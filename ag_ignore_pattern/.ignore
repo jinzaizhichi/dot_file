@@ -1,0 +1,9 @@
+.gitignore
+*.html
+*.asv
+.history*
+~/.t/*
+~/.zsh_history
+~/dot_file/.zsh_history
+*.zsh_history
+*.bk*

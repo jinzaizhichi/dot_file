@@ -1,0 +1,30 @@
+pqi
+opencv-python
+matplotlib
+flake8
+yapf
+numpy
+scipy
+neovim
+
+# 加速库
+numba
+
+pudb
+
+# 美化
+ptpython
+pretty_errors
+gpustat
+rich
+termcolor
+# 记忆：log you  run yousefl （傻瓜式，不用我操心）
+loguru
+
+
+#neovim会自动装pynvim，可能导致报错，自己删掉pynvim就好
+
+# 没用？
+pyvim
+msgpack
+beeprint
