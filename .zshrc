@@ -140,23 +140,6 @@ PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
 export PKG_CONFIG_PATH
 
 
-# 改变目录后 自动ls
-function list_all_after_cd() {
-# if [[ $PWD != '/home/' ]]; then
-    print -Pn "\e]2;%~\a" #在terminal的tittle显示路径
-    emulate -L zsh
-    \ls -gGhtrFB --color=always --classify $* | cut -c 14- | tail -5
-	tmp=$((`\ls -l | wc -l`-1-5)) #文件总数: `\ls -l | wc -l`-1
-	if [ $tmp -lt 0 ]; then
-        echo "------no more files--------"
-	else
-        echo "--------未显示文件数：$tmp---------"
-	fi
-}
-# $chpwd_functions:  shell parameter
-# This is an array of function names.
-# All of these functions are executed `in order` when changing the current working directory.
-chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 
 
 # done附近报错：
@@ -174,3 +157,5 @@ chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 #     PATH=${PATH#:}
 #     unset old_PATH x
 # fi
+
+

@@ -51,16 +51,42 @@ alias -s zip=unzip_multi
 # Use [[]] : if you want conditional expressions not supported by `[]` and don't need to be portable.
 alias nls='export chpwd_functions=()'
 alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path '/proc' -prune -o -name "*$1*" -exec ~/.squashfs-root/AppRun {} + ; }; fv'
-alias cd='export chpwd_functions=() ; builtin cd'
 alias h='help'
+# alias cd='export chpwd_functions=() ; builtin cd' #  加了这行，就算没敲cd，chpwd_functions也废掉了
 
 
 # u for use
 # alias u='git clone'
 
+# 改变目录后 自动ls
+function list_all_after_cd() {
+# if [[ $PWD != '/home/' ]]; then
+print -Pn "\e]2;%~\a" #在terminal的tittle显示路径
+emulate -L zsh
+\ls -gGhtrFB --color=always --classify $* | cut -c 14- | tail -5
+tmp=$((`\ls -l | wc -l`-1-5)) #文件总数: `\ls -l | wc -l`-1
+if [ $tmp -lt 0 ]; then
+    echo "------no more files--------"
+else
+    echo "--------未显示文件数：$tmp---------"
+fi
+}
+# $chpwd_functions:  shell parameter
+# This is an array of function names.
+# All of these functions are executed `in order` when changing the current working directory.
+chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
+# alias cd='export chpwd_functions=() ; builtin cd' #  加了这行，就算没敲cd，chpwd_functions也废掉了
+
+
 # 第一次用才需要
 # alias p='python3 -W ignore -m pretty_errors'
-alias p='chpwd_functions=() && python3 -W ignore'
+
+function python_go(){
+    chpwd_functions=()
+    python3 -W ignore $*  # 打断后就不再执行下面几行
+    chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd") 
+}
+alias p='python_go'
 alias python='p'
 alias pv='p'
 alias vv='p'
@@ -310,7 +336,7 @@ alias oc='_oc(){ g++ -g $* -o ${1%.*} `pkg-config --cflags --libs opencv` ; ./${
 
 alias vi='~/.squashfs-root/AppRun -u ~/dot_file/.config/nvim/init.vim'
 # alias vi='~/.squashfs-root/AppRun'
-alias vim='~/.squashfs-root/AppRun'
+alias vim='~/.squashfs-root/AppRun -u ~/dot_file/.config/nvim/init.vim'
 
 
 
@@ -384,7 +410,7 @@ alias dk='wf_docker(){ docker start $1 ; docker exec -it $1 zsh; }; wf_docker'
 ##换行输出
 ##echo "${PATH//:/$'\n'}"
 ##echo "${fpath// /$\n}"
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e ''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'')"'
+# alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e ''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'')"'
 
 
 alias pt='ptpython --vi'
@@ -596,6 +622,7 @@ alias -s cfg=code
 
 if [[ -n "$TMUX" ]];
 then
+    alias code=vim
     alias -s cpp=vim
     alias -s py=vim
     alias -s toml=vim
