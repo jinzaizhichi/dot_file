@@ -112,7 +112,6 @@ chsh -s `which zsh`
 # ln -s /opt/data/private/trash /t
 
 
-
 export ZPLUG_HOME=$HOME/dot_file/zplug
 export ZPLUG_LOADFILE=$HOME/dot_file/zplug/zplug_loadfile.sh
 git clone https://github.com/zplug/zplug $ZPLUG_HOME
