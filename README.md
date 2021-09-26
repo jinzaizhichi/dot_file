@@ -10,10 +10,10 @@
  bash auto_install.sh 
  ```
  
- ## git skills
+
+###  About git submodule  
  this arrow means a soft link OR a submodule   
  ![image](https://user-images.githubusercontent.com/53520949/134790530-feaea641-0da6-4483-b311-3f8301f9629b.png)   
-###  About git submodule  
 
 如果希望git clone时，子模块代码也能获取到:  
 * 方法1  
@@ -21,13 +21,12 @@
 此时project-main/project-sub-1文件夹是有内容的，（但不是project-sub-1的原作者的最新版本？）
 
 * 方法2  
-git clone外层repo后，
+git clone外层repo后，这样拉取子模块的原作者的最新代码
 ```
 git submodule init
 git submodule update
 ```
-拉取子模块的原作者的最新代码
-
+ref:  
 https://www.atlassian.com/git/tutorials/git-submodule
 
  ---
