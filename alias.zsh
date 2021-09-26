@@ -3,7 +3,6 @@ alias cle='clear -x'
 alias pipc='pqi' # pip change
 alias q='tree -L 2 --filelimit=30 | bat'
 
-alias ba='bat'
 # alias git='LANG=en_GB git' # 不行
 
 zi_leo_func(){
@@ -62,7 +61,7 @@ alias h='help'
 # alias u='git clone'
 
 # 改变目录后 自动ls
-function list_all_after_cd() {
+list_all_after_cd() {
 # if [[ $PWD != '/home/' ]]; then
 print -Pn "\e]2;%~\a" #在terminal的tittle显示路径
 emulate -L zsh
@@ -373,9 +372,21 @@ alias dk='wf_docker(){ docker start $1 ; docker exec -it $1 zsh; docker exec -it
 # n
 # p
 # x
-alias w='_w(){ bat $1 ; bat $1 | xsel -ib ; };_w'
+
+# Localhost: server that is used on your own computer
+w(){
+if [[ -e $DISPLAY ]];then
+    bat $1
+    cat $1 | xsel -ib
+else
+    bat $1
+fi
+}
+# 没有x11时, 不启用复制功能
+
 alias wv='w'
 alias ca=cat
+alias ba='bat'
 alias le="less --lesskey-file=$HOME/dot_file/.lesskey"
 
 
