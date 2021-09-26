@@ -24,4 +24,4 @@ export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --
 # export LESS='-R --use-color -Dd+r$Du+b'
 
 # --------------------------------less color-------------------------------------]]]
-#
+

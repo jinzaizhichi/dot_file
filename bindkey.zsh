@@ -5,7 +5,7 @@ bindkey "\033[4~" end-of-line # END
 # bindkey [ options ] -s in-string out-string
 bindkey -s "\C-o" "cle \C-j"
 # t for try
-bindkey -s "\C-t" "run_l \C-j"
+# bindkey -s "\C-t" "run_l \C-j" 不知道是啥
 # vi mode 出问题来这里
 
 # todo

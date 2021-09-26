@@ -78,7 +78,7 @@ zplug "rupa/z", use:z.sh # 这样不行： zplug "rupa/z", as:plugin, use:"*.sh"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 # zplug "softmoth/zsh-vim-mode"
-# zplug "jeffreytse/zsh-vi-mode"  # 有奇怪错误，提issue很繁琐，不用了。自己配吧
+# zplug "jeffreytse/zsh-vi-mode"  # 有奇怪错误，提issue很繁琐，不用了。自己配吧。
 # zplug "hchbaw/zce.zsh"
 
 

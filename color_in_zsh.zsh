@@ -33,7 +33,9 @@ ZSH_HIGHLIGHT_STYLES[path]=fg=110,underline,bold
 LS_COLORS=''
 LS_COLORS=$LS_COLORS:'ex=0'          # Executable file
 LS_COLORS=$LS_COLORS:'no=0'           # Normal text       = Default foreground
-LS_COLORS=$LS_COLORS:'fi=35'           # Regular file      = Default foreground
+LS_COLORS=$LS_COLORS:'fi=47;30'           # Regular file
+#不行
+#LS_COLORS=$LS_COLORS:'_*_=0'        # Plain/Text
 LS_COLORS=$LS_COLORS:'di=30'       # Directory         = Bold, Blue
 
 #stiky
@@ -49,10 +51,8 @@ LS_COLORS=$LS_COLORS:'do=34;4'       # DO
 LS_COLORS=$LS_COLORS:'bd=34;4'       # Block device
 LS_COLORS=$LS_COLORS:'cd=34;4'       # Character device
 
-LS_COLORS=$LS_COLORS:'*.sh=47;31'     # Shell-Scripts
 LS_COLORS=$LS_COLORS:'*.md=30;47'     # Shell-Scripts
-#不行
-#LS_COLORS=$LS_COLORS:'_*_=0'        # Plain/Text
+LS_COLORS=$LS_COLORS:'*.py=47;33'
 LS_COLORS=$LS_COLORS:'*.vim=34'       # Vim-"Scripts"
 LS_COLORS=$LS_COLORS:'*.or=34;47'       # original  用于临时放没改动的原文件
 LS_COLORS=$LS_COLORS:'*.json=36;47'       # original  用于临时放没改动的原文件
@@ -82,43 +82,25 @@ LS_COLORS=$LS_COLORS:'*.bz2=1;31'       # Archive
 LS_COLORS=$LS_COLORS:'*.html=36'      # HTML
 LS_COLORS=$LS_COLORS:'*.htm=1;34'     # HTML
 LS_COLORS=$LS_COLORS:'*.txt=0'        # Plain/Text
-LS_COLORS=$LS_COLORS:'*.n=43;37'        # Plain/Text
+LS_COLORS=$LS_COLORS:'*.n=36'
+LS_COLORS=$LS_COLORS:'*.sh=32'     # Shell-Scripts
+LS_COLORS=$LS_COLORS:'*.csv=01'     # Shell-Scripts
 
 export LS_COLORS
 # --------------------------------ls color-------------------------------------]]
 
 
-#[[[--------------------------------less color-------------------------------------
-
-#definitions of the less termcap settings:
-
-# LESS_TERMCAP_md: Start bold effect (double-bright).
-# LESS_TERMCAP_me: Stop bold effect.
-# LESS_TERMCAP_us: Start underline effect.
-# LESS_TERMCAP_ue: Stop underline effect.
-# LESS_TERMCAP_so: Start stand-out effect (similar to reverse text).
-# LESS_TERMCAP_se: Stop stand-out effect (similar to reverse text).
-
-
-# export LESS_TERMCAP_md=$'\E[1;36m'
-export LESS_TERMCAP_so=$'\E[01;37;40m'
-# export LESS_TERMCAP_us=$'\E[1;32m'
-
-# 0    : Turn off all effects.
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-
-# https://www.topbug.net/blog/2016/09/27/make-gnu-less-more-powerful/
-export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --no-init '
-# export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=-2'
-# export LESS='-R --use-color -Dd+r$Du+b'
-
-# --------------------------------less color-------------------------------------]]]
-
 function wf_use_function_as_block_comment_color () {
 “\e” :  escape sequence.
 “m”  :end of the command.
+
+00=none
+01=bold
+04=underscore
+05=blink
+07=reverse
+08=concealed 隐藏
+
 颜色表
 Foreground:
 30 - black
@@ -140,7 +122,6 @@ Background:
 46 - cyan
 47 - white
 
-00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
 NORMAL 00 # no color code at all
 FILE 00 # regular file: use no color at all
 RESET 0 # reset to "normal" color

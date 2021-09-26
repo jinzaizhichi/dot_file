@@ -1,7 +1,7 @@
 # todo 函数名不要起一两个字，不然容易覆盖built-in
 alias cle='clear -x'
 alias pipc='pqi' # pip change
-alias q='tree -L 2 --filelimit=30 | less'
+alias q='tree -L 2 --filelimit=30 | bat'
 
 alias ba='bat'
 # alias git='LANG=en_GB git' # 不行
@@ -116,8 +116,8 @@ alias a_t=access_time_leo_func
 alias vsc='code'
 #移到垃圾箱
 alias tvsc='t'
-alias hg='history -i 1000 | grep'
-alias his='noglob history -i 1000 | less'
+# alias hg='history -i 1000 | bat' # 待用
+alias his='noglob history -i 1000 | bat'
 # 统计命令输入频率
 alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | head -n 30'
 
@@ -367,13 +367,13 @@ alias dk='wf_docker(){ docker start $1 ; docker exec -it $1 zsh; docker exec -it
 # 双引号换成单引号就不行
 # alias vj='_j(){ jq -C '' $1 ; }; _j'
 # 最外层用双引号也不行
-# alias vj="_j(){ jq -C "" $1 |less -R;};_j"
+# alias vj="_j(){ jq -C "" $1 |bat -R;};_j"
 
 # 还可以用:
 # n
 # p
 # x
-alias w='_w(){ cat $1 ; cat $1 | xsel -ib ; };_w'
+alias w='_w(){ bat $1 ; bat $1 | xsel -ib ; };_w'
 alias wv='w'
 alias ca=cat
 alias le="less --lesskey-file=$HOME/dot_file/.lesskey"
@@ -397,7 +397,7 @@ alias bv='b'
 alias sa='chmod -R 777'  #share to all
 alias t_a='t *'
 # see json
-alias cj='_j(){ jq -C "" $1 |less -R; };_j'
+alias cj='_j(){ jq -C "" $1 |bat -R; };_j'
 alias sc='noglob scp -r'
 alias scp='noglob scp -r'
 # tac:
@@ -474,14 +474,14 @@ alias du='du -h'
 #e for exit 离开代理
 alias e='unset ALL_PROXY'
 
-f(){
+find_a_file(){
     find . \
     -path '/d/docker' -prune -o  \
     -path '~/.t' -prune -o       \
     -path '/proc' -prune -o      \
-    -name "*$1*"                 \
-    | grep $1
+    -name "*$1*"  |  bat
 }
+alias f=find_a_file
 
 # /proc写成/proc/据说不行
 alias f/='f_2(){ find / -path '/proc' -prune -o -path '/proc' -prune -o  -name "*$1*" | grep $1;}; f_2'
@@ -551,9 +551,6 @@ mcd() {
 
 alias mi='curl cip.cc'
 
-# alias o=xdg-open
-# alias pbc=pbcopy
-# alias pbp=pbpaste
 alias pi='pip3 install'
 alias pip='pip3'
 alias po=popd
@@ -567,8 +564,8 @@ alias r='/usr/bin/tldr'
 alias rm='rm -Irv --preserve-root'
 alias rmi='nocorrect rm -i'
 alias rsync='noglob rsync'
-# o for open
-alias o='zsh'
+# o for open (source .zsrc,  as if opening a new zsh, to make new config take effect)
+alias o='source ~/.zshrc'  # 有时source后，alias就算在文件中被删了，还在"
 # search alias
 alias sftp='noglob sftp'
 alias sl=ls
@@ -606,11 +603,11 @@ alias -s tar.xz='tar -xJf'
 # 会导致执行不了?
 # alias -s make='vim'
 
-alias -s md=less
-alias -s log=less
-alias -s txt=less
-alias -s html=less
-alias -s yaml=less
+alias -s md=bat
+alias -s log=bat
+alias -s txt=bat
+alias -s html=bat
+alias -s yaml=bat
 
 
 alias -s cpp=code
