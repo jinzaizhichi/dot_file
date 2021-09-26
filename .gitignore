@@ -27,8 +27,8 @@ __pycache__
 .config/gnome-session/
 .config/gnome-session/*
 
-# zplug
-# zplug/*
+zplug
+zplug/*
 
 .config/ptpython/history
 *.zwc
