@@ -3,6 +3,8 @@ alias cle='clear -x'
 alias pipc='pqi' # pip change
 alias q='tree -L 2 --filelimit=30 | less'
 
+alias ba='bat --theme=Solarized\ \(light\)'
+
 zi_leo_func(){
     # https://unix.stackexchange.com/questions/161905/adding-unzipped-files-to-a-zipped-folder
 
@@ -84,7 +86,7 @@ chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 function python_go(){
     chpwd_functions=()
     python3 -W ignore $*  # 打断后就不再执行下面几行
-    chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd") 
+    chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 }
 alias p='python_go'
 alias python='p'
