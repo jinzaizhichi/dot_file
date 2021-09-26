@@ -57,6 +57,7 @@ autoload -U compinit # -U : suppress alias expansion for functions
 compinit
 
 
+
 # [[==================================zsh插件管理：zplug=================================
 export ZPLUG_HOME=$HOME/dot_file/zplug
 source $ZPLUG_HOME/init.zsh

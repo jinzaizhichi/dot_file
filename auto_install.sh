@@ -109,7 +109,14 @@ yes | (cp -rf .muttrc ~ ;cp -rf .msmtprc ~ ; touch ~/.msmtp.log)
 rm /usr/bin/python
 ln -s /usr/bin/python3.? /usr/bin/python
 chsh -s `which zsh`
-ln -s /opt/data/private/trash /t
+# ln -s /opt/data/private/trash /t
+
+
+
+export ZPLUG_HOME=$HOME/dot_file/zplug
+export ZPLUG_LOADFILE=$HOME/dot_file/zplug/zplug_loadfile.sh
+git clone https://github.com/zplug/zplug $ZPLUG_HOME
+
 
 mkdir -p ~/.config/nvim/pack/kite/start/kite
 git clone https://github.com/kiteco/vim-plugin.git ~/.config/nvim/pack/kite/start/kite/
