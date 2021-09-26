@@ -3,7 +3,8 @@ alias cle='clear -x'
 alias pipc='pqi' # pip change
 alias q='tree -L 2 --filelimit=30 | less'
 
-alias ba='bat --theme=Solarized\ \(light\)'
+alias ba='bat'
+# alias git='LANG=en_GB git' # 不行
 
 zi_leo_func(){
     # https://unix.stackexchange.com/questions/161905/adding-unzipped-files-to-a-zipped-folder

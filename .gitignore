@@ -26,6 +26,7 @@ __pycache__
 .config/google_chrome/*
 .config/gnome-session/
 .config/gnome-session/*
+
 # zplug
 # zplug/*
 

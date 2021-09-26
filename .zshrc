@@ -1,12 +1,17 @@
+# export 了某个变量后，再从.zsrhc删除对应的代码，再开子zsh，该环境变量还在的哦，除非另写（覆盖）
 export PYTHONPATH=
 
 export PTPYTHON_CONFIG_HOME=$HOME/dot_file/.config/ptpython
 export PTIPYTHON_CONFIG_HOME=$HOME/dot_file/.config/ptpython # ptipython
 export PYTHONSTARTUP=$HOME/dot_file/leo_python_startup.py
 
+# export PAGER='bat --theme="Solarized\ \(light\)"'  # 加了双引号反而不行
+export PAGER='bat --theme="Coldark-Cold"' # 导致下面的v无效，“can not 修改stdin啥的”
+
 # less 敲v，先找VIUSAL指定的编辑器，没有再找EDITOR
 export VISUAL=vim  # vscode不行
 export EDITOR=vim
+
 
 export LOGURU_FORMAT="{time} | <lvl>{message}</lvl>"
 
