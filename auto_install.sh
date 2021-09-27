@@ -1,8 +1,19 @@
 mkdir -p /etc/apt/
 # ubuntu 18的源
 echo "using apt source of ubuntu 18=================================================================="
-mv /etc/apt/sources.list /etc/apt/sources.list.origin
-cp -rf sources.list.china.py /etc/apt/sources.list
+# mv /etc/apt/sources.list /etc/apt/sources.list.origin_useless
+
+string=`cat /etc/issue`
+
+if [[ $string =~ "Ubuntu 18" ]]  # regex
+then
+	cp -rf sources_china_ubuntu18.py /etc/apt/sources.list
+fi
+
+if [[ $string =~ "Ubuntu 20" ]]  # regex
+then
+	cp -rf sources_china_ubuntu20.py /etc/apt/sources.list
+fi
 
 
 # export ALL_PROXY=socks5://你的ip:端口
