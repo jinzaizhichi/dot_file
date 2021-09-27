@@ -1,6 +1,6 @@
-tags
 __pycache__/*
 __pycache__
+
 .config/EasyConnect
 .config/EasyConnect/*
 .config/nautilus
@@ -18,7 +18,7 @@ __pycache__
 .config/Code
 .config/Code/*
 .config/dconf
-.config/dconf/*
+.config/dconf/user
 
 # 输入法:
 .config/fcitx
@@ -34,7 +34,19 @@ __pycache__
 # zplug/*
 
 .config/ptpython/history
-*.zwc
+
+# zsh
+zcompdump
+**/zcompdump
+zcompdump.zwc
+**/zcompdump.zwc
+
+# vim
+*~
+**/*~
+*.swp
+**/*.swp
 
 
-
+# Ctags
+tags
