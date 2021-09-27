@@ -42,7 +42,7 @@ ln -s ~/dot_file/.condarc ~/
 ln -s /d ~/d
 
 yes | unminimize
-yes | (ln -s /opt/data/private/anaconda3 ~/)
+# yes | (ln -s /opt/data/private/anaconda3 ~/)
 yes | (apt install software-properties-common)
 yes | (add-apt-repository ppa:ultradvorka/ppa && apt -qq update)
 yes | (apt install sudo)
