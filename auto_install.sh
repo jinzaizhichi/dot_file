@@ -89,7 +89,7 @@ rm -f /etc/localtime &&  ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 mkdir ~/.cache
 yes |(mv ~/.tmux ~/.tmux_bk ; ln -s ~/dot_file/tmux ~/.tmux)
 yes |(mv ~/.config/ ~/.old_config ;  ln -s ~/dot_file/.config ~)
-yes |(cp ~/dot_file/local_template_zshrc ~/.zshrc )
+yes |(cp ~/dot_file/local_template_zshrc.zsh ~/.zshrc )
 
 
 # 不知道和github下载的nvim是否冲突
@@ -142,16 +142,18 @@ sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update
 sudo apt install python3.9
 apt install python3.9-distutils
-#
+
 # 别改系统默认python啊，不然apt都会出问题
 # sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
 # sudo update-alternatives --config python3
+
 # 考虑这个：
-# alias p='/usr/bin/python3.9'
+# alias p9='/usr/bin/python3.9'
 
 yes | (ai python3.9-pip)
 
 yes | (unset ALL_PROXY ; pip install --upgrade pip ; pip3 install --upgrade pip ; pip3 install pysocks)
+echo '如果有网络问题，最后这2行要在 设置PROXY后，手动敲'
 pip install -r pip_useful_tool.txt
 # 不删会报错
 pip uninstall pynvim
