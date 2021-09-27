@@ -290,7 +290,7 @@ alias jn='jupyter notebook'
 alias ci='conda install -y'
 alias snp='~/dot_file/wf_snippet.py'
 alias sy='cd ~/dot_file ; git pull ; git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
-alias tmux='tmux -L wfwfwf'
+alias tmux='$HOME/dot_file/tmux3_1_b.AppImage -L wfwfwf'
 
 tm() {
     if [ "$1" != "" ] # or better, if [ -n "$1" ]
@@ -375,11 +375,12 @@ alias dk='wf_docker(){ docker start $1 ; docker exec -it $1 zsh; docker exec -it
 
 # Localhost: server that is used on your own computer
 w(){
-if [[ -e $DISPLAY ]];then
+if [[ -z $DISPLAY ]];then
+# -z: 看是否empty
     bat $1
-    cat $1 | xsel -ib
 else
     bat $1
+    cat $1 | xsel -ib
 fi
 }
 # 没有x11时, 不启用复制功能

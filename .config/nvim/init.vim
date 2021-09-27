@@ -1,5 +1,5 @@
-" 以本地C盘里面的init.vim为准。暂时不更新这个
-" 
+" 本地C盘里面的init.vim最新。这个暂时用着
+
 
 nnoremap yf ggyG<C-O>
 " p后面一般没有参数，所以pf不好。选中全文，一般只是为了替换。所以vf选中后，多了p这一步
@@ -27,6 +27,7 @@ if exists('g:vscode')
 else
     echo '没在用 vscode-neovim, only nvim'
 
+    nnoremap <F4> :UndotreeToggle<CR>
     noremap <silent><leader>/ :nohls<CR> " 搜索时 不高亮
     " vscode里不行
     " nnoremap zz :wq<C-R>
@@ -60,18 +61,33 @@ let mapleader =" "
 " Lazy loading, my preferred way, as you can have both installable at once:
 " https://github.com/junegunn/vim-plug/wiki/tips
 function! Cond(cond, ...)
-  let opts = get(a:000, 0, {})
-  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+    let opts = get(a:000, 0, {})
+    return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
 
 " =============================================vim-plug===============================begin
+" 加了插件要敲command  :PlugInstall
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug' " 为了能用:help plug-options
 Plug 'easymotion/vim-easymotion', Cond(!exists('g:vscode'))  " use normal easymotion when in vim mode
 Plug 'asvetliakov/vim-easymotion', Cond(exists('g:vscode'), { 'as': 'vsc-easymotion' }) " use vscode easymotion when in vscode mode
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "好像会添乱
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "chrome里用nvim。好像会添乱
 Plug 'machakann/vim-sandwich'
 Plug 'scrooloose/nerdcommenter'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'mbbill/undotree'
+if has("persistent_undo")
+    let target_path = expand('~/.undodir')
+    if !isdirectory(target_path) " if the location does not exist.
+        call mkdir(target_path, "p", 0700) " create the directory and any parent directories
+    endif
+
+    let &undodir=target_path
+    set undofile
+endif
+
 
 " 同类:
 "  Plug 'tpope/vim-surround'
@@ -113,6 +129,20 @@ Plug 'scrooloose/nerdcommenter'
 call plug#end()
 " =============================================vim-plug===============================end
 
+
+let g:airline_theme='solarized'
+if &diff
+    " colorscheme github
+    set cursorline
+
+    " 反应变慢，不好
+    " map ] ]c
+    " map [ [c
+
+    hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
+    hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
+    hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
+endif
 
 " [[---------------------------nerdcommenter-config------------------------begin
 let g:NERDCreateDefaultMappings = 1
@@ -402,16 +432,6 @@ inoremap <C-Y> <C-O><C-R>
 " ---------------------------------------msvim-------------------------------
 
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
-if &diff
-    colorscheme one
-    set cursorline
-    " 反应变慢，不好
-    " map ] ]c
-    " map [ [c
-    " hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
-    " hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
-    " hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
-endif
 
 
 noremap <F5> <ESC>oimport pudb<ESC>opu.db
@@ -526,10 +546,7 @@ func! WfRunScript()
 endfunc
 
 
-
-
-
-nnoremap <F4> :call HideNumber()<CR>
+nnoremap <F8> :call HideNumber()<CR>  " 8 for byebye number
 function! HideNumber()
     if(&relativenumber == &number)
         set relativenumber! number!
@@ -657,20 +674,6 @@ set shortmess=atI
 set nobackup
 " 关闭交换文件
 set noswapfile
-
-
-" TODO: remove this, use gundo
-" create undo file
-" if has('persistent_undo')
-    " " How many undos
-    " set undolevels=1000
-    " " number of lines to save for undo
-    " set undoreload=10000
-    " " So is persistent undo ...
-    " "set undofile
-    " set noundofile
-    " " set undodir=/tmp/vimundo/
-" endif
 
 
 " 突出显示当前行
@@ -1019,4 +1022,3 @@ let pyindent_open_paren="&sw*2"
 
 nnoremap  cb O'''<Esc>Go'''<Esc>
 inoremap  cb '''<Esc>Go'''<Esc><C-o>i
-
