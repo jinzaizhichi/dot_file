@@ -26,6 +26,6 @@ export PAGER=less
 export PATH
 
 # https://github.com/pydata/numexpr/issues/322
-export NUMEXPR_MAX_THREADS=320 # 80 cpu cores x 4threds
+# export NUMEXPR_MAX_THREADS=320 # 80 cpu cores x 4threds
 
 export PYTHONPATH=
