@@ -440,8 +440,6 @@ alias do='cd ~/dot_file/'
 alias va='cd ~/dot_file ; git pull ; code ~/dot_file/auto_install.sh ; git add . ;git config --global user.email liuweifengemail@163.com ; git config --global user.name sisrfeng ; git commit -m "wf" ; git push ; cd -'
 alias vb='cd ~/dot_file ; git pull ; code ~/dot_file/alias.zsh ; git add . ;git config --global user.email liuweifengemail@163.com ; git config --global user.name sisrfeng ; git commit -m "wf" ; git push ; cd -;zsh'
 alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux.conf; sy'
-# alias vs='cd ~/dot_file ; git pull ; code ~/dot_file/spacevim_conf.vim ; sy'
-alias s='code ~/dot_file/rc.zsh ; zsh'
 
 # i for init.vim
 alias ji='code ~/dot_file/.config/nvim/init.vim; echo '改配置后记得sync' '
@@ -450,7 +448,7 @@ alias vr='cd ~/dot_file ; git pull ; code ~/dot_file/.config/nvim/init.vim ; git
 
 alias jt='code ~/dot_file/tmux.conf; echo '改配置后记得sync''
 # alias js='code ~/dot_file/spacevim_conf.vim; echo '改配置后记得sync''
-alias js='code ~/dot_file/.zshrc; echo '改配置后记得sync''
+alias s='code ~/dot_file/rc.zsh ; zsh'
 alias jb='code ~/dot_file/alias.zsh; echo '改配置后记得sync''
 alias ja='code ~/dot_file/auto_install.sh; echo '改配置后记得sync''
 
