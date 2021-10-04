@@ -10,8 +10,7 @@ export PAGER='bat --theme="Coldark-Cold"' # 导致下面的v无效，“can not 
 
 # less 敲v，先找VIUSAL指定的编辑器，没有再找EDITOR
 export VISUAL=vim  # vscode不行
-export EDITOR=vim
-
+# export EDITOR=vim
 
 export LOGURU_FORMAT="{time} | <lvl>{message}</lvl>"
 
@@ -20,6 +19,14 @@ export PYTHON_PRETTY_ERRORS=1
 export TIMEFMT=$'\n================\nCPU\t%P\nuser\t%*U\nsystem\t%*S\ntotal\t%*E'
 
 export TF_CPP_MIN_LOG_LEVEL=2
+
+# 如果因为locales无法安装，locale-gens啥的失败，报LC等错误，删掉这行：
+export LC_ALL=zh_CN.UTF-8
+# 待阅: https://www.linux.com/news/controlling-your-locale-environment-variables/
+
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+export PKG_CONFIG_PATH
+
 
 # 交互式模式的初始化脚本, 防止被加载两次
 if [ -z "$_INIT_SH_LOADED" ]; then   # test -z returns true, if the parameter is empty
@@ -52,9 +59,22 @@ autoload -Uz run-help-ip # -z  | mark function for zsh-style autoloading
 autoload run-help-git
 
 export TERM="xterm-256color" # Enable 256 color to make auto-suggestions look nice
-ZSH_AUTOSUGGEST_USE_ASYNC=1
 autoload -U compinit # -U : suppress alias expansion for functions
 compinit
+
+setopt autocd
+setopt globdots
+setopt interactivecomments
+
+
+
+
+autoload -U promptinit # -U: suppress alias expansion for functions
+promptinit
+autoload -U colors && colors
+#Red, Blue, Green, Cyan, Yellow, Magenta, Black & White
+
+
 
 
 # [[==================================zsh插件管理：zplug=================================
@@ -70,6 +90,9 @@ zplug "zplug/zplug", hook-build:"zplug --self-manage"
 # 避免冲突，顺序： zsh-autosuggestions > zsh-syntax-highlighting > zsh-vim-mode
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bg=cyan,bold,underline"
+
 zplug "rupa/z", use:z.sh # 这样不行： zplug "rupa/z", as:plugin, use:"*.sh"
 
 # 下面这个插件，must be loaded after:
@@ -90,35 +113,24 @@ if ! zplug check --verbose; then
     fi
 fi
 
-# source plugins and add commands to $PATH
+zplug load     # source plugins and add commands to $PATH
 # zplug load --verbose
-zplug load
 
 # zplug update  #需要时，自己敲
 # ==================================zsh插件管理：zplug=================================]]
 
+
 source $HOME/dot_file/completion.zsh
 source $HOME/dot_file/history.zsh
-source $HOME/dot_file/alias.zsh
 source $HOME/dot_file/color_in_less.zsh
 source $HOME/dot_file/color_in_zsh.zsh
 source $HOME/dot_file/bindkey.zsh
 
-setopt autocd
-setopt globdots
-setopt ignorebraces
-setopt interactivecomments
-export UPDATE_ZSH_DAYS=30
+source $HOME/dot_file/alias.zsh   # 里面有：chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
+autoload -Uz chpwd_recent_dirs  cdr add-zsh-hook  # -U: suppress alias expansion for functions
+add-zsh-hook chpwd chpwd_recent_dirs
 
 
-# 如果因为locales无法安装，locale-gens啥的失败，报LC等错误，删掉这行：
-export LC_ALL=zh_CN.UTF-8
-# 待阅: https://www.linux.com/news/controlling-your-locale-environment-variables/
-
-autoload -U promptinit # -U: suppress alias expansion for functions
-promptinit
-autoload -U colors && colors
-#Red, Blue, Green, Cyan, Yellow, Magenta, Black & White
 
 
 alias -- -='cd -'
@@ -137,14 +149,16 @@ compdef _dirs d
 # prmptcmd() { eval "$PROMPT_COMMAND" }
 # precmd_functions=(prmptcmd)
 
+# =============================================================================================
+# 放到zplug的东西前 会报错
+# setopt ignorebraces     #  turns off csh-style brace ({)   expansion.  不知道哪里复制来的
+# 设置前后：
+#  echo x{y{z,a},{b,c}d}e
+            # xyze xyae xbde xcde
 
-autoload -Uz chpwd_recent_dirs  cdr add-zsh-hook  # -U: suppress alias expansion for functions
-add-zsh-hook chpwd chpwd_recent_dirs
-
-PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
-export PKG_CONFIG_PATH
-
-
+#  echo x{y{z,a},{b,c}d}e
+            # xyze xyae xbde xcde
+# =============================================================================================
 
 
 # done附近报错：
@@ -163,4 +177,10 @@ export PKG_CONFIG_PATH
 #     unset old_PATH x
 # fi
 
+if [ -z "$TMUX" ]; then
+    echo $DISPLAY > ~/.t/display.txt
+fi
 
+function set_display(){
+    export DISPLAY=$(cat ~/.t/display.txt)
+}

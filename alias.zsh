@@ -1,11 +1,12 @@
-# todo 函数名不要起一两个字，不然容易覆盖built-in
+# 改了函数以后，子shell会以为没改。要先退出当前zsh，重开zsh
+# todo 函数名不要起一两个字，不然容易覆盖built-in ? 应该没事
 alias cle='clear -x'
 alias pipc='pqi' # pip change
 alias q='tree -L 2 --filelimit=30 | bat'
 
 # alias git='LANG=en_GB git' # 不行
 
-zi_leo_func(){
+zi(){
     # https://unix.stackexchange.com/questions/161905/adding-unzipped-files-to-a-zipped-folder
 
     # [[ -a FILE_NAME ]], the "! -a" asks if the file does not exist.
@@ -34,7 +35,6 @@ zi_leo_func(){
     # alias hl='f_hl(){ du -sh $1* | sort -h; }; f_hl'
     du -sh  ~/tmp_at_home.zip
 }
-alias zi=zi_leo_func
 
 # () 含义：declaring a function.
 unzip_multi(){
@@ -64,7 +64,16 @@ alias h='help'
 list_all_after_cd() {
 # if [[ $PWD != '/home/' ]]; then
 print -Pn "\e]2;%~\a" #在terminal的tittle显示路径
+
+# to make your zsh script portable and reliable :
+# use zsh's `built-in features` over calling an `external program`
+# Since setopt can drastically change the behavior of zsh, add `emulate -L zsh` to
+# the body of your script or function to start from a known state.
 emulate -L zsh
+# -L  | set local_options and local_traps as well
+# -R  | reset all options instead of only those needed for script portability
+#  模拟 csh ksh sh 或者 （没加配置的）zsh
+
 \ls -gGhtrFB --color=always --classify $* | cut -c 14- | tail -5
 tmp=$((`\ls -l | wc -l`-1-5)) #文件总数: `\ls -l | wc -l`-1
 if [ $tmp -lt 0 ]; then
@@ -167,9 +176,24 @@ alias lr='ls -gGhtF --color=always'
 alias lt='ll -tr'
 alias lx='\ls -l'
 alias l.='\ls -d1 .* --color=always --classify'
+# list lean
 alias ll='\ls -1htr --color=always --classify | head -30'
 # list full:
-alias lf='_l(){  \ls -gGhtrF --color=always --classify $* ; };_l'
+
+lf(){
+    # --classify:   append indicator (one of */=>@|) to entries
+    #-g  -l时不显示用户名
+    \ls -g -htrF \
+        --no-group \
+        --color=always --classify $* \
+        | cut -c 14- \
+        | sed 's/月  /月/' \
+        | sed 's/月 /月_/' \
+        # | ag ':'
+        # | ag ':' --colour=always \
+    tmp=$((`\ls -l | wc -l`-1))
+    echo "列出了所有：${tmp}"
+}
 
 alias l=leo_func_ls
 #写成l()会报错。可能和built-in冲突了
@@ -183,8 +207,8 @@ leo_func_ls(){
         | tail -25 \
         | sed 's/月  /月/' \
         | sed 's/月 /月_/' \
-        | grep ':' --colour=always \
-        | grep '月' --colour=always
+        # | ag ':'
+        # | ag ':' --colour=always \
     tmp=$((`\ls -l | wc -l`-1))
 	if [   $tmp     -lt      25 ]
 	then
@@ -346,7 +370,11 @@ alias v='code'
 alias vp='code'   #p wf_run.py 跳到开头加个v，不用删p就能编辑
 
 alias gr='grep'
-alias ec='echo'
+ec(){
+    tmp=$1
+    echo ${$tmp}
+}
+# alias ec='echo'
 
 alias sc='scp'
 alias scp='scp -r'
@@ -383,6 +411,7 @@ else
     cat $1 | xsel -ib
 fi
 }
+
 # 没有x11时, 不启用复制功能
 
 alias wv='w'
@@ -449,7 +478,7 @@ alias vr='cd ~/dot_file ; git pull ; code ~/dot_file/.config/nvim/init.vim ; git
 alias jt='code ~/dot_file/tmux.conf; echo '改配置后记得sync''
 # alias js='code ~/dot_file/spacevim_conf.vim; echo '改配置后记得sync''
 alias s='code ~/dot_file/rc.zsh ; zsh'
-alias jb='code ~/dot_file/alias.zsh; echo '改配置后记得sync''
+alias jb='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
 alias ja='code ~/dot_file/auto_install.sh; echo '改配置后记得sync''
 
 

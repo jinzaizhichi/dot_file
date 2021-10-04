@@ -1,10 +1,18 @@
-# [[=================================syntax color definition====================================
+# [[===========================插件 zsh-syntax-highlighting的syntax color definition====================================
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 typeset -A ZSH_HIGHLIGHT_STYLES
 
-# 不知道三位代码 什么意思
+# ASCII
+# 这里不是css的方式：
+# CSS 里颜色值可以用#FFFFFF的方式表示, 对于rrggbb格式的颜色值可以用#rgb格式的简写表示.
+# 不够6位的颜色值按 rgb=rrggbb的方式,自动扩展成6位颜色值
+# 比如
+# FFFFFF = #FFF  #00000 = #000
 ZSH_HIGHLIGHT_STYLES[command]=fg=yellow,bold
-ZSH_HIGHLIGHT_STYLES[alias]=fg=111,bold
+# 左右两边同时开了个zsh，一个紫色 一个蓝色..
+ZSH_HIGHLIGHT_STYLES[alias]=fg=33,bold
+ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=green,underline
+ZSH_HIGHLIGHT_STYLES[global-alias]=fg=cyan
 ZSH_HIGHLIGHT_STYLES[path]=fg=110,underline,bold
 # ZSH_HIGHLIGHT_STYLES[assign]=111,bold 没变
 
@@ -25,18 +33,52 @@ ZSH_HIGHLIGHT_STYLES[path]=fg=110,underline,bold
 # ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=063
 # ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=009
 # ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=009
-# =================================syntax color definition====================================]]
+
+# ZSH_HIGHLIGHT_STYLES[default]:=none
+# ZSH_HIGHLIGHT_STYLES[unknown-token]:=fg=red,bold
+# ZSH_HIGHLIGHT_STYLES[reserved-word]:=fg=yellow
+# ZSH_HIGHLIGHT_STYLES[precommand]:=fg=green,underline
+# ZSH_HIGHLIGHT_STYLES[commandseparator]:=none
+# ZSH_HIGHLIGHT_STYLES[autodirectory]:=fg=green,underline
+# ZSH_HIGHLIGHT_STYLES[path]:=underline
+# ZSH_HIGHLIGHT_STYLES[path_pathseparator]:=
+# ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]:=
+# ZSH_HIGHLIGHT_STYLES[globbing]:=fg=blue
+# ZSH_HIGHLIGHT_STYLES[history-expansion]:=fg=blue
+# ZSH_HIGHLIGHT_STYLES[command-substitution]:=none
+# ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]:=fg=magenta
+# ZSH_HIGHLIGHT_STYLES[process-substitution]:=none
+# ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]:=fg=magenta
+# ZSH_HIGHLIGHT_STYLES[single-hyphen-option]:=none
+# ZSH_HIGHLIGHT_STYLES[double-hyphen-option]:=none
+# ZSH_HIGHLIGHT_STYLES[back-quoted-argument]:=none
+# ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]:=fg=magenta
+# ZSH_HIGHLIGHT_STYLES[single-quoted-argument]:=fg=yellow
+# ZSH_HIGHLIGHT_STYLES[double-quoted-argument]:=fg=yellow
+# ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]:=fg=yellow
+# ZSH_HIGHLIGHT_STYLES[rc-quote]:=fg=cyan
+# ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]:=fg=cyan
+# ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]:=fg=cyan
+# ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]:=fg=cyan
+# ZSH_HIGHLIGHT_STYLES[assign]:=none
+# ZSH_HIGHLIGHT_STYLES[redirection]:=fg=yellow
+# ZSH_HIGHLIGHT_STYLES[comment]:=fg=black,bold
+# ZSH_HIGHLIGHT_STYLES[named-fd]:=none
+# ZSH_HIGHLIGHT_STYLES[numeric-fd]:=none
+# ZSH_HIGHLIGHT_STYLES[arg0]:=fg=green
+# ===========================插件 zsh-syntax-highlighting的syntax color definition====================================]]
 
 
 # [[--------------------------------ls color-------------------------------------
 
+ # See man dircolors for the command, and man dir_colors for the configuration file syntax.
 LS_COLORS=''
-LS_COLORS=$LS_COLORS:'ex=0'          # Executable file
-LS_COLORS=$LS_COLORS:'no=0'           # Normal text       = Default foreground
-LS_COLORS=$LS_COLORS:'fi=47;30'           # Regular file
+LS_COLORS=$LS_COLORS:'ex=00'          # Executable file
+LS_COLORS=$LS_COLORS:'no=0'           # Normal text   
+LS_COLORS=$LS_COLORS:'fi=47;30'       # Regular file
+LS_COLORS=$LS_COLORS:'di=30'          # Directory     
 #不行
 #LS_COLORS=$LS_COLORS:'_*_=0'        # Plain/Text
-LS_COLORS=$LS_COLORS:'di=30'       # Directory         = Bold, Blue
 
 #stiky
 LS_COLORS=$LS_COLORS:'tw=34;4'
@@ -45,56 +87,45 @@ LS_COLORS=$LS_COLORS:'ow=34;4'
 
 LS_COLORS=$LS_COLORS:'ln=34;4'       # Symbolic link
 LS_COLORS=$LS_COLORS:'or=01;05;31'    # broken  link
-LS_COLORS=$LS_COLORS:'pi=34;4'          # Named pipe
-LS_COLORS=$LS_COLORS:'so=34;4'       # Socket
-LS_COLORS=$LS_COLORS:'do=34;4'       # DO
-LS_COLORS=$LS_COLORS:'bd=34;4'       # Block device
-LS_COLORS=$LS_COLORS:'cd=34;4'       # Character device
 
-LS_COLORS=$LS_COLORS:'*.md=30;47'     # Shell-Scripts
+LS_COLORS=$LS_COLORS:'*.md=30;47'    
 LS_COLORS=$LS_COLORS:'*.py=47;33'
-LS_COLORS=$LS_COLORS:'*.vim=34'       # Vim-"Scripts"
-LS_COLORS=$LS_COLORS:'*.or=34;47'       # original  用于临时放没改动的原文件
-LS_COLORS=$LS_COLORS:'*.json=36;47'       # original  用于临时放没改动的原文件
+LS_COLORS=$LS_COLORS:'*.vim=34'       
+LS_COLORS=$LS_COLORS:'*.json=36;47'   
 LS_COLORS=$LS_COLORS:'*.swp=00;44;37' # Swapfiles (Vim)
-LS_COLORS=$LS_COLORS:'*,v=5;34;93'    # Versioncontrols
+
 LS_COLORS=$LS_COLORS:'*.c=1;33'       # Sources
 LS_COLORS=$LS_COLORS:'*.C=1;33'       # Sources
 LS_COLORS=$LS_COLORS:'*.h=1;33'       # Sources
+
 LS_COLORS=$LS_COLORS:'*.jpg=1;32'     # Images
 LS_COLORS=$LS_COLORS:'*.jpeg=1;32'    # Images
 LS_COLORS=$LS_COLORS:'*.JPG=1;32'     # Images
 LS_COLORS=$LS_COLORS:'*.gif=1;32'     # Images
 LS_COLORS=$LS_COLORS:'*.png=1;32'     # Images
+
 LS_COLORS=$LS_COLORS:'*.tar=31'       # Archive
 LS_COLORS=$LS_COLORS:'*.tgz=1;31'       # Archive
 LS_COLORS=$LS_COLORS:'*.gz=1;31'        # Archive
 LS_COLORS=$LS_COLORS:'*.xz=1;31'        # Archive
 LS_COLORS=$LS_COLORS:'*.zip=31'       # Archive
 LS_COLORS=$LS_COLORS:'*.bz2=1;31'       # Archive
-LS_COLORS=$LS_COLORS:'*.jpeg=1;32'    # Images
-LS_COLORS=$LS_COLORS:'*.tar=31'       # Archive
-LS_COLORS=$LS_COLORS:'*.tgz=1;31'       # Archive
-LS_COLORS=$LS_COLORS:'*.gz=1;31'        # Archive
-LS_COLORS=$LS_COLORS:'*.xz=1;31'        # Archive
-LS_COLORS=$LS_COLORS:'*.zip=31'       # Archive
 LS_COLORS=$LS_COLORS:'*.bz2=1;31'       # Archive
+
 LS_COLORS=$LS_COLORS:'*.html=36'      # HTML
 LS_COLORS=$LS_COLORS:'*.htm=1;34'     # HTML
+
 LS_COLORS=$LS_COLORS:'*.txt=0'        # Plain/Text
-LS_COLORS=$LS_COLORS:'*.n=36'
 LS_COLORS=$LS_COLORS:'*.sh=32'     # Shell-Scripts
-LS_COLORS=$LS_COLORS:'*.csv=01'     # Shell-Scripts
+LS_COLORS=$LS_COLORS:'*.csv=01'     
+LS_COLORS=$LS_COLORS:'*.n=36'
 
 export LS_COLORS
 # --------------------------------ls color-------------------------------------]]
 
 
-function wf_use_function_as_block_comment_color () {
-“\e” :  escape sequence.
-“m”  :end of the command.
-
-00=none
+wf_use_function_as_block_comment_color () {
+00=none #和0一样？
 01=bold
 04=underscore
 05=blink
@@ -122,26 +153,14 @@ Background:
 46 - cyan
 47 - white
 
-NORMAL 00 # no color code at all
-FILE 00 # regular file: use no color at all
-RESET 0 # reset to "normal" color
-MULTIHARDLINK 00 # regular file with more than one link
-FIFO 40;33 # pipe
-SOCK 01;35 # socket
-DOOR 01;35 # door
-BLK 40;33;01 # block device driver
-CHR 40;33;01 # character device driver
-ORPHAN 40;31;01 # symlink to nonexistent file, or non-stat'able file ...
-MISSING 00 # ... and the files they point to
-SETUID 37;41 # file that is setuid (u+s)
-SETGID 30;43 # file that is setgid (g+s)
 CAPABILITY 30;41 # file with capability
-STICKY_OTHER_WRITABLE 30;42 # dir that is sticky and other-writable (+t,o+w)
 OTHER_WRITABLE 34;42 # dir that is other-writable (o+w) and not sticky
 STICKY 37;44 # dir with the sticky bit set (+t) and not other-writable
-# This is for files with execute permission:
-EXEC 01;32
 
+“\e” :  escape sequence.
+“m”  :end of the command. 记作mark吧
+
+\033[ 必须有。0是消除之前的设置 m或者M代表作用与文本，且在这里结束
 black   = '\033[0;30M'
 red     = '\033[0;31M'
 green   = '\033[0;32M'
@@ -154,20 +173,7 @@ white   = '\033[0;37M'
 ; 给上面的颜色加粗而已
 bright_black   = grey = '\033[1;30M'
 bright_red     = '\033[1;31M'
-bright_green   = '\033[1;32M'
-bright_yellow  = '\033[1;33M'
-bright_blue    = '\033[1;34M'
-bright_magenta = '\033[1;35M'
-bright_cyan    = '\033[1;36M'
-bright_white   = '\033[1;37M'
 
 black_background   = '\033[40M'
-red_background     = '\033[41M'
-green_background   = '\033[42M'
-yellow_background  = '\033[43M'
-blue_background    = '\033[44M'
-magenta_background = '\033[45M'
-cyan_background    = '\033[46M'
-white_background   = '\033[47M'
 
 }

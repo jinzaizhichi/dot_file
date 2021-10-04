@@ -7,3 +7,4 @@
 ~/dot_file/.zsh_history
 *.zsh_history
 *.bk*
+*tags
