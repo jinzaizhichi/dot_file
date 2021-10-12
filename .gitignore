@@ -23,8 +23,9 @@ __pycache__
 .config/SogouPY/*
 .config/Code
 .config/Code/*
-.config/dconf
+# .config/dconf/*
 .config/dconf/user
+.config/dconf/user/*
 
 # 输入法:
 .config/fcitx
@@ -36,8 +37,8 @@ __pycache__
 .config/gnome-session/*
 
 # 变成了submodul？加不加这两行，都一样
-# zplug
-# zplug/*
+zplug
+zplug/*
 
 .config/ptpython/history
 
