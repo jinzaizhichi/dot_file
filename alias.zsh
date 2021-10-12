@@ -1,5 +1,27 @@
-# 改了函数以后，子shell会以为没改。要先退出当前zsh，重开zsh
-# todo 函数名不要起一两个字，不然容易覆盖built-in ? 应该没事
+# # 敲`zsh 某.sh`时，这里的东西全都不起作用. 放心覆盖built-in命令.
+# alias r='~/.local/bin/tldr'  # pip安装的，比apt安装的显示好些 但不翻墙就有时连不上网。。。。。
+h(){
+    /usr/bin/tldr $1 
+    # todo https://zsh.sourceforge.io/Doc/Release/Expansion.html#Parameter-Expansion-Flags
+    # parameter expansion
+    VAR="$(/usr/bin/tldr $1)" # 赋值时千万别写空格！！
+    if [[ ${VAR} == *"No tldr entry for"* ]]
+    then
+        run-help $1
+    fi
+}
+# alias r=tldr_help
+# 覆盖了built-in的r:    Same as fc -e -      重复你敲的上一条命令
+# help zshbuiltins 查看内置命令
+
+
+# 改了函数以后，敲source ~/.zshrc, 不生效。要新开zsh
+
+# `env -i` 比“\”更强, 解决了2的缺点   https://stackoverflow.com/questions/6162903/why-do-backslashes-prevent-alias-expansion
+# 函数与别名：1 定义函数后， alias 原=函数名。好处：敲`\原` ，能使用原命令，坏处：`co 原` 后，要多敲`co 函数名`
+#            2 直接定义 my_func_ls(){ }      与上面相反
+
+
 alias cle='clear -x'
 alias pipc='pqi' # pip change
 alias q='tree -L 2 --filelimit=30 | bat'
@@ -53,7 +75,6 @@ alias -s zip=unzip_multi
 # Use [[]] : if you want conditional expressions not supported by `[]` and don't need to be portable.
 alias nls='export chpwd_functions=()'
 alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path '/proc' -prune -o -name "*$1*" -exec ~/.squashfs-root/AppRun {} + ; }; fv'
-alias h='help'
 # alias cd='export chpwd_functions=() ; builtin cd' #  加了这行，就算没敲cd，chpwd_functions也废掉了
 
 
@@ -230,6 +251,8 @@ md(){
     do
         if [ -d "${x}" ]; then
             echo "已存在:$x"
+            # mkdir 不会覆盖已有目录
+            # 只是想echo一下，提醒自己 尽量回忆起 之前为什么创建了目录
         else
             \mkdir -p "$x"
         fi
@@ -247,8 +270,7 @@ cl(){
 t() {
     the_time=$(date  +"%H时%M分-%m月%d日")
     #trash_bin1
-    #命令的结果 赋值给变量.shell的数据类型只有字符串
-    tb1=~/.t/${the_time}
+    tb1=~/.t/${the_time} # 命令的结果 赋值给变。.shell的数据类型只有字符串
     if [ -d ${tb1} ]; then                                  # [ your_code ]才对  [your_code]少了空格
         tb2=~/.t/${the_time}_2
         if [ -d "${tb2}" ]; then
@@ -595,9 +617,6 @@ alias pip='pip3'
 alias po=popd
 alias pu=pushd
 
-
-# alias r='~/.local/bin/tldr'  # pip安装的，比apt安装的显示好些 但不翻墙就有时连不上网。。。。。
-alias r='/usr/bin/tldr'
 
 # alias rake='noglob rake'
 alias rm='rm -Irv --preserve-root'

@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-import cv2 ; import numpy as np ; import json ; import sys; import os
+import cv2
+import numpy as np
+import json
+import sys
+import os
 import matplotlib.pyplot as plt
 
 def cv2p(wf_img):
@@ -61,7 +65,13 @@ def vpp(*args, end='\n'): #这里的end，到了vpp_single就叫leo—_end
         # m = re.search(r'\bvpp\s*\(\s*([A-Za-z_][A-Za-z0-9_]*)\s*\)', line)
     # if m:
         # print('||》', m.group(1), end=': ')
-
+    # todo  try this:
+    # To create a dynamic variable in Python, use a dictionary.
+    # name = 'number'
+    # value = 10
+    # variables = {name: value}
+    # print(variables['number'])
+    
     # args是一个tuple，vpp()时，args为空tuple，()
     if args  == ():
         print()

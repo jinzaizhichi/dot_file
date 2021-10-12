@@ -1,3 +1,8 @@
+# todo 有人说，这样可以避免不明alias干扰
+# unalias -a
+
+# 敲`zsh 某.sh`时，这里的东西全都不起作用. 放心覆盖built-in命令
+
 # export 了某个变量后，再从.zsrhc删除对应的代码，再开子zsh，该环境变量还在的哦，除非另写（覆盖）
 export PYTHONPATH=
 
@@ -181,6 +186,6 @@ if [ -z "$TMUX" ]; then
     echo $DISPLAY > ~/.t/display.txt
 fi
 
-function set_display(){
-    export DISPLAY=$(cat ~/.t/display.txt)
+dis_tmux(){
+    export DISPLAY=$(cat ~/.t/display.txt) # todo DISPLAY还是空白
 }

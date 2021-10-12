@@ -4,7 +4,8 @@ max-line-length = 120
 enable-extensions = L101,L102
 ; ignore = E128,E402,E722,W504
 ; // https://stackoverflow.com/questions/24271961/is-there-anything-bad-about-having-multiple-imports-on-one-line
-ignore = E121,E123,E126,E226,E24,E704,W503,W504,   E303,E402,E401,E202,E211,  E251,E225,E265,E201,E127,E501,E302,E262,E305, E231
+;  E / F / W codes do not mean error / failure / warning
+ignore = E121,E123,E126,E226,E24,E704,W503,W504, E303,E402,E401,E202,E211,  E251,E225,E265,E201, E127,E501,E302,E262,E305, E231, E124, E128, E127
 exclude=*.egg/*,build,dist
 
 # Configuration for flake8-copyright extension

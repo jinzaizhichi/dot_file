@@ -75,6 +75,9 @@ ZSH_HIGHLIGHT_STYLES[path]=fg=110,underline,bold
 LS_COLORS=''
 LS_COLORS=$LS_COLORS:'ex=00'          # Executable file
 LS_COLORS=$LS_COLORS:'no=0'           # Normal text   
+LS_COLORS=$LS_COLORS:'*.csv=00'     
+LS_COLORS=$LS_COLORS:'*.txt=0'        # Plain/Text
+
 LS_COLORS=$LS_COLORS:'fi=47;30'       # Regular file
 LS_COLORS=$LS_COLORS:'di=30'          # Directory     
 #不行
@@ -115,9 +118,7 @@ LS_COLORS=$LS_COLORS:'*.bz2=1;31'       # Archive
 LS_COLORS=$LS_COLORS:'*.html=36'      # HTML
 LS_COLORS=$LS_COLORS:'*.htm=1;34'     # HTML
 
-LS_COLORS=$LS_COLORS:'*.txt=0'        # Plain/Text
 LS_COLORS=$LS_COLORS:'*.sh=32'     # Shell-Scripts
-LS_COLORS=$LS_COLORS:'*.csv=01'     
 LS_COLORS=$LS_COLORS:'*.n=36'
 
 export LS_COLORS
