@@ -9,10 +9,12 @@ typeset -A ZSH_HIGHLIGHT_STYLES
 # 比如
 # FFFFFF = #FFF  #00000 = #000
 ZSH_HIGHLIGHT_STYLES[command]=fg=yellow,bold
+
 # 左右两边同时开了个zsh，一个紫色 一个蓝色..
-ZSH_HIGHLIGHT_STYLES[alias]=fg=33,bold
+ZSH_HIGHLIGHT_STYLES[alias]=fg=33,bold  # 33是黄色，但各终端看到的m 都是看到的是蓝色
 ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=green,underline
 ZSH_HIGHLIGHT_STYLES[global-alias]=fg=cyan
+
 ZSH_HIGHLIGHT_STYLES[path]=fg=110,underline,bold
 # ZSH_HIGHLIGHT_STYLES[assign]=111,bold 没变
 

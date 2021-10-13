@@ -19,12 +19,14 @@ h(){
 
 # `env -i` 比“\”更强, 解决了2的缺点   https://stackoverflow.com/questions/6162903/why-do-backslashes-prevent-alias-expansion
 # 函数与别名：1 定义函数后， alias 原=函数名。好处：敲`\原` ，能使用原命令，坏处：`co 原` 后，要多敲`co 函数名`
-#            2 直接定义 my_func_ls(){ }      与上面相反
+#            2 直接定义 my_func_ls(){ }      与上面相反. 【注意函数名别和built-in重复】
 
 
 alias cle='clear -x'
 alias pipc='pqi' # pip change
-alias q='tree -L 2 --filelimit=30 | bat'
+q(){
+    tree -L 2 --filelimit=50 $1 | bat
+}
 
 # alias git='LANG=en_GB git' # 不行
 
@@ -150,7 +152,7 @@ alias his='noglob history -i 1000 | bat'
 # 统计命令输入频率
 alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | head -n 30'
 
-ag_by_leo(){
+a(){
 echo "需要转义的字符：'#'等"
 echo "这里指定的类型不搜: '~/dot_file/ag_ignore_pattern/.ignore' "
 # cat ~/dot_file/ag_ignore_pattern/.ignore
@@ -166,11 +168,11 @@ nocorrect ag \
 --all-text \
 --max-count 3  \
 --path-to-ignore ~/dot_file/ag_ignore_pattern/.ignore \
---silent \
-"$*"
+--silent   \
+"$*"   
+# "$*" | bat  # # 不能保留颜色高亮
 }
 
-alias a='ag_by_leo'
 alias ac='_ack(){ nocorrect ack "$*";};_ack'
 
 #找到软链接的真实路径
@@ -210,10 +212,11 @@ lf(){
         | cut -c 14- \
         | sed 's/月  /月/' \
         | sed 's/月 /月_/' \
+        | bat
         # | ag ':'
         # | ag ':' --colour=always \
     tmp=$((`\ls -l | wc -l`-1))
-    echo "列出了所有：${tmp}"
+    echo "列了所有：${tmp}"
 }
 
 alias l=leo_func_ls
@@ -548,7 +551,7 @@ alias f=find_a_file
 alias f/='f_2(){ find / -path '/proc' -prune -o -path '/proc' -prune -o  -name "*$1*" | grep $1;}; f_2'
 alias f12='f_wf(){ find "$1" -name "*$2*" | grep $1; }; f_wf'
 
-alias th='f_touch(){ touch $1.n; };f_touch '
+th(){ touch $1.n }
 # noglob
 # Filename generation (globbing) is not performed on any of the words.
 # 又叫 filename generation 或者 globbing，对特殊字符 *、?、[ 和 ]进行处理，试着用对应目录下存在文件的文件名来进行补全或匹配，如果匹配失败，不会进行扩展。
