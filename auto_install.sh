@@ -75,10 +75,8 @@ yes | (ai rename)
 # chmod u+x nvim.appimage
 # ./nvim.appimage --appimage-extract
 
-#已经存在目录的话,会啥都不干
-#目录~/.d 专门放各机器都需要且体积大的工具
 rm -rf ~/.SpaceVim.d ~/.Spacevim
-mkdir ~/.d
+
 cp ./squashfs-root ~/.squashfs-root
 
 yes |(ln -s  ~/dot_file/vimrc ~/.config/nvim/init.vim)

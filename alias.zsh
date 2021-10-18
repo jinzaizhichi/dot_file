@@ -391,9 +391,8 @@ alias oc='_oc(){ g++ -g $* -o ${1%.*} `pkg-config --cflags --libs opencv` ; ./${
 # oc demo.cpp draw.h draw.cpp
 # ./demo
 
-alias vi='~/.squashfs-root/AppRun -u ~/dot_file/.config/nvim/init.vim'
-# alias vi='~/.squashfs-root/AppRun'
-alias vim='~/.squashfs-root/AppRun -u ~/dot_file/.config/nvim/init.vim'
+alias vi='~/dot_file/nvim.appimage -u ~/dot_file/.config/nvim/init.vim'
+alias vim='~/dot_file/nvim.appimage -u ~/dot_file/.config/nvim/init.vim'
 
 
 
