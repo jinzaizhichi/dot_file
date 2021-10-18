@@ -57,7 +57,7 @@ yes | (add-apt-repository ppa:ultradvorka/ppa && apt -qq update)
 yes | (apt install sudo)
 alias ai='\sudo apt install -y -qq'
 
-yes | (ai man cowsay fortune)
+yes | (ai man cowsay fortune bat)
 yes | (ai aptitude ;aptitude update -q ; ai zsh; ai progress; ai libevent-dev)
 yes | (ai htop ;ai ack ;ai axel; ai intltool; ai tmux ; ai fontconfig; ai xdg-utils)
 yes | (ai exiftool htop tree tzdata locales language-pack-zh-hans language-pack-zh-hans-base)
@@ -154,17 +154,16 @@ apt install python3.9-distutils
 # alias p9='/usr/bin/python3.9'
 
 yes | (ai python3-pip)
+\apt autoremove -y -q
 
-yes | (unset ALL_PROXY ; pip install --upgrade pip ; pip install --upgrade pip ; pip install pysocks)
-
-
+yes | (unset ALL_PROXY ; pip install --upgrade pip  ; pip install pysocks)
 pip install -r pip_useful_tool.txt
-# 不删会报错
-pip uninstall pynvim
+
+pip uninstall pynvim  # 不删会报错
 
 echo '如果有网络问题，这2行要在 设置PROXY后，手动敲: \n
 pip install -r pip_useful_tool.txt  \n
 pip uninstall pynvim  \n'
 
-# git config --global credential.helper store
+git config --global credential.helper store
 zsh

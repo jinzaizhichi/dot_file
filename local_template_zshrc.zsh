@@ -4,6 +4,7 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64/"
 export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/cuda-10.2/lib64"
 
 
+
 source ~/dot_file/.zshrc
 # 没有x11时, 不启用复制功能
 alias w='_w(){ less $1 ;};_w'
@@ -29,3 +30,9 @@ export PATH
 # export NUMEXPR_MAX_THREADS=320 # 80 cpu cores x 4threds
 
 export PYTHONPATH=
+
+if [[ `cat /etc/issue` =~ "Ubuntu 20" ]]  # regex
+then
+    alias bat=batcat
+
+fi
