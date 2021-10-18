@@ -1,10 +1,7 @@
 mkdir -p /etc/apt/
-# ubuntu 18的源
-echo "using apt source of ubuntu 18=================================================================="
-# mv /etc/apt/sources.list /etc/apt/sources.list.origin_useless
 
+mv /etc/apt/sources.list /etc/apt/sources.list.origin_useless
 string=`cat /etc/issue`
-
 if [[ $string =~ "Ubuntu 18" ]]  # regex
 then
 	cp -rf sources_china_ubuntu18.py /etc/apt/sources.list

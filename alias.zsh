@@ -1,7 +1,7 @@
 # # 敲`zsh 某.sh`时，这里的东西全都不起作用. 放心覆盖built-in命令.
 # alias r='~/.local/bin/tldr'  # pip安装的，比apt安装的显示好些 但不翻墙就有时连不上网。。。。。
 h(){
-    /usr/bin/tldr $1 
+    /usr/bin/tldr $1
     # todo https://zsh.sourceforge.io/Doc/Release/Expansion.html#Parameter-Expansion-Flags
     # parameter expansion
     VAR="$(/usr/bin/tldr $1)" # 赋值时千万别写空格！！
@@ -169,7 +169,7 @@ nocorrect ag \
 --max-count 3  \
 --path-to-ignore ~/dot_file/ag_ignore_pattern/.ignore \
 --silent   \
-"$*"   
+"$*"
 # "$*" | bat  # # 不能保留颜色高亮
 }
 
@@ -426,16 +426,17 @@ alias dk='wf_docker(){ docker start $1 ; docker exec -it $1 zsh; docker exec -it
 # p
 # x
 
+alias w=bat
+
+# 用了这个不能自动补全
 # Localhost: server that is used on your own computer
-w(){
-if [[ -z $DISPLAY ]];then
-# -z: 看是否empty
-    bat $1
-else
-    bat $1
-    cat $1 | xsel -ib
-fi
-}
+# w(){
+# if [[ -z $DISPLAY ]];then     # -z: 看是否empty
+#    bat $1
+#    cat $1 | xsel -ib
+
+#fi
+# }
 
 # 没有x11时, 不启用复制功能
 
