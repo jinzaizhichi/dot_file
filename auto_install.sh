@@ -57,6 +57,7 @@ yes | (add-apt-repository ppa:ultradvorka/ppa && apt -qq update)
 yes | (apt install sudo)
 alias ai='\sudo apt install -y -qq'
 
+yes | (ai man cowsay fortune)
 yes | (ai aptitude ;aptitude update -q ; ai zsh; ai progress; ai libevent-dev)
 yes | (ai htop ;ai ack ;ai axel; ai intltool; ai tmux ; ai fontconfig; ai xdg-utils)
 yes | (ai exiftool htop tree tzdata locales language-pack-zh-hans language-pack-zh-hans-base)
@@ -152,9 +153,9 @@ apt install python3.9-distutils
 # 考虑这个：
 # alias p9='/usr/bin/python3.9'
 
-yes | (ai python3.9-pip)
+yes | (ai python3-pip)
 
-yes | (unset ALL_PROXY ; pip install --upgrade pip ; pip3 install --upgrade pip ; pip3 install pysocks)
+yes | (unset ALL_PROXY ; pip install --upgrade pip ; pip install --upgrade pip ; pip install pysocks)
 
 
 pip install -r pip_useful_tool.txt

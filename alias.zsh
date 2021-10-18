@@ -1,3 +1,4 @@
+alias bat=batcat
 # # 敲`zsh 某.sh`时，这里的东西全都不起作用. 放心覆盖built-in命令.
 # alias r='~/.local/bin/tldr'  # pip安装的，比apt安装的显示好些 但不翻墙就有时连不上网。。。。。
 h(){
