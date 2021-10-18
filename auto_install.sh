@@ -155,11 +155,15 @@ apt install python3.9-distutils
 yes | (ai python3.9-pip)
 
 yes | (unset ALL_PROXY ; pip install --upgrade pip ; pip3 install --upgrade pip ; pip3 install pysocks)
-echo '如果有网络问题，最后这2行要在 设置PROXY后，手动敲'
+
+
 pip install -r pip_useful_tool.txt
 # 不删会报错
 pip uninstall pynvim
 
+echo '如果有网络问题，这2行要在 设置PROXY后，手动敲: \n
+pip install -r pip_useful_tool.txt  \n
+pip uninstall pynvim  \n'
 
 # git config --global credential.helper store
 zsh
