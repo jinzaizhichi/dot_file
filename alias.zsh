@@ -1,8 +1,3 @@
-if [[ `cat /etc/issue` =~ "Ubuntu 20" ]]  # regex
-then
-    alias bat=batcat
-
-fi
 
 # # 敲`zsh 某.sh`时，这里的东西全都不起作用. 放心覆盖built-in命令.
 # alias r='~/.local/bin/tldr'  # pip安装的，比apt安装的显示好些 但不翻墙就有时连不上网。。。。。
@@ -413,8 +408,7 @@ alias scp='scp -r'
 # 最近15个文件
 # printf 命令 指定格式
 
-# zsh启动不了时, 并不会启动bash, 搁置
-alias dk='wf_docker(){ docker start $1 ; docker exec -it $1 zsh; docker exec -it $1 bash}; wf_docker'
+
 #都说别改动或者覆盖linux的builtin!
 # 最规范的语法 alias custom-alias='command'  command 里面没空格就不用引号
 # {后一定要有空格
@@ -477,8 +471,6 @@ alias scp='noglob scp -r'
 
 
 
-alias dkr='docker'
-alias dk='wf_docker(){ docker start $1 ; docker exec -it $1 zsh; }; wf_docker'
 
 ##tr 更合适 但它是translate命令
 ##q for query查询
@@ -544,6 +536,16 @@ alias du='du -h'
 #e for exit 离开代理
 alias e='unset ALL_PROXY'
 
+alias dkr='docker'
+alias dkrps='docker ps -a --format "table {{.Names}} 我是分隔符 {{.Image}}  "'
+# zsh启动不了时, 并不会启动bash, 搁置
+
+dk(){
+docker start $1 ; docker exec -it $1 zsh
+# docker exec -it $1 zsh 在退出时不返回1  ?
+#  这样会一直卡着: echo `docker exec -it $1 zsh`
+}
+
 find_a_file(){
     find . \
     -path '/d/docker' -prune -o  \
@@ -573,7 +575,6 @@ th(){ touch $1.n }
 #$ echo l*
 #l*
 
-alias dkrps='docker ps -a --format "table {{.Names}} 我是分隔符 {{.Image}}  "'
 alias fsh-alias=fast-theme
 alias ftp='noglob ftp'
 alias gc='echo "using proxy>>> ${ALL_PROXY}" ; dl ; git clone'  # dl for  dai li

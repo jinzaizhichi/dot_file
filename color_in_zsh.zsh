@@ -2,27 +2,32 @@
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 typeset -A ZSH_HIGHLIGHT_STYLES
 
-# ASCII
+
 # 这里不是css的方式：
 # CSS 里颜色值可以用#FFFFFF的方式表示, 对于rrggbb格式的颜色值可以用#rgb格式的简写表示.
 # 不够6位的颜色值按 rgb=rrggbb的方式,自动扩展成6位颜色值
 # 比如
 # FFFFFF = #FFF  #00000 = #000
-ZSH_HIGHLIGHT_STYLES[command]=fg=yellow,bold
+
+ZSH_HIGHLIGHT_STYLES[command]=fg=green,bold
 
 # 左右两边同时开了个zsh，一个紫色 一个蓝色..
-ZSH_HIGHLIGHT_STYLES[alias]=fg=33,bold  # 33是黄色，但各终端看到的m 都是看到的是蓝色
-ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=green,underline
+ZSH_HIGHLIGHT_STYLES[alias]=fg=33,bold  # 蓝色  # 这里用的是xterm-256的颜色编号？
+ZSH_HIGHLIGHT_STYLES[function]=fg=33,bold
+ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=33,underline
 ZSH_HIGHLIGHT_STYLES[global-alias]=fg=cyan
 
 ZSH_HIGHLIGHT_STYLES[path]=fg=110,underline,bold
+# ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold  # 不能识别的东西
+ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red # 不能识别的东西
+ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=009,standout
+# ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]=fg=magenta
+# ZSH_HIGHLIGHT_STYLES[command-substitution]=magenta
+
 # ZSH_HIGHLIGHT_STYLES[assign]=111,bold 没变
 
 # ZSH_HIGHLIGHT_STYLES[default]=none
-# ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=009
-# ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=009,standout
 # ZSH_HIGHLIGHT_STYLES[builtin]=fg=cyan,bold
-# ZSH_HIGHLIGHT_STYLES[function]=fg=cyan,bold
 # ZSH_HIGHLIGHT_STYLES[precommand]=fg=white,underline
 # ZSH_HIGHLIGHT_STYLES[commandseparator]=none
 # ZSH_HIGHLIGHT_STYLES[hashed-command]=fg=009
@@ -36,10 +41,7 @@ ZSH_HIGHLIGHT_STYLES[path]=fg=110,underline,bold
 # ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=009
 # ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=009
 
-# ZSH_HIGHLIGHT_STYLES[default]:=none
-# ZSH_HIGHLIGHT_STYLES[unknown-token]:=fg=red,bold
-# ZSH_HIGHLIGHT_STYLES[reserved-word]:=fg=yellow
-# ZSH_HIGHLIGHT_STYLES[precommand]:=fg=green,underline
+# ZSH_HIGHLIGHT_STYLES[precommand]=fg=green,underline
 # ZSH_HIGHLIGHT_STYLES[commandseparator]:=none
 # ZSH_HIGHLIGHT_STYLES[autodirectory]:=fg=green,underline
 # ZSH_HIGHLIGHT_STYLES[path]:=underline
@@ -47,8 +49,6 @@ ZSH_HIGHLIGHT_STYLES[path]=fg=110,underline,bold
 # ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]:=
 # ZSH_HIGHLIGHT_STYLES[globbing]:=fg=blue
 # ZSH_HIGHLIGHT_STYLES[history-expansion]:=fg=blue
-# ZSH_HIGHLIGHT_STYLES[command-substitution]:=none
-# ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]:=fg=magenta
 # ZSH_HIGHLIGHT_STYLES[process-substitution]:=none
 # ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]:=fg=magenta
 # ZSH_HIGHLIGHT_STYLES[single-hyphen-option]:=none
@@ -76,12 +76,12 @@ ZSH_HIGHLIGHT_STYLES[path]=fg=110,underline,bold
  # See man dircolors for the command, and man dir_colors for the configuration file syntax.
 LS_COLORS=''
 LS_COLORS=$LS_COLORS:'ex=00'          # Executable file
-LS_COLORS=$LS_COLORS:'no=0'           # Normal text   
-LS_COLORS=$LS_COLORS:'*.csv=00'     
+LS_COLORS=$LS_COLORS:'no=0'           # Normal text
+LS_COLORS=$LS_COLORS:'*.csv=00'
 LS_COLORS=$LS_COLORS:'*.txt=0'        # Plain/Text
 
 LS_COLORS=$LS_COLORS:'fi=47;30'       # Regular file
-LS_COLORS=$LS_COLORS:'di=30'          # Directory     
+LS_COLORS=$LS_COLORS:'di=30'          # Directory
 #不行
 #LS_COLORS=$LS_COLORS:'_*_=0'        # Plain/Text
 
@@ -93,10 +93,10 @@ LS_COLORS=$LS_COLORS:'ow=34;4'
 LS_COLORS=$LS_COLORS:'ln=34;4'       # Symbolic link
 LS_COLORS=$LS_COLORS:'or=01;05;31'    # broken  link
 
-LS_COLORS=$LS_COLORS:'*.md=30;47'    
+LS_COLORS=$LS_COLORS:'*.md=30;47'
 LS_COLORS=$LS_COLORS:'*.py=47;33'
-LS_COLORS=$LS_COLORS:'*.vim=34'       
-LS_COLORS=$LS_COLORS:'*.json=36;47'   
+LS_COLORS=$LS_COLORS:'*.vim=34'
+LS_COLORS=$LS_COLORS:'*.json=36;47'
 LS_COLORS=$LS_COLORS:'*.swp=00;44;37' # Swapfiles (Vim)
 
 LS_COLORS=$LS_COLORS:'*.c=1;33'       # Sources

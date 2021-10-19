@@ -30,9 +30,3 @@ export PATH
 # export NUMEXPR_MAX_THREADS=320 # 80 cpu cores x 4threds
 
 export PYTHONPATH=
-
-if [[ `cat /etc/issue` =~ "Ubuntu 20" ]]  # regex
-then
-    alias bat=batcat
-
-fi
