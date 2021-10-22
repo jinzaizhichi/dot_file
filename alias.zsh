@@ -340,14 +340,19 @@ alias jn='jupyter notebook'
 alias ci='conda install -y'
 alias snp='~/dot_file/wf_snippet.py'
 alias sy='cd ~/dot_file ; git pull ; git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
-alias tmux='$HOME/dot_file/tmux3_1_b.AppImage -L wfwfwf'
+# Sometimes it is convenient to create separate tmux servers, perhaps to ensure an
+# important process is completely isolated or to test a tmux configuration.
+# This can be done by using the -L flag which creates a socket in /tmp but with a name other than default
+# S socket-path:   Specify a full alternative path to the server socket.  If -S is specified, the default socket directory is not
+                   # used and any -L flag is ignored
+alias tmux='\tmux -S /tmp/leo_tmux_socket_path -f ~/dot_file/tmux.conf'
 
 tm() {
     if [ "$1" != "" ] # or better, if [ -n "$1" ]
     then
-        tmux -f ~/dot_file/tmux.conf new -s wf_$1 || tmux attach -t wf_$1  -d
+        tmux  new -s wf_$1 || tmux attach -t wf_$1  -d
     else
-        tmux -f ~/dot_file/tmux.conf new -s wf_0 || tmux attach -t wf_0 -d
+        tmux  new -s wf_0 || tmux attach -t wf_0 -d
     fi
 }
 
