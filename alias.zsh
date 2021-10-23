@@ -315,9 +315,6 @@ alias gi='gpustat  --show-user --no-header --show-pid'
 alias giw='gi --your-name wf'
 alias giwf='gi --your-name wf'
 
-# alias g="gpu | cut -d' ' -f1,8- | cut -d'|' -f2 | cut -d'/' -f1"
-alias gitp='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
-alias gip='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
 alias au='apt update'
 alias nv='nvidia-smi'
 alias pid='ps -aux |grep -v grep|grep'
@@ -340,6 +337,8 @@ alias jn='jupyter notebook'
 alias ci='conda install -y'
 alias snp='~/dot_file/wf_snippet.py'
 
+# alias gitp='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
+# alias gip='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
 sy(){
     cd ~/dot_file 
     git pull 
