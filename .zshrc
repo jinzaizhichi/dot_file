@@ -95,9 +95,10 @@ zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
 # 避免冲突，顺序： zsh-autosuggestions > zsh-syntax-highlighting > zsh-vim-mode
 zplug "zsh-users/zsh-completions"
+
 zplug "zsh-users/zsh-autosuggestions"
 ZSH_AUTOSUGGEST_USE_ASYNC=1
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bg=cyan,bold,underline"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#888888,bg=bold"
 
 zplug "rupa/z", use:z.sh # 这样不行： zplug "rupa/z", as:plugin, use:"*.sh"
 
