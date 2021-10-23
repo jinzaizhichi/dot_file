@@ -58,6 +58,8 @@ yes | (apt install sudo)
 alias ai='\sudo apt install -y -qq'
 
 yes | (ai man cowsay fortune bat)
+ln -s /usr/bin/batcat /usr/local/bin/bat
+
 yes | (ai aptitude ;aptitude update -q ; ai zsh; ai progress; ai libevent-dev)
 yes | (ai htop ;ai ack ;ai axel; ai intltool; ai tmux ; ai fontconfig; ai xdg-utils)
 yes | (ai exiftool htop tree tzdata locales language-pack-zh-hans language-pack-zh-hans-base)
