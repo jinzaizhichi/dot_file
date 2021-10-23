@@ -339,7 +339,16 @@ alias bd='code ~/.zshrc ; zsh'
 alias jn='jupyter notebook'
 alias ci='conda install -y'
 alias snp='~/dot_file/wf_snippet.py'
-alias sy='cd ~/dot_file ; git pull ; git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
+
+sy(){
+    cd ~/dot_file 
+    git pull 
+    git add --verbose .
+    git commit -m "$1_by_leo" 
+    git push 
+    cd - 
+}
+
 # Sometimes it is convenient to create separate tmux servers, perhaps to ensure an
 # important process is completely isolated or to test a tmux configuration.
 # This can be done by using the -L flag which creates a socket in /tmp but with a name other than default
