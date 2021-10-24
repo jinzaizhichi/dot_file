@@ -691,27 +691,29 @@ alias -s html=bat
 alias -s yaml=bat
 
 
-alias -s cpp=code
-alias -s py=code
-alias -s toml=code
-alias -s vim=code
-alias -s zsh=code
-alias -s conf=code
-alias -s m=code
-alias -s cfg=code
-
-
 if [[ -n "$TMUX" ]];
 then
+    alias -s py=vim 
+
     alias code=vim
     alias -s cpp=vim
-    alias -s py=vim
     alias -s toml=vim
     alias -s vim=vim
     alias -s zsh=vim
     alias -s conf=vim
     alias -s m=vim
     alias -s cfg=vim
+else
+    alias -s py=code 
+    # alias -s py=code  # 为了能让python被zsh自动补全
+
+    alias -s cpp=code
+    alias -s toml=code
+    alias -s vim=code
+    alias -s zsh=code
+    alias -s conf=code
+    alias -s m=code
+    alias -s cfg=code
 fi
 
 alias ai='apt -q install'
