@@ -57,7 +57,7 @@ yes | (add-apt-repository ppa:ultradvorka/ppa && apt -qq update)
 yes | (apt install sudo)
 alias ai='\sudo apt install -y -qq'
 
-yes | (ai man cowsay fortune bat)
+yes | (ai man  bat)
 ln -s /usr/bin/batcat /usr/local/bin/bat
 
 yes | (ai aptitude ;aptitude update -q ; ai zsh; ai progress; ai libevent-dev)
@@ -147,6 +147,15 @@ sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update
 sudo apt install python3.9
 apt install python3.9-distutils
+
+# `没跑过`
+echo "这些没跑过"
+sudo apt-get install fortune cowsay
+sudo add-apt-repository --yes ppa:vincent-c/ponysay
+sudo apt-get update
+sudo apt-get install ponysay
+sudo snap install ponysay
+echo "这些没跑过-----------------------------end"
 
 # 别改系统默认python啊，不然apt都会出问题
 # sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
