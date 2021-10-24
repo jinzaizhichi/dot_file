@@ -259,8 +259,9 @@ nnoremap gj j
 
 noremap H ^
 noremap L $
+
 noremap K r<CR><UP>
-"nnoremap J G
+nnoremap J Ji <Esc>
 
 
 
