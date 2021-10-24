@@ -93,10 +93,10 @@ zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
 # zplug "modules/prompt", from:prezto
 
-# 避免冲突，顺序： zsh-autosuggestions > zsh-syntax-highlighting > zsh-vim-mode
 zplug "zsh-users/zsh-completions"
 
-zplug "zsh-users/zsh-autosuggestions"
+# 避免冲突，顺序： zsh-autosuggestions > zsh-syntax-highlighting > zsh-vim-mode
+zplug "zsh-users/zsh-autosuggestions"  # 弹出之前敲过的命令
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#888888,bg=bold"
 
@@ -105,7 +105,7 @@ zplug "rupa/z", use:z.sh # 这样不行： zplug "rupa/z", as:plugin, use:"*.sh"
 # 下面这个插件，must be loaded after:
 # 1. executing compinit command (让defer>= 2 )
 # 2. sourcing other plugins
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-syntax-highlighting", defer:2  # 对命令行中的目录 可执行文件等 进行语法高亮
 
 # zplug "softmoth/zsh-vim-mode"
 # zplug "jeffreytse/zsh-vi-mode"  # 有奇怪错误，提issue很繁琐，不用了。自己配吧。
@@ -127,11 +127,13 @@ zplug load     # source plugins and add commands to $PATH
 # ==================================zsh插件管理：zplug=================================]]
 
 
-source $HOME/dot_file/completion.zsh
-source $HOME/dot_file/history.zsh
-source $HOME/dot_file/color_in_less.zsh
-source $HOME/dot_file/color_in_zsh.zsh
+source $HOME/dot_file/color_highlight_style.zsh
+source $HOME/dot_file/color_completion_of敲tab.zsh  #  不只是颜色, 但为了想改颜色时容易找，这么命名。
+source $HOME/dot_file/color_ls.zsh
+source $HOME/dot_file/color_less.zsh
+
 source $HOME/dot_file/bindkey.zsh
+source $HOME/dot_file/history.zsh
 
 source $HOME/dot_file/alias.zsh   # 里面有：chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 autoload -Uz chpwd_recent_dirs  cdr add-zsh-hook  # -U: suppress alias expansion for functions

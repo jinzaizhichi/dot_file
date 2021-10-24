@@ -1,4 +1,4 @@
-# [[===========================插件 zsh-syntax-highlighting的syntax color definition====================================
+# [[===========================插件 zsh-syntax-highlighting的syntax color definition====================================begin
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 typeset -A ZSH_HIGHLIGHT_STYLES
 
@@ -9,7 +9,7 @@ typeset -A ZSH_HIGHLIGHT_STYLES
 # 比如
 # FFFFFF = #FFF  #00000 = #000
 
-ZSH_HIGHLIGHT_STYLES[command]=fg=green,bold
+ZSH_HIGHLIGHT_STYLES[command]=fg=green
 
 # 左右两边同时开了个zsh，一个紫色 一个蓝色..
 ZSH_HIGHLIGHT_STYLES[alias]=fg=33,bold  # 蓝色  # 这里用的是xterm-256的颜色编号？
@@ -18,9 +18,8 @@ ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=33,underline
 ZSH_HIGHLIGHT_STYLES[global-alias]=fg=cyan
 
 ZSH_HIGHLIGHT_STYLES[path]=fg=110,underline,bold
-# ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold  # 不能识别的东西
 ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red # 不能识别的东西
-ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=009,standout
+ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=009,standout  #  比如敲export
 # ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]=fg=magenta
 # ZSH_HIGHLIGHT_STYLES[command-substitution]=magenta
 
@@ -69,4 +68,3 @@ ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=009,standout
 # ZSH_HIGHLIGHT_STYLES[numeric-fd]:=none
 # ZSH_HIGHLIGHT_STYLES[arg0]:=fg=green
 # ===========================插件 zsh-syntax-highlighting的syntax color definition====================================]]
-
