@@ -111,8 +111,8 @@ zplug "rupa/z", use:z.sh # 这样不行： zplug "rupa/z", as:plugin, use:"*.sh"
 # 2. sourcing other plugins
 zplug "zsh-users/zsh-syntax-highlighting", defer:2  # 对命令行中的目录 可执行文件等 进行语法高亮
 
-zplug "softmoth/zsh-vim-mode"
 # zplug "jeffreytse/zsh-vi-mode"  # 有奇怪错误，提issue很繁琐，不用了。自己配吧。
+zplug "softmoth/zsh-vim-mode"
 # zplug "hchbaw/zce.zsh"
 
 
