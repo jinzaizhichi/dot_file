@@ -578,10 +578,14 @@ let g:ackprg = 'ag --vimgrep'
 set cmdheight=2
 set fdm=indent
 
-
+" set termguicolors   " Nvim emits true (24-bit) colours in the terminal, if 'termguicolors' is set.
 
 set cursorline
+hi CursorLine cterm=NONE ctermbg=NONE
+" hi Cursor cterm=inverse
 
+" For terminal Vim, with colors, we're most interested in the cterm
+" term=reverse is for B&W terminal, the gui ones are primarily for gvim.
 
 
 
@@ -962,14 +966,14 @@ hi! link ShowMarksHLl DiffAdd
 hi! link ShowMarksHLu DiffChange
 
 " 防止错误整行标红 导致看不清
-highlight clear SpellBad
-highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
-highlight clear SpellCap
-highlight SpellCap term=underline cterm=underline
-highlight clear SpellRare
-highlight SpellRare term=underline cterm=underline
-highlight clear SpellLocal
-highlight SpellLocal term=underline cterm=underline
+" highlight clear SpellBad
+" highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
+" highlight clear SpellCap
+" highlight SpellCap term=underline cterm=underline
+" highlight clear SpellRare
+" highlight SpellRare term=underline cterm=underline
+" highlight clear SpellLocal
+" highlight SpellLocal term=underline cterm=underline
 
 
 " 放前面会被某些内容覆盖掉
