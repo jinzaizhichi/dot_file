@@ -743,6 +743,8 @@ set matchtime=5
 " E384: search hit TOP without match for: set
 " E385: search hit BOTTOM without match for: set
 
+" 要在设定颜色主题后面，覆盖颜色主题里面的设置
+highlight  Search cterm=NONE ctermfg=white ctermbg=gray
 set hlsearch " 高亮search命中的文本
 set incsearch " 增量搜索模式,随着键入即时搜索
 set ignorecase " 搜索时忽略大小写 , 但,
@@ -959,7 +961,7 @@ hi! link SignColumn     LineNr
 hi! link ShowMarksHLl DiffAdd
 hi! link ShowMarksHLu DiffChange
 
-" 防止错误整行标红导致看不清
+" 防止错误整行标红 导致看不清
 highlight clear SpellBad
 highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
 highlight clear SpellCap
