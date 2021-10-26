@@ -1,5 +1,11 @@
 
-# # 敲`zsh 某.sh`时，这里的东西全都不起作用. 放心覆盖built-in命令.
+# 失败：
+# https://stackoverflow.com/questions/58225759/how-do-i-copy-and-paste-bash-without-dollar-signs
+# ud() { . <( sed 's/^\$ //' ); }
+# undollar() { . <( sed 's/^\$ //' ); }
+
+
+# # 敲`zsh 某.sh`时，这里的东西全都不起作用. 覆盖built-in命令也不怕翻车
 # alias r='~/.local/bin/tldr'  # pip安装的，比apt安装的显示好些 但不翻墙就有时连不上网。。。。。
 h(){
     /usr/bin/tldr $1
