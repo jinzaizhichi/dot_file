@@ -10,6 +10,8 @@ neovim
 # 加速库
 numba
 
+tensorboard
+
 pudb
 
 # 美化
