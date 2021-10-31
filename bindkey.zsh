@@ -1,24 +1,36 @@
 bindkey "\033[1~" beginning-of-line # HOME键
 bindkey "\033[4~" end-of-line # END
 
-# A key sequence typed by the user can be turned into a command name for use in user-defined widgets with the read-command widget
+# A key sequence typed by the user can be turned into a command name 
+
 # bindkey [ options ] -s in-string out-string
 bindkey -s "\C-o" "cle \C-j"
+
+
 # t for try
 # bindkey -s "\C-t" "run_l \C-j" 不知道是啥
+
 # vi mode 出问题来这里
 
-# todo
 # alt键：\e
-bindkey -s '\ee' backward-word
-bindkey '\eh' backward-word
-bindkey '\el' forward-word
+
+# ctrl作为前缀：
+# 1. `\C-x',
+# 2.  `^x'
+# `-m' option to bindkey tells zsh that wherever it binds an escape sequence like `\eb', itshould also bind the corresponding meta sequence like `\M-b'.
+# 不加-m的话：you can rebind them separately. and if you want both sequences to be bound to a new command, you have to bind them both explicitly.
+
+
+# ctrl p/n  和 上下箭头 只能找到以特定内容开头的历史命令，这个可以所有？
 bindkey '\ej' down-line-or-history
 bindkey '\ek' up-line-or-history
 #可以换成别的功能
 bindkey '\eJ' beginning-of-line
 bindkey '\eK' end-of-line
 # bindkey '\eo' end-of-line
+bindkey '\ee' backward-word
+bindkey '\eh' backward-word
+bindkey '\el' forward-word
 
 bindkey -s '\eu' '..\n' # u for up
 bindkey -s '\eo' 'echo "待用" \n'

@@ -1,3 +1,4 @@
+set -x
 mkdir -p /etc/apt/
 
 mv /etc/apt/sources.list /etc/apt/sources.list.origin_useless
@@ -21,9 +22,7 @@ echo  'ALL_PROXY is:  -------------------end'
 mv ~/.pip  ~/.pip_wf_bk
 ln -s ~/dot_file/.pip/ ~/
 
-
-set -x
-ln -s ~/d/dot_file ~/
+# ln -s ~/d/dot_file ~/
 
 
 cat git_url.txt>>/etc/hosts
@@ -49,7 +48,6 @@ yes | (apt update ; apt install  nscd )
 ln -s ~/dot_file/.condarc ~/
 
 [[ -d /d ]] && ln -s /d ~/d
-[[ -d /opt/data/private/anaconda3 ]] && ln -s /opt/data/private/anaconda3 ~/
 
 yes | unminimize
 yes | (apt install software-properties-common)
@@ -83,7 +81,6 @@ rm -rf ~/.SpaceVim.d ~/.Spacevim
 
 cp ./squashfs-root ~/.squashfs-root
 
-yes |(ln -s  ~/dot_file/vimrc ~/.config/nvim/init.vim)
 curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
 	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
