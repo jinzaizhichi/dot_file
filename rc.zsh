@@ -4,7 +4,6 @@
 # 敲`zsh 某.sh`时，这里的东西全都不起作用. 放心覆盖built-in命令
 
 # export 了某个变量后，再从.zsrhc删除对应的代码，再开子zsh，该环境变量还在的哦，除非另写（覆盖）
-export PYTHONPATH=
 
 export PTPYTHON_CONFIG_HOME=$HOME/dot_file/.config/ptpython
 export PTIPYTHON_CONFIG_HOME=$HOME/dot_file/.config/ptpython # ptipython
@@ -96,6 +95,8 @@ export ZPLUG_LOADFILE=$HOME/dot_file/zplug/zplug_loadfile.sh
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
 # zplug "modules/prompt", from:prezto
+
+zplug "srijanshetty/zsh-pip-completion" # 能补全pip包的名字，但没生效
 
 zplug "zsh-users/zsh-completions"
 
@@ -197,3 +198,18 @@ fi
 dis_tmux(){
     export DISPLAY=$(cat ~/.t/display.txt) # todo DISPLAY还是空白
 }
+
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] 2>/dev/null ))
+}
+# compctl -K _pip_completion /data/wf/anaconda3/envs/py38_torch18/bin/python3 -m pip
+compctl -K _pip_completion pip
+compctl -K _pip_completion pip3
+
+# pip zsh completion end

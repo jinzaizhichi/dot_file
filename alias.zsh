@@ -122,15 +122,16 @@ chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 # 第一次用才需要
 # alias p='python3 -W ignore -m pretty_errors'
 
-function python_go(){
+wf_python(){
     chpwd_functions=()
-    python3 -W ignore $*  # 打断后就不再执行下面几行
+    \python3 -W ignore $*  # 打断后就不再执行下面几行
     chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 }
-alias p='python_go'
-alias python='p'
-alias pv='p'
-alias vv='p'
+alias p='wf_python'
+alias python='wf_python'
+alias python3='wf_python'
+alias pv='wf_python'
+alias vv='wf_python'
 
 
 
