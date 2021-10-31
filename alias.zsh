@@ -511,14 +511,14 @@ alias do='cd ~/dot_file/'
 #alias sudo=''
 alias va='cd ~/dot_file ; git pull ; code ~/dot_file/auto_install.sh ; git add . ;git config --global user.email liuweifengemail@163.com ; git config --global user.name sisrfeng ; git commit -m "wf" ; git push ; cd -'
 alias vb='cd ~/dot_file ; git pull ; code ~/dot_file/alias.zsh ; git add . ;git config --global user.email liuweifengemail@163.com ; git config --global user.name sisrfeng ; git commit -m "wf" ; git push ; cd -;zsh'
-alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux_tools_wf/tmux.conf'; sy'
+alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux_tools_wf/tmux.conf; sy'
 
 # i for init.vim
 alias ji='code ~/dot_file/.config/nvim/init.vim; echo '改配置后记得sync' '
 # 想改成vi ，但vi本来打开neovim
 alias vr='cd ~/dot_file ; git pull ; code ~/dot_file/.config/nvim/init.vim ; git add . ;git config --global user.email liuweifengemail@163.com ; git config --global user.name sisrfeng ; git commit -m "wf" ; git push ; cd -;zsh'
 
-alias jt='code ~/dot_file/tmux_tools_wf/tmux.conf'; echo '改配置后记得sync''
+alias jt='code ~/dot_file/tmux_tools_wf/tmux.conf; echo "改配置后记得sync"'
 # alias js='code ~/dot_file/spacevim_conf.vim; echo '改配置后记得sync''
 alias s='code ~/dot_file/rc.zsh ; zsh'
 alias jb='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
