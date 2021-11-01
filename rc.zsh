@@ -1,3 +1,5 @@
+# ^ is also often used in git commands, such as git diff HEAD^ which makes the use of it in zsh quite problematic if you use git often
+
 # todo 有人说，这样可以避免不明alias干扰
 # unalias -a
 
