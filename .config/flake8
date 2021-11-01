@@ -1,91 +1,177 @@
 [flake8]
-max-line-length = 120
-# L102 - apache license header
-enable-extensions = L101,L102
-; ignore = E128,E402,E722,W504
-; // https://stackoverflow.com/questions/24271961/is-there-anything-bad-about-having-multiple-imports-on-one-line
-;  E / F / W codes do not mean error / failure / warning
-ignore = E121,E123,E126,E226,E24,E704,W503,W504, E303,E402,E401,E202,E211,  E251,E225,E265,E201, E127,E501,E302,E262,E305, E231, E124, E128, E127, E401,E501
+
+max-line-length = 180
 exclude=*.egg/*,build,dist
 
-# Configuration for flake8-copyright extension
-; copyright-check = True
-; copyright-min-file-size = 1
+# 需要检查的类型
+select =  
+    E1,
+    E3,
+    E502,
+    E7,
+    # SyntaxError or IndentationError   IOError
+    E9,
+    # warning
+    W1,
+    W5,
+    W6,
+# 别管的类型
+ignore = 
+    E121,
+    E127,
+    E123,
+    E126,
+    E704,
+    E303,
+    E501,
+    E302,
+    E305,
+    E124,
+    E128,
+    E127,
+    E501,
+    W503,
+    W504,
+    W505,
+    # 没select的类型,放着,避免以后select了大类 要排除里面的这些小类
+    E231, 
+    E262,
+    E202,
+    E211,
+    E226,
+    E24,
+    E251,
+    E225,
+    E265,
+    E201,
+    E401
+    E402,
 
-# Settings for flake8-license
-; license-type = apache
 
-# NOTE: This requires flake8 >= 3.0.0 to work correctly.
-# listed above as part of ignore list
-; select = E,F,W,C,L
-
-
-# All options available as of Flake8 3.1.0:
+# [[==================================下面都是解释=========================================]]
+# 如果命令行敲`flake8 --select=E --ignore=E432 dir/`
+# This will report all codes that start with E, but ignore E432 specifically.
+# This is more flexibly than the Flake8 2.x and 1.x used to be.
 #
-# --version             show program's version number and exit
-# -h, --help            show this help message and exit
-# -v, --verbose         Print more information about what is happening in
-#                       flake8. This option is repeatable and will increase
-#                       verbosity each time it is repeated.
-# -q, --quiet           Report only file names, or nothing. This option is
-#                       repeatable.
-# --count               Print total number of errors and warnings to standard
-#                       error and set the exit code to 1 if total is not
-#                       empty.
-# --diff                Report changes only within line number ranges in the
-#                       unified diff provided on standard in by the user.
-# --exclude=patterns    Comma-separated list of files or directories to
-#                       exclude. (Default:
-#                       .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg)
-# --filename=patterns   Only check for filenames matching the patterns in this
-#                       comma-separated list. (Default: *.py)
-# --stdin-display-name=STDIN_DISPLAY_NAME
-#                       The name used when reporting errors from code passed
-#                       via stdin. This is useful for editors piping the file
-#                       contents to flake8. (Default: stdin)
-# --format=format       Format errors according to the chosen formatter.
-# --hang-closing        Hang closing bracket instead of matching indentation
-#                       of opening bracket's line.
-# --ignore=errors       Comma-separated list of errors and warnings to ignore
-#                       (or skip). For example, ``--ignore=E4,E51,W234``.
-#                       (Default: E121,E123,E126,E226,E24,E704,W503,W504)
-# --max-line-length=n   Maximum allowed line length for the entirety of this
-#                       run. (Default: 79)
-# --select=errors       Comma-separated list of errors and warnings to enable.
-#                       For example, ``--select=E4,E51,W234``. (Default:
-#                       E,F,W,C90)
-# --disable-noqa        Disable the effect of "# noqa". This will report
-#                       errors on lines with "# noqa" at the end.
-# --show-source         Show the source generate each error or warning.
-# --statistics          Count errors and warnings.
-# --enable-extensions=ENABLE_EXTENSIONS
-#                       Enable plugins and extensions that are otherwise
-#                       disabled by default
-# --exit-zero           Exit with status code "0" even if there are errors.
-# -j JOBS, --jobs=JOBS  Number of subprocesses to use to run checks in
-#                       parallel. This is ignored on Windows. The default,
-#                       "auto", will auto-detect the number of processors
-#                       available to use. (Default: auto)
-# --output-file=OUTPUT_FILE
-#                       Redirect report to a file.
-# --tee                 Write to stdout and output-file.
-# --append-config=APPEND_CONFIG
-#                       Provide extra config files to parse in addition to the
-#                       files found by Flake8 by default. These files are the
-#                       last ones read and so they take the highest precedence
-#                       when multiple files provide the same option.
-# --config=CONFIG       Path to the config file that will be the authoritative
-#                       config source. This will cause Flake8 to ignore all
-#                       other configuration files.
-# --isolated            Ignore all configuration files.
-# --benchmark           Print benchmark information about this run of Flake8
-# --bug-report          Print information necessary when preparing a bug
-#                       report
-# --builtins=BUILTINS   define more built-ins, comma separated
-# --doctests            check syntax of the doctests
-# --include-in-doctest=INCLUDE_IN_DOCTEST
-#                       Run doctests only on these files
-# --exclude-from-doctest=EXCLUDE_FROM_DOCTEST
-#                       Skip these files when running doctests
-# --max-complexity=MAX_COMPLEXITY
-#                       McCabe complexity threshold
+#
+# pyflakes
+# The project Flake8 depends on to lint files (check for unused imports, variables, etc.).
+# This uses the `F class of error codes` reported by Flake8.
+#
+#
+# `pycodestyle implements checks for PEP 8. This uses the E and W classes of error codes.`
+# code	sample message
+# E1	Indentation
+# E101	indentation contains mixed spaces and tabs
+# E111	indentation is not a multiple of four
+# E112	expected an indented block
+# E113	unexpected indentation
+# E114	indentation is not a multiple of four (comment)
+# E115	expected an indented block (comment)
+# E116	unexpected indentation (comment)
+# E117	over-indented
+# E121 (*^)	continuation line under-indented for hanging indent
+# E122 (^)	continuation line missing indentation or outdented
+# E123 (*)	closing bracket does not match indentation of opening bracket’s line
+# E124 (^)	closing bracket does not match visual indentation
+# E125 (^)	continuation line with same indent as next logical line
+# E126 (*^)	continuation line over-indented for hanging indent
+# E127 (^)	continuation line over-indented for visual indent
+# E128 (^)	continuation line under-indented for visual indent
+# E129 (^)	visually indented line with same indent as next logical line
+# E131 (^)	continuation line unaligned for hanging indent
+# E133 (*)	closing bracket is missing indentation
+#
+# E2	Whitespace
+# E201	whitespace after ‘(’
+# E202	whitespace before ‘)’
+# E203	whitespace before ‘:’
+#
+# E211	whitespace before ‘(’
+#
+# E221	multiple spaces before operator
+# E222	multiple spaces after operator
+# E223	tab before operator
+# E224	tab after operator
+# E225	missing whitespace around operator
+# E226 (*)	missing whitespace around arithmetic operator
+# E227	missing whitespace around bitwise or shift operator
+# E228	missing whitespace around modulo operator
+#
+# E231	missing whitespace after ‘,’, ‘;’, or ‘:’
+#
+# E241 (*)	multiple spaces after ‘,’
+# E242 (*)	tab after ‘,’
+#
+# E251	unexpected spaces around keyword / parameter equals
+#
+# E261	at least two spaces before inline comment
+# E262	inline comment should start with ‘# ‘
+# E265	block comment should start with ‘# ‘
+# E266	too many leading ‘#’ for block comment
+#
+# E271	multiple spaces after keyword
+# E272	multiple spaces before keyword
+# E273	tab after keyword
+# E274	tab before keyword
+# E275	missing whitespace after keyword
+#
+# E3	Blank line
+# E301	expected 1 blank line, found 0
+# E302	expected 2 blank lines, found 0
+# E303	too many blank lines (3)
+# E304	blank lines found after function decorator
+# E305	expected 2 blank lines after end of function or class
+# E306	expected 1 blank line before a nested definition
+#
+# E4	Import
+# E401	multiple imports on one line
+# E402	module level import not at top of file
+#
+# E5	Line length
+# E501 (^)	line too long (82 > 79 characters)
+# E502	the backslash is redundant between brackets
+#
+# E7	Statement
+# E701	multiple statements on one line (colon)
+# E702	multiple statements on one line (semicolon)
+# E703	statement ends with a semicolon
+# E704 (*)	multiple statements on one line (def)
+# E711 (^)	comparison to None should be ‘if cond is None:’
+# E712 (^)	comparison to True should be ‘if cond is True:’ or ‘if cond:’
+# E713	test for membership should be ‘not in’
+# E714	test for object identity should be ‘is not’
+# E721 (^)	do not compare types, use ‘isinstance()’
+# E722	do not use bare except, specify exception instead
+# E731	do not assign a lambda expression, use a def
+# E741	do not use variables named ‘l’, ‘O’, or ‘I’
+# E742	do not define classes named ‘l’, ‘O’, or ‘I’
+# E743	do not define functions named ‘l’, ‘O’, or ‘I’
+#
+# E9	Runtime
+# E901	SyntaxError or IndentationError
+# E902	IOError
+#
+# W1	Indentation warning
+# W191	indentation contains tabs
+#
+# W2	Whitespace warning
+# W291	trailing whitespace
+# W292	no newline at end of file
+# W293	blank line contains whitespace
+#
+# W3	Blank line warning
+# W391	blank line at end of file
+#
+# W5	Line break warning
+# W503 (*)	line break before binary operator
+# W504 (*)	line break after binary operator
+# W505 (*^)	doc line too long (82 > 79 characters)
+#
+# W6	Deprecation warning
+# W601	.has_key() is deprecated, use ‘in’
+# W602	deprecated form of raising exception
+# W603	‘<>’ is deprecated, use ‘!=’
+# W604	backticks are deprecated, use ‘repr()’
+# W605	invalid escape sequence ‘x’
+# W606	‘async’ and ‘await’ are reserved keywords starting with Python 3.7

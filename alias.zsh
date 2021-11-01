@@ -1,4 +1,8 @@
 
+cj(){
+    jq -C "" $1 |less -R 
+}
+
 # 失败：
 # https://stackoverflow.com/questions/58225759/how-do-i-copy-and-paste-bash-without-dollar-signs
 # ud() { . <( sed 's/^\$ //' ); }
@@ -483,7 +487,6 @@ alias bv='b'
 alias sa='chmod -R 777'  #share to all
 alias t_a='t *'
 # see json
-alias cj='_j(){ jq -C "" $1 |bat -R; };_j'
 alias sc='noglob scp -r'
 alias scp='noglob scp -r'
 # tac:
