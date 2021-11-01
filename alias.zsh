@@ -640,7 +640,6 @@ mcd() {
 #   string is not null.
 }
 
-alias mi='curl cip.cc'
 
 alias pi='pip3 install'
 alias pip='pip3'
