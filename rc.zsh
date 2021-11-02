@@ -89,6 +89,9 @@ autoload -U colors && colors
 
 # [[==================================zsh插件管理：zplug=================================
 export ZPLUG_HOME=$HOME/.zplug
+export ZPLUG_CACHE_DIR=$ZPLUG_HOME/.cache  # 默认就是这样
+export ZPLUG_REPOS=$ZPLUG_HOME/repos  # 默认就是这样
+
 source $ZPLUG_HOME/init.zsh
 
 # use double quotes
