@@ -1,4 +1,13 @@
-# ^ is also often used in git commands, such as git diff HEAD^ which makes the use of it in zsh quite problematic if you use git often
+# [[===========================================================================begin
+# 为了交互使用zsh时可以 通配, 比如 mv ~/Linux/Old/^Tux.png ~/Linux/New/   (mv除了Tux.png的所有文件)
+setopt extended_glob  # 可能导致这些命令出bug, 使用时要注意:   git diff HEAD^ 
+# Treat the ‘#’, ‘~’ and ‘^’ characters as part of patterns for filename generation, etc.
+# (An initial unquoted ‘~’ always produces named directory expansion.)
+#
+#  https://www.techrepublic.com/article/globbing-wildcard-characters-with-zsh/
+#
+# end==============================================================================]]
+
 
 # todo 有人说，这样可以避免不明alias干扰
 # unalias -a
