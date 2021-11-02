@@ -11,6 +11,20 @@
  ```
  
 
+
+ ---
+ ## Just for Backup
+1. 【已修复】ctrl R 一直是tmux的reload的快捷键，改了~/.tmux.conf还是不行，导致vim中用不了ctrl R
+2. Something strange:    
+ And in `~/.zshrc`, I write `source ~/dot_file/.zshrc` then `export PS1="@ "  `    
+ In `~/dot_file/.zshrc`, there was already `export PS1=">>at_here>>"`  
+ Surprisingly,  `~/dot_file/.zshrc`, instead of `~/.zshrc` takes effect.    
+ After removing `~/dot_file/.zshrc`, things go right.  
+
+
+## 没事别看:
+
+之前把zplug直接git clone到dot__file下, 导致同步时_,zplug这个submodule难处理. 现在clone到~/下了
 ###  About git submodule  
  this arrow means a soft link OR a submodule   
  ![image](https://user-images.githubusercontent.com/53520949/134790530-feaea641-0da6-4483-b311-3f8301f9629b.png)   
@@ -28,15 +42,3 @@ git submodule update
 ```
 ref:  
 https://www.atlassian.com/git/tutorials/git-submodule
-
- ---
- ## Just for Backup
-1. 【已修复】ctrl R 一直是tmux的reload的快捷键，改了~/.tmux.conf还是不行，导致vim中用不了ctrl R
-2. Something strange:    
- And in `~/.zshrc`, I write `source ~/dot_file/.zshrc` then `export PS1="@ "  `    
- In `~/dot_file/.zshrc`, there was already `export PS1=">>at_here>>"`  
- Surprisingly,  `~/dot_file/.zshrc`, instead of `~/.zshrc` takes effect.    
- After removing `~/dot_file/.zshrc`, things go right.  
-
-
-
