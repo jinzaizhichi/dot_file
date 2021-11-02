@@ -2,7 +2,7 @@
 
 " todo:  有些粘贴来的配置，应该要清理掉
 
-" Return to last edit position when opening files 
+" `Return to last edit position when opening files
 " 有bug: autocmd BufReadPost * normal! g`"zv
 "  normal! 表示 Execute Normal mode commands,   If the [!] is given, mappings will not be used.
 "  g`"表示 跳到 the last known position in a file
@@ -14,8 +14,6 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"zv" |
      \ endif
-
-
 
 nnoremap yf ggyG<C-O>
 " p后面一般没有参数，所以pf不好。选中全文，一般只是为了替换。所以vf选中后，多了p这一步
@@ -178,6 +176,17 @@ let g:NERDToggleCheckAllLines = 1 " check all selected lines is commented or not
 nmap <C-_> <plug>nerdcommentertoggle<cr>
 imap <c-_> <esc><plug>nerdcommentertoggle<cr><esc>
 vnoremap <C-_> <plug>nerdcommentertoggle<cr>
+" <Plug>NERDCommenterToggle<CR>和 :call NERDComment('n', 'toggle')<CR> 应该一样
+nnoremap = :call nerdcommenter#Comment('n', 'toggle')<CR>j
+nnoremap - :call nerdcommenter#Comment('n', 'toggle')<CR>k
+
+" 这行 不行:
+" nnoremap = :call <Plug>NERDCommenterInvert<CR>
+
+" <C-/> 在vim中由C-_表示
+nnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
+inoremap <C-_> <ESC>:call nerdcommenter#Comment('n', 'toggle')<CR>j
+vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
 " 好慢：
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
 " nnoremap - :k<plug>nerdcommentertoggle<cr>
@@ -520,17 +529,6 @@ inoremap <C-F> <C-X><C-F>
 " nvim中不了<HOME> <END>    $行末 ^行首 结合autohotkey
 
 
-" <Plug>NERDCommenterToggle<CR>和 :call NERDComment('n', 'toggle')<CR> 应该一样
-nnoremap = :call nerdcommenter#Comment('n', 'toggle')<CR>j
-nnoremap - :call nerdcommenter#Comment('n', 'toggle')<CR>k
-
-" 这行 不行:
-" nnoremap = :call <Plug>NERDCommenterInvert<CR>
-
-" <C-/> 在vim中由C-_表示
-nnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
-inoremap <C-_> <ESC>:call nerdcommenter#Comment('n', 'toggle')<CR>j
-vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
 
 
 
