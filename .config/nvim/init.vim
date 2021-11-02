@@ -323,8 +323,6 @@ vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
 
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 
-" execute "set <M-_>=\e_"
-" nnoremap <M-_> yyp
 
 " 好慢：
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
