@@ -319,6 +319,7 @@ let g:NERDToggleCheckAllLines = 1 " check all selected lines is commented or not
 nnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>j
 inoremap <C-_> <ESC>:call nerdcommenter#Comment('n', 'toggle')<CR>j
 vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
+" 哪里map了<leader>cc ?
 
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 
