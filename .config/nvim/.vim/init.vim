@@ -1,1 +1,0 @@
-/home/wf/dot_file/vimrc
