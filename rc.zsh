@@ -128,8 +128,8 @@ if ! zplug check --verbose; then
     fi
 fi
 
-# zplug load     # source plugins and add commands to $PATH
-zplug load --verbose
+zplug load     # source plugins and add commands to $PATH
+# zplug load --verbose
 
 # zplug update  #需要时，自己敲
 # ==================================zsh插件管理：zplug=================================]]
