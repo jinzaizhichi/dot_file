@@ -1077,3 +1077,4 @@ inoremap  cb '''<Esc>Go'''<Esc><C-o>i
 " let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']  " qs是quick-scope的意思
 " highlight QuickScopePrimary guifg='#7cbd3c80' gui=underline ctermfg=155 cterm=underline
 " highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
+
