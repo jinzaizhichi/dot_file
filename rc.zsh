@@ -90,7 +90,6 @@ autoload -U colors && colors
 # [[==================================zsh插件管理：zplug=================================
 export ZPLUG_HOME=$HOME/.zplug
 source $ZPLUG_HOME/init.zsh
-# export ZPLUG_LOADFILE=$ZPLUG_HOME/zplug_loadfile.sh
 
 # use double quotes
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
