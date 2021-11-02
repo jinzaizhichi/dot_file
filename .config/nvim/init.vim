@@ -1,4 +1,11 @@
-" 本地C盘里面的init.vim最新。这个暂时用着
+echo "vscode-nvim用的是wsl下的dot_file的init.vim"
+" 这样可以 不那么死板地 只能用~/AppData/Local/nvim/init.vim来进入windows的nvim, 从而管理插件(
+    " windows的nvim和vscode的nvim共用): 
+"nvim -u '\\wsl$\Ubuntu\root\dot_file\.config\nvim\init.vim'
+" 插件位置:
+" C:\Users\noway\AppData\Local\nvim-data
+" 把wsl下的dotfile发送快捷方式到 ~/AppData/Local/nvim/init.vim , 不行.因为shortcut和软链接还不一样
+" https://superuser.com/questions/253935/what-is-the-difference-between-symbolic-link-and-shortcut
 
 " todo:  有些粘贴来的配置，应该要清理掉
 
@@ -15,16 +22,21 @@ autocmd BufReadPost *
      \   exe "normal! g`\"zv" |
      \ endif
 
+if has('win32')
+    " echo 'leo: 正在用win32，win32表示 32 or 64 bit的windows'
+    let g:python3_host_prog = "F:\\python39\\python.exe"  " ToggleBool会用到
+    " let g:python_host_prog = ""  " ToggleBool会用到   我fork了这个插件 并改了?
+    " let g:loaded_python_provider = 0
+endif
 
 
-nnoremap yf ggyG<C-O>
-" p后面一般没有参数，所以pf不好。选中全文，一般只是为了替换。所以vf选中后，多了p这一步
-nnoremap vf ggVGp
-" comment at the end of line
-nnoremap ce A<space>#<space>
+func! TabToSpace()
+    " vscode 有个插件：takumii.tabspace
+    set ts=4 | set expandtab | %retab! | echo" Tab变成4空格"
+endfunc
+" autocmd对neovim-vscode无效？ 暂时手动敲吧
+autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()"
 
-" vscode里失灵了:
-" inoremap yf <Esc>ggyG<C-O>"
 
 if exists('g:vscode')
     " set MYVIMRC = "C:\Users\noway\AppData\Local\nvim\init.vim"
@@ -42,8 +54,82 @@ if exists('g:vscode')
     "echo 'wf: using vscode-neovim '
 else
     echo '没在用 vscode-neovim, only nvim'
+    " 有些内容可能可以复制到vscode-nvim中用
+    
+    nnoremap <F8> :call HideNumber()<CR>  " 8 for byebye number
+    function! HideNumber()
+        if(&relativenumber == &number)
+            set relativenumber! number!
+        elseif(&number)
+            set number!
+        else
+            set relativenumber!
+        endif
+        set number?
+    endfunc
+
+    set wrap    " vscode里设置了不wrap
+
+    "set wrap 后，同物理行上线直接跳。vscode中不行
+    nnoremap k gk
+    nnoremap gk k
+
+    nnoremap j gj
+    nnoremap gj j
 
     nnoremap <F4> :UndotreeToggle<CR>
+    " [[==============================缩进==============================
+    " vscode上有插件自动处理，不用加这些:
+    "
+    " filetype 和 setlocal 一般成对出现？
+    " autocmd Filetype python setlocal et sta sw=4 sts=4
+    " Put them in vimfiles/ftplugin/python.vim (but change set to setlocal) and add filetype plugin on to .vimrc.
+
+    filetype on        " 检测文件类型
+    filetype indent on " 针对不同的文件类型采用不同的缩进格式
+    filetype plugin on " a file's plugin file is loaded (if there is one for the detected filetype).
+    filetype plugin indent on  " 启动自动补全 
+
+    set expandtab " 将Tab自动转化成空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
+    set tabstop=4 " 设置Tab键等同的空格数
+
+    set shiftwidth=4 " 每一次缩进对应的空格数
+
+    set smarttab " insert tabs on the start of a line according to shiftwidth
+    set shiftround " 用shiftwidth的整数倍， when indenting with '<' and '>'
+
+    set softtabstop=4 " 按退格键时可以一次删掉 4 个空格
+
+    " 如果要仅对python有效：
+    " autocmd Filetype python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab shiftround
+
+    set smartindent
+    " `各种indent方法`
+    " 只是对c语言家族而言？
+    " 'autoindent'	uses the indent from the previous line.
+    " 'smartindent'	is like 'autoindent' but also recognizes some C syntax to
+    "                 increase/reduce the indent where appropriate.
+    " 'cindent'	Works more cleverly than the other two and is configurable to
+    "             different indenting styles.
+    " 'indentexpr'	The most flexible of all: Evaluates an expression to compute
+    " 		the indent of a line.  When non-empty this method overrides
+    " 		the other ones.  See |indent-expression|.
+    " set cindent
+    
+    func! Indent_wf()
+        set ts=2 | set noexpandtab | %retab! | set ts=4 | set expandtab | %retab! | echo"Indent 2缩进变4"
+    endfunc
+    nnoremap <F10> :call Indent_wf()<CR>
+    inoremap <F10> <ESC>:call Indent_wf()<CR>i
+    " 遇到保存了tab作为缩进的文件，可以替换：
+    " %s/\t/    /g
+    " %retab中的%：表示在全文中
+
+    " 考虑用谷歌的规范？ setlocal indentexpr=GetGooglePythonIndent(v:lnum)
+    " https://github.com/google/styleguide/blob/gh-pages/google_python_style.vim
+
+    " ==============================缩进==============================]]
+
     noremap <silent><leader>/ :nohls<CR> " 搜索时 不高亮
     " vscode里不行
     " nnoremap zz :wq<C-R>
@@ -68,32 +154,113 @@ else
     endfun
     autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
+    let g:airline_theme='solarized'
+    if &diff
+        " colorscheme github
+        set cursorline
+
+        " 反应变慢，不好
+        " map ] ]c
+        " map [ [c
+
+        hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
+        hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
+        hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
+    endif
+
+    " 要在设定颜色主题后面，覆盖颜色主题里面的设置
+    highlight  Search cterm=NONE ctermfg=white ctermbg=gray
+
 endif
 
-let mapleader =" "
+nnoremap yf ggyG<C-O>
+" p后面一般没有参数，所以pf不好。选中全文，一般只是为了替换。所以vf选中后，多了p这一步
+nnoremap vf ggVGp
+" comment at the end of line
+nnoremap ce A<space><space>#<space>
+
+" vscode里失灵了:
+" inoremap yf <Esc>ggyG<C-O>"
+
+let mapleader =" "     
 " https://stackoverflow.com/questions/54787831/map-space-to-leader-in-vim
 
 
-" Lazy loading, my preferred way, as you can have both installable at once:
+" Lazy loading, my preferred way, as you can have both [避免被PlugClean删除没启动的插件] 
 " https://github.com/junegunn/vim-plug/wiki/tips
-function! Cond(cond, ...)
-    let opts = get(a:000, 0, {})
-    return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+" leo改过
+function! VimPlugConds(arg1, ...)
+
+    " a: 表示argument
+    " You must prefix a parameter name with "a:" (argument).
+        " a:0  等于 len(a:000)), 
+        " a:1 first unnamed parameters, and so on.  `a:1` is the same as "a:000[0]".
+    " A function cannot change a parameter
+    
+            " To avoid an error for an invalid index use the get() function
+            " get(list, idx, default)
+    let leo_opts = get(a:000, 0, {})  "  a:000 (list of all parameters), 获得该list的第一个元素
+    " Borrowed from the C language is the conditional expression:
+    " a ? b : c
+    " If "a" evaluates to true "b" is used
+    let out = (a:arg1 ? leo_opts : extend(leo_opts, { 'on': [], 'for': [] }))  " 括号不能换行
+    " an empty `on` or `for` option : plugin is registered but not loaded by default depending on the condition.
+    return  out
 endfunction
 
+
+
 " =============================================vim-plug===============================begin
-" 加了插件要敲command  :PlugInstall
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug' " 为了能用:help plug-options
-Plug 'easymotion/vim-easymotion', Cond(!exists('g:vscode'))  " use normal easymotion when in vim mode
-Plug 'asvetliakov/vim-easymotion', Cond(exists('g:vscode'), { 'as': 'vsc-easymotion' }) " use vscode easymotion when in vscode mode
-" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "chrome里用nvim。好像会添乱
+
+
+" [[==============================easymotion 配置=====================begin
+
+" Plug 'asvetliakov/vim-easymotion'   " 不用裸nvim下的easymotion
+" Plug 'easymotion/vim-easymotion'    " 只用裸nvim下的easymotion  千万别这么干。会把正在编辑的文件全搞乱
+
+" Plug 'easymotion/vim-easymotion', VimPlugConds(!exists('g:vscode'))  " exists(): 变量存在，则返回TRUE，否则0
+Plug 'asvetliakov/vim-easymotion', VimPlugConds(exists('g:vscode'), { 'as': 'leo-jump' })  " as的名字随便起，
+                                                                                        " 下面map时，还是 nmap s <Plug>(easymotion-f2)之类的
+
+" 这样可能更容易理解，没那么绕: 【an empty `on` or `for` option : plugin is registered but not loaded by default depending on the condition.】
+" Plug 'easymotion/vim-easymotion',  has('g:vscode') ? { as': 'ori-easymotion', 'on': [] } : {}
+" Plug 'asvetliakov/vim-easymotion', has('g:vscode') ? {} : { 'on': [] }
+
+map <Leader> <Plug>(easymotion-prefix)
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1 " 敲小写，能匹配大写。反之不然
+
+" Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+" todo  debug buggy 出了问题来这里
+"s for search 
+nmap s <Plug>(easymotion-f)
+" Need one more keystroke
+nmap f <Plug>(easymotion-f2)
+
+" 会抽风颤抖
+" nmap f <Plug>(easymotion-f) "f{char}
+" map  <Leader>f <Plug>(easymotion-bd-f) " <Leader>f{char} to move to {char}
+" unmap f  " umap后，变回默然的功能
+
+" 会显示高亮字母后，光标到下一行
+" nmap s <Plug>(easymotion-f2) " {char}{char} 怎样可以上下文都搜索？现在只能搜下文
+" map  <Leader>w <Plug>(easymotion-w) " Move to word    " buftype option is set??
+" ================================easymotion 配置=====================]]
+
 Plug 'machakann/vim-sandwich'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
+Plug 'sagarrakshe/toggle-bool'
+noremap <leader>r :ToggleBool<CR>
+" nnoremap <F2> cawTrue<ESC>
+" nnoremap <F3> cawFalse<ESC>
 
 Plug 'mbbill/undotree'
 if has("persistent_undo")
@@ -128,41 +295,14 @@ endif
 " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
-" Using a non-default branch
-" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-" Plug 'fatih/vim-go', { 'tag': '*' }
-
-" Plugin options
-" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
-" Plugin outside ~/.vim/plugged with post-update hook
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-" Unmanaged plugin (manually installed and updated)
-" Plug '~/my-prototype-plugin'
-
-" Initialize plugin system
 call plug#end()
+" 用了vim-pug, 会自动 `filetype plugin indent on` and `syntax enable`?
 " =============================================vim-plug===============================end
 
 
-let g:airline_theme='solarized'
-if &diff
-    " colorscheme github
-    set cursorline
 
-    " 反应变慢，不好
-    " map ] ]c
-    " map [ [c
-
-    hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
-    hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
-    hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
-endif
-
-" [[---------------------------nerdcommenter-config------------------------begin
+" [[----------------------------nerdcommenter-config-------------------------------begin
+" g代表Global Variable
 let g:NERDCreateDefaultMappings = 1
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters
 let g:NERDCompactSexyComs = 1 " Use compact syntax for  multi-line comments
@@ -174,8 +314,7 @@ let g:NERDCustomDelimiters = { 'c': { 'left': '/*','right': '*/' } }
 let g:NERDCommentEmptyLines = 1  " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDToggleCheckAllLines = 1 " check all selected lines is commented or not
-" <C-/> 在vim中由C-_表示
-nmap <C-_> <plug>nerdcommentertoggle<cr>
+nmap <C-_> <plug>nerdcommentertoggle<cr>  " <C-/> 在vim中由C-_表示
 imap <c-_> <esc><plug>nerdcommentertoggle<cr><esc>
 vnoremap <C-_> <plug>nerdcommentertoggle<cr>
 " 好慢：
@@ -185,35 +324,7 @@ vnoremap <C-_> <plug>nerdcommentertoggle<cr>
 " nnoremap = :call <Plug>NERDCommenterInvert<CR>
 
 "let g:NERDDefaultNesting = 1
-" ---------------------------nerdcommenter-config-----end------------------------]]
-
-
-" [[==============================easymotion 配置=====================begin
-map <Leader> <Plug>(easymotion-prefix)
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-
-
-"s for search:  s{char}
-nmap s <Plug>(easymotion-f)
-
-" f{char}{char}
-" Need one more keystroke, but on average, it may be more comfortable.
-nmap f <Plug>(easymotion-f2)
-
-" Turn on case-insensitive feature
-" 敲小写，能匹配大写。反之不然
-let g:EasyMotion_smartcase = 1
-
-" Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-
-" 会抽风颤抖
-" map  <Leader>f <Plug>(easymotion-bd-f) " <Leader>f{char} to move to {char}
-
-" buftype option is set
-" map  <Leader>w <Plug>(easymotion-w) " Move to word
-" ================================easymotion 配置===================end
+" ---------------------------nerdcommenter-config----------------------------------end]]
 
 
 " todo: vscode中会复制了 前后空格
@@ -266,14 +377,7 @@ nnoremap < <<
 nnoremap > >>
 vnoremap < <gv
 
-set wrap
 
-"set wrap 后，同物理行上线直接跳
-nnoremap k gk
-nnoremap gk k
-
-nnoremap j gj
-nnoremap gj j
 
 noremap H ^
 noremap L $
@@ -281,7 +385,7 @@ noremap L $
 noremap K r<CR><UP>
 nnoremap J Ji <Esc>
 
-
+set pastetoggle=<F9>
 
 "有空再搞
 
@@ -320,17 +424,6 @@ nnoremap J Ji <Esc>
 "====https://github.com/ahonn/dotfiles/tree/master/vim/vscode================end
 
 
-nnoremap <F2> cawTrue<ESC>
-nnoremap <F3> cawFalse<ESC>
-" nnoremap <F6> :ToggleBool<CR>
-
-set pastetoggle=<F9>
-
-func! Indent_wf()
-    set ts=2 | set noexpandtab | %retab! | set ts=4 | set expandtab | %retab! | echo"Indent 2缩进变4"
-endfunc
-nnoremap <F10> :call Indent_wf()<CR>
-inoremap <F10> <ESC>:call Indent_wf()<CR>i
 
 " nnoremap  J j
 " c b means: comment block
@@ -367,8 +460,6 @@ inoremap ( (
 
 set completeopt=noinsert,menuone
 
-set autoindent
-set cindent
 
 let g:spacevim_force_global_config = 0
 " let g:spacevim_snippet_engine = 'ultisnips'
@@ -451,6 +542,16 @@ inoremap <C-Y> <C-O><C-R>
 " ---------------------------------------msvim-------------------------------
 
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+if &diff
+    colorscheme one
+    set cursorline
+    " 反应变慢，不好
+    " map ] ]c
+    " map [ [c
+    " hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
+    " hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
+    " hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
+endif
 
 
 noremap <F5> <ESC>oimport pudb<ESC>opu.db
@@ -493,7 +594,7 @@ endfunc
 "% for the whole file. Example: :%s/foo/bar/g.
 " .,$ from the current line to the end of the file.
 " nnoremap <TAB> :%s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W>
-nnoremap <TAB> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W>
+nnoremap <TAB> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W><Left><Left>
 
 
 " 不在下面加这行，<C-i>会等效于TAB  Ctrl-p用不了
@@ -534,7 +635,6 @@ vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
 
 
 
-
 " 按一次z要等一会才退出， 不如连续按2次快
 " nnoremap q :wq<CR>
 " nnoremap qq :wq<CR>
@@ -564,17 +664,7 @@ func! WfRunScript()
 endfunc
 
 
-nnoremap <F8> :call HideNumber()<CR>  " 8 for byebye number
-function! HideNumber()
-    if(&relativenumber == &number)
-        set relativenumber! number!
-    elseif(&number)
-        set number!
-    else
-        set relativenumber!
-    endif
-    set number?
-endfunc
+
 
 " 让配置变更立即生效
 " 有变化, 但spacevim在捣乱 , 但各种报错
@@ -586,19 +676,17 @@ autocmd! bufwritepost .vimrc source %
 " map <CapsLock>[ #
 " map <CapsLock>] *
 
-
-
-
 let g:ackprg = 'ag --vimgrep'
 
 
 set cmdheight=2
 set fdm=indent
 
+" todo
 " set termguicolors   " Nvim emits true (24-bit) colours in the terminal, if 'termguicolors' is set.
 
 set cursorline
-hi CursorLine cterm=NONE ctermbg=NONE
+" hi CursorLine cterm=NONE ctermbg=NONE
 " hi Cursor cterm=inverse
 
 " For terminal Vim, with colors, we're most interested in the cterm
@@ -615,16 +703,16 @@ if exists('$TMUX')
 endif
 
 set title
-set sw=4
-set ts=4
 set mouse=a
-filetype plugin indent on
-autocmd Filetype python setlocal et sta sw=4 sts=4
 syntax enable
 set background=light
 
-set nocompatible
+set nocompatible  " 别兼容老的vi
 set backspace=indent,eol,start
+" indent  allow backspacing over autoindent
+" eol     allow backspacing over line breaks (join lines)
+" start   allow backspacing over the start of insert; CTRL-W and CTRL-U stop once at the start of insert.
+
 
 set history=2000
 set timeoutlen=800
@@ -633,9 +721,6 @@ set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set enc=utf8
 set fencs=utf8,gbk,gb2312,gb18030
 
-set ts=4
-set expandtab
-set autoindent
 
 " <Leader>t 翻译光标下的文本，在命令行回显
 " nmap <silent> <Leader>t <Plug>Translate
@@ -673,14 +758,6 @@ syntax on
 " history存储容量
 set history=2000
 
-" 检测文件类型
-filetype on
-" 针对不同的文件类型采用不同的缩进格式
-filetype indent on
-" 允许插件
-filetype plugin on
-" 启动自动补全
-filetype plugin indent on
 
 " 文件修改之后自动载入
 set autoread
@@ -696,6 +773,20 @@ set shortmess=atI
 set nobackup
 " 关闭交换文件
 set noswapfile
+
+
+" TODO: remove this, use gundo
+" create undo file
+" if has('persistent_undo')
+    " " How many undos
+    " set undolevels=1000
+    " " number of lines to save for undo
+    " set undoreload=10000
+    " " So is persistent undo ...
+    " "set undofile
+    " set noundofile
+    " " set undodir=/tmp/vimundo/
+" endif
 
 
 " 突出显示当前行
@@ -764,8 +855,6 @@ set matchtime=5
 " E384: search hit TOP without match for: set
 " E385: search hit BOTTOM without match for: set
 
-" 要在设定颜色主题后面，覆盖颜色主题里面的设置
-highlight  Search cterm=NONE ctermfg=white ctermbg=gray
 set hlsearch " 高亮search命中的文本
 set incsearch " 增量搜索模式,随着键入即时搜索
 set ignorecase " 搜索时忽略大小写 , 但,
@@ -774,31 +863,9 @@ set smartcase
 
 " 代码折叠
 set foldenable
-" 折叠方法
-" indent        使用缩进表示折叠
-" expr          使用表达式定义折叠
-" syntax        使用语法定义折叠
-" diff          对没有更改的文本进行折叠
-" marker        使用标记进行折叠, 默认标记是 {{{ 和 }}}
-" 初步尝试, 缩进最好
-set foldmethod=indent
+set foldmethod=indent  " 初步尝试, 缩进最好
 set foldlevel=99
 
-set smartindent
-
-" 打开自动缩进
-" never add copyindent, case error   " copy the previous indentation on autoindenting
-set autoindent
-
-
-" 将Tab自动转化成空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
-set expandtab
-set tabstop=4 " 设置Tab键等同的空格数
-set softtabstop=4 " 按退格键时可以一次删掉 4 个空格
-
-set shiftwidth=4 " 每一次缩进对应的空格数
-set shiftround " 用shiftwidth的整数倍， when indenting with '<' and '>'
-set smarttab " insert tabs on the start of a line according to shiftwidth
 
 " nnoremap <F1> :set number! number?<CR>
 " 开了这个, 按F 1还是去不掉相对行号, 除非进入insert mode
@@ -852,13 +919,9 @@ command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <Leader>z :ZoomToggle<CR>
 
 
-
-
-
 " 命令行模式增强，ctrl - a到行首， -e 到行尾
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-
 
 
 " 用了它，看着有点晕
@@ -955,13 +1018,9 @@ nnoremap U <C-r>
 " FileType Settings  文件类型设置
 "==========================================
 
-" 具体编辑文件类型的一般设置，比如不要 tab 等
-autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
 autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
 
-
-
-
+" Todo
 " 设置可以高亮的关键字
 if has("autocmd")
     " Highlight TODO, FIXME, NOTE, etc.
@@ -997,43 +1056,6 @@ hi! link ShowMarksHLu DiffChange
 nnoremap <C-E> $
 
 
-" Indent Python in the Google way.
-
-setlocal indentexpr=GetGooglePythonIndent(v:lnum)
-
-let s:maxoff = 50 " maximum number of lines to look backwards.
-
-function GetGooglePythonIndent(lnum)
-
-    " Indent inside parens.
-    " Align with the open paren unless it is at the end of the line.
-    " E.g.
-    "       open_paren_not_at_EOL(100,
-    "                                                   (200,
-    "                                                    300),
-    "                                                   400)
-    "       open_paren_at_EOL(
-    "               100, 200, 300, 400)
-    " echo('谷歌python规范函数‘)
-    call cursor(a:lnum, 1)
-    let [par_line, par_col] = searchpairpos('(\|{\|\[', '', ')\|}\|\]', 'bW',
-                \ "line('.') < " . (a:lnum - s:maxoff) . " ? dummy :"
-                \ . " synIDattr(synID(line('.'), col('.'), 1), 'name')"
-                \ . " =~ '\\(Comment\\|String\\)$'")
-    if par_line > 0
-        call cursor(par_line, 1)
-        if par_col != col("$") - 1
-            return par_col
-        endif
-    endif
-
-    " Delegate the rest to the original function.
-    return GetPythonIndent(a:lnum)
-
-endfunction
-
-let pyindent_nested_paren="&sw*2"
-let pyindent_open_paren="&sw*2"
 
 " Using this operator we can surround swaths of text using it as you would any other operator within Vim:
 " ds' to delete the surrounding ' (ds{char})
@@ -1046,3 +1068,12 @@ let pyindent_open_paren="&sw*2"
 
 nnoremap  cb O'''<Esc>Go'''<Esc>
 inoremap  cb '''<Esc>Go'''<Esc><C-o>i
+
+
+" 用过，垃圾，别用：
+
+" Plug 'unblevable/quick-scope'
+" Trigger a highlight in the appropriate direction when pressing these keys:
+" let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']  " qs是quick-scope的意思
+" highlight QuickScopePrimary guifg='#7cbd3c80' gui=underline ctermfg=155 cterm=underline
+" highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
