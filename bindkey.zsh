@@ -31,10 +31,16 @@ bindkey '\eK' end-of-line
 bindkey '\ee' backward-word
 bindkey '\eh' backward-word
 bindkey '\el' forward-word
+# bindkey -s '\e/' 'll\n'
+# 留给vim 用作复制一行并注释
+
+# bindkey -r '^l'   # -r unbind  r记作reload吧
+bindkey -s '^l'   'echo "ctrl加L, 待用" \n'
+
+# bindkey -s '^i'   'echo "ctrl加I, 待用" \n'  # 不能改, 这货和tab一样
 
 bindkey -s '\eu' '..\n' # u for up
 bindkey -s '\eo' 'echo "待用" \n'
-bindkey -s '\e/' 'll\n'
 
 # setup for deer
 # autoload -U deer

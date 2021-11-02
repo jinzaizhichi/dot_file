@@ -35,6 +35,7 @@ h(){
 
 alias cle='clear -x'
 alias pipc='pqi' # pip change
+alias pq='pqi'  # PyQuickInstall
 q(){
     tree -L 2 --filelimit=50 $1 | bat
 }
@@ -93,49 +94,6 @@ alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path
 
 # u for use
 # alias u='git clone'
-
-# 改变目录后 自动ls
-list_all_after_cd() {
-# if [[ $PWD != '/home/' ]]; then
-print -Pn "\e]2;%~\a" #在terminal的tittle显示路径
-
-# to make your zsh script portable and reliable :
-# use zsh's `built-in features` over calling an `external program`
-# Since setopt can drastically change the behavior of zsh, add `emulate -L zsh` to
-# the body of your script or function to start from a known state.
-emulate -L zsh
-# -L  | set local_options and local_traps as well
-# -R  | reset all options instead of only those needed for script portability
-#  模拟 csh ksh sh 或者 （没加配置的）zsh
-
-\ls -gGhtrFB --color=always --classify $* | cut -c 14- | tail -5
-tmp=$((`\ls -l | wc -l`-1-5)) #文件总数: `\ls -l | wc -l`-1
-if [ $tmp -lt 0 ]; then
-    echo "------no more files--------"
-else
-    echo "--------未显示文件数：$tmp---------"
-fi
-}
-# $chpwd_functions:  shell parameter
-# This is an array of function names.
-# All of these functions are executed `in order` when changing the current working directory.
-chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
-# alias cd='export chpwd_functions=() ; builtin cd' #  加了这行，就算没敲cd，chpwd_functions也废掉了
-
-
-# 第一次用才需要
-# alias p='python3 -W ignore -m pretty_errors'
-
-wf_python(){
-    chpwd_functions=()
-    \python3 -W ignore $*  # 打断后就不再执行下面几行
-    chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
-}
-alias p='wf_python'
-alias python='wf_python'
-alias python3='wf_python'
-alias pv='wf_python'
-alias vv='wf_python'
 
 
 
@@ -201,6 +159,7 @@ alias co='whence -ca'
 alias help=run-help
 
 #==============================ls相关===================================
+# todo 现在exa和ls混用, 最好统一一下
 alias ls='\ls -hrt --color=always'
 # alias ls='ls | awk "{print $4,$5,$6,$7, $3}"'
 alias la='\ls -ACF1GhFtr --color=always --classify'
@@ -215,23 +174,51 @@ alias l.='\ls -d1 .* --color=always --classify'
 alias ll='\ls -1htr --color=always --classify | head -30'
 # list full:
 
+# lf(){
+#     # --classify:   append indicator (one of */=>@|) to entries
+#     #-g  -l时不显示用户名
+#     \ls -g -htrF \
+#         --no-group \
+#         --color=always --classify $* \
+#         | cut -c 14- \
+#         | sed 's/月  /月/' \
+#         | sed 's/月 /月_/' \
+#         | bat
+#         # | ag ':'
+#         # | ag ':' --colour=always \
+#     tmp=$((`\ls -l | wc -l`-1))
+#     echo "列了所有：${tmp}"
+# }
 lf(){
-    # --classify:   append indicator (one of */=>@|) to entries
-    #-g  -l时不显示用户名
-    \ls -g -htrF \
-        --no-group \
-        --color=always --classify $* \
-        | cut -c 14- \
-        | sed 's/月  /月/' \
-        | sed 's/月 /月_/' \
-        | bat
-        # | ag ':'
-        # | ag ':' --colour=always \
+    $HOME/dot_file/exa/bin/exa \
+    --long \
+    --classify \
+    --colour auto \
+    -F  \
+    --group-directories-first  \
+    --header  \
+    --no-user  \
+    --no-permissions  \
+    --sort=time  \
+    --time-style=default
     tmp=$((`\ls -l | wc -l`-1))
-    echo "列了所有：${tmp}"
+    echo "共：${tmp}"
 }
 
-alias l=leo_func_ls
+alias l="$HOME/dot_file/exa/bin/exa \
+    --long \
+    --classify \
+    --colour auto \
+    -F  \
+    --group-directories-first  \
+    --header  \
+    --no-user  \
+    --no-permissions  \
+    --sort=time  \
+    --time-style=default"
+
+# [[===========================================================================被替代了,先放这儿
+# alias l=leo_func_ls
 #写成l()会报错。可能和built-in冲突了
 leo_func_ls(){
     # --classify:   append indicator (one of */=>@|) to entries
@@ -242,7 +229,7 @@ leo_func_ls(){
         | cut -c 14- \
         | tail -25 \
         | sed 's/月  /月/' \
-        | sed 's/月 /月_/' \
+        # | sed 's/月 /月_/' \
         # | ag ':'
         # | ag ':' --colour=always \
     tmp=$((`\ls -l | wc -l`-1))
@@ -253,8 +240,66 @@ leo_func_ls(){
         echo "--------文件数：25/${tmp}---------"
 	fi
 }
+# [[===========================================================================被替代了,先放这儿
+
+# 改变目录后 自动ls
+list_all_after_cd() {
+    # if [[ $PWD != '/home/' ]]; then
+    print -Pn "\e]2;%~\a" #在terminal的tittle显示路径
+
+    # to make your zsh script portable and reliable :
+    # use zsh's `built-in features` over calling an `external program`
+    # Since setopt can drastically change the behavior of zsh, add `emulate -L zsh` to
+    # the body of your script or function to start from a known state.
+    emulate -L zsh
+    # -L  | set local_options and local_traps as well
+    # -R  | reset all options instead of only those needed for script portability
+    #  模拟 csh ksh sh 或者 （没加配置的）zsh
+
+    $HOME/dot_file/exa/bin/exa \
+        --long \
+        --classify \
+        --colour auto \
+        -F  \
+        --header  \
+        --no-user  \
+        --no-permissions  \
+        --no-filesize \
+        --sort=time  \
+        --time-style=default | tail -8
+
+    # \ls -gGhtrFB --color=always --classify $* | cut -c 14- | tail -5
+    tmp=$((`\ls -l | wc -l`-1-8)) #文件总数: `\ls -l | wc -l`-1
+    if [ $tmp -lt 0 ]; then
+        echo "------no more files--------"
+    else
+        echo "--------未显示文件数：$tmp---------"
+    fi
+}
+
+# $chpwd_functions:  shell parameter
+# This is an array of function names.
+# All of these functions are executed `in order` when changing the current working directory.
+chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
+# alias cd='export chpwd_functions=() ; builtin cd' #  加了这行，就算没敲cd，chpwd_functions也废掉了
+
+
 
 #==============================ls相关===================================]]
+
+# 第一次用才需要
+# alias p='python3 -W ignore -m pretty_errors'
+
+wf_python(){
+    chpwd_functions=()
+    \python3 -W ignore $*  # 打断后就不再执行下面几行
+    chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
+}
+alias p='wf_python'
+alias python='wf_python'
+alias python3='wf_python'
+alias pv='wf_python'
+alias vv='wf_python'
 
 
 # 这个还在生效，注意别搞混。可借鉴
@@ -318,7 +363,8 @@ psu () {
 # conda remove --name old_name --all # or its alias: `conda env remove --name old_name`
 
 # gpustat and grep wf
-alias g='gpustat  --show-user --no-header'
+#
+alias g='gpustat  --show-user --no-header  | cut -d',' -f2 | bat --number --language=py3'
 alias gw='g --your-name wf '
 alias gwf='g --your-name wf '
 
@@ -327,11 +373,10 @@ alias giw='gi --your-name wf'
 alias giwf='gi --your-name wf'
 
 alias au='apt update'
+
 alias nv='nvidia-smi'
 alias pid='ps -aux |grep -v grep|grep'
 
-# PyQuickInstall
-alias pq='pqi'
 # count line number
 #$ echo "$((20+5))"
 #25

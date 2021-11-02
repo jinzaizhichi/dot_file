@@ -314,9 +314,17 @@ let g:NERDCustomDelimiters = { 'c': { 'left': '/*','right': '*/' } }
 let g:NERDCommentEmptyLines = 1  " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDToggleCheckAllLines = 1 " check all selected lines is commented or not
-nmap <C-_> <plug>nerdcommentertoggle<cr>  " <C-/> 在vim中由C-_表示
-imap <c-_> <esc><plug>nerdcommentertoggle<cr><esc>
-vnoremap <C-_> <plug>nerdcommentertoggle<cr>
+
+" <C-/> 在vim中由C-_表示
+nnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>j
+inoremap <C-_> <ESC>:call nerdcommenter#Comment('n', 'toggle')<CR>j
+vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
+
+nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
+
+" execute "set <M-_>=\e_"
+" nnoremap <M-_> yyp
+
 " 好慢：
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
 " nnoremap - :k<plug>nerdcommentertoggle<cr>
@@ -430,13 +438,22 @@ set pastetoggle=<F9>
 
 " block模式
 " As far as Vim is concerned, <C-M> and <CR> 一样
-" <C-q>用不了，可能是kite占用了
+" <C-q>用不了，可能是kite占用了  [好像又能用了]
 " 记忆：c for block c发音:ke
 nnoremap <C-c> <C-v>
-inoremap <C-c> <Esc><C-V>
+inoremap <C-c> <C-v>
+
+" pressing  Ctrl[   will usually get you the equivalent of pressing Esc.
+" *i_CTRL-V*
+" CTRL-V	Insert next non-digit `literally`.  For special keys, the
+"         terminal code is inserted.  
+"         The characters typed right after CTRL-V are not considered for
+"         mapping.
+"
+" *i_CTRL-Q*
+" CTRL-Q		Same as CTRL-V.
 
 
-nnoremap <C-F> /
 
 " 这两个都不行， airblade/vim-rooter也不行了
 " :lcd吧
@@ -627,12 +644,6 @@ nnoremap - :call nerdcommenter#Comment('n', 'toggle')<CR>k
 
 " 这行 不行:
 " nnoremap = :call <Plug>NERDCommenterInvert<CR>
-
-" <C-/> 在vim中由C-_表示
-nnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
-inoremap <C-_> <ESC>:call nerdcommenter#Comment('n', 'toggle')<CR>j
-vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
-
 
 
 " 按一次z要等一会才退出， 不如连续按2次快
