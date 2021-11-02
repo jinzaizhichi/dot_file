@@ -87,11 +87,10 @@ autoload -U colors && colors
 
 
 
-
 # [[==================================zsh插件管理：zplug=================================
-export ZPLUG_HOME=$HOME/dot_file/zplug
+export ZPLUG_HOME=$HOME/.zplug
 source $ZPLUG_HOME/init.zsh
-export ZPLUG_LOADFILE=$HOME/dot_file/zplug/zplug_loadfile.sh
+# export ZPLUG_LOADFILE=$ZPLUG_HOME/zplug_loadfile.sh
 
 # use double quotes
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
@@ -127,8 +126,8 @@ if ! zplug check --verbose; then
     fi
 fi
 
-zplug load     # source plugins and add commands to $PATH
-# zplug load --verbose
+# zplug load     # source plugins and add commands to $PATH
+zplug load --verbose
 
 # zplug update  #需要时，自己敲
 # ==================================zsh插件管理：zplug=================================]]
