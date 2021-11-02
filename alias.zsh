@@ -725,9 +725,9 @@ else
     alias -s cfg=code
 fi
 
-alias ai='apt -q install'
-alias apt='apt -q -y'
-alias apt-get='apt -q -y'
+alias ai='sudo apt install'
+alias apt='sudo apt'
+alias apt-get='apt'
 
 
 # unix software resoure python
