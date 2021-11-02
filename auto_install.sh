@@ -94,6 +94,7 @@ yes |(mv ~/.config/ ~/.old_config ;  ln -s ~/dot_file/.config ~)
 yes |(cp ~/dot_file/local_template_zshrc.zsh ~/.zshrc )
 
 
+
 # 不知道和github下载的nvim是否冲突
 ai python-neovim
 ai python3-neovim
@@ -174,4 +175,9 @@ pip install -r pip_useful_tool.txt  \n
 pip uninstall pynvim  \n'
 
 git config --global credential.helper store
+
+export ZPLUG_HOME=$HOME/.zplug                                                                                                                                                                                   export ZPLUG_CACHE_DIR=$ZPLUG_HOME/.cache  # 默认就是这样
+export ZPLUG_REPOS=$ZPLUG_HOME/repos  # 默认就是这样
+git clone https://github.com/zplug/zplug $ZPLUG_HOME
+
 zsh
