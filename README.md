@@ -12,9 +12,10 @@
  
 
 
+
  ---
 
-## Just for Backup
+## All Other Content is Just for Backup
 1. 【已修复】ctrl R 一直是tmux的reload的快捷键，改了~/.tmux.conf还是不行，导致vim中用不了ctrl R
 2. Something strange:    
  And in `~/.zshrc`, I write `source ~/dot_file/.zshrc` then `export PS1="@ "  `    
