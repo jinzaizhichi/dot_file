@@ -303,7 +303,8 @@ call plug#end()
 
 " [[----------------------------nerdcommenter-config-------------------------------begin
 " g代表Global Variable
-let g:NERDCreateDefaultMappings = 1
+let g:NERDCreateDefaultMappings = 0    " 别用默认的键位
+
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters
 let g:NERDCompactSexyComs = 1 " Use compact syntax for  multi-line comments
 " Align line-wise comment delimiters flush left instead of following code indentation
@@ -315,6 +316,7 @@ let g:NERDCommentEmptyLines = 1  " Allow commenting and inverting empty lines (u
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDToggleCheckAllLines = 1 " check all selected lines is commented or not
 
+" 对vscode无效,不知道为啥
 " <C-/> 在vim中由C-_表示
 nnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>j
 inoremap <C-_> <ESC>:call nerdcommenter#Comment('n', 'toggle')<CR>j
