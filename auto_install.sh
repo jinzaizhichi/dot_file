@@ -89,7 +89,8 @@ curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --c
 locale-gen zh_CN.UTF-8
 rm -f /etc/localtime &&  ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 mkdir ~/.cache
-yes |(mv ~/.tmux ~/.tmux_bk ; ln -s ~/dot_file/tmux ~/.tmux)
+# yes |(mv ~/.tmux ~/.tmux_bk ; ln -s ~/dot_file/tmux ~/.tmux)
+yes |(mv ~/.tmux ~/.tmux_bk)
 yes |(mv ~/.config/ ~/.old_config ;  ln -s ~/dot_file/.config ~)
 yes |(cp ~/dot_file/local_template_zshrc.zsh ~/.zshrc )
 

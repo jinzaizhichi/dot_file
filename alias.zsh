@@ -298,8 +298,6 @@ l(){
 
 # 改变目录后 自动ls
 list_all_after_cd() {
-    # if [[ $PWD != '/home/' ]]; then
-    print -Pn "\e]2;%~\a" #在terminal的tittle显示路径
 
     # to make your zsh script portable and reliable :
     # use zsh's `built-in features` over calling an `external program`
@@ -313,14 +311,15 @@ list_all_after_cd() {
     $HOME/dot_file/exa/bin/exa \
         --long \
         --classify \
-        --colour auto \
+        --colour=always \
         -F  \
+        --group-directories-first  \
         --header  \
         --no-user  \
         --no-permissions  \
-        --no-filesize \
         --sort=time  \
-        --time-style=default | tail -8
+        --time-style=iso  | \
+        tail -8
 
     # \ls -gGhtrFB --color=always --classify $* | cut -c 14- | tail -5
     tmp=$((`\ls -l | wc -l`-1-8)) #文件总数: `\ls -l | wc -l`-1
@@ -610,20 +609,46 @@ alias ml='matlab -nosplash -nodesktop'
 alias do='cd ~/dot_file/'
 #不记得当时为啥加了这个
 #alias sudo=''
-alias va='cd ~/dot_file ; git pull ; code ~/dot_file/auto_install.sh ; git add . ;git config --global user.email liuweifengemail@163.com ; git config --global user.name sisrfeng ; git commit -m "wf" ; git push ; cd -'
-alias vb='cd ~/dot_file ; git pull ; code ~/dot_file/alias.zsh ; git add . ;git config --global user.email liuweifengemail@163.com ; git config --global user.name sisrfeng ; git commit -m "wf" ; git push ; cd -;zsh'
 alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux_tools_wf/tmux.conf; sy'
 
-# i for init.vim
-alias ji='code ~/dot_file/.config/nvim/init.vim; echo '改配置后记得sync' '
-# 想改成vi ，但vi本来打开neovim
-alias vr='cd ~/dot_file ; git pull ; code ~/dot_file/.config/nvim/init.vim ; git add . ;git config --global user.email liuweifengemail@163.com ; git config --global user.name sisrfeng ; git commit -m "wf" ; git push ; cd -;zsh'
 
 alias jt='code ~/dot_file/tmux_tools_wf/tmux.conf; echo "改配置后记得sync"'
 # alias js='code ~/dot_file/spacevim_conf.vim; echo '改配置后记得sync''
 alias s='code ~/dot_file/rc.zsh ; zsh'
-alias jb='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
+va(){
+    cd ~/dot_file 
+    git pull 
+    code ~/dot_file/auto_install.sh 
+    git add . 
+    git commit -m "wf" 
+    git push 
+    cd -
+}
 alias ja='code ~/dot_file/auto_install.sh; echo '改配置后记得sync''
+
+vb(){
+    cd ~/dot_file 
+    git pull 
+    code ~/dot_file/alias.zsh 
+    git add . 
+    git commit -m "wf" 
+    git push 
+    cd -;zsh
+}
+alias jb='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
+
+sycn_init(){
+    cd ~/dot_file 
+    git pull 
+    code ~/dot_file/.config/nvim/init.vim
+    git add . 
+    git commit -m "wf" 
+    git push 
+    cd -;zsh
+}
+# i for init.vim
+alias ji='code ~/dot_file/.config/nvim/init.vim; echo '记得sync' '
+# 想改成vi ，但vi本来打开neovim
 
 
 #同步
@@ -839,7 +864,6 @@ alias apt-get='apt'
 # alias up='/usr/bin/python'
 
 # 函数开头, 比如下面的echo, 前少了空格，在用这个alias时，报错zsh: parse error near `}
-alias ma='mail(){ echo "done" | mutt -s "$1" 584400706@qq.com;}; mail'
 
 # 方法名后面可以有多个空格
 # 括号内可以有多个空格
@@ -850,3 +874,5 @@ alias ma='mail(){ echo "done" | mutt -s "$1" 584400706@qq.com;}; mail'
 
 #变量名=$(命令名)
 #result=$(password_formula)
+#
+# print -Pn "\e]2;%~\a" #在terminal的tittle显示路径

@@ -1,4 +1,4 @@
-
+" 改了后直接这样，不用退出再打开：echo "source init.vim"
 " echo "vscode-nvim用的是wsl下的dot_file的init.vim"
 
 
@@ -73,7 +73,7 @@ if exists('g:vscode')
     " nnoremap zz ZZ
     "echo 'wf: using vscode-neovim '
 else
-    " echo '没在用 vscode-neovim, only nvim'
+    " echo '没在用 vscode-neovim, 纯 nvim'
     " 有些内容可能可以复制到vscode-nvim中用
     
     nnoremap <F8> :call HideNumber()<CR>  " 8 for byebye number
@@ -338,7 +338,7 @@ vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
 
 
 " let g:NERDCreateDefaultMappings = 0  " 之前设为1，导致vscode用不了nerdcommenter?
-nnoremap ce A<space><space><Esc>o/<Esc>:call nerdcommenter#Comment('n', 'toggle')<CR>kJA
+nnoremap ce A<space><space><Esc>o/<Esc>:call nerdcommenter#Comment('n', 'toggle')<CR>kJA<BS>
 
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 
@@ -851,7 +851,6 @@ set showmode
 " 在上下移动光标时，光标的上方或下方至少会保留显示的行数
 " set scrolloff=7
 
-" set winwidth=79
 
 
 " set statusline=
@@ -1094,8 +1093,6 @@ nnoremap <C-E> $
 " ysaptli> to surround a paragraph with an <li> tag (ys{motion}{char})
 " You can also use vim-surround by selecting a bit of text in visual mode and then using S{desired character}
 
-" 自动换行是每行超过 n 个字的时候 , vim 自动加上换行符用。最好别用，坑
-" set textwidth=30
 
 nnoremap  cb O'''<Esc>Go'''<Esc>
 inoremap  cb '''<Esc>Go'''<Esc><C-o>i
@@ -1109,3 +1106,5 @@ inoremap  cb '''<Esc>Go'''<Esc><C-o>i
 " highlight QuickScopePrimary guifg='#7cbd3c80' gui=underline ctermfg=155 cterm=underline
 " highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
 
+" 自动换行是每行超过 n 个字的时候 , vim 自动加上换行符用。最好别用，坑?
+set textwidth=100  " 没起作用
