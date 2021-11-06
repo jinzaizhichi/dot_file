@@ -667,14 +667,13 @@ docker start $1 ; docker exec -it $1 zsh
 #  这样会一直卡着: echo `docker exec -it $1 zsh`
 }
 
-find_a_file(){
+f(){
     find . \
     -path '/d/docker' -prune -o  \
     -path '~/.t' -prune -o       \
     -path '/proc' -prune -o      \
     -name "*$1*"  |  bat
 }
-alias f=find_a_file
 
 # /proc写成/proc/据说不行
 alias f/='f_2(){ find / -path '/proc' -prune -o -path '/proc' -prune -o  -name "*$1*" | grep $1;}; f_2'
@@ -698,7 +697,16 @@ th(){ touch $1.n }
 
 alias fsh-alias=fast-theme
 alias ftp='noglob ftp'
-alias gc='echo "using proxy>>> ${ALL_PROXY}" ; dl ; git clone'  # dl for  dai li
+gc(){
+    if [[ -z ${ALL_PROXY} ]]; then  # -z: 看是否empty
+        echo '没开代理'
+    else
+        echo '代理：'
+        echo ${ALL_PROXY}
+    fi
+    echo $1 $2 $3
+    git clone $1 $2
+}
 alias gcc='nocorrect gcc'
 alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
 alias gist='nocorrect gist'

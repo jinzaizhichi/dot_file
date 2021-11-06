@@ -212,6 +212,13 @@ fi
 dis_tmux(){
     export DISPLAY=$(cat ~/.t/display.txt) # todo DISPLAY还是空白
 }
+dis_tmux
+
+if [[ -z  $DISPLAY ]]; then
+   echo "if DISPLAY isn't set, it's no use setting it manually"
+fi
+
+
 
 # pip zsh completion start
 function _pip_completion {

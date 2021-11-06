@@ -1,5 +1,7 @@
 
-echo "vscode-nvim用的是wsl下的dot_file的init.vim"
+" echo "vscode-nvim用的是wsl下的dot_file的init.vim"
+
+
 " 这样可以 不那么死板地 只能用~/AppData/Local/nvim/init.vim来进入windows的nvim, 从而管理插件(
     " windows的nvim和vscode的nvim共用): 
 "nvim -u '\\wsl$\Ubuntu\root\dot_file\.config\nvim\init.vim'
@@ -10,6 +12,8 @@ echo "vscode-nvim用的是wsl下的dot_file的init.vim"
 
 " todo:  有些粘贴来的配置，应该要清理掉
 
+
+" 【【-----------------------------------------------------------begin
 " Return to last edit position when opening files 
 " 有bug: autocmd BufReadPost * normal! g`"zv
 "  normal! 表示 Execute Normal mode commands,   If the [!] is given, mappings will not be used.
@@ -22,6 +26,7 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"zv" |
      \ endif
+" end-------------------------------------------------------------】】
 
 
 " map 默认是recursive的
@@ -68,7 +73,7 @@ if exists('g:vscode')
     " nnoremap zz ZZ
     "echo 'wf: using vscode-neovim '
 else
-    echo '没在用 vscode-neovim, only nvim'
+    " echo '没在用 vscode-neovim, only nvim'
     " 有些内容可能可以复制到vscode-nvim中用
     
     nnoremap <F8> :call HideNumber()<CR>  " 8 for byebye number
@@ -266,7 +271,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'sagarrakshe/toggle-bool'
+Plug 'sisrfeng/toggle-bool'
 noremap <leader>r :ToggleBool<CR>
 " nnoremap <F2> cawTrue<ESC>
 " nnoremap <F3> cawFalse<ESC>
@@ -544,11 +549,13 @@ set autowrite
 
 " mswin.vim会导致visual mode 光标所在字符不被选中
 " source ~/dot_file/mswin.vim
-" ---------------------------------------msvim-------------------------------
+" [[---------------------------------------msvim-------------------------------
+
 "其他地方实现了。
 "Use the + register (clipboard) :   "+g
 "gP : paste before the current position, placing the cursor after the new text.
-"nnoremap <C-V> "+gP
+nnoremap <C-V> "+gP
+set clipboard+=unnamedplus
 
 
 " Use CTRL-S for saving,
@@ -570,7 +577,7 @@ inoremap <C-Z> <C-O>u
 noremap <C-Y> <C-R>
 inoremap <C-Y> <C-O><C-R>
 
-" ---------------------------------------msvim-------------------------------
+" ---------------------------------------msvim-------------------------------]]
 
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
 if &diff
@@ -589,7 +596,6 @@ noremap <F5> <ESC>oimport pudb<ESC>opu.db
 " 不指定模式，只在normal中生效，insert moed不生效
 inoremap <F5> <ESC>oimport pudb<ESC>opu.db
 
-set clipboard+=unnamedplus
 " 定义函数AutoSetFileHead，自动插入文件头
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
 function! AutoSetFileHead()
