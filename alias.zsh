@@ -1,4 +1,5 @@
-
+alias grep='grep --color=always'
+alias gr='grep'
 cj(){
     jq -C "" $1 |less -R 
 }
@@ -99,19 +100,61 @@ alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path
 
 # -----------------------------------------------------------------mt()---------------------------------------
 # -print0: uses a null character to split file names, and
-# -0:  uses it as delimiter
+# --null 或者 -0： expect NUL characters as input separators
 # stat --format ''
 # %y :  time of last data `modification`
-mt_leo_func(){ find $1 -type f -print0 | xargs -0 stat --format '%y 改%n' | sort -nr | head -15 | cut --delimiter=' ' --fields=1,2,4 | tac | grep :;  }
-alias mt=mt_leo_func
+# tac  倒着列出
+# %y表示  `modify time`
+mt(){ 
+    # %y得到的  +0800表示东八区
+    find $1 -type f -print0 | xargs --null stat --format '%y 改 %n'  | \
+    sort --numeric-sort --reverse | \
+    head -100 | \
+    cut --delimiter=' ' --fields=1,2,4 | \
+    tac | \
+    awk -F " " \
+    '{OFMT="%.6f" ; \
+    print NR"】", \
+    $1,           \
+    " ",          \
+    $2,           \
+    " ",          \
+    $3            \
+    }'  | bat   # 这里不能用双引号代替单引号
+    # date --date="${UglyTime}"  +"%Y年%m月%d日 %X"` | \
+    # PrettyTime=`date --date="${UglyTime}"  +"%Y年%-m月%-d日 %X"
+    # \grep : --color=always
+}
 # access time
-access_time_leo_func(){ find $1 -type f -print0 | xargs -0 stat --format '%x 读%n' | sort -nr | head -15 | cut --delimiter=' ' --fields=1,2,4 | tac | grep :;  }
-alias a_t=access_time_leo_func
-# alias mt="modified_time(){ find $1 -type f -print0  -printf '%Cm月%Cd日   %CH:%CM:%CS    %s         %f \n'   | sort -nr | cut -d: -f2- | head -15 | tac ;  }; modified_time"
-# alias st='find -type f | xargs stat --format "modify时间: %y 文件:%n" | sort -nr |cut -d " " -f 1,2,3,5 | head -20 | tac'
+at(){
+    find $1 -type f -print0 | xargs --null stat --format '%x Acess%n'  | \
+    sort --numeric-sort --reverse | \
+    head -100 | \
+    cut --delimiter=' ' --fields=1,2,4 | \
+    tac | \
+    awk -F " " \
+    '{OFMT="%.6f" ; \
+    print NR"】", \
+    $1,           \
+    " ",          \
+    $2,           \
+    " ",          \
+    $3            \
+    }' | bat    # 这里不能用双引号代替单引号
+}
+
 # | cut -d: -f2-
-# todo mt现在输出的垃圾消息有点多,可以考虑：
+#  百分号加字母，在不同命令有不同含义。表示时间时，有些时候不同命令某些程度上一致
+#   Convert a specific date to the Unix timestamp format
+# date --date="某个表示时间的字符串" '+%格式代码' 
+# 例如：
+# date --date="1may" '+%m%d'
+# date --date="may1" '+%m月%d日  没加百分号的字符 随便写'
+#‘-’ : suppress the padding altogether:
+# date --date="may1" '+%-m月%-d日'
+#
 # echo "$(stat -c '%n %A' $filename) $(date -d "1970-01-01 + $(stat -c '%Z' $filename ) secs"  '+%F %X')"
+# %Y     time of last data modification, seconds since Epoch
 # -----------------------------------------------------------------mt()---------------------------------------
 
 alias vsc='code'
@@ -193,53 +236,64 @@ lf(){
     $HOME/dot_file/exa/bin/exa \
     --long \
     --classify \
-    --colour auto \
+    --colour=always \
     -F  \
     --group-directories-first  \
     --header  \
     --no-user  \
     --no-permissions  \
     --sort=time  \
-    --time-style=default
+    --time-style=iso | bat
+
     tmp=$((`\ls -l | wc -l`-1))
     echo "共：${tmp}"
 }
 
-alias l="$HOME/dot_file/exa/bin/exa \
+l(){
+    $HOME/dot_file/exa/bin/exa \
     --long \
     --classify \
-    --colour auto \
+    --colour=always \
     -F  \
     --group-directories-first  \
     --header  \
     --no-user  \
     --no-permissions  \
     --sort=time  \
-    --time-style=default"
+    --time-style=iso  | \
+    tail -25 
 
-# [[===========================================================================被替代了,先放这儿
-# alias l=leo_func_ls
-#写成l()会报错。可能和built-in冲突了
-leo_func_ls(){
-    # --classify:   append indicator (one of */=>@|) to entries
-    #-g  -l时不显示用户名
-    \ls -g -htrF \
-        --no-group \
-        --color=always --classify $* \
-        | cut -c 14- \
-        | tail -25 \
-        | sed 's/月  /月/' \
-        # | sed 's/月 /月_/' \
-        # | ag ':'
-        # | ag ':' --colour=always \
     tmp=$((`\ls -l | wc -l`-1))
-	if [   $tmp     -lt      25 ]
-	then
+	if [   $tmp     -lt      25 ];  then
 		echo "--------------"
 	else
         echo "--------文件数：25/${tmp}---------"
 	fi
 }
+
+# [[===========================================================================被替代了,先放这儿
+# alias l=leo_func_ls
+#写成l()会报错。可能和built-in冲突了
+# leo_func_ls(){
+#     # --classify:   append indicator (one of */=>@|) to entries
+#     #-g  -l时不显示用户名
+#     \ls -g -htrF \
+#         --no-group \
+#         --color=always --classify $* \
+#         | cut -c 14- \
+#         | tail -25 \
+#         | sed 's/月  /月/' \
+#         # | sed 's/月 /月_/' \
+#         # | ag ':'
+#         # | ag ':' --colour=always \
+#     tmp=$((`\ls -l | wc -l`-1))
+#     if [   $tmp     -lt      25 ]
+#     then
+#         echo "--------------"
+#     else
+#         echo "--------文件数：25/${tmp}---------"
+#     fi
+# }
 # [[===========================================================================被替代了,先放这儿
 
 # 改变目录后 自动ls
@@ -463,12 +517,11 @@ alias vim='~/dot_file/nvim.appimage -u ~/dot_file/.config/nvim/init.vim'
 alias v='code'
 alias vp='code'   #p wf_run.py 跳到开头加个v，不用删p就能编辑
 
-alias gr='grep'
-ec(){
-    tmp=$1
-    echo ${$tmp}
-}
-# alias ec='echo'
+# ec(){
+#     tmp=$1
+#     echo ${$tmp}
+# }
+alias ec='echo'
 
 alias sc='scp'
 alias scp='scp -r'
@@ -651,7 +704,6 @@ alias get='curl --continue-at - --location --progress-bar --remote-name --remote
 alias gist='nocorrect gist'
 # alias git='pro &&  git'
 alias globurl='noglob urlglobber '
-alias grep='grep --color=always'
 alias hl='f_hl(){ du -sh $1* | sort -h; }; f_hl'
 alias ht='houtai(){ nohup  >$1 2>&1 &; }; houtai'
 alias http-serve='python3 -m http.server'
