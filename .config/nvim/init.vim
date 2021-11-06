@@ -1,3 +1,4 @@
+
 echo "vscode-nvim用的是wsl下的dot_file的init.vim"
 " 这样可以 不那么死板地 只能用~/AppData/Local/nvim/init.vim来进入windows的nvim, 从而管理插件(
     " windows的nvim和vscode的nvim共用): 
@@ -22,6 +23,18 @@ autocmd BufReadPost *
      \   exe "normal! g`\"zv" |
      \ endif
 
+
+" map 默认是recursive的
+"set wrap 后，同物理行上线直接跳。
+if exists('g:vscode')
+    nmap j gj
+    nmap k gk
+else
+    nnoremap j gj
+    nnoremap k gk
+endif
+
+
 if has('win32')
     " echo 'leo: 正在用win32，win32表示 32 or 64 bit的windows'
     let g:python3_host_prog = "F:\\python39\\python.exe"  " ToggleBool会用到
@@ -39,7 +52,9 @@ autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()"
 
 
 if exists('g:vscode')
-    " set MYVIMRC = "C:\Users\noway\AppData\Local\nvim\init.vim"
+    " 不行：
+    " nnoremap gk :<C-u>call VSCodeCall('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR> 
+    " nnoremap gj :<C-u>call VSCodeCall('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
     highlight OperatorSandwichBuns guifg='#aa91a0' gui=underline ctermfg=172 cterm=underline
     highlight OperatorSandwichChange guifg='#edc41f' gui=underline ctermfg='yellow' cterm=underline
     highlight OperatorSandwichAdd guibg='#b1fa87' gui=none ctermbg='green' cterm=none
@@ -68,14 +83,8 @@ else
         set number?
     endfunc
 
-    set wrap    " vscode里设置了不wrap
+    set wrap    " vscode里, 要在setting.json设置warp
 
-    "set wrap 后，同物理行上线直接跳。vscode中不行
-    nnoremap k gk
-    nnoremap gk k
-
-    nnoremap j gj
-    nnoremap gj j
 
     nnoremap <F4> :UndotreeToggle<CR>
     " [[==============================缩进==============================
@@ -177,7 +186,7 @@ nnoremap yf ggyG<C-O>
 " p后面一般没有参数，所以pf不好。选中全文，一般只是为了替换。所以vf选中后，多了p这一步
 nnoremap vf ggVGp
 " comment at the end of line
-nnoremap ce A<space><space>#<space>
+ 
 
 " vscode里失灵了:
 " inoremap yf <Esc>ggyG<C-O>"
@@ -321,10 +330,14 @@ let g:NERDToggleCheckAllLines = 1 " check all selected lines is commented or not
 nnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>j
 inoremap <C-_> <ESC>:call nerdcommenter#Comment('n', 'toggle')<CR>j
 vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
-" 哪里map了<leader>cc ?
+
+
+" let g:NERDCreateDefaultMappings = 0  " 之前设为1，导致vscode用不了nerdcommenter?
+nnoremap ce A<space><space><Esc>o/<Esc>:call nerdcommenter#Comment('n', 'toggle')<CR>kJA
 
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 
+ 
 
 " 好慢：
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
