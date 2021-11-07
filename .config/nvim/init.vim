@@ -174,9 +174,12 @@ else
 
 endif
 
-nnoremap yf ggyG<C-O>
+
+nnoremap yf ggyG<C-O>  " 让光标看着没动
+nnoremap df ggdG
 " p后面一般没有参数，所以pf不好。选中全文，一般只是为了替换。所以vf选中后，多了p这一步
 nnoremap vf ggVGp
+
 " comment at the end of line
  
 

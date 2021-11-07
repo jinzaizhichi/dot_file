@@ -476,8 +476,10 @@ alias pid='ps -aux |grep -v grep|grep'
 #$ echo "$((20+5/2))"
 #22
 
-alias ctp='code ~/d/tmp.py'
-alias tp='vim ~/d/tmp.py'
+# edit tempt
+alias et='vim ~/d/tmp.py'
+# code edit tempt
+alias cet='code ~/d/tmp.py'
 # try tempt
 alias tt='python ~/d/tmp.py'
 # bd : 本地
