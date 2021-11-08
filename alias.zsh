@@ -507,10 +507,8 @@ alias oc='_oc(){ g++ -g $* -o ${1%.*} `pkg-config --cflags --libs opencv` ; ./${
 # oc demo.cpp draw.h draw.cpp
 # ./demo
 
-alias vi='~/dot_file/nvim.appimage -u ~/dot_file/.config/nvim/init.vim'
-alias vim='~/dot_file/nvim.appimage -u ~/dot_file/.config/nvim/init.vim'
-
-
+alias vi='~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim'
+alias vim='~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim'
 
 alias v='code'
 alias vp='code'   #p wf_run.py 跳到开头加个v，不用删p就能编辑

@@ -168,7 +168,7 @@ else
     endfun
     autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
-    let g:airline_theme='solarized'
+    let g:airline_theme='papercolor'
     if &diff
         " colorscheme github
         set cursorline
@@ -581,7 +581,7 @@ inoremap <C-Y> <C-O><C-R>
 
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
 if &diff
-    colorscheme one
+    colorscheme solarized
     set cursorline
     " 反应变慢，不好
     " map ] ]c
