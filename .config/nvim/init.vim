@@ -72,11 +72,12 @@ if exists('g:vscode')
     " 不行
     " nnoremap zz ZZ
     "echo 'wf: using vscode-neovim '
+    
 else
     " echo '没在用 vscode-neovim, 纯 nvim'
-    " 有些内容可能可以复制到vscode-nvim中用
     
-    nnoremap <F8> :call HideNumber()<CR>  " 8 for byebye number
+    " nnoremap <F8> :call HideNumber()<CR>  " 记忆：  8 : byebye number
+    nnoremap <F8> :echo 'wfwfwf'
     function! HideNumber()
         if(&relativenumber == &number)
             set relativenumber! number!
@@ -89,7 +90,6 @@ else
     endfunc
 
     set wrap    " vscode里, 要在setting.json设置warp
-
 
     nnoremap <F4> :UndotreeToggle<CR>
     " [[==============================缩进==============================
@@ -168,19 +168,6 @@ else
     endfun
     autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
-    let g:airline_theme='papercolor'
-    if &diff
-        " colorscheme github
-        set cursorline
-
-        " 反应变慢，不好
-        " map ] ]c
-        " map [ [c
-
-        hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
-        hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
-        hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
-    endif
 
     " 要在设定颜色主题后面，覆盖颜色主题里面的设置
     highlight  Search cterm=NONE ctermfg=white ctermbg=gray
@@ -271,7 +258,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+Plug 'NLKNguyen/papercolor-theme'
+
+
 Plug 'sisrfeng/toggle-bool'
+
 noremap <leader>r :ToggleBool<CR>
 " nnoremap <F2> cawTrue<ESC>
 " nnoremap <F3> cawFalse<ESC>
@@ -579,17 +570,33 @@ inoremap <C-Y> <C-O><C-R>
 
 " ---------------------------------------msvim-------------------------------]]
 
+" Theme Settings    主题设置
+" hi! link SignColumn     LineNr
+" hi! link ShowMarksHLl DiffAdd
+" hi! link ShowMarksHLu DiffChange
+set background=light
+colorscheme PaperColor
+let g:airline_theme='papercolor'
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+
+
 if &diff
-    colorscheme solarized
+    " colorscheme quietlight
+    colorscheme PaperColor  " 其实默认就和 if &diff外设置的主题一致
     set cursorline
+
     " 反应变慢，不好
     " map ] ]c
     " map [ [c
+
     " hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
     " hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
     " hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
 endif
+
 
 
 noremap <F5> <ESC>oimport pudb<ESC>opu.db
@@ -714,7 +721,7 @@ set cmdheight=2
 set fdm=indent
 
 " todo
-" set termguicolors   " Nvim emits true (24-bit) colours in the terminal, if 'termguicolors' is set.
+set termguicolors   " Nvim emits true (24-bit) colours in the terminal, if 'termguicolors' is set.
 
 set cursorline
 " hi CursorLine cterm=NONE ctermbg=NONE
@@ -736,7 +743,6 @@ endif
 set title
 set mouse=a
 syntax enable
-set background=light
 
 set nocompatible  " 别兼容老的vi
 set backspace=indent,eol,start
@@ -771,7 +777,6 @@ set fencs=utf8,gbk,gb2312,gb18030
 "               -> Others 其它配置
 "               -> HotKey Settings  自定义快捷键
 "               -> 针对文件类型的设置
-"               -> Theme Settings  主题设置
 "
 "               -> 插件配置和具体设置在vimrc.bundles中
 
@@ -917,12 +922,12 @@ set foldlevel=99
 
 " 防止tmux下vim的背景色显示异常
 " Refer: http://sunaku.github.io/vim-256color-bce.html
-if &term =~ '256color'
-    " disable Background Color Erase (BCE) so that color schemes
-    " render properly when inside 256-color tmux and GNU screen.
-    " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-    set t_ut=
-endif
+" if &term =~ '256color'
+    " set t_ut=
+            " disable Background Color Erase (BCE) so that color schemes
+            " render properly when inside 256-color tmux and GNU screen.
+            " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+" endif
 
 "==========================================
 " FileEncode Settings 文件编码,格式
@@ -1066,10 +1071,6 @@ endif
 
 " https://dougblack.io/words/a-good-vimrc.html
 "==========================================
-" Theme Settings    主题设置
-hi! link SignColumn     LineNr
-hi! link ShowMarksHLl DiffAdd
-hi! link ShowMarksHLu DiffChange
 
 " 防止错误整行标红 导致看不清
 " highlight clear SpellBad

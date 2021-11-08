@@ -166,10 +166,10 @@ alias his='noglob history -i 1000 | bat'
 alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | head -n 30'
 
 a(){
-echo "需要转义的字符：'#'等"
+echo "需要转义的字符：# , - 等"
 echo "这里指定的类型不搜: '~/dot_file/ag_ignore_pattern/.ignore' "
 # cat ~/dot_file/ag_ignore_pattern/.ignore
-echo "======================================"
+echo "========="
 echo " "
 nocorrect ag \
 --before=2  \
@@ -183,6 +183,7 @@ nocorrect ag \
 --path-to-ignore ~/dot_file/ag_ignore_pattern/.ignore \
 --silent   \
 "$*"
+# $*表示所有参数, *不表示 常见的shell字符通配
 # "$*" | bat  # # 不能保留颜色高亮
 }
 
@@ -243,7 +244,7 @@ lf(){
     --no-user  \
     --no-permissions  \
     --sort=time  \
-    --time-style=iso | bat
+    --time-style=iso $1 | bat
 
     tmp=$((`\ls -l | wc -l`-1))
     echo "共：${tmp}"
@@ -260,7 +261,7 @@ l(){
     --no-user  \
     --no-permissions  \
     --sort=time  \
-    --time-style=iso  | \
+    --time-style=iso  $1 | \
     tail -25 
 
     tmp=$((`\ls -l | wc -l`-1))

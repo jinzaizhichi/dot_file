@@ -79,6 +79,17 @@ autoload -Uz run-help-ip # -z  | mark function for zsh-style autoloading
 autoload run-help-git
 
 export TERM="xterm-256color" # Enable 256 color to make auto-suggestions look nice
+# export TERM="xterm-truecolor"   # 报错 
+
+# 如果终端支持truecolor, 用之
+case $TERM in
+  iterm            |\
+  linux-truecolor  |\
+  screen-truecolor |\
+  tmux-truecolor   |\
+  xterm-256color  )    export COLORTERM=truecolor ;;
+  vte*)
+esac
 
 fpath=(~/dot_file/zfunc_in_fpath_leo $fpath)  # zfunc_in_fpath_leo用于存放自动补全命令  要在compinit之前. 
 autoload -U compinit # -U : suppress alias expansion for functions
