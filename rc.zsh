@@ -24,8 +24,10 @@ export PYTHONSTARTUP=$HOME/dot_file/leo_python_startup.py
 export PAGER='bat --theme="Coldark-Cold"' # 导致下面的v无效，“can not 修改stdin啥的”
 
 # less 敲v，先找VIUSAL指定的编辑器，没有再找EDITOR
-export VISUAL=vim  # vscode不行
-# export EDITOR=vim
+# pudb 敲ctrl E能用EDITOR打开文件编辑
+export VISUAL=~/dot_file/nvim-linux64/bin/nvim  # vscode不行
+export EDITOR=~/dot_file/nvim-linux64/bin/nvim   # 不用加-u 指定init.vim 因为默认就在~/.config/下
+# export EDITOR="~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim"
 
 export LOGURU_FORMAT="{time} | <lvl>{message}</lvl>"
 
@@ -78,15 +80,15 @@ autoload -Uz run-help
 autoload -Uz run-help-ip # -z  | mark function for zsh-style autoloading
 autoload run-help-git
 
-export TERM="xterm-256color" # Enable 256 color to make auto-suggestions look nice
+# export TERM="xterm-256color" # Enable 256 color to make auto-suggestions look nice
 # export TERM="xterm-truecolor"   # 报错 
 
 # 如果终端支持truecolor, 用之
 case $TERM in
   iterm            |\
   linux-truecolor  |\
-  screen-truecolor |\
-  tmux-truecolor   |\
+  screen-256color |\
+  tmux-256color   |\
   xterm-256color  )    export COLORTERM=truecolor ;;
   vte*)
 esac

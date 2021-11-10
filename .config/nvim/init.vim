@@ -329,8 +329,8 @@ vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
 
 
 " let g:NERDCreateDefaultMappings = 0  " 之前设为1，导致vscode用不了nerdcommenter?
-nnoremap ce A<space><space><Esc>o/<Esc>:call nerdcommenter#Comment('n', 'toggle')<CR>kJA<BS>
-
+nnoremap ce A<space><space><Esc>o/<Esc>:call nerdcommenter#Comment("n", "Comment")<CR>kJA<BS>
+  
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 
  
@@ -339,7 +339,8 @@ nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
 " nnoremap - :k<plug>nerdcommentertoggle<cr>
 " 这行不行:
-" nnoremap = :call <Plug>NERDCommenterInvert<CR>
+" nnoremap = :call <Plug>NERDCommenterInvert<CR>  
+
 
 "let g:NERDDefaultNesting = 1
 " ---------------------------nerdcommenter-config----------------------------------end]]
@@ -600,7 +601,6 @@ endif
 
 
 noremap <F5> <ESC>oimport pudb<ESC>opu.db
-" 不指定模式，只在normal中生效，insert moed不生效
 inoremap <F5> <ESC>oimport pudb<ESC>opu.db
 
 " 定义函数AutoSetFileHead，自动插入文件头

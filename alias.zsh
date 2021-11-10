@@ -13,7 +13,7 @@ cj(){
 # # 敲`zsh 某.sh`时，这里的东西全都不起作用. 覆盖built-in命令也不怕翻车
 # alias r='~/.local/bin/tldr'  # pip安装的，比apt安装的显示好些 但不翻墙就有时连不上网。。。。。翻了也用不了....
 h(){
-    /usr/bin/tldr $1
+    /usr/bin/tldr $1 | bat
     # todo https://zsh.sourceforge.io/Doc/Release/Expansion.html#Parameter-Expansion-Flags
     # parameter expansion
     VAR="$(/usr/bin/tldr $1)" # 赋值时千万别写空格！！
@@ -22,8 +22,7 @@ h(){
         run-help $1
     fi
 }
-# alias r=tldr_help
-# 覆盖了built-in的r:    Same as fc -e -      重复你敲的上一条命令
+# built-in的r:    Same as fc -e -      重复你敲的上一条命令
 # help zshbuiltins 查看内置命令
 
 
@@ -107,7 +106,7 @@ alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path
 # %y表示  `modify time`
 mt(){ 
     # %y得到的  +0800表示东八区
-    find $1 -type f -print0 | xargs --null stat --format '%y 改 %n'  | \
+    find $1 -type f -print0 | xargs --null stat --format "%y 改%n"  | \
     sort --numeric-sort --reverse | \
     head -100 | \
     cut --delimiter=' ' --fields=1,2,4 | \
@@ -126,6 +125,7 @@ mt(){
     # \grep : --color=always
 }
 # access time
+# https://zhuanlan.zhihu.com/p/429228870  # atime不是很可靠
 at(){
     find $1 -type f -print0 | xargs --null stat --format '%x Acess%n'  | \
     sort --numeric-sort --reverse | \
@@ -166,7 +166,7 @@ alias his='noglob history -i 1000 | bat'
 alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | head -n 30'
 
 a(){
-echo "需要转义的字符：# , - 等"
+echo "需要转义的字符：# , . - 等"
 echo "这里指定的类型不搜: '~/dot_file/ag_ignore_pattern/.ignore' "
 # cat ~/dot_file/ag_ignore_pattern/.ignore
 echo "========="
@@ -508,15 +508,30 @@ alias oc='_oc(){ g++ -g $* -o ${1%.*} `pkg-config --cflags --libs opencv` ; ./${
 # oc demo.cpp draw.h draw.cpp
 # ./demo
 
-alias vi='~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim'
-alias vim='~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim'
+alias nvim='~/dot_file/nvim-linux64/bin/nvim'
+alias vi='~/dot_file/nvim-linux64/bin/nvim'
+alias vim='~/dot_file/nvim-linux64/bin/nvim'  # 不用加-u 指定 因为默认就在~/.config/下
+# alias vim='~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim'
 
 alias v='code'
 alias vp='code'   #p wf_run.py 跳到开头加个v，不用删p就能编辑
 
-# ec(){
-#     tmp=$1
-#     echo ${$tmp}
+# 用autohotkey敲\ec吧
+# ech(){
+#   涉及到变量替换, 搞了很久没成功
+    # printf $$1  # 输出3290431
+    # printf ${$1}
+    # echo $1>$HOME/.t/ec_leo_short_for_echo.txt
+
+    # cat $HOME/.t/ec_leo_short_for_echo.txt | echo ${}
+    # echo  ${"echo $1"}
+    
+    # if (( ${+$(VAR)} ))   #  看 VAR是否未设置
+    # then
+        # echo $(VAR)
+    # else
+        # echo "$1 未设置"
+    # fi
 # }
 alias ec='echo'
 
@@ -610,7 +625,9 @@ alias do='cd ~/dot_file/'
 alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux_tools_wf/tmux.conf; sy'
 
 
-alias jt='code ~/dot_file/tmux_tools_wf/tmux.conf; echo "改配置后记得sync"'
+# alias jt='code ~/dot_file/tmux_tools_wf/tmux.conf; echo "改配置后记得sync"'
+# tmux config
+alias tc='code ~/dot_file/tmux_tools_wf/tmux.conf; echo "改配置后记得sync"'
 # alias js='code ~/dot_file/spacevim_conf.vim; echo '改配置后记得sync''
 alias s='code ~/dot_file/rc.zsh ; zsh'
 va(){
@@ -622,7 +639,10 @@ va(){
     git push 
     cd -
 }
-alias ja='code ~/dot_file/auto_install.sh; echo '改配置后记得sync''
+
+# az: 安装an zhuang
+# alias ja='code ~/dot_file/auto_install.sh; echo '改配置后记得sync''
+alias az='code ~/dot_file/auto_install.sh; echo '改配置后记得sync''
 
 vb(){
     cd ~/dot_file 
@@ -633,7 +653,10 @@ vb(){
     git push 
     cd -;zsh
 }
-alias jb='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
+# alias jb='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
+# al: alias
+alias al='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
+# alias ali='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
 
 sycn_init(){
     cd ~/dot_file 
@@ -645,8 +668,8 @@ sycn_init(){
     cd -;zsh
 }
 # i for init.vim
-alias ji='code ~/dot_file/.config/nvim/init.vim; echo '记得sync' '
-# 想改成vi ，但vi本来打开neovim
+# alias ji='code ~/dot_file/.config/nvim/init.vim; echo '记得sync' '
+alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
 
 
 #同步
@@ -806,15 +829,22 @@ alias z='_z 2>&1'
 # -f指定归档文件
 #  -z (同 --gzip, --gunzip, --ungzip)  通过 gzip 过滤归档
 # alias -s gz='wf_gz(){ tar -xzf $* ; t $* ; };wf_gz'
-alias -s gz='tar -xzf'
-alias -s tgz='tar -xzf'
-# -j   可以处理有bz2属性的
-alias -s bz2='tar -xjf'
 
+
+# -x 等同 --extrac
 alias -s tar='tar -xf'
-alias -s tar.gz='tar -xzf'
+
+alias -s gz='tar -xzf'
+alias -s bz2='tar -xjf'  # -j   针对bz2
+
 alias -s tar.bz2='tar --extract --bzip2 --verbose -f' #-f指定文件
+alias -s tbz='tar --extract --bzip2 --verbose -f' # 同上
+
+alias -s tar.gz='tar -xzf'
+alias -s tgz='tar -xzf'  # 同上
+
 alias -s tar.xz='tar -xJf'
+alias -s txz='tar -xJf'  # 同上
 
 ##加了这行导致./build_ops.sh等执行不了
 #alias -s sh=vi
@@ -825,7 +855,9 @@ alias -s md=bat
 alias -s log=bat
 alias -s txt=bat
 alias -s html=bat
-alias -s yaml=bat
+
+alias -s yaml=vim
+alias -s yml=vim
 
 
 if [[ -n "$TMUX" ]];
@@ -863,14 +895,19 @@ alias apt-get='apt'
 
 # 函数开头, 比如下面的echo, 前少了空格，在用这个alias时，报错zsh: parse error near `}
 
-# 方法名后面可以有多个空格
-# 括号内可以有多个空格
-# 括号可以不要，但是为了美观，建议加上括号
-# 如果方法体写成一行，需要在语句后面加分号“;”
-# $*表示除$0外的所有参数
 # http://faculty.salina.k-state.edu/tim/unix_sg/shell/variables.html
+# 1. 方法名后面可以有多个空格
+# 2. 括号内可以有多个空格
+# 3. 括号可以不要，但是为了美观，建议加上括号
+# 4. 如果方法体写成一行，需要在语句后面加分号“;”
+# 5. $*表示除$0外的所有参数
 
 #变量名=$(命令名)
 #result=$(password_formula)
 #
 # print -Pn "\e]2;%~\a" #在terminal的tittle显示路径
+#
+# 获得当前路径的basename
+# $PWD:t
+# 或者
+# basename $PWD  # 更通用
