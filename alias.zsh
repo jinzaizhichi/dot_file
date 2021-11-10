@@ -4,6 +4,13 @@ cj(){
     jq -C "" $1 |less -R 
 }
 
+ht(){ 
+    # 2>&1  : stderr > stdout
+    # 2>1  1会被当作为文件名  
+    # https://stackoverflow.com/questions/818255/in-the-shell-what-does-21-mean
+    nohup $* 2>&1 &
+} 
+
 # 失败：
 # https://stackoverflow.com/questions/58225759/how-do-i-copy-and-paste-bash-without-dollar-signs
 # ud() { . <( sed 's/^\$ //' ); }
@@ -166,8 +173,8 @@ alias his='noglob history -i 1000 | bat'
 alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | head -n 30'
 
 a(){
-echo "需要转义的字符：# , . - 等"
-echo "这里指定的类型不搜: '~/dot_file/ag_ignore_pattern/.ignore' "
+echo "要转义：# , . - 等"
+# echo "这里指定的类型不搜: '~/dot_file/ag_ignore_pattern/.ignore' "
 # cat ~/dot_file/ag_ignore_pattern/.ignore
 echo "========="
 echo " "
@@ -759,7 +766,7 @@ alias gist='nocorrect gist'
 # alias git='pro &&  git'
 alias globurl='noglob urlglobber '
 alias hl='f_hl(){ du -sh $1* | sort -h; }; f_hl'
-alias ht='houtai(){ nohup  >$1 2>&1 &; }; houtai'
+
 alias http-serve='python3 -m http.server'
 alias i='curl cip.cc'
 alias k='kill -9'

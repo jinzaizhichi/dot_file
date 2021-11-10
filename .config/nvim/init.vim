@@ -3,7 +3,7 @@
 
 
 " 这样可以 不那么死板地 只能用~/AppData/Local/nvim/init.vim来进入windows的nvim, 从而管理插件(
-    " windows的nvim和vscode的nvim共用): 
+    " windows的nvim和vscode的nvim共用):
 "nvim -u '\\wsl$\Ubuntu\root\dot_file\.config\nvim\init.vim'
 " 插件位置:
 " C:\Users\noway\AppData\Local\nvim-data
@@ -14,7 +14,7 @@
 
 
 " 【【-----------------------------------------------------------begin
-" Return to last edit position when opening files 
+" Return to last edit position when opening files
 " 有bug: autocmd BufReadPost * normal! g`"zv
 "  normal! 表示 Execute Normal mode commands,   If the [!] is given, mappings will not be used.
 "  g`"表示 跳到 the last known position in a file
@@ -58,7 +58,7 @@ autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()"
 
 if exists('g:vscode')
     " 不行：
-    " nnoremap gk :<C-u>call VSCodeCall('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR> 
+    " nnoremap gk :<C-u>call VSCodeCall('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
     " nnoremap gj :<C-u>call VSCodeCall('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
     highlight OperatorSandwichBuns guifg='#aa91a0' gui=underline ctermfg=172 cterm=underline
     highlight OperatorSandwichChange guifg='#edc41f' gui=underline ctermfg='yellow' cterm=underline
@@ -72,10 +72,10 @@ if exists('g:vscode')
     " 不行
     " nnoremap zz ZZ
     "echo 'wf: using vscode-neovim '
-    
+
 else
     " echo '没在用 vscode-neovim, 纯 nvim'
-    
+ 
     " nnoremap <F8> :call HideNumber()<CR>  " 记忆：  8 : byebye number
     nnoremap <F8> :echo 'wfwfwf'
     function! HideNumber()
@@ -102,7 +102,7 @@ else
     filetype on        " 检测文件类型
     filetype indent on " 针对不同的文件类型采用不同的缩进格式
     filetype plugin on " a file's plugin file is loaded (if there is one for the detected filetype).
-    filetype plugin indent on  " 启动自动补全 
+    filetype plugin indent on  " 启动自动补全
 
     set expandtab " 将Tab自动转化成空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
     set tabstop=4 " 设置Tab键等同的空格数
@@ -578,6 +578,17 @@ inoremap <C-Y> <C-O><C-R>
 set background=light
 colorscheme PaperColor
 let g:airline_theme='papercolor'
+let g:airline_section_b = ''
+let g:airline_section_c = ''  
+" let g:airline_section_gutter  (csv)
+" let g:airline_section_x       (tagbar, filetype, virtualenv)
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+" let g:airline_section_y       (fileencoding, fileformat, 'bom', 'eol')
+" let g:airline_section_z=      (percentage, line number, column number)
+" let g:airline_section_error   (ycm_error_count, syntastic-err, eclim,  languageclient_error_count)
+" let g:airline_section_warning (ycm_warning_count, syntastic-warn,  languageclient_warning_count, whitespace)
+
+
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 
