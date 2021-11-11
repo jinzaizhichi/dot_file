@@ -44,14 +44,15 @@ bindkey '\ee' backward-word
 # 留给vim 用作复制一行并注释
 
 bindkey '\ex' execute-named-cmd
-bindkey -s '^[^H' 'echo "ctrl加L, 待用" \n'
-bindkey -s '^[^?' 'echo "ctrl加L, 待用" \n'
+bindkey -s '^[^H' 'echo "待用" \n'
+bindkey -s '^[^?' 'echo "待用" \n'
 
 
 # bindkey -r '^l'   # -r unbind  r记作reload吧
-bindkey -s '^l'   'echo "ctrl加L, 待用" \n'
+bindkey -s '^l'   'echo "tmux要用" \n'
+bindkey -s '^s'  'echo "覆盖了原来的锁屏" \n'
 
-# bindkey -s '^i'   'echo "ctrl加I, 待用" \n'  # 不能改, 这货和tab一样
+# bindkey -s '^i'   # 不能改, 这货和tab同体
 
 
 # setup for deer
@@ -65,11 +66,9 @@ bindkey -s '^l'   'echo "ctrl加L, 待用" \n'
 # bindkey '^x^e' vi-find-next-char
 # 暂时没有用的键
 # 没有用：
-# bindkey '^j' peco-history-selection
-# bindkey '^j' peco-history-selection
-# bindkey '^m' peco-history-selection
-# bindkey '^g' peco-history-selection
-# bindkey '^i' peco-history-selection
-# bindkey '^s' peco-history-selection
+# bindkey '^j' 
+# bindkey '^m' 
+# bindkey '^g' 
+# bindkey '^i' 
 # 设不设好像都一样，默认的吧
 # bindkey '^q' push-line-or-edit
