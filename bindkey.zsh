@@ -1,3 +1,5 @@
+# "^C" self-insert  # 原样输入
+
 bindkey "\033[1~" beginning-of-line # HOME键
 bindkey "\033[4~" end-of-line # END
 
@@ -22,6 +24,13 @@ bindkey -s "\C-o" "cle \C-j"
 
 
 # ctrl p/n  和 上下箭头 只能找到以特定内容开头的历史命令，这个可以所有？
+#  <alt>+b, \eb, <esc>+b, <Meta>+b or M-b. These are all the same.
+#  e: 表示escap吧
+bindkey -s '\eu' '..\n' # u for up  # 不行： bindkey -s '<atl>+u' '..\n' # u for up
+bindkey -s '\eo' 'echo "待用" \n'
+bindkey -s '\ei' 'echo "待用" \n'
+bindkey -s '\ep' 'echo "待用" \n'
+
 bindkey '\ej' down-line-or-history
 bindkey '\ek' up-line-or-history
 #可以换成别的功能
@@ -29,18 +38,21 @@ bindkey '\eJ' beginning-of-line
 bindkey '\eK' end-of-line
 # bindkey '\eo' end-of-line
 bindkey '\ee' backward-word
-bindkey '\eh' backward-word
-bindkey '\el' forward-word
+# bindkey '\eh' backward-word  # 行首
+# bindkey '\el' forward-word  # 被插件改了？行末
 # bindkey -s '\e/' 'll\n'
 # 留给vim 用作复制一行并注释
+
+bindkey '\ex' execute-named-cmd
+bindkey -s '^[^H' 'echo "ctrl加L, 待用" \n'
+bindkey -s '^[^?' 'echo "ctrl加L, 待用" \n'
+
 
 # bindkey -r '^l'   # -r unbind  r记作reload吧
 bindkey -s '^l'   'echo "ctrl加L, 待用" \n'
 
 # bindkey -s '^i'   'echo "ctrl加I, 待用" \n'  # 不能改, 这货和tab一样
 
-bindkey -s '\eu' '..\n' # u for up
-bindkey -s '\eo' 'echo "待用" \n'
 
 # setup for deer
 # autoload -U deer

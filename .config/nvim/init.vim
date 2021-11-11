@@ -322,7 +322,7 @@ let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace wh
 let g:NERDToggleCheckAllLines = 1 " check all selected lines is commented or not
 
 " 对vscode无效,不知道为啥
-" <C-/> 在vim中由C-_表示
+" <C-/> 在vim中由C-_表示 zsh下敲cat后，ctrl / 显示  ^_ 
 nnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>j
 inoremap <C-_> <ESC>:call nerdcommenter#Comment('n', 'toggle')<CR>j
 vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>

@@ -159,6 +159,7 @@ zplug load     # source plugins and add commands to $PATH
 # ==================================zsh插件管理：zplug=================================]]
 
 
+# 放在插件管理后面，避免被别人的配置覆盖
 source $HOME/dot_file/color_highlight_style.zsh
 source $HOME/dot_file/color_completion_of敲tab.zsh  #  不只是颜色, 但为了想改颜色时容易找，这么命名。
 source $HOME/dot_file/color_ls.zsh

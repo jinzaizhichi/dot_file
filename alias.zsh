@@ -246,12 +246,12 @@ lf(){
     --classify \
     --colour=always \
     -F  \
-    --group-directories-first  \
     --header  \
     --no-user  \
     --no-permissions  \
     --sort=time  \
     --time-style=iso $1 | bat
+    # --group-directories-first    # 不好，
 
     tmp=$((`\ls -l | wc -l`-1))
     echo "共：${tmp}"
@@ -263,13 +263,13 @@ l(){
     --classify \
     --colour=always \
     -F  \
-    --group-directories-first  \
     --header  \
     --no-user  \
     --no-permissions  \
     --sort=time  \
     --time-style=iso  $1 | \
     tail -25 
+    # --group-directories-first    # 不好，
 
     tmp=$((`\ls -l | wc -l`-1))
 	if [   $tmp     -lt      25 ];  then
@@ -359,8 +359,16 @@ p(){
 alias python='p'
 alias python3='p'
 alias pv='p'
-alias vv='p'
 
+# alias tp='t'  # 下面有个tp： vim tmp.py
+alias tv='t'
+
+# insert & v::
+# send, ^a
+# send,v
+# return
+
+# alias vv='p'
 
 # 这个还在生效，注意别搞混。可借鉴
 alias di='code -d'
@@ -387,27 +395,36 @@ cl(){
 
 # alias t=to_trash  # 函数后别加()
 # 直接写成下面这样更好：
+
+# t() {
+#     the_time=$(date  +"%H时%M分S%-%m月%d日")
+#     #trash_bin1
+#     tb1=~/.t/${the_time} # 命令的结果 赋值给变。.shell的数据类型只有字符串
+#     if [ -d ${tb1} ]; then                                  # [ your_code ]才对  [your_code]少了空格
+#         tb2=~/.t/${the_time}_2
+#         if [ -d "${tb2}" ]; then
+#             #万一 时间__3 也存在，就会报错，别移动文件
+#             tb3=~/.t/${the_time}_3
+#             echo "新建垃圾箱： ${tb3}"  #这里如果有单引号，$后面的值就取不出来
+#             md ${tb3} && mv -ft ${tb3} $*
+#             echo '就算看见"已存在 某某"，还是会移到这个目录，不会新建目录--时间_4'
+#         else
+#             echo "新建垃圾箱： ${tb2}"
+#             md ${tb2} && mv -ft ${tb2} $*
+#         fi
+#     else
+#         echo "新建垃圾箱：${tb1}"
+#         md ${tb1} ; mv -ft ${tb1} $*
+#     fi
+#     # 星号通配失败时，就算加了分号,后面的命令也不会执行"
+# }
 t() {
-    the_time=$(date  +"%H时%M分-%m月%d日")
-    #trash_bin1
-    tb1=~/.t/${the_time} # 命令的结果 赋值给变。.shell的数据类型只有字符串
-    if [ -d ${tb1} ]; then                                  # [ your_code ]才对  [your_code]少了空格
-        tb2=~/.t/${the_time}_2
-        if [ -d "${tb2}" ]; then
-            #万一 时间__3 也存在，就会报错，别移动文件
-            tb3=~/.t/${the_time}_3
-            echo "新建垃圾箱： ${tb3}"  #这里如果有单引号，$后面的值就取不出来
-            md ${tb3} && mv -ft ${tb3} $*
-            echo '就算看见"已存在 某某"，还是会移到这个目录，不会新建目录--时间_4'
-        else
-            echo "新建垃圾箱： ${tb2}"
-            md ${tb2} && mv -ft ${tb2} $*
-        fi
-    else
-        echo "新建垃圾箱：${tb1}"
-        md ${tb1} ; mv -ft ${tb1} $*
-    fi
-    # 星号通配失败时，就算加了分号,后面的命令也不会执行"
+    for my_file in $*
+    do
+        trash=${my_file}_`date  +"%m月%d日%H:%M:%S"`  
+        mv ${my_file} ~/.t/${trash}
+        echo ${trash}
+    done
 }
 
 # ps 表头
@@ -625,11 +642,11 @@ alias pt='ptpython --vi'
 alias pti='ptipython --vi'
 alias alert='notify-send --urgency=critical -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e ''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'')"'
 alias matlab='matlab -nosplash -nodesktop'
-alias ml='matlab -nosplash -nodesktop'
+# alias ml='matlab -nosplash -nodesktop'
 alias do='cd ~/dot_file/'
 #不记得当时为啥加了这个
 #alias sudo=''
-alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux_tools_wf/tmux.conf; sy'
+# alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux_tools_wf/tmux.conf; sy'
 
 
 # alias jt='code ~/dot_file/tmux_tools_wf/tmux.conf; echo "改配置后记得sync"'
