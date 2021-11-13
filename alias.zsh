@@ -172,27 +172,40 @@ alias his='noglob history -i 1000 | bat'
 # 统计命令输入频率
 alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | head -n 30'
 
-a(){
-echo "要转义：# , . - 等"
-# echo "这里指定的类型不搜: '~/dot_file/ag_ignore_pattern/.ignore' "
-# cat ~/dot_file/ag_ignore_pattern/.ignore
-echo "========="
-echo " "
-nocorrect ag \
---before=2  \
---after=2  \
---color-line-number=47 \
---color-path=1 \
---stats \
---hidden \
---all-text \
---max-count 3  \
---path-to-ignore ~/dot_file/ag_ignore_pattern/.ignore \
---silent   \
-"$*"
-# $*表示所有参数, *不表示 常见的shell字符通配
-# "$*" | bat  # # 不能保留颜色高亮
-}
+
+
+# 作为函数 不能同名, 无限递归？
+# maximum nested function level reached; increase FUNCNEST?
+# rg(){
+#     \rg --pretty --hidden  \
+#     $*
+#     # $* | bat  # 导致无法自动补全
+# }
+#
+
+# 作为alias 可以同名
+alias rg='\rg --pretty --hidden'
+alias a='\rg --pretty --hidden'  # 沿用ag的a
+# a(){
+#     echo "要转义：# , . - 等"
+#     # echo "这里指定的类型不搜: ~/dot_file/AgIgnore
+#     echo "========="
+#     echo " "
+#     nocorrect ag \
+#     --before=2  \
+#     --after=2  \
+#     --color-line-number=47 \
+#     --color-path=1 \
+#     --stats \
+#     --hidden \
+#     --all-text \
+#     --max-count 3  \
+#     --path-to-ignore ~/dot_file/AgIgnore \
+#     --silent   \
+#     "$*"
+#     # $*表示所有参数, *不表示 常见的shell字符通配
+#     # "$*" | bat  # # 不能保留颜色高亮
+# }
 
 alias ac='_ack(){ nocorrect ack "$*";};_ack'
 
@@ -362,6 +375,7 @@ alias pv='p'
 
 # alias tp='t'  # 下面有个tp： vim tmp.py
 alias tv='t'
+alias vw='vim'
 
 # insert & v::
 # send, ^a
@@ -422,6 +436,8 @@ t() {
     for my_file in $*
     do
         trash=${my_file}_`date  +"%m月%d日%H:%M:%S"`  
+        # mkdir -p ~/.t/${trash}
+        # mv ${my_file} ~/.t/${trash}/my_file
         mv ${my_file} ~/.t/${trash}
         echo ${trash}
     done
@@ -742,7 +758,12 @@ f(){
     -path '/d/docker' -prune -o  \
     -path '~/.t' -prune -o       \
     -path '/proc' -prune -o      \
-    -name "*$1*"  |  bat
+    -name "*$1*">~/.t/.find_results.log
+
+    # rg能高亮关键词，进了bat还能显示
+    rg $1 ~/.t/.find_results.log | bat
+
+    # bat ~/.t/.find_results.log
 }
 
 # /proc写成/proc/据说不行
@@ -782,7 +803,10 @@ alias get='curl --continue-at - --location --progress-bar --remote-name --remote
 alias gist='nocorrect gist'
 # alias git='pro &&  git'
 alias globurl='noglob urlglobber '
-alias hl='f_hl(){ du -sh $1* | sort -h; }; f_hl'
+hl(){ 
+    du -sh $1* | sort -h 
+    # tput bel  # 上一条没echo完就响了
+}
 
 alias http-serve='python3 -m http.server'
 alias i='curl cip.cc'

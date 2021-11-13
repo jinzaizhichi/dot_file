@@ -169,8 +169,8 @@ else
     autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 
+    set hlsearch " 高亮search命中的文本
     " 要在设定颜色主题后面，覆盖颜色主题里面的设置
-    highlight  Search cterm=NONE ctermfg=white ctermbg=gray
 
 endif
 
@@ -257,7 +257,6 @@ Plug 'machakann/vim-sandwich'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
 Plug 'NLKNguyen/papercolor-theme'
 
 
@@ -571,12 +570,37 @@ inoremap <C-Y> <C-O><C-R>
 
 " ---------------------------------------msvim-------------------------------]]
 
-" Theme Settings    主题设置
-" hi! link SignColumn     LineNr
-" hi! link ShowMarksHLl DiffAdd
-" hi! link ShowMarksHLu DiffChange
+
+" [[---------------------------------------Theme Settings    主题设置
+
 set background=light
 colorscheme PaperColor
+
+if &diff
+    " colorscheme PaperColor  " 默认就和 if &diff外设置的主题一致
+    set cursorline
+
+    " 反应变慢，不好
+    " map ] ]c
+    " map [ [c
+
+    " hi DiffAdd    guifg=#003300 guibg=#DDFFDD gui=none
+    " hi DiffChange guibg=#ececec gui=none
+    " hi DiffText   guifg=#000033 guibg=#DDDDFF gui=none
+endif
+
+autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+
+set cursorline
+hi CursorLine guibg=#bbddcc
+" hi Cursor guibg=#0000cc  " 似乎被mobaxterm控制着
+
+" 古老：For terminal Vim, with colors, we're most interested in the cterm
+" 支持真彩色 true color
+set termguicolors   " Nvim emits true (24-bit) colours. 下面改颜色只用改 guibg guifg
+hi Search guibg=#bbeeee guifg=green  " 放文件前部分不行  
+
+" [[--底栏：
 let g:airline_theme='papercolor'
 let g:airline_section_b = ''
 let g:airline_section_c = ''  
@@ -587,29 +611,19 @@ let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 " let g:airline_section_z=      (percentage, line number, column number)
 " let g:airline_section_error   (ycm_error_count, syntastic-err, eclim,  languageclient_error_count)
 " let g:airline_section_warning (ycm_warning_count, syntastic-warn,  languageclient_warning_count, whitespace)
+"  底栏--]]
 
 
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1  " 被下面的代替了
+" 不生效
+set guicursor=n-v-c:block,
+            \i-ci-ve:ver25,
+            \r-cr:hor20,
+            \o:hor50
+            \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+            \,sm:block-blinkwait175-blinkoff150-blinkon175
 
-
-autocmd BufWritePost * if &diff == 1 | diffupdate | endif
-
-
-if &diff
-    " colorscheme quietlight
-    colorscheme PaperColor  " 其实默认就和 if &diff外设置的主题一致
-    set cursorline
-
-    " 反应变慢，不好
-    " map ] ]c
-    " map [ [c
-
-    " hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
-    " hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
-    " hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
-endif
-
-
+" -------------------------Theme Settings    主题设置------------------]]
 
 noremap <F5> <ESC>oimport pudb<ESC>opu.db
 inoremap <F5> <ESC>oimport pudb<ESC>opu.db
@@ -731,15 +745,6 @@ let g:ackprg = 'ag --vimgrep'
 set cmdheight=2
 set fdm=indent
 
-" todo
-set termguicolors   " Nvim emits true (24-bit) colours in the terminal, if 'termguicolors' is set.
-
-set cursorline
-" hi CursorLine cterm=NONE ctermbg=NONE
-" hi Cursor cterm=inverse
-
-" For terminal Vim, with colors, we're most interested in the cterm
-" term=reverse is for B&W terminal, the gui ones are primarily for gvim.
 
 
 
@@ -842,11 +847,9 @@ set cursorline
 
 " 启用鼠标
 set mouse=a
-" Hide the mouse cursor while typing
-set mousehide
+set mousehide  " Hide the mouse cursor while typing
 
-" change the terminal's title
-set title
+set title  " change the terminal's title
 
 " Remember info about open buffers on close
 set viminfo^=%
@@ -901,7 +904,6 @@ set matchtime=5
 " E384: search hit TOP without match for: set
 " E385: search hit BOTTOM without match for: set
 
-set hlsearch " 高亮search命中的文本
 set incsearch " 增量搜索模式,随着键入即时搜索
 set ignorecase " 搜索时忽略大小写 , 但,
 " 敲了大写字母时, 仍大小写敏感:
@@ -1099,6 +1101,7 @@ nnoremap <C-E> $
 
 
 
+
 " Using this operator we can surround swaths of text using it as you would any other operator within Vim:
 " ds' to delete the surrounding ' (ds{char})
 " cs'" to change the surrounding ' for " (cs{old}{new})
@@ -1120,3 +1123,4 @@ inoremap  cb '''<Esc>Go'''<Esc><C-o>i
 
 " 自动换行是每行超过 n 个字的时候 , vim 自动加上换行符用。最好别用，坑?
 set textwidth=100  " 没起作用
+

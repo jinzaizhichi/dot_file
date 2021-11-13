@@ -120,16 +120,15 @@ export ZPLUG_REPOS=$ZPLUG_HOME/repos  # 默认就是这样
 
 source $ZPLUG_HOME/init.zsh
 
+# zplug "modules/prompt", from:prezto
 # use double quotes
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
-# zplug "modules/prompt", from:prezto
-
 zplug "srijanshetty/zsh-pip-completion" # 能补全pip包的名字，但没生效
-
 zplug "zsh-users/zsh-completions"
 
 # 避免冲突，顺序： zsh-autosuggestions > zsh-syntax-highlighting > zsh-vim-mode
+
 zplug "zsh-users/zsh-autosuggestions"  # 弹出之前敲过的命令
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#888888,bg=bold"
@@ -141,8 +140,11 @@ zplug "rupa/z", use:z.sh # 这样不行： zplug "rupa/z", as:plugin, use:"*.sh"
 # 2. sourcing other plugins
 zplug "zsh-users/zsh-syntax-highlighting", defer:2  # 对命令行中的目录 可执行文件等 进行语法高亮
 
+zplug "zsh-users/zsh-history-substring-search"  # 要在syntax-highlighting后面  , 在我建的bindky.zsh里面改快捷键
+
 # zplug "jeffreytse/zsh-vi-mode"  # 有奇怪错误，提issue很繁琐，不用了。自己配吧。
 zplug "softmoth/zsh-vim-mode"
+
 # zplug "hchbaw/zce.zsh"
 
 

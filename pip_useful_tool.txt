@@ -1,3 +1,9 @@
+pysocks
+
+# 清理__pycache__
+pyclean
+
+
 pqi
 opencv-python
 matplotlib

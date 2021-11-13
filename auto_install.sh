@@ -45,7 +45,7 @@ touch "$HOME/.z" # 这是zsh的z跳转的记录文件
 yes | (apt update ; apt install  nscd )
 /etc/init.d/nscd restart
 
-ln -s ~/dot_file/.condarc ~/
+ln -s ~/dot_file/.config/.condarc ~/
 
 [[ -d /d ]] && ln -s /d ~/d
 

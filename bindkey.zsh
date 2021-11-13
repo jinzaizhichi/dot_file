@@ -18,13 +18,15 @@
 
 # https://unix.stackexchange.com/a/677162/457327
 autoload -U history-search-end  # -U  | suppress alias expansion for functions
-zle -N history-beginning-search-backward-end        history-search-end
-zle -N history-beginning-search-forward-end         history-search-end
-bindkey "$key[Up]" history-beginning-search-backward-end  # 别用"^[[A"了,$key[Up]好看
-bindkey "$key[Down]" history-beginning-search-forward-end
 # -k  | mark function for ksh-style autoloading
 # -z  | mark function for zsh-style autoloading
 
+zle -N history-beginning-search-backward-end        history-search-end
+zle -N history-beginning-search-forward-end         history-search-end
+# bindkey "$key[Up]" history-beginning-search-backward-end  # 别用"^[[A"了,$key[Up]好看
+# bindkey "$key[Down]" history-beginning-search-forward-end
+bindkey "$key[Up]" history-substring-search-up  # 比上面2行更灵活
+bindkey "$key[Down]" history-substring-search-down
 
 bindkey "$key[Home]" beginning-of-line # HOME键 "\033[1~" 
 bindkey "$key[End]" end-of-line # END  "\033[4~" 
@@ -53,13 +55,17 @@ bindkey -s "\C-o" "cle \C-j"
 # ctrl p/n  和 上下箭头 只能找到以特定内容开头的历史命令，这个可以所有？
 #  <alt>+b, \eb, <esc>+b, <Meta>+b or M-b. These are all the same.
 #  e: 表示escap吧
+
+# bindkey -s '^j' 'echo "vscode在用" \n'  #别改^j ，^j和\n同体？
+# bindkey '^m' 和回车键 同体
+
 bindkey -s '\eu' '..\n' # u for up  # 不行： bindkey -s '<atl>+u' '..\n' 
 bindkey -s '\eo' 'echo "待用" \n'
 bindkey -s '\ei' 'echo "待用" \n'
 bindkey -s '\ep' 'echo "待用" \n'
 
 # bindkey '\ek' up-line-or-history
-bindkey '^p'  up-line-or-history
+bindkey '^p'  up-line-or-history  # 有了history-substring-search-up 似乎用不到了
 # ^p 本来是 history-beginning-search-forward, 搜以当前已敲内容开头的history 用↑代替了
 # bindkey '\ej' down-line-or-history
 bindkey '^n'  down-line-or-history
@@ -81,8 +87,6 @@ bindkey -s '^[^H' 'echo "待用" \n'  # ASCII BS == 0x08 == ^H  改了不生效
 bindkey -s '^[^?' 'echo "待用" \n'  # ASCII DEL == 0x7f == 0177 == ^?  
 bindkey -s '^h' 'echo "被tmux占了" \n'
 
-bindkey -s '^j' 'echo "vscode在用" \n'
-# bindkey '^m' 和回车键 同体
 
 # bindkey -r '^l'   # -r unbind  r记作reload吧
 bindkey -s '^l'   'echo "tmux要用" \n'
