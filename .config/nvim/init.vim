@@ -188,14 +188,17 @@ else
 
 endif
 
-nnoremap yf ggyG<C-O>
+
+nnoremap yf ggyG<C-O>  " 让光标看着没动
+nnoremap df ggdG
 " p后面一般没有参数，所以pf不好。选中全文，一般只是为了替换。所以vf选中后，多了p这一步
-nnoremap vf ggVGp
+nnoremap vf ggVGp:echo"已粘贴之前复制的内容"<CR>
+
 " comment at the end of line
  
 
-" vscode里失灵了:
-" inoremap yf <Esc>ggyG<C-O>"
+" vscode里不行，别试了:
+" inoremap yf <Esc>ggyG<C-O>
 
 let mapleader =" "     
 " https://stackoverflow.com/questions/54787831/map-space-to-leader-in-vim
@@ -704,11 +707,18 @@ function! AutoSetFileHead()
 endfunc
 
 " 全文替换
+<<<<<<< HEAD
 " 分隔符#可以换成 / _      can use most non-alphanumeric characters (but not \, " or |)
 "% :表示全文. Example: :%s/foo/bar/g.
 " 开头,结尾  
 " 所以：.,$ 表示 from the current line to the end of the file.
 " nnoremap <TAB> :%s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W>
+=======
+" 分隔符#可以换成 / _        You can use most non-alphanumeric characters (but not \, " or |)
+"% for the whole file. Example: :%s/foo/bar/g.
+" nnoremap <TAB> :rs#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W>
+" .,$ from the current line to the end of the file.
+>>>>>>> 9751bc1b0eef2f45b07ce052f716460011281dd6
 nnoremap <TAB> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W><Left><Left>
 
 
