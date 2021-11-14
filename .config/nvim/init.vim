@@ -273,9 +273,9 @@ nmap f <Plug>(easymotion-f2)
 
 Plug 'machakann/vim-sandwich'
 Plug 'scrooloose/nerdcommenter'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'vim-airline/vim-airline', VimPlugConds(exists('g:vscode'))
+Plug 'vim-airline/vim-airline-themes', VimPlugConds(exists('g:vscode'))
+Plug 'NLKNguyen/papercolor-theme', VimPlugConds(exists('g:vscode'))
 
 
 Plug 'sisrfeng/toggle-bool'
