@@ -1,5 +1,19 @@
-" 改了后直接这样，不用退出再打开：echo "source init.vim"
-" echo "vscode-nvim用的是wsl下的dot_file的init.vim"
+" 让配置变更立即生效
+" 别再老敲：source init.vim
+if has('autocmd') " ignore this section if your vim does not support autocommands
+    " 1. Select the group with ":augroup {name}".
+    augroup wf_reload_init.vim
+        " 2. Delete any old autocommands with 
+        autocmd!
+        " 3. Define the autocommands.   %表示当前文件
+        autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source % | echo '改了init.vim'
+
+        " 4. Go back to the default group：  END  
+    augroup END
+endif
+
+
+" echo "vscode-nvim用的是  wsl下的dot_file的init.vim"
 
 
 " 这样可以 不那么死板地 只能用~/AppData/Local/nvim/init.vim来进入windows的nvim, 从而管理插件(
@@ -215,13 +229,14 @@ endfunction
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug' " 为了能用:help plug-options
 
+Plug 'andymass/vim-matchup'
 
 " [[==============================easymotion 配置=====================begin
 
-" Plug 'asvetliakov/vim-easymotion'   " 不用裸nvim下的easymotion
+" Plug 'asvetliakov/vim-easymotion'   " vscode定制的easymotion
 " Plug 'easymotion/vim-easymotion'    " 只用裸nvim下的easymotion  千万别这么干。会把正在编辑的文件全搞乱
 
-" Plug 'easymotion/vim-easymotion', VimPlugConds(!exists('g:vscode'))  " exists(): 变量存在，则返回TRUE，否则0
+Plug 'easymotion/vim-easymotion', VimPlugConds(!exists('g:vscode'))  " exists(): 变量存在，则返回TRUE，否则0
 Plug 'asvetliakov/vim-easymotion', VimPlugConds(exists('g:vscode'), { 'as': 'leo-jump' })  " as的名字随便起，
                                                                                         " 下面map时，还是 nmap s <Plug>(easymotion-f2)之类的
 
@@ -371,7 +386,26 @@ nnoremap y{ yi{
 nnoremap y} yi}
 
 nnoremap cw caw
-nnoremap c' ci'
+nnoremap c' :call DoubleAsSingleC()<CR>
+func! DoubleAsSingleC()
+    " When [!] is added, error messages will also be skipped,
+    " and commands and mappings will not be aborted
+    " when an error is detected.  |v:errmsg| is still set.
+    let v:errmsg = ""
+    silent! :s#\"\([^"]*\)\"#'\1'#g
+    if (v:errmsg == "")
+        echo "双变单"
+    endif
+
+    exec "normal ci'"
+endfunc
+
+nnoremap y' :s#\"\([^"]*\)\"#'\1'#g<CR>yi'
+nnoremap v' :s#\"\([^"]*\)\"#'\1'#g<CR>vi'
+" nnoremap d' da'
+nnoremap d' :s#\"\([^"]*\)\"#'\1'#g<CR>da'
+
+
 nnoremap c" ci"
 nnoremap c( ci(
 nnoremap c) ci)
@@ -381,7 +415,6 @@ nnoremap c{ ci{
 nnoremap c} ci}
 
 nnoremap dw daw
-nnoremap d' da'
 nnoremap d" da"
 nnoremap d( da(
 nnoremap d) da)
@@ -389,6 +422,19 @@ nnoremap d[ da[
 nnoremap d] da]
 nnoremap d{ da{
 nnoremap d} da}
+
+" inoremap cb '''<Esc>Go'''<Esc><C-o>i
+" change a block  " 百分号 能自动跳到配对的符号
+" nnoremap cb cib
+nnoremap cb %cib
+" nnoremap vb vib
+nnoremap vb %vib
+nnoremap yb %yib
+nnoremap db %dab
+
+
+" nnoremap cb O'''<Esc>Go'''<Esc>
+" inoremap cb '''<Esc>Go'''<Esc><C-o>i
 
 "====https://github.com/ahonn/dotfiles/tree/master/vim/vscode================start
 nnoremap < <<
@@ -542,10 +588,9 @@ set autowrite
 " source ~/dot_file/mswin.vim
 " [[---------------------------------------msvim-------------------------------
 
-"其他地方实现了。
-"Use the + register (clipboard) :   "+g
-"gP : paste before the current position, placing the cursor after the new text.
-nnoremap <C-V> "+gP
+"  "+g   Use the + register (clipboard) :   
+"   gP : paste before the current position, placing the cursor after the new text.
+inoremap <C-V> "+gP
 set clipboard+=unnamedplus
 
 
@@ -659,9 +704,10 @@ function! AutoSetFileHead()
 endfunc
 
 " 全文替换
-" 分隔符#可以换成 / _        You can use most non-alphanumeric characters (but not \, " or |)
-"% for the whole file. Example: :%s/foo/bar/g.
-" .,$ from the current line to the end of the file.
+" 分隔符#可以换成 / _      can use most non-alphanumeric characters (but not \, " or |)
+"% :表示全文. Example: :%s/foo/bar/g.
+" 开头,结尾  
+" 所以：.,$ 表示 from the current line to the end of the file.
 " nnoremap <TAB> :%s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W>
 nnoremap <TAB> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W><Left><Left>
 
@@ -728,12 +774,6 @@ endfunc
 
 
 
-
-" 让配置变更立即生效
-" 有变化, 但spacevim在捣乱 , 但各种报错
-" autocmd! bufwritepost vimrc source $MYVIMRC| echo '改了nvim配置'
-
-autocmd! bufwritepost .vimrc source %
 
 " CapsLock 识别不了
 " map <CapsLock>[ #
@@ -1101,7 +1141,6 @@ nnoremap <C-E> $
 
 
 
-
 " Using this operator we can surround swaths of text using it as you would any other operator within Vim:
 " ds' to delete the surrounding ' (ds{char})
 " cs'" to change the surrounding ' for " (cs{old}{new})
@@ -1109,8 +1148,6 @@ nnoremap <C-E> $
 " You can also use vim-surround by selecting a bit of text in visual mode and then using S{desired character}
 
 
-nnoremap  cb O'''<Esc>Go'''<Esc>
-inoremap  cb '''<Esc>Go'''<Esc><C-o>i
 
 
 " 用过，垃圾，别用：

@@ -46,6 +46,8 @@ yes | (apt update ; apt install  nscd )
 /etc/init.d/nscd restart
 
 ln -s ~/dot_file/.config/.condarc ~/
+mkdir ~/.ssh
+ln -s ~/dot_file/.config/.ssh/config ~/.ssh/config
 
 [[ -d /d ]] && ln -s /d ~/d
 

@@ -109,7 +109,7 @@ alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path
 # --null 或者 -0： expect NUL characters as input separators
 # stat --format ''
 # %y :  time of last data `modification`
-# tac  倒着列出
+# tac  倒着列出  # cat倒过来
 # %y表示  `modify time`
 mt(){ 
     # %y得到的  +0800表示东八区
@@ -149,6 +149,25 @@ at(){
     $3            \
     }' | bat    # 这里不能用双引号代替单引号
 }
+ct(){
+    echo 'status （meta data) changed 时间, 当作birth time吧，birth没记录'
+    find $1 -type f -print0 | xargs --null stat --format '%z metadata被改%n'  | \
+    sort --numeric-sort --reverse | \
+    head -100 | \
+    cut --delimiter=' ' --fields=1,2,4 | \
+    tac | \
+    awk -F " " \
+    '{OFMT="%.6f" ; \
+    print NR"】", \
+    $1,           \
+    " ",          \
+    $2,           \
+    " ",          \
+    $3            \
+    }' | bat --language=Python   # 这里不能用双引号代替单引号
+}
+
+# The closest you can get is the file's ctime, which is not the creation time, it is the time that the file's metadata was last changed.
 
 # | cut -d: -f2-
 #  百分号加字母，在不同命令有不同含义。表示时间时，有些时候不同命令某些程度上一致
@@ -185,7 +204,9 @@ alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | 
 
 # 作为alias 可以同名
 alias rg='\rg --pretty --hidden'
-alias a='\rg --pretty --hidden'  # 沿用ag的a
+a(){
+    \rg --pretty --hidden "$*" | bat # 沿用ag的a
+}
 # a(){
 #     echo "要转义：# , . - 等"
 #     # echo "这里指定的类型不搜: ~/dot_file/AgIgnore
@@ -616,7 +637,7 @@ alias w=bat
 alias wv='w'
 alias ca=cat
 alias ba='bat'
-alias le="less --lesskey-file=$HOME/dot_file/.lesskey"
+alias le="less --HILITE-UNREAD --lesskey-file=$HOME/dot_file/.lesskey"
 
 
 alias vpv='vim'
@@ -760,7 +781,7 @@ f(){
     -path '/proc' -prune -o      \
     -name "*$1*">~/.t/.find_results.log
 
-    # rg能高亮关键词，进了bat还能显示
+    rg能高亮关键词，进了bat还能显示
     rg $1 ~/.t/.find_results.log | bat
 
     # bat ~/.t/.find_results.log
@@ -803,10 +824,7 @@ alias get='curl --continue-at - --location --progress-bar --remote-name --remote
 alias gist='nocorrect gist'
 # alias git='pro &&  git'
 alias globurl='noglob urlglobber '
-hl(){ 
-    du -sh $1* | sort -h 
-    # tput bel  # 上一条没echo完就响了
-}
+alias hl='f_hl(){ du -sh $1* | sort -h; }; f_hl'
 
 alias http-serve='python3 -m http.server'
 alias i='curl cip.cc'
