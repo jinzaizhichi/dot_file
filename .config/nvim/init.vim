@@ -706,19 +706,11 @@ function! AutoSetFileHead()
         normal o
 endfunc
 
-" 全文替换
-<<<<<<< HEAD
 " 分隔符#可以换成 / _      can use most non-alphanumeric characters (but not \, " or |)
 "% :表示全文. Example: :%s/foo/bar/g.
-" 开头,结尾  
+" 开头,结尾
 " 所以：.,$ 表示 from the current line to the end of the file.
 " nnoremap <TAB> :%s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W>
-=======
-" 分隔符#可以换成 / _        You can use most non-alphanumeric characters (but not \, " or |)
-"% for the whole file. Example: :%s/foo/bar/g.
-" nnoremap <TAB> :rs#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W>
-" .,$ from the current line to the end of the file.
->>>>>>> 9751bc1b0eef2f45b07ce052f716460011281dd6
 nnoremap <TAB> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W><Left><Left>
 
 
