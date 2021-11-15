@@ -206,6 +206,9 @@ alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | 
 # 作为alias 可以同名
 alias rg='\rg --pretty --hidden'
 a(){
+    # read TMP
+    # TMP2 ="`print -r ${(q)TMP}`"
+    # \rg --pretty --hidden TMP2 | bat # 沿用ag的a
     \rg --pretty --hidden "$*" | bat # 沿用ag的a
 }
 # a(){

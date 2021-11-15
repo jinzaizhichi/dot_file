@@ -12,6 +12,36 @@ if has('autocmd') " ignore this section if your vim does not support autocommand
     augroup END
 endif
 
+"  "+g   Use the + register (clipboard) :   
+"   gP : paste before the current position, placing the cursor after the new text.
+inoremap <C-V> "+gP
+set clipboard+=unnamedplus
+" unmap <C-V>
+
+
+
+
+" block模式
+" As far as Vim is concerned, <C-M> and <CR> 一样
+" <C-q>用不了，可能是kite占用了  [好像又能用了]
+" 记忆：c for block c发音:ke
+" nnoremap <C-c> <C-v>
+inoremap <C-c> <C-v>
+
+nnoremap <C-X> :echo '该按键 待用'<CR>
+inoremap <C-F> <C-X><C-F>  " 应该是某插件的功能
+" 对于vscode-nvim：insert mode is being handled by vscode 所以<C-X>没反应
+
+						" *i_CTRL-X* *insert_expand*
+" CTRL-X enters a sub-mode where several commands can be used.  Most of these
+" commands do keyword completion; see |ins-completion|.
+
+
+" no help for <C-X>
+" no help for CTRL-X CRTL-O
+" 这样才行：
+" h i_CTRL-X
+
 
 " echo "vscode-nvim用的是  wsl下的dot_file的init.vim"
 
@@ -495,12 +525,6 @@ set pastetoggle=<F9>
 " nnoremap  J j
 " c b means: comment block
 
-" block模式
-" As far as Vim is concerned, <C-M> and <CR> 一样
-" <C-q>用不了，可能是kite占用了  [好像又能用了]
-" 记忆：c for block c发音:ke
-nnoremap <C-c> <C-v>
-inoremap <C-c> <C-v>
 
 " pressing  Ctrl[   will usually get you the equivalent of pressing Esc.
 " *i_CTRL-V*
@@ -591,16 +615,15 @@ set autowrite
 " source ~/dot_file/mswin.vim
 " [[---------------------------------------msvim-------------------------------
 
-"  "+g   Use the + register (clipboard) :   
-"   gP : paste before the current position, placing the cursor after the new text.
-inoremap <C-V> "+gP
-set clipboard+=unnamedplus
 
 
 " Use CTRL-S for saving,
 noremap <C-S>		:update<CR>
-vnoremap <C-S>		<C-C>:update<CR>
 inoremap <C-S>		<C-O>:update<CR>
+" *v_CTRL-C*
+" CTRL-C			In Visual mode: Stop Visual mode  
+vnoremap <C-S>		<C-C>:update<CR>
+
 
 " For CTRL-V to work autoselect must be off.
 " On Unix we have two selections, autoselect can be used.
@@ -730,7 +753,7 @@ nnoremap <C-E> $
 nnoremap gd g<C-]>
 " nnoremap gd :KiteGotoDefinition<CR>
 
-inoremap <C-F> <C-X><C-F>
+
 
 " if 1
     " echo ' wf初始化的文件: ~/dot_file/vimrc'
@@ -1086,8 +1109,8 @@ nnoremap <leader>v V`}
 
 
 " 滚动Speed up scrolling of the viewport slightly
-nnoremap <C-e> 2<C-e>
-nnoremap <C-y> 2<C-y>
+" nnoremap <C-e> 2<C-e>
+" nnoremap <C-y> 2<C-y>  " 用作tmux的激活键了
 
 
 " Jump to start and end of line using the home row keys
