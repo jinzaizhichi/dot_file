@@ -1,7 +1,8 @@
 alias grep='grep --color=always'
 alias gr='grep'
 cj(){
-    jq -C "" $1 |less -R 
+    # cj: 意思是 see json
+    jq -C "" $1 |less -R  # jq: json query？
 }
 
 ht(){ 
@@ -659,7 +660,6 @@ alias bv='b'
 
 alias sa='chmod -R 777'  #share to all
 alias t_a='t *'
-# see json
 alias sc='noglob scp -r'
 alias scp='noglob scp -r'
 # tac:
