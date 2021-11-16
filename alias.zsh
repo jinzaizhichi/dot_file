@@ -116,7 +116,7 @@ alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path
 
 
 
-# -----------------------------------------------------------------mt()---------------------------------------
+# >_>---------------------------------------------------------关于mtime--------------------------------->_>
 # -print0: uses a null character to split file names, and
 # --null 或者 -0： expect NUL characters as input separators
 # stat --format ''
@@ -124,6 +124,7 @@ alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path
 # tac  倒着列出  # cat倒过来
 # %y表示  `modify time`
 mt(){ 
+    echo '目录下新增内容，该目录mtime会变。但只是修改其下内容，不变'
     # %y得到的  +0800表示东八区
     find $1 -type f -print0 | xargs --null stat --format "%y 改%n"  | \
     sort --numeric-sort --reverse | \
@@ -144,40 +145,42 @@ mt(){
     # \grep : --color=always
 }
 # access time
-# https://zhuanlan.zhihu.com/p/429228870  # atime不是很可靠
-at(){
-    find $1 -type f -print0 | xargs --null stat --format '%x Acess%n'  | \
-    sort --numeric-sort --reverse | \
-    head -100 | \
-    cut --delimiter=' ' --fields=1,2,4 | \
-    tac | \
-    awk -F " " \
-    '{OFMT="%.6f" ; \
-    print NR"】", \
-    $1,           \
-    " ",          \
-    $2,           \
-    " ",          \
-    $3            \
-    }' | bat    # 这里不能用双引号代替单引号
-}
-ct(){
-    echo 'status （meta data) changed 时间, 当作birth time吧，birth没记录'
-    find $1 -type f -print0 | xargs --null stat --format '%z metadata被改%n'  | \
-    sort --numeric-sort --reverse | \
-    head -100 | \
-    cut --delimiter=' ' --fields=1,2,4 | \
-    tac | \
-    awk -F " " \
-    '{OFMT="%.6f" ; \
-    print NR"】", \
-    $1,           \
-    " ",          \
-    $2,           \
-    " ",          \
-    $3            \
-    }' | bat --language=Python   # 这里不能用双引号代替单引号
-}
+# mtime变了，ctime跟着变。ctime变了，atime跟着变
+# https://zhuanlan.zhihu.com/p/429228870  # atime不是很可靠   
+# at(){
+#     find $1 -type f -print0 | xargs --null stat --format '%x Acess%n'  | \
+#     sort --numeric-sort --reverse | \
+#     head -100 | \
+#     cut --delimiter=' ' --fields=1,2,4 | \
+#     tac | \
+#     awk -F " " \
+#     '{OFMT="%.6f" ; \
+#     print NR"】", \
+#     $1,           \
+#     " ",          \
+#     $2,           \
+#     " ",          \
+#     $3            \
+#     }' | bat    # 这里不能用双引号代替单引号
+# }
+
+# ct(){
+#     echo 'status （meta data) changed 时间, 当作birth time吧，birth没记录'
+#     find $1 -type f -print0 | xargs --null stat --format '%z metadata被改%n'  | \
+#     sort --numeric-sort --reverse | \
+#     head -100 | \
+#     cut --delimiter=' ' --fields=1,2,4 | \
+#     tac | \
+#     awk -F " " \
+#     '{OFMT="%.6f" ; \
+#     print NR"】", \
+#     $1,           \
+#     " ",          \
+#     $2,           \
+#     " ",          \
+#     $3            \
+#     }' | bat --language=Python   # 这里不能用双引号代替单引号
+# }
 
 # The closest you can get is the file's ctime, which is not the creation time, it is the time that the file's metadata was last changed.
 
@@ -193,7 +196,7 @@ ct(){
 #
 # echo "$(stat -c '%n %A' $filename) $(date -d "1970-01-01 + $(stat -c '%Z' $filename ) secs"  '+%F %X')"
 # %Y     time of last data modification, seconds since Epoch
-# -----------------------------------------------------------------mt()---------------------------------------
+# <_<---------------------------------------------------------关于mtime-----------------------------------<_<
 
 alias vsc='code'
 #移到垃圾箱
