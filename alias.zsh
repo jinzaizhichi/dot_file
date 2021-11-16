@@ -1,7 +1,7 @@
 # The shell evaluation order (per POSIX) for the entities in your question is:
 # aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
-#
-#
+
+
 # file1=`cat answer.txt` 不及：
 # file1 = $(cat answer.txt)  # 能避免特殊字符发挥作用
 #
