@@ -16,8 +16,15 @@
 #     PageDown   "${terminfo[knp]}"
 # )
 
+# autoload一个函数和source函数所在文件，效果一样？
+
+# autoload -U:
+# autoload: 把fpath定义的函数load进来，这样才能调用。类似python的import？
+# -U  | unalias?  suppress alias expansion for functions
+
+
 # https://unix.stackexchange.com/a/677162/457327
-autoload -U history-search-end  # -U  | suppress alias expansion for functions
+autoload -U history-search-end  
 # -k  | mark function for ksh-style autoloading
 # -z  | mark function for zsh-style autoloading
 

@@ -1,3 +1,14 @@
+# The shell evaluation order (per POSIX) for the entities in your question is:
+# aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
+#
+#
+# file1=`cat answer.txt` 不及：
+# file1 = $(cat answer.txt)  # 能避免特殊字符发挥作用
+#
+
+# alias echo='print "正在用print代替echo" && print -l'
+alias ec='print -l && print "正在用print代替echo" '
+
 alias grep='grep --color=always'
 alias gr='grep'
 cj(){
@@ -600,7 +611,6 @@ alias vp='code'   #p wf_run.py 跳到开头加个v，不用删p就能编辑
         # echo "$1 未设置"
     # fi
 # }
-alias ec='echo'
 
 alias sc='scp'
 alias scp='scp -r'

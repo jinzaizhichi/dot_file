@@ -1,3 +1,8 @@
+# echo "$foo" instead of just echo $foo.
+# Without double-quotes the variable's contents get parsed in a somewhat weird way that tends to cause bugs.
+
+
+
 # [[===========================================================================begin
 # 为了交互使用zsh时可以 通配, 比如 mv ~/Linux/Old/^Tux.png ~/Linux/New/   (mv除了Tux.png的所有文件)
 setopt extended_glob  # 可能导致这些命令出bug, 使用时要注意:   git diff HEAD^ 
@@ -112,6 +117,9 @@ autoload -U colors && colors
 #Red, Blue, Green, Cyan, Yellow, Magenta, Black & White
 
 
+autoload -U select-word-style
+select-word-style bash  # 斜杠 下划线等 会作为单词的分隔
+# zplug里面的vim-mode搞鬼，导致放在zplug load后 会不起作用
 
 # [[==================================zsh插件管理：zplug=================================
 export ZPLUG_HOME=$HOME/.zplug
@@ -143,7 +151,10 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2  # 对命令行中的目录 �
 zplug "zsh-users/zsh-history-substring-search"  # 要在syntax-highlighting后面  , 在我建的bindky.zsh里面改快捷键
 
 # zplug "jeffreytse/zsh-vi-mode"  # 有奇怪错误，提issue很繁琐，不用了。自己配吧。
+#
+
 zplug "softmoth/zsh-vim-mode"
+
 
 # zplug "hchbaw/zce.zsh"
 
@@ -168,6 +179,7 @@ source $HOME/dot_file/color_highlight_style.zsh
 source $HOME/dot_file/color_completion_of敲tab.zsh  #  不只是颜色, 但为了想改颜色时容易找，这么命名。
 source $HOME/dot_file/color_ls.zsh
 source $HOME/dot_file/color_less.zsh
+
 
 source $HOME/dot_file/bindkey.zsh
 source $HOME/dot_file/history.zsh
@@ -232,9 +244,9 @@ dis_tmux(){
 }
 dis_tmux
 
-if [[ -z  $DISPLAY ]]; then
-   echo "if DISPLAY isn't set, it's no use setting it manually"
-fi
+# if [[ -z  $DISPLAY ]]; then
+#    echo "if DISPLAY isn't set, it's no use setting it manually"
+# fi
 
 
 
