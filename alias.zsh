@@ -4,7 +4,7 @@
 
 # file1=`cat answer.txt` 不及：
 # file1 = $(cat answer.txt)  # 能避免特殊字符发挥作用
-#
+
 
 # alias echo='print "正在用print代替echo" && print -l'
 alias ec='print -l && print "正在用print代替echo" '
