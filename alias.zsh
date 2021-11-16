@@ -532,7 +532,7 @@ sy(){
     git pull  # Update the branch to the latest code .   = fetch + merge? 还是只fetch?  
     git stash apply  # Merge your local changes into the latest code:
     git add --verbose .
-    git commit -m "$1_by_leo" 
+    git commit -m "提交原因_$1" 
     git push 
     cd - 
 }
