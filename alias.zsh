@@ -358,11 +358,10 @@ l(){
 
 # 改变目录后 自动ls
 list_all_after_cd() {
-
     # to make your zsh script portable and reliable :
-    # use zsh's `built-in features` over calling an `external program`
-    # Since setopt can drastically change the behavior of zsh, add `emulate -L zsh` to
-    # the body of your script or function to start from a known state.
+    # use zsh's `built-in features`
+    # add `emulate -L zsh` to  the body of your script or function,  to start from a known state.
+    # 避免setopt等搞乱默认配置
     emulate -L zsh
     # -L  | set local_options and local_traps as well
     # -R  | reset all options instead of only those needed for script portability
@@ -389,12 +388,41 @@ list_all_after_cd() {
         echo "--------未显示文件数：$tmp---------"
     fi
 }
+date_leo(){
+    print "___{---------"`date  +"%d日%H:%M:%S"`"----------}___"
+}
 
-# $chpwd_functions:  shell parameter
-# This is an array of function names.
+# $chpwd_functions:  shell parameter (an array of function names.)
 # All of these functions are executed `in order` when changing the current working directory.
+# 类似PAHT=$PATH:某目录，  我猜这么append函数名
+# chpwd_functions=(${chpwd_functions[@]} "函数1")
+#
+
+换行=$'\n'
+上行=$'\e[1A'
+上行=$'\e[1B'
+autoload -U colors 
+colors
+PS1_leo(){
+# https://void-shana.moe/linux/customize-your-zsh-prompt.html
+# 放文件开头时，颜色时有时无
+# https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html#Prompt-Expansion
+# PS1="%{$fg[cyan]%}【82服务器】%~       %T_周%w号"${换行}">%{$reset_color%}"
+# myPS+="${换行}"
+
+print ${fg[cyan]}`pwd`${reset_color}
+}
+
+
+# /usr/share/zsh/functions/Chpwd  下有chpwd_recent_dirs等
+# 默认的 chpwd_functions 只含chpwd_recent_dirs一个函数
+# @表示取array里的所有东西，类似于python的list[:], 但冒号不能换成具体数字?
+chpwd_functions=(${chpwd_functions[@]} "PS1_leo")
+chpwd_functions=(${chpwd_functions[@]} "date_leo")
 chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
-# alias cd='export chpwd_functions=() ; builtin cd' #  加了这行，就算没敲cd，chpwd_functions也废掉了
+
+# 加了这行，就算没敲cd，chpwd_functions也废掉了:
+# alias cd='export chpwd_functions=() ; builtin cd'
 
 
 
@@ -550,9 +578,9 @@ alias tmux='\tmux -S /tmp/leo_tmux_socket_path -f ~/dot_file/tmux_tools_wf/tmux.
 tm() {
     if [ "$1" != "" ] # or better, if [ -n "$1" ]
     then
-        tmux  new -s wf_$1 || tmux attach -t wf_$1  -d
+        tmux  new -s wf_$1 || tmux attach -t s$1  -d
     else
-        tmux  new -s wf_0 || tmux attach -t wf_0 -d
+        tmux  new -s wf_0 || tmux attach -t s0 -d
     fi
 }
 
