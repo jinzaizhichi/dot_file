@@ -19,6 +19,11 @@ set clipboard+=unnamedplus
 " nnoremap <C-V> <C-v>  " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
 
 
+nnoremap <Right> *
+nnoremap <Left> #
+" 和ctrl O 一样:
+noremap <Up> :bp<CR>
+noremap <Down> :bn<CR>
 
 " block模式
 " <C-q>用不了，可能是kite占用了  [好像又能用了]
@@ -200,9 +205,6 @@ else
     " nnoremap <leader>w :w<CR>
 
     " 使用方向键切换buffer 。 vscode的map，别用command mode ?
-    nnoremap <C-I> :bprevious<CR>
-    noremap <left> :bp<CR>  " 和ctrl O 一样
-    noremap <right> :bn<CR>
 
     " 保存python文件时删除多余空格
     fun! <SID>StripTrailingWhitespaces()
@@ -1140,7 +1142,6 @@ endif
 if &diff
     " colorscheme PaperColor  " 默认就和 if &diff外设置的主题一致
     set cursorline
-
     " 反应变慢，不好
     " map ] ]c
     " map [ [c
