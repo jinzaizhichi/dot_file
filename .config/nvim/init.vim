@@ -25,7 +25,7 @@ nnoremap <C-V> <C-V>
 " <C-q>用不了，可能是kite占用了  [好像又能用了]
 " 记忆：c for block c发音:ke
 " nnoremap <C-c> <C-v>
-inoremap <C-C> <C-V>
+inoremap <C-C> <C-V>  " 变成^   显示ASCII码吧
 " nnoremap <C-J>  " 待用 但vscode里是切到terminal 
 
 
