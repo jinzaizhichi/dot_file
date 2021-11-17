@@ -573,14 +573,16 @@ sy(){
 # This can be done by using the -L flag which creates a socket in /tmp but with a name other than default
 # S socket-path:   Specify a full alternative path to the server socket.  If -S is specified, the default socket directory is not
                    # used and any -L flag is ignored
-alias tmux='\tmux -S /tmp/leo_tmux_socket_path -f ~/dot_file/tmux_tools_wf/tmux.conf'
+alias tmux='\tmux \
+            -S /tmp/leo_tmux_socket_path \
+            -f ~/dot_file/tmux_tools_wf/tmux.conf'
 
 tm() {
     if [ "$1" != "" ] # or better, if [ -n "$1" ]
     then
-        tmux  new -s wf_$1 || tmux attach -t s$1  -d
+        tmux  new -s s_$1 || tmux attach -t s_$1  -d
     else
-        tmux  new -s wf_0 || tmux attach -t s0 -d
+        tmux  new -s s_初代 ||l tmux attach -t s_初代 -d
     fi
 }
 
