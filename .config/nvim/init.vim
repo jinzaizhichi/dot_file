@@ -1133,7 +1133,9 @@ set textwidth=100  " 没起作用
 
 
 set background=light
-colorscheme PaperColor
+if exists('g:vscode')
+    colorscheme PaperColor
+endif
 
 if &diff
     " colorscheme PaperColor  " 默认就和 if &diff外设置的主题一致
@@ -1149,6 +1151,7 @@ if &diff
 endif
 
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+
 
 set cursorline
 hi CursorLine guibg=#bbddcc
