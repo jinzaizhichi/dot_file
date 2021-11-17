@@ -22,8 +22,8 @@ set clipboard+=unnamedplus
 nnoremap <Right> *
 nnoremap <Left> #
 " 和ctrl O 一样:
-noremap <Up> :bp<CR>
-noremap <Down> :bn<CR>
+noremap <Up> <C-O> 
+noremap <Down> <C-I> 
 
 " block模式
 " <C-q>用不了，可能是kite占用了  [好像又能用了]
