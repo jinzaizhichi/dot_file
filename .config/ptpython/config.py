@@ -159,11 +159,12 @@ def configure(repl):
         "impotr": "import",
         "pritn": "print",
     }
-    
+
     @repl.add_key_binding("c-c", filter=ViInsertMode())
     def _(event):
-        "ctrl-c to go into block mode"
-        event.cli.key_processor.feed(KeyPress("escape"))
+        "ctrl-c "
+        event.cli.current_buffer.text = ""
+        #  event.cli.key_processor.feed(KeyPress("escape"))
 
     @repl.add_key_binding(" ")
     def _(event):
@@ -178,7 +179,7 @@ def configure(repl):
 
     # Add a custom title to the status bar. This is useful when ptpython is
     # embedded in other applications.
-    repl.title = "Leo Prompt"
+    repl.title = "Wf Prompt"
 
 
 # Custom colorscheme for the UI. See `ptpython/layout.py` and
@@ -252,6 +253,7 @@ _custom_ui_colorscheme = {
     # Exit confirmation.
     "exit-confirmation": "bg:#884444 #ffffff",
 }
+
 
 
 #@bindings.add('c-x')

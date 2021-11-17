@@ -16,7 +16,7 @@ endif
 "   gP : paste before the current position, placing the cursor after the new text.
 inoremap <C-V> "+gP
 set clipboard+=unnamedplus
-" unmap <C-V>
+nnoremap <C-V> <C-V>
 
 
 
@@ -617,85 +617,27 @@ set autowrite
 " [[---------------------------------------msvim-------------------------------
 
 
-
-" Use CTRL-S for saving,
+" saving,
 noremap <C-S>		:update<CR>
 inoremap <C-S>		<C-O>:update<CR>
-" *v_CTRL-C*
-" CTRL-C			In Visual mode: Stop Visual mode  
+" *v_CTRL-C*  v表示 Visual mode; Stop Visual mode
 vnoremap <C-S>		<C-C>:update<CR>
-
 
 " For CTRL-V to work autoselect must be off.
 " On Unix we have two selections, autoselect can be used.
-if !has("unix")
-  set guioptions-=a
-endif
+" if !has("unix")
+"   set guioptions-=a
+" endif
 
-" CTRL-Z is Undo
-noremap <C-Z> u
+nnoremap <C-Z> u  " CTRL-Z is Undo
 inoremap <C-Z> <C-O>u
 
-" CTRL-Y is Redo (although not repeat)
-noremap <C-Y> <C-R>
+nnoremap <C-Y> <C-R>      " CTRL-Y is Redo (although not repeat)
 inoremap <C-Y> <C-O><C-R>
 
 " ---------------------------------------msvim-------------------------------]]
 
 
-" [[---------------------------------------Theme Settings    主题设置
-
-set background=light
-colorscheme PaperColor
-
-if &diff
-    " colorscheme PaperColor  " 默认就和 if &diff外设置的主题一致
-    set cursorline
-
-    " 反应变慢，不好
-    " map ] ]c
-    " map [ [c
-
-    " hi DiffAdd    guifg=#003300 guibg=#DDFFDD gui=none
-    " hi DiffChange guibg=#ececec gui=none
-    " hi DiffText   guifg=#000033 guibg=#DDDDFF gui=none
-endif
-
-autocmd BufWritePost * if &diff == 1 | diffupdate | endif
-
-set cursorline
-hi CursorLine guibg=#bbddcc
-" hi Cursor guibg=#0000cc  " 似乎被mobaxterm控制着
-
-" 古老：For terminal Vim, with colors, we're most interested in the cterm
-" 支持真彩色 true color
-set termguicolors   " Nvim emits true (24-bit) colours. 下面改颜色只用改 guibg guifg
-hi Search guibg=#bbeeee guifg=green  " 放文件前部分不行  
-
-" [[--底栏：
-let g:airline_theme='papercolor'
-let g:airline_section_b = ''
-let g:airline_section_c = ''  
-" let g:airline_section_gutter  (csv)
-" let g:airline_section_x       (tagbar, filetype, virtualenv)
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-" let g:airline_section_y       (fileencoding, fileformat, 'bom', 'eol')
-" let g:airline_section_z=      (percentage, line number, column number)
-" let g:airline_section_error   (ycm_error_count, syntastic-err, eclim,  languageclient_error_count)
-" let g:airline_section_warning (ycm_warning_count, syntastic-warn,  languageclient_warning_count, whitespace)
-"  底栏--]]
-
-
-" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1  " 被下面的代替了
-" 不生效
-set guicursor=n-v-c:block,
-            \i-ci-ve:ver25,
-            \r-cr:hor20,
-            \o:hor50
-            \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-            \,sm:block-blinkwait175-blinkoff150-blinkon175
-
-" -------------------------Theme Settings    主题设置------------------]]
 
 noremap <F5> <ESC>oimport pudb<ESC>opu.db
 inoremap <F5> <ESC>oimport pudb<ESC>opu.db
@@ -822,9 +764,10 @@ if exists('$TMUX')
     set title
 endif
 
+
 set title
 set mouse=a
-syntax enable
+" syntax on  " 别用，会覆盖DIY的配置
 
 set nocompatible  " 别兼容老的vi
 set backspace=indent,eol,start
@@ -866,9 +809,6 @@ set fencs=utf8,gbk,gb2312,gb18030
 " Initial Plugin 加载插件
 "==========================================
 
-
-" 开启语法高亮
-syntax on
 
 
 " General Settings 基础设置
@@ -1187,3 +1127,61 @@ nnoremap <C-E> $
 " 自动换行是每行超过 n 个字的时候 , vim 自动加上换行符用。最好别用，坑?
 set textwidth=100  " 没起作用
 
+
+
+" [[---------------------------------------Theme Settings    主题设置
+
+
+set background=light
+colorscheme PaperColor
+
+if &diff
+    " colorscheme PaperColor  " 默认就和 if &diff外设置的主题一致
+    set cursorline
+
+    " 反应变慢，不好
+    " map ] ]c
+    " map [ [c
+
+    " hi DiffAdd    guifg=#003300 guibg=#DDFFDD gui=none
+    " hi DiffChange guibg=#ececec gui=none
+    " hi DiffText   guifg=#000033 guibg=#DDDDFF gui=none
+endif
+
+autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+
+set cursorline
+hi CursorLine guibg=#bbddcc
+" hi Cursor guibg=#0000cc  " 似乎被mobaxterm控制着
+
+" 古老：For terminal Vim, with colors, we're most interested in the cterm
+" 支持真彩色 true color
+set termguicolors   " Nvim emits true (24-bit) colours. 下面改颜色只用改 guibg guifg
+hi Search guibg=#ffffff guifg=#00aeae  " 放文件前部分不行
+
+
+" [[--底栏：
+let g:airline_theme='papercolor'
+let g:airline_section_b = ''
+let g:airline_section_c = ''  
+" let g:airline_section_gutter  (csv)
+" let g:airline_section_x       (tagbar, filetype, virtualenv)
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+" let g:airline_section_y       (fileencoding, fileformat, 'bom', 'eol')
+" let g:airline_section_z=      (percentage, line number, column number)
+" let g:airline_section_error   (ycm_error_count, syntastic-err, eclim,  languageclient_error_count)
+" let g:airline_section_warning (ycm_warning_count, syntastic-warn,  languageclient_warning_count, whitespace)
+"  底栏--]]
+
+
+
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1  " 被下面的代替了
+" 不生效
+set guicursor=n-v-c:block,
+            \i-ci-ve:ver25,
+            \r-cr:hor20,
+            \o:hor50
+            \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+            \,sm:block-blinkwait175-blinkoff150-blinkon175
+
+syntax enable
