@@ -16,21 +16,21 @@ endif
 "   gP : paste before the current position, placing the cursor after the new text.
 inoremap <C-V> "+gP
 set clipboard+=unnamedplus
-nnoremap <C-V> <C-V>
+" nnoremap <C-V> <C-v>  " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
 
 
 
 " block模式
-" As far as Vim is concerned, <C-M> and <CR> 一样
 " <C-q>用不了，可能是kite占用了  [好像又能用了]
 " 记忆：c for block c发音:ke
-" nnoremap <C-c> <C-v>
+nnoremap <C-c> <C-v>
 inoremap <C-C> <C-V>  " 变成^   显示ASCII码吧
 " nnoremap <C-J>  " 待用 但vscode里是切到terminal 
 
 
+" As far as Vim is concerned <C-M> and <CR> 一样
 nnoremap <C-X> :echo '该按键 待用'<CR>
-inoremap <C-F> <C-X><C-F>  " 应该是某插件的功能
+inoremap <C-F> <C-X><C-F>  " 自带的omnicomplete
 " 对于vscode-nvim：insert mode is being handled by vscode 所以<C-X>没反应
 
 						" *i_CTRL-X* *insert_expand*
