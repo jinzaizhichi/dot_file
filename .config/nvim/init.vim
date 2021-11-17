@@ -1133,7 +1133,7 @@ set textwidth=100  " 没起作用
 
 
 set background=light
-if exists('g:vscode')
+if !exists('g:vscode')
     colorscheme PaperColor
 endif
 
