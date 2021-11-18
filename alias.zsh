@@ -582,7 +582,7 @@ tm() {
     then
         tmux  new -s s_$1 || tmux attach -t s_$1  -d
     else
-        tmux  new -s s_初代 ||l tmux attach -t s_初代 -d
+        tmux  new -s s_初代 || tmux attach -t s_初代 -d
     fi
 }
 
