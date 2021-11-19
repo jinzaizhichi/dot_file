@@ -389,7 +389,7 @@ list_all_after_cd() {
     fi
 }
 date_leo(){
-    print "___{---------"`date  +"%d日%H:%M:%S"`"----------}___"
+    print "{<time of ls:"`date  +"%d日%H:%M:%S"`">}"
 }
 
 # $chpwd_functions:  shell parameter (an array of function names.)
