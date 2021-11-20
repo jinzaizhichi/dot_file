@@ -379,11 +379,26 @@ inoremap <C-_> <ESC>:call nerdcommenter#Comment('n', 'toggle')<CR>j
 vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
 
 
-" let g:NERDCreateDefaultMappings = 0  " 之前设为1，导致vscode用不了nerdcommenter?
-nnoremap ce A<space><space><Esc>o/<Esc><Esc><Esc>:call nerdcommenter#Comment("n", "Comment")<CR>kJA<BS>
+" 不行
+" func! InlineCommentWf()
+"     exec "normal A"
+"     exec "normal o/"
+"     call nerdcommenter#Comment("n", "Comment")
+"     exec "normal kJA"
+" endfunc
+
+if exists('g:vscode')
+    " vscode里，<C-_>注释，不是vim的命令,这样不行：
+    " nnoremap ce A<space><space><Esc>o/<Esc><Esc><Esc><Esc><Esc><Esc><C-_>kJA<BS>
+    " 有时会弄脏代码，可能是vscode-nvim弹出窗口太慢了？它不能接管inputmode？  " 提issue吧
+    nnoremap ce A<space><space><Esc>o/<Esc><Esc>:::::call nerdcommenter#Comment("n", "Comment")<space><CR>kJA<BS>
+else
+    " let g:NERDCreateDefaultMappings = 0  " 之前设为1，导致vscode用不了nerdcommenter?
+    nnoremap ce A<space><space><Esc>o/<Esc><Esc>:call nerdcommenter#Comment("n", "Comment")<CR>kJA<BS>
+    " 有缩进时，有时会把开头的注释符号删掉，别完美主义吧
+endif
   
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
-
  
 
 " 好慢：
