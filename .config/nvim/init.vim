@@ -380,7 +380,7 @@ vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
 
 
 " let g:NERDCreateDefaultMappings = 0  " 之前设为1，导致vscode用不了nerdcommenter?
-nnoremap ce A<space><space><Esc>o/<Esc>:call nerdcommenter#Comment("n", "Comment")<CR>kJA<BS>
+nnoremap ce A<space><space><Esc>o/<Esc><Esc><Esc>:call nerdcommenter#Comment("n", "Comment")<CR>kJA<BS>
   
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 
