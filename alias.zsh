@@ -124,10 +124,12 @@ alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path
 # tac  倒着列出  # cat倒过来
 # %y表示  `modify time`
 mt(){ 
+    # 去掉reverse
+    # sort --numeric-sort --reverse | \
     echo '目录下新增内容，该目录mtime会变。但只是修改其下内容，不变'
     # %y得到的  +0800表示东八区
     find $1 -type f -print0 | xargs --null stat --format "%y 改%n"  | \
-    sort --numeric-sort --reverse | \
+    sort --numeric-sort | \
     head -100 | \
     cut --delimiter=' ' --fields=1,2,4 | \
     tac | \
