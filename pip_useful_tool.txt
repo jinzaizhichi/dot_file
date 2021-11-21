@@ -5,7 +5,13 @@ pyclean
 
 
 pqi
-opencv-python
+
+# 4个中只能留一个，不然会打架
+# opencv-python  有时候缺点东西
+# opencv-python-headless  用不了imshow等
+# opencv-contib-python-headless  用不了imshow等
+opencv-contrib-python
+
 matplotlib
 flake8
 yapf

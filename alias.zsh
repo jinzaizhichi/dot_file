@@ -124,15 +124,12 @@ alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path
 # tac  倒着列出  # cat倒过来
 # %y表示  `modify time`
 mt(){ 
-    # 去掉reverse
-    # sort --numeric-sort --reverse | \
     echo '目录下新增内容，该目录mtime会变。但只是修改其下内容，不变'
     # %y得到的  +0800表示东八区
     find $1 -type f -print0 | xargs --null stat --format "%y 改%n"  | \
-    sort --numeric-sort | \
+    sort --numeric-sort --reverse | \
     head -100 | \
     cut --delimiter=' ' --fields=1,2,4 | \
-    tac | \
     awk -F " " \
     '{OFMT="%.6f" ; \
     print NR"】", \
@@ -733,15 +730,14 @@ alias alert='notify-send --urgency=critical -i "$([ $? = 0 ] && echo terminal ||
 alias matlab='matlab -nosplash -nodesktop'
 # alias ml='matlab -nosplash -nodesktop'
 alias do='cd ~/dot_file/'
-#不记得当时为啥加了这个
+#不记得当时为啥加了这个 
 #alias sudo=''
 # alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux_tools_wf/tmux.conf; sy'
 
 
-# alias jt='code ~/dot_file/tmux_tools_wf/tmux.conf; echo "改配置后记得sync"'
+# alias jt='code ~/dot_file/tmux_tools_wf/tmux.conf'
 # tmux config
-alias tc='code ~/dot_file/tmux_tools_wf/tmux.conf; echo "改配置后记得sync"'
-# alias js='code ~/dot_file/spacevim_conf.vim; echo '改配置后记得sync''
+alias tc='code ~/dot_file/tmux_tools_wf/tmux.conf'
 alias s='code ~/dot_file/rc.zsh ; zsh'
 va(){
     cd ~/dot_file 
@@ -754,8 +750,7 @@ va(){
 }
 
 # az: 安装an zhuang
-# alias ja='code ~/dot_file/auto_install.sh; echo '改配置后记得sync''
-alias az='code ~/dot_file/auto_install.sh; echo '改配置后记得sync''
+alias az='code ~/dot_file/auto_install.sh'
 
 vb(){
     cd ~/dot_file 
@@ -766,10 +761,8 @@ vb(){
     git push 
     cd -;zsh
 }
-# alias jb='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
 # al: alias
-alias al='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
-# alias ali='code ~/dot_file/alias.zsh; echo '改配置后记得sync' ; zsh'
+alias al='code ~/dot_file/alias.zsh'
 
 sycn_init(){
     cd ~/dot_file 
@@ -781,7 +774,6 @@ sycn_init(){
     cd -;zsh
 }
 # i for init.vim
-# alias ji='code ~/dot_file/.config/nvim/init.vim; echo '记得sync' '
 alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
 
 
