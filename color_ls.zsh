@@ -1,4 +1,5 @@
 # [[--------------------------------ls color-------------------------------------
+# https://gist.github.com/iamnewton/8754917
 
  # See man dircolors for the command, and man dir_colors for the configuration file syntax.
 LS_COLORS=''
@@ -30,6 +31,7 @@ LS_COLORS=$LS_COLORS:'*.c=1;33'       # Sources
 LS_COLORS=$LS_COLORS:'*.C=1;33'       # Sources
 LS_COLORS=$LS_COLORS:'*.h=1;33'       # Sources
 
+LS_COLORS=$LS_COLORS:'*.mp4=1;35'     # Images
 LS_COLORS=$LS_COLORS:'*.jpg=1;32'     # Images
 LS_COLORS=$LS_COLORS:'*.jpeg=1;32'    # Images
 LS_COLORS=$LS_COLORS:'*.JPG=1;32'     # Images

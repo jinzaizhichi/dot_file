@@ -1,5 +1,5 @@
 # "^C" self-insert  # 原样输入
-# 
+#
 
 # todo  ^[^H等hard coded的鬼画符 换成这些
 # key=(
@@ -24,7 +24,7 @@
 
 
 # https://unix.stackexchange.com/a/677162/457327
-autoload -U history-search-end  
+autoload -U history-search-end
 # -k  | mark function for ksh-style autoloading
 # -z  | mark function for zsh-style autoloading
 
@@ -35,11 +35,11 @@ zle -N history-beginning-search-forward-end         history-search-end
 bindkey "$key[Up]" history-substring-search-up  # 比上面2行更灵活
 bindkey "$key[Down]" history-substring-search-down
 
-bindkey "$key[Home]" beginning-of-line # HOME键 "\033[1~" 
-bindkey "$key[End]" end-of-line # END  "\033[4~" 
+bindkey "$key[Home]" beginning-of-line # HOME键 "\033[1~"
+bindkey "$key[End]" end-of-line # END  "\033[4~"
 
 
-# A key sequence typed by the user can be turned into a command name 
+# A key sequence typed by the user can be turned into a command name
 
 # bindkey [ options ] -s in-string out-string
 bindkey -s "\C-o" "cle \C-j"
@@ -66,7 +66,7 @@ bindkey -s "\C-o" "cle \C-j"
 # bindkey -s '^j' 'echo "vscode在用" \n'  #别改^j ，^j和\n同体？
 # bindkey '^m' 和回车键 同体
 
-bindkey -s '\eu' '..\n' # u for up  # 不行： bindkey -s '<atl>+u' '..\n' 
+bindkey -s '\eu' '..\n' # u for up  # 不行： bindkey -s '<atl>+u' '..\n'
 bindkey -s '\eo' 'echo "待用" \n'
 bindkey -s '\ei' 'echo "待用" \n'
 bindkey -s '\ep' 'echo "待用" \n'
@@ -84,6 +84,7 @@ bindkey '\eK' end-of-line
 bindkey '\ee' backward-word
 # bindkey '\eh' backward-word  # 行首
 # bindkey '\el' forward-word  # 被插件改了？行末
+bindkey -r '\el'  # 不生效，被vim
 # bindkey -s '\e/' 'll\n'
 # 留给vim 用作复制一行并注释
 
@@ -91,7 +92,7 @@ bindkey '\ex' execute-named-cmd
 # 待阅 https://www.cs.colostate.edu/~mcrob/toolbox/unix/keyboard.html
 # https://sgeb.io/posts/zsh-zle-custom-widgets/
 bindkey -s '^[^H' 'echo "待用" \n'  # ASCII BS == 0x08 == ^H  改了不生效
-bindkey -s '^[^?' 'echo "待用" \n'  # ASCII DEL == 0x7f == 0177 == ^?  
+bindkey -s '^[^?' 'echo "待用" \n'  # ASCII DEL == 0x7f == 0177 == ^?
 bindkey -s '^h' 'echo "被tmux占了" \n'
 
 
@@ -114,6 +115,6 @@ bindkey -s '^s'  'echo "覆盖了原来的锁屏" \n'
 # 改了不生效
 # bindkey '^x^e' vi-find-next-char
 # 暂时没有用的键
-# bindkey '^g' 
+# bindkey '^g'
 # 设不设好像都一样，默认的吧
 # bindkey '^q' push-line-or-edit

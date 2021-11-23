@@ -16,12 +16,12 @@ cj(){
     jq -C "" $1 |less -R  # jq: json query？
 }
 
-ht(){ 
+ht(){
     # 2>&1  : stderr > stdout
-    # 2>1  1会被当作为文件名  
+    # 2>1  1会被当作为文件名
     # https://stackoverflow.com/questions/818255/in-the-shell-what-does-21-mean
     nohup $* 2>&1 &
-} 
+}
 
 # 失败：
 # https://stackoverflow.com/questions/58225759/how-do-i-copy-and-paste-bash-without-dollar-signs
@@ -123,8 +123,8 @@ alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path
 # %y :  time of last data `modification`
 # tac  倒着列出  # cat倒过来
 # %y表示  `modify time`
-mt(){ 
-    echo '目录下新增内容，该目录mtime会变。但只是修改其下内容，不变'
+mt(){
+    echo '如果在目录下新增内容，该目录的mtime会变。如果只是修改其下内容，该目录的mtime不变'
     # %y得到的  +0800表示东八区
     find $1 -type f -print0 | xargs --null stat --format "%y 改%n"  | \
     sort --numeric-sort --reverse | \
@@ -145,7 +145,7 @@ mt(){
 }
 # access time
 # mtime变了，ctime跟着变。ctime变了，atime跟着变
-# https://zhuanlan.zhihu.com/p/429228870  # atime不是很可靠   
+# https://zhuanlan.zhihu.com/p/429228870  # atime不是很可靠
 # at(){
 #     find $1 -type f -print0 | xargs --null stat --format '%x Acess%n'  | \
 #     sort --numeric-sort --reverse | \
@@ -186,7 +186,7 @@ mt(){
 # | cut -d: -f2-
 #  百分号加字母，在不同命令有不同含义。表示时间时，有些时候不同命令某些程度上一致
 #   Convert a specific date to the Unix timestamp format
-# date --date="某个表示时间的字符串" '+%格式代码' 
+# date --date="某个表示时间的字符串" '+%格式代码'
 # 例如：
 # date --date="1may" '+%m%d'
 # date --date="may1" '+%m月%d日  没加百分号的字符 随便写'
@@ -319,7 +319,7 @@ l(){
     --no-permissions  \
     --sort=time  \
     --time-style=iso  $1 | \
-    tail -25 
+    tail -25
     # --group-directories-first    # 不好，
 
     tmp=$((`\ls -l | wc -l`-1))
@@ -400,7 +400,7 @@ date_leo(){
 换行=$'\n'
 上行=$'\e[1A'
 上行=$'\e[1B'
-autoload -U colors 
+autoload -U colors
 colors
 PS1_leo(){
 # https://void-shana.moe/linux/customize-your-zsh-prompt.html
@@ -501,7 +501,7 @@ cl(){
 t() {
     for my_file in $*
     do
-        trash=${my_file}_`date  +"%m月%d日%H:%M:%S"`  
+        trash=${my_file}_`date  +"%m月%d日%H:%M:%S"`
         # mkdir -p ~/.t/${trash}
         # mv ${my_file} ~/.t/${trash}/my_file
         mv ${my_file} ~/.t/${trash}
@@ -557,14 +557,14 @@ alias snp='~/dot_file/wf_snippet.py'
 # alias gitp='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
 # alias gip='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
 sy(){
-    cd ~/dot_file 
+    cd ~/dot_file
     git stash
-    git pull  # Update the branch to the latest code .   = fetch + merge? 还是只fetch?  
+    git pull  # Update the branch to the latest code .   = fetch + merge? 还是只fetch?
     git stash apply  # Merge your local changes into the latest code:
     git add --verbose .
-    git commit -m "提交原因_$1" 
-    git push 
-    cd - 
+    git commit -m "提交原因_$1"
+    git push
+    cd -
 }
 
 # Sometimes it is convenient to create separate tmux servers, perhaps to ensure an
@@ -637,7 +637,7 @@ alias vp='code'   #p wf_run.py 跳到开头加个v，不用删p就能编辑
 
     # cat $HOME/.t/ec_leo_short_for_echo.txt | echo ${}
     # echo  ${"echo $1"}
-    
+
     # if (( ${+$(VAR)} ))   #  看 VAR是否未设置
     # then
         # echo $(VAR)
@@ -730,7 +730,7 @@ alias alert='notify-send --urgency=critical -i "$([ $? = 0 ] && echo terminal ||
 alias matlab='matlab -nosplash -nodesktop'
 # alias ml='matlab -nosplash -nodesktop'
 alias do='cd ~/dot_file/'
-#不记得当时为啥加了这个 
+#不记得当时为啥加了这个
 #alias sudo=''
 # alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux_tools_wf/tmux.conf; sy'
 
@@ -740,12 +740,12 @@ alias do='cd ~/dot_file/'
 alias tc='code ~/dot_file/tmux_tools_wf/tmux.conf'
 alias s='code ~/dot_file/rc.zsh ; zsh'
 va(){
-    cd ~/dot_file 
-    git pull 
-    code ~/dot_file/auto_install.sh 
-    git add . 
-    git commit -m "wf" 
-    git push 
+    cd ~/dot_file
+    git pull
+    code ~/dot_file/auto_install.sh
+    git add .
+    git commit -m "wf"
+    git push
     cd -
 }
 
@@ -753,24 +753,24 @@ va(){
 alias az='code ~/dot_file/auto_install.sh'
 
 vb(){
-    cd ~/dot_file 
-    git pull 
-    code ~/dot_file/alias.zsh 
-    git add . 
-    git commit -m "wf" 
-    git push 
+    cd ~/dot_file
+    git pull
+    code ~/dot_file/alias.zsh
+    git add .
+    git commit -m "wf"
+    git push
     cd -;zsh
 }
 # al: alias
 alias al='code ~/dot_file/alias.zsh'
 
 sycn_init(){
-    cd ~/dot_file 
-    git pull 
+    cd ~/dot_file
+    git pull
     code ~/dot_file/.config/nvim/init.vim
-    git add . 
-    git commit -m "wf" 
-    git push 
+    git add .
+    git commit -m "wf"
+    git push
     cd -;zsh
 }
 # i for init.vim
@@ -972,7 +972,7 @@ alias -s yml=vim
 
 if [[ -n "$TMUX" ]];
 then
-    alias -s py=vim 
+    alias -s py=vim
 
     alias code=vim
     alias -s cpp=vim
@@ -983,7 +983,7 @@ then
     alias -s m=vim
     alias -s cfg=vim
 else
-    alias -s py=code 
+    alias -s py=code
     # alias -s py=code  # 为了能让python被zsh自动补全
 
     alias -s cpp=code
