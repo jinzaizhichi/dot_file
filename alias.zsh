@@ -197,7 +197,6 @@ mt(){
 # %Y     time of last data modification, seconds since Epoch
 # <_<---------------------------------------------------------关于mtime-----------------------------------<_<
 
-alias vsc='code'
 #移到垃圾箱
 alias tvsc='t'
 # alias hg='history -i 1000 | bat' # 待用
@@ -631,7 +630,10 @@ alias vi='~/dot_file/nvim-linux64/bin/nvim'
 alias vim='~/dot_file/nvim-linux64/bin/nvim'  # 不用加-u 指定 因为默认就在~/.config/下
 # alias vim='~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim'
 
+alias vsc='code'
+alias vs='code'
 alias v='code'
+
 alias vp='code'   #p wf_run.py 跳到开头加个v，不用删p就能编辑
 
 # 用autohotkey敲\ec吧
@@ -729,6 +731,7 @@ alias scp='noglob scp -r'
 # alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e ''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'')"'
 
 
+alias disimg='~/dot_file/imcat/imcat'
 alias pt='ptpython --vi'
 #alias pt='ptpython --vi --config-dir=~/dot_file/.config/ptpython'
 alias pti='ptipython --vi'
@@ -922,7 +925,8 @@ alias rm='rm -Irv --preserve-root'
 alias rmi='nocorrect rm -i'
 alias rsync='noglob rsync'
 # o for open (source .zsrc,  as if opening a new zsh, to make new config take effect)
-alias o='source ~/.zshrc'  # 有时source后，alias就算在文件中被删了，还在"
+# alias o='source ~/.zshrc'  # 有时source后，alias就算在文件中被删了，还在"
+alias o='zsh'  # 有时source后，alias就算在文件中被删了，还在"
 # search alias
 alias sftp='noglob sftp'
 alias sl=ls

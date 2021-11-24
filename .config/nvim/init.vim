@@ -704,10 +704,6 @@ nnoremap <TAB> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Righ
 " vim中:map看现在的绑定, 能看到spacevim的
 
 
-" kite捣乱：
-" inoremap <C-E> o<BS>
-nnoremap <C-E> $
-
 
 " 用不了
 
