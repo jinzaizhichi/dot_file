@@ -83,8 +83,10 @@ bindkey '\eK' end-of-line
 # bindkey '\eo' end-of-line
 bindkey '\ee' backward-word
 # bindkey '\eh' backward-word  # 行首
+
 # bindkey '\el' forward-word  # 被插件改了？行末
-bindkey -r '\el'  # 不生效，被vim
+# bindkey -r '\el'  # 不生效，被zsh vim模式插件占了？
+
 # bindkey -s '\e/' 'll\n'
 # 留给vim 用作复制一行并注释
 

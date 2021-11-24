@@ -3,16 +3,16 @@
 if has('autocmd') " ignore this section if your vim does not support autocommands
     " 1. Select the group with ":augroup {name}".
     augroup wf_reload_init.vim
-        " 2. Delete any old autocommands with 
+        " 2. Delete any old autocommands with
         autocmd!
         " 3. Define the autocommands.   %表示当前文件
         autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source % | echo '改了init.vim'
 
-        " 4. Go back to the default group：  END  
+        " 4. Go back to the default group：  END
     augroup END
 endif
 
-"  "+g   Use the + register (clipboard) :   
+"  "+g   Use the + register (clipboard) :
 "   gP : paste before the current position, placing the cursor after the new text.
 inoremap <C-V> "+gP
 set clipboard+=unnamedplus
@@ -22,8 +22,8 @@ set clipboard+=unnamedplus
 nnoremap <Right> *
 nnoremap <Left> #
 " 和ctrl O 一样:
-noremap <Up> <C-O> 
-noremap <Down> <C-I> 
+noremap <Up> <C-O>
+noremap <Down> <C-I>
 
 " block模式
 " <C-q>用不了，可能是kite占用了  [好像又能用了]
@@ -31,7 +31,7 @@ noremap <Down> <C-I>
 " vscod里不生效：
 nnoremap <C-c> <C-v>
 inoremap <C-C> <C-V>  " 变成^   显示ASCII码吧
-" nnoremap <C-J>  " 待用 但vscode里是切到terminal 
+" nnoremap <C-J>  " 待用 但vscode里是切到terminal
 
 
 " As far as Vim is concerned <C-M> and <CR> 一样
@@ -126,7 +126,7 @@ if exists('g:vscode')
 
 else
     " echo '没在用 vscode-neovim, 纯 nvim'
- 
+
     " nnoremap <F8> :call HideNumber()<CR>  " 记忆：  8 : byebye number
     nnoremap <F8> :echo 'wfwfwf'
     function! HideNumber()
@@ -180,7 +180,7 @@ else
     " 		the indent of a line.  When non-empty this method overrides
     " 		the other ones.  See |indent-expression|.
     " set cindent
-    
+
     func! Indent_wf()
         set ts=2 | set noexpandtab | %retab! | set ts=4 | set expandtab | %retab! | echo"Indent 2缩进变4"
     endfunc
@@ -229,26 +229,26 @@ nnoremap df ggdG
 nnoremap vf ggVGp:echo"已粘贴之前复制的内容"<CR>
 
 " comment at the end of line
- 
+
 
 " vscode里不行，别试了:
 " inoremap yf <Esc>ggyG<C-O>
 
-let mapleader =" "     
+let mapleader =" "
 " https://stackoverflow.com/questions/54787831/map-space-to-leader-in-vim
 
 
-" Lazy loading, my preferred way, as you can have both [避免被PlugClean删除没启动的插件] 
+" Lazy loading, my preferred way, as you can have both [避免被PlugClean删除没启动的插件]
 " https://github.com/junegunn/vim-plug/wiki/tips
 " leo改过
 function! VimPlugConds(arg1, ...)
 
     " a: 表示argument
     " You must prefix a parameter name with "a:" (argument).
-        " a:0  等于 len(a:000)), 
+        " a:0  等于 len(a:000)),
         " a:1 first unnamed parameters, and so on.  `a:1` is the same as "a:000[0]".
     " A function cannot change a parameter
-    
+
             " To avoid an error for an invalid index use the get() function
             " get(list, idx, default)
     let leo_opts = get(a:000, 0, {})  "  a:000 (list of all parameters), 获得该list的第一个元素
@@ -290,7 +290,7 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
 " todo  debug buggy 出了问题来这里
-"s for search 
+"s for search
 nmap s <Plug>(easymotion-f)
 " Need one more keystroke
 nmap f <Plug>(easymotion-f2)
@@ -373,7 +373,7 @@ let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace wh
 let g:NERDToggleCheckAllLines = 1 " check all selected lines is commented or not
 
 " 对vscode无效,不知道为啥
-" <C-/> 在vim中由C-_表示 zsh下敲cat后，ctrl / 显示  ^_ 
+" <C-/> 在vim中由C-_表示 zsh下敲cat后，ctrl / 显示  ^_
 nnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>j
 inoremap <C-_> <ESC>:call nerdcommenter#Comment('n', 'toggle')<CR>j
 vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
@@ -397,15 +397,15 @@ else
     nnoremap ce A<space><space><Esc>o/<Esc><Esc>:call nerdcommenter#Comment("n", "Comment")<CR>kJA<BS>
     " 有缩进时，有时会把开头的注释符号删掉，别完美主义吧
 endif
-  
+
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
- 
+
 
 " 好慢：
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
 " nnoremap - :k<plug>nerdcommentertoggle<cr>
 " 这行不行:
-" nnoremap = :call <Plug>NERDCommenterInvert<CR>  
+" nnoremap = :call <Plug>NERDCommenterInvert<CR>
 
 
 "let g:NERDDefaultNesting = 1
@@ -548,7 +548,7 @@ set pastetoggle=<F9>
 " pressing  Ctrl[   will usually get you the equivalent of pressing Esc.
 " *i_CTRL-V*
 " CTRL-V	Insert next non-digit `literally`.  For special keys, the
-"         terminal code is inserted.  
+"         terminal code is inserted.
 "         The characters typed right after CTRL-V are not considered for
 "         mapping.
 "
@@ -1183,7 +1183,7 @@ hi Search guibg=#ffffff guifg=#00aeae  " 放文件前部分不行
 " [[--底栏：
 let g:airline_theme='papercolor'
 let g:airline_section_b = ''
-let g:airline_section_c = ''  
+let g:airline_section_c = ''
 " let g:airline_section_gutter  (csv)
 " let g:airline_section_x       (tagbar, filetype, virtualenv)
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'

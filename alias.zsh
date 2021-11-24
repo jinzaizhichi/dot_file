@@ -222,7 +222,13 @@ a(){
     # read TMP
     # TMP2 ="`print -r ${(q)TMP}`"
     # \rg --pretty --hidden TMP2 | bat # 沿用ag的a
-     \rg --pretty --hidden --smart-case "$*"  | bat # 沿用ag的a
+     \rg --pretty --hidden  --before-context 1 --after-context 2  --smart-case "$*"  | bat # 沿用ag的a
+}
+a4(){
+    # read TMP
+    # TMP2 ="`print -r ${(q)TMP}`"
+    # \rg --pretty --hidden TMP2 | bat # 沿用ag的a
+     \rg --pretty --hidden  --before-context 4 --after-context 4  --smart-case "$*"  | bat # 沿用ag的a
 }
 # a(){
 #     echo "要转义：# , . - 等"

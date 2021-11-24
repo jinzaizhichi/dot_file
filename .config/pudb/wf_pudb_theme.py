@@ -1,32 +1,33 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# 256 color chart: http://en.wikipedia.org/wiki/File:Xterm_color_chart.png
-#
-####################################### "setting_name": (foreground_color, background_color),
 
 
 # Note, be sure to test your theme in both curses and raw mode (see the bottom
-# of the preferences window). Curses mode will be used with screen or tmux.
+# of the preferences window).
+#  Curses mode will be used with screen or tmux.
 
 
 
 palette.update({
     #  "source": (add_setting("black", "underline"), "dark green"),
 
-    # UI
-    "header": ("black", "light blue"),
-    "focused sidebar": ("yellow", "light blue"),
-    "group head": ("black", "light blue"),
-    "background": ("black", "light blue"),
-    "label": ("black", "light blue"),
-    "value": ("white", "dark blue"),
-    "fixed value": ("black", "light blue"),
+    #  "setting_name": (foreground_color, background_color),
+    # 256 color chart: http://en.wikipedia.org/wiki/File:Xterm_color_chart.png
 
-    "variables": ("light blue", "default"),
+    # UI
+    "header": ( "black", "h231"),
+    "focused sidebar": ("white", "h249"),
+    "group head": ("black", "h249"),
+    "background": ("black", "h249"),
+    "label": ("black", "h249"),
+    "value": ("white", "dark blue"),
+    "fixed value": ("black", "h249"),
+
+    "variables": ("h249", "default"),
 
     "var label": ("dark blue", "default"),
-    "var value": ("light blue", "default"),
+    "var value": ("h249", "default"),
 
     "focused var label": ("white", "dark blue"),
     "focused var value": ("black", "h159"),
@@ -36,11 +37,11 @@ palette.update({
     "focused highlighted var label": ("white", "light green"),
     "focused highlighted var value": ("white", "light green"),
 
-    ############################################  stack
-    "stack": ("light blue", "default"),
+    ##########  stack
+    "stack": ("h249", "default"),
 
     "frame name": ("dark blue", "default"),
-    "frame class": ("light blue", "default"),
+    "frame class": ("h249", "default"),
     "frame location": ("light green", "default"),
 
     "focused frame name": ("white", "dark blue"),
@@ -55,10 +56,10 @@ palette.update({
     "current frame class": ("h0", "h109"),
     "current frame location": ("h235", "h109"),
 
-#下面进行了批量替换:  %s/light blue/h237/gc 
+#下面进行了批量替换:  %s/light blue/h237/gc
 
 
-# breakpoints
+     # breakpoints
     "breakpoint": ("h237", "default"),
     "disabled breakpoint": ("light gray", "default"),
     "focused breakpoint": ("white", "light green"),
@@ -82,9 +83,9 @@ palette.update({
     "current source": ( "h237","h255"),
     "current focused source": ("h0", "h181"),
 
-    "focused source": ("h0", "h111"),
+    "focused source": ("h0", "h153"),
 
-    "current highlighted source": ("black", "dark cyan"),
+    "current highlighted source": ("black", "h195"),
     "highlighted source": ("h237", "black"),
 
     "line number": ("h237", "default"),
@@ -97,7 +98,7 @@ palette.update({
     "docstring": ("dark cyan", "default"),
     "backtick": ("light green", "default"),
     "punctuation": ("h237", "default"),
-    "comment": ("light green", "default"),
+    "comment": ("h130", "default"),
     "classname": ("dark blue", "default"),
     "funcname": ("dark blue", "default"),
 
