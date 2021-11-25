@@ -154,7 +154,7 @@ zplug "zsh-users/zsh-history-substring-search"  # 要在syntax-highlighting后�
 # zplug "jeffreytse/zsh-vi-mode"  # 有奇怪错误，提issue很繁琐，不用了。自己配吧。
 #
 
-zplug "softmoth/zsh-vim-mode"
+# zplug "softmoth/zsh-vim-mode"
 
 
 # zplug "hchbaw/zce.zsh"
@@ -190,12 +190,6 @@ autoload -Uz chpwd_recent_dirs  cdr add-zsh-hook  # -U: suppress alias expansion
 add-zsh-hook chpwd chpwd_recent_dirs
 
 
-alias -- -='cd -'
-
-function d () {
-    dirs -v | head -10
-}
-compdef _dirs d
 # If you want to preserve (and don't want to alter) the existing definition, you can :
 # prmptcmd() { eval "$PROMPT_COMMAND" }
 # precmd_functions=(prmptcmd)

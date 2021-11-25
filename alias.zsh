@@ -405,6 +405,7 @@ date_leo(){
 # chpwd_functions=(${chpwd_functions[@]} "函数1")
 #
 
+# 没看错，中文能当变量
 换行=$'\n'
 上行=$'\e[1A'
 上行=$'\e[1B'
@@ -792,19 +793,43 @@ alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
 #同步
 alias y='cd ~/dot_file ; git pull ; git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
 
+
+# todo  # alt left 搞成和windows一样的体验
+# }
+
+# Shell functions are defined with the function reserved word or the special syntax ‘funcname ()’.
+# function d () {
+
+d () {
+    dirs -lv | head -10  > ~/.t/.leo_path_stack_dirs.log
+    # -v 带上序号
+    # -l  代表long？ full path
+    bat ~/.t/.leo_path_stack_dirs.log
+}
+compdef _dirs d  # 让函数d能被自动补全
+
+# _dirs is an autoload shell function
+#
+# whence dirs输出：
+# _dirs () {
+#         # undefined
+#         builtin autoload -XUz
+# }
+#
+# /usr/share/zsh/functions/Completion/Zsh/_dirs 的完整内容:
+#compdef dirs
+# _arguments -s \
+#   '(-)-c[clear the directory stack]' \
+#   '(* -c)-l[display directory names in full]' \
+#   '(* -c)-v[display numbered list of directory stack]' \
+#   '(* -c)-p[display directory entries one per line]' \
+#   '(-)*:directory:_directories'
+
 # alias -g ...='../..'
+alias -- -='cd -'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias -- -='cd -'
-
-# todo  # alt left 搞成和windows一样的体验
-# alias d='dirs -v | head -6 '
-# d(){
-#     dirs -v | head -6 > ~/.t/.find_results.log
-#     bat ~/.t/.find_results.log
-# }
-
 
 alias 2='cd -2'
 alias 3='cd -3'
@@ -849,10 +874,19 @@ f(){
     # bat ~/.t/.find_results.log
 }
 
-ch(){
+# found a directory
+fd(){
     cd `sed --quiet $1p ~/.t/.find_results.log`
 }
 
+ff(){
+    v `sed --quiet $1p ~/.t/.find_results.log`
+}
+
+fp(){
+    # cd `sed --quiet $1p ~/.z`  # todo 扔掉~/.z每行竖线后的内容
+    cd `sed --quiet $1p ~/.t/.cd_stack.log`
+}
 
 # /proc写成/proc/据说不行
 alias f/='f_2(){ find / -path '/proc' -prune -o -path '/proc' -prune -o  -name "*$1*" | grep $1;}; f_2'
