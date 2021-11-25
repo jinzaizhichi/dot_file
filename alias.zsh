@@ -9,6 +9,9 @@
 # alias echo='print "正在用print代替echo" && print -l'
 alias ec='print -l && print "正在用print代替echo" '
 
+alias version='~/dot_file/show_version_of_any_tool/version'
+alias ver='~/dot_file/show_version_of_any_tool/version'
+
 alias grep='grep --color=always'
 alias gr='grep'
 cj(){
