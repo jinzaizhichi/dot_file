@@ -32,6 +32,7 @@ function peco-history-selection() {
     else
     tac="tail -r"
     fi
+    # 别用系统的根目录下的peco，太老，用dot_file下的
     BUFFER=$(history -1000 | eval $tac | cut -c 8- | $HOME/dot_file/peco --query "$LBUFFER")
     CURSOR=$#BUFFER
 }
