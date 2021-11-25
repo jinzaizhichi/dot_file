@@ -5,7 +5,7 @@
 
 # [[===========================================================================begin
 # 为了交互使用zsh时可以 通配, 比如 mv ~/Linux/Old/^Tux.png ~/Linux/New/   (mv除了Tux.png的所有文件)
-setopt extended_glob  # 可能导致这些命令出bug, 使用时要注意:   git diff HEAD^ 
+setopt extended_glob  # 可能导致这些命令出bug, 使用时要注意:   git diff HEAD^
 # Treat the ‘#’, ‘~’ and ‘^’ characters as part of patterns for filename generation, etc.
 # (An initial unquoted ‘~’ always produces named directory expansion.)
 #
@@ -89,7 +89,7 @@ autoload -Uz run-help-ip # -z  | mark function for zsh-style autoloading
 autoload run-help-git
 
 # export TERM="xterm-256color" # Enable 256 color to make auto-suggestions look nice
-# export TERM="xterm-truecolor"   # 报错 
+# export TERM="xterm-truecolor"   # 报错
 
 # 如果终端支持truecolor, 用之
 case $TERM in
@@ -101,7 +101,7 @@ case $TERM in
   vte*)
 esac
 
-fpath=(~/dot_file/zfunc_in_fpath_leo $fpath)  # zfunc_in_fpath_leo用于存放自动补全命令  要在compinit之前. 
+fpath=(~/dot_file/zfunc_in_fpath_leo $fpath)  # zfunc_in_fpath_leo用于存放自动补全命令  要在compinit之前.
 autoload -U compinit # -U : suppress alias expansion for functions
 compinit
 
@@ -190,23 +190,16 @@ autoload -Uz chpwd_recent_dirs  cdr add-zsh-hook  # -U: suppress alias expansion
 add-zsh-hook chpwd chpwd_recent_dirs
 
 
-
-
 alias -- -='cd -'
-alias 1='cd -'
-alias 2='cd -2'
-alias 3='cd -3'
-alias 4='cd -4'
-alias 5='cd -5'
-alias 6='cd -6'
 
 function d () {
     dirs -v | head -10
 }
 compdef _dirs d
-# If you want to preserve (and don't want to alter) the existing definition, you can use that approach:
+# If you want to preserve (and don't want to alter) the existing definition, you can :
 # prmptcmd() { eval "$PROMPT_COMMAND" }
 # precmd_functions=(prmptcmd)
+
 
 # =============================================================================================
 # 放到zplug的东西前 会报错

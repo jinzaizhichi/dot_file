@@ -797,7 +797,15 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias -- -='cd -'
-alias 1='cd -'
+
+# todo  # alt left 搞成和windows一样的体验
+# alias d='dirs -v | head -6 '
+# d(){
+#     dirs -v | head -6 > ~/.t/.find_results.log
+#     bat ~/.t/.find_results.log
+# }
+
+
 alias 2='cd -2'
 alias 3='cd -3'
 alias 4='cd -4'
@@ -814,7 +822,6 @@ alias db=pudb3
 alias c=cp
 alias cp='cp -ivr'
 alias c.='cp -ivr -t `pwd`'
-alias d='dirs -v | head -6'
 alias df='df -h'
 alias du='du -h'
 #e for exit 离开代理
@@ -835,13 +842,17 @@ f(){
     -path '/d/docker' -prune -o  \
     -path '~/.t' -prune -o       \
     -path '/proc' -prune -o      \
-    -name "*$1*">~/.t/.find_results.log
+    -name "*$1*" > ~/.t/.find_results.log
 
     # rg能高亮关键词，进了bat还能显示
     rg $1 ~/.t/.find_results.log | bat
-
     # bat ~/.t/.find_results.log
 }
+
+ch(){
+    cd `sed --quiet $1p ~/.t/.find_results.log`
+}
+
 
 # /proc写成/proc/据说不行
 alias f/='f_2(){ find / -path '/proc' -prune -o -path '/proc' -prune -o  -name "*$1*" | grep $1;}; f_2'
@@ -985,9 +996,9 @@ alias -s yml=vim
 
 if [[ -n "$TMUX" ]];
 then
-    alias -s py=vim
+    alias    code=vim
 
-    alias code=vim
+    alias -s py=vim
     alias -s cpp=vim
     alias -s toml=vim
     alias -s vim=vim
@@ -996,9 +1007,7 @@ then
     alias -s m=vim
     alias -s cfg=vim
 else
-    alias -s py=code
-    # alias -s py=code  # 为了能让python被zsh自动补全
-
+    alias -s py=code  # 要是想 让python被zsh自动补全,注释掉这行
     alias -s cpp=code
     alias -s toml=code
     alias -s vim=code
