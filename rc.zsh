@@ -176,14 +176,14 @@ zplug load     # source plugins and add commands to $PATH
 
 
 # 放在插件管理后面，避免被别人的配置覆盖
-source $HOME/dot_file/color_highlight_style.zsh
-source $HOME/dot_file/color_completion_of敲tab.zsh  #  不只是颜色, 但为了想改颜色时容易找，这么命名。
-source $HOME/dot_file/color_ls.zsh
-source $HOME/dot_file/color_less.zsh
+source $HOME/dot_file/color_highlight_style_wf.zsh
+source $HOME/dot_file/completion_color_config_敲tab补全.zsh  #  不只是颜色, 但为了想改颜色时容易找，这么命名。
+source $HOME/dot_file/color_ls_wf.zsh
+source $HOME/dot_file/color_less_wf.zsh
 
 
-source $HOME/dot_file/bindkey.zsh
-source $HOME/dot_file/history.zsh
+source $HOME/dot_file/bindkey_wf.zsh
+source $HOME/dot_file/history_config_wf.zsh
 
 source $HOME/dot_file/alias.zsh   # 里面有：chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 autoload -Uz chpwd_recent_dirs  cdr add-zsh-hook  # -U: suppress alias expansion for functions
