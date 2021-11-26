@@ -407,9 +407,15 @@ else
     nnoremap ce A<space><space><Esc>o/<Esc><Esc>:call nerdcommenter#Comment("n", "Comment")<CR>kJA<BS>
     " 有缩进时，有时会把开头的注释符号删掉，别完美主义吧
 endif
+<<<<<<< Updated upstream
 
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 
+=======
+  
+nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
+ 
+>>>>>>> Stashed changes
 
 " 好慢：
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
