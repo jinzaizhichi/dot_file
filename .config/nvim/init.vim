@@ -1085,15 +1085,5 @@ autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
 " 放前面会被某些内容覆盖掉
 nnoremap <C-E> $
 
-<<<<<<< Updated upstream
-=======
-
-
-
-
-" 每行超过 n 个字的时候 , vim 自动加上换行符
-set textwidth=100
-
->>>>>>> Stashed changes
 source ~/dot_file/.config/nvim/beautify_wf.vim
 
