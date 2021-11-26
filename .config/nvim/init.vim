@@ -1077,10 +1077,6 @@ nnoremap U <C-r>
 " 放前面会被某些内容覆盖掉
 nnoremap <C-E> $
 
-<<<<<<< Updated upstream
-=======
-source ~/dot_file/.config/nvim/beautify_wf.vim
->>>>>>> Stashed changes
 
 " >>>---------------------------------------------------------------------LeaderF
 " don't show the help in normal mode
