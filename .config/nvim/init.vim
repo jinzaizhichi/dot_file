@@ -416,13 +416,7 @@ else
 endif
 
 
-<<<<<<< Updated upstream
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
-=======
-  
-nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
- 
->>>>>>> Stashed changes
 
 " 好慢：
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
