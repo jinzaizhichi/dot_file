@@ -409,12 +409,17 @@ else
 endif
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 
 =======
   
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
+=======
+  
+nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
+>>>>>>> Stashed changes
 =======
   
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
