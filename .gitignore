@@ -23,8 +23,7 @@ __pycache__
 .config/SogouPY/*
 .config/Code
 .config/Code/*
-.config/nvim
-.config/nvim/*
+# .config/nvim
 .config/nvim/*
 tmux/plugins
 tmux/plugins/*

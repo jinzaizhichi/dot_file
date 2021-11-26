@@ -1094,7 +1094,6 @@ nnoremap <C-E> $
 
 
 
-<<<<<<< Updated upstream
 
 
 " 每行超过 n 个字的时候 , vim 自动加上换行符
