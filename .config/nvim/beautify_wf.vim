@@ -60,10 +60,10 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1  " 被下面的代替了
 syntax enable
 
 
-highlight OperatorSandwichBuns guifg='#aa91a0' gui=underline ctermfg=172 cterm=underline
-highlight OperatorSandwichChange guifg='#edc41f' gui=underline ctermfg='yellow' cterm=underline
-highlight OperatorSandwichAdd guibg='#b1fa87' gui=none ctermbg='green' cterm=none
-highlight OperatorSandwichDelete guibg='#cf5963' gui=none ctermbg='red' cterm=none
+highlight OperatorSandwichBuns guifg='#aa91a0' gui=underline 
+highlight OperatorSandwichChange guifg='#edc41f' gui=underline 
+highlight OperatorSandwichAdd guibg='#b1fa87' gui=none 
+highlight OperatorSandwichDelete guibg='#cf5963' gui=none 
 
 
 " 防止tmux下vim的背景色显示异常
@@ -84,3 +84,46 @@ if has("autocmd")
     autocmd Syntax * call matchadd('Todo',  '\W\zs\(todo\|FIXME\|CHANGED\|DONE\|Todo\|BUG\|HACK\)')
     autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
 endif
+
+
+" 不加bold时，背景前景会 对调
+hi StatusLine     gui=bold guibg=#a4e4e4 guifg=#004040
+hi StatusLineNC   gui=bold guibg=#e0f0f0 guifg=#0099a0
+
+" todo printf style '%' items interspersed with  normal text.
+" Each status line item is of the form:
+"       %-0{minwid}.{maxwid}{item}
+"     All fields except the {item} are optional.
+" 在上面的基础上：  (几表示某个highlight设置)
+" %几*某内容%*
+
+" %=   右对齐
+" %r  readonly, 显示 [RO]
+set statusline=%=%r
+set statusline=%=%t
+set statusline +=%=缓存:%n\                   "buffer number
+set statusline +=%=%m                         "modified flag
+set statusline +=%=文件格式:%{&ff}            "是否unix
+set statusline +=%=\ %h
+" flag [Preview]
+set statusline +=%=\ %w
+set statusline +=%=\ %k
+set statusline +=%=\ %q
+set statusline +=%999X
+set statusline +=%=第%l行(%p%%)\ %v列         "virtual column number (screen column)
+set statusline +=
+" set statusline +=\ %c                        " Column number (byte index).
+" set statusline +=/%L行                       "total lines
+" set statusline +=\ 0x%B\                     "character under cursor
+
+" 每行超过 n 个字的时候 , vim 自动加上换行符
+set textwidth=100
+
+
+" 不加bold时，背景前景会 对调
+hi StatusLine     gui=bold guibg=#a4e4e4 guifg=#004040
+hi StatusLineNC   gui=bold guibg=#e0f0f0 guifg=#0099a0
+
+
+set laststatus=1  " only if there are at least two windows
+
