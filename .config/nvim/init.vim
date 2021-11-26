@@ -416,7 +416,13 @@ else
 endif
 
 
+<<<<<<< Updated upstream
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
+=======
+  
+nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
+ 
+>>>>>>> Stashed changes
 
 " 好慢：
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
@@ -1094,7 +1100,7 @@ nnoremap <C-E> $
 " 每行超过 n 个字的时候 , vim 自动加上换行符
 set textwidth=100
 
-source /home/wf/dot_file/.config/nvim/beautify_wf.vim
+source ~/dot_file/.config/nvim/beautify_wf.vim
 
 " set statusline=%=%<%f分割%m%r%=%-14.(%l,%c%V%)\ %P
 
