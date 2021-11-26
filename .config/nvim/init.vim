@@ -1,5 +1,4 @@
 " 让配置变更立即生效
-" 别再老敲：source init.vim
 if has('autocmd') " ignore this section if your vim does not support autocommands
     " 1. Select the group with ":augroup {name}".
     augroup wf_reload_init.vim
@@ -12,11 +11,20 @@ if has('autocmd') " ignore this section if your vim does not support autocommand
     augroup END
 endif
 
-"  "+g   Use the + register (clipboard) :
+augroup my_filetype_settings
+autocmd!
+" winnr: 当前window的编号，top winodw是1
+" $: last window
+autocmd FileType help if winnr('$') > 2 | wincmd K | else | wincmd L | endif
+augroup END
+
+
+"  "+   Use the + register (clipboard) :
 "   gP : paste before the current position, placing the cursor after the new text.
 inoremap <C-V> "+gP
 set clipboard+=unnamedplus
-" nnoremap <C-V> <C-v>  " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
+nnoremap <C-V> p|  " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
+
 
 
 nnoremap <Right> *
@@ -28,17 +36,17 @@ noremap <Down> <C-I>
 " block模式
 " <C-q>用不了，可能是kite占用了  [好像又能用了]
 " 记忆：c for block c发音:ke
-" vscod里不生效：
 nnoremap <C-c> <C-v>
 
-" 变成^  作用是 显示ASCII码?
-
+" 变成^  作用是 显示ASCII码?:
+" vscod里不生效：
 inoremap <C-C> <C-V>
+
 
 " nnoremap <C-J>  " vscode里是切到terminal
 
 noremap <BS> X
-" normal模式：<C-X>  数字减1 
+" normal模式：<C-X>  数字减1
 " shift在ctrl上，加1 vs 减一，刚好
 nnoremap X <C-A>
 
@@ -60,7 +68,6 @@ nnoremap <C-F> i<C-X><C-F>
 " h i_CTRL-X
 
 
-" echo "vscode-nvim用的是  wsl下的dot_file的init.vim"
 
 
 " 这样可以 不那么死板地 只能用~/AppData/Local/nvim/init.vim来进入windows的nvim, 从而管理插件(
@@ -117,15 +124,11 @@ endfunc
 autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()"
 
 
+
 if exists('g:vscode')
     " 不行：
     " nnoremap gk :<C-u>call VSCodeCall('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
     " nnoremap gj :<C-u>call VSCodeCall('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
-    highlight OperatorSandwichBuns guifg='#aa91a0' gui=underline ctermfg=172 cterm=underline
-    highlight OperatorSandwichChange guifg='#edc41f' gui=underline ctermfg='yellow' cterm=underline
-    highlight OperatorSandwichAdd guibg='#b1fa87' gui=none ctermbg='green' cterm=none
-    highlight OperatorSandwichDelete guibg='#cf5963' gui=none ctermbg='red' cterm=none
-
     " todo
     " insert mode下，neovim不管事，（但esc退回normal还是可以的），imap都用不了
     " nnoremap gd vaw<F12>
@@ -308,7 +311,8 @@ nmap f <Plug>(easymotion-f2)
 " 会抽风颤抖
 " nmap f <Plug>(easymotion-f) "f{char}
 " map  <Leader>f <Plug>(easymotion-bd-f) " <Leader>f{char} to move to {char}
-" unmap f  " umap后，变回默然的功能
+"" umap后，变回默然的功能
+" unmap f
 
 " 会显示高亮字母后，光标到下一行
 " nmap s <Plug>(easymotion-f2) " {char}{char} 怎样可以上下文都搜索？现在只能搜下文
@@ -316,9 +320,14 @@ nmap f <Plug>(easymotion-f2)
 " ================================easymotion 配置=====================]]
 
 Plug 'machakann/vim-sandwich'
+" 同类:
+"  Plug 'tpope/vim-surround'
+"  Plug 'kana/vim-textobj-user'
+"  Plug 'sgur/vim-textobj-parameter'
+
 Plug 'scrooloose/nerdcommenter'
-Plug 'vim-airline/vim-airline', VimPlugConds(!exists('g:vscode'))
-Plug 'vim-airline/vim-airline-themes', VimPlugConds(!exists('g:vscode'))
+" Plug 'vim-airline/vim-airline', VimPlugConds(!exists('g:vscode'))
+" Plug 'vim-airline/vim-airline-themes', VimPlugConds(!exists('g:vscode'))
 Plug 'NLKNguyen/papercolor-theme', VimPlugConds(!exists('g:vscode'))
 
 
@@ -330,7 +339,8 @@ noremap <leader>r :ToggleBool<CR>
 
 Plug 'mbbill/undotree'
 if has("persistent_undo")
-    let target_path = expand('~/.undodir')
+    " let target_path = expand('~/.undodir')
+    let target_path = expand('~/.undodir_nvim_wf')
     if !isdirectory(target_path) " if the location does not exist.
         call mkdir(target_path, "p", 0700) " create the directory and any parent directories
     endif
@@ -340,11 +350,8 @@ if has("persistent_undo")
 endif
 
 
-" 同类:
-"  Plug 'tpope/vim-surround'
-"  Plug 'kana/vim-textobj-user'
-"  Plug 'sgur/vim-textobj-parameter'
 
+" 同类:
 "  Plug 'tpope/vim-repeat'
 "  Plug 'chaoren/vim-wordmotion'
 "  Plug 'kkoomen/vim-doge'
@@ -408,9 +415,9 @@ else
     " 有缩进时，有时会把开头的注释符号删掉，别完美主义吧
 endif
 
-  
+
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
- 
+
 
 " 好慢：
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
@@ -643,7 +650,7 @@ endfunc
 set autowrite
 
 " mswin.vim会导致visual mode 光标所在字符不被选中
-" source ~/dot_file/mswin.vim
+" ~/dot_file/mswin.vim里有用的内容都在这里
 " [[---------------------------------------msvim-------------------------------
 
 
@@ -659,10 +666,15 @@ vnoremap <C-S>		<C-C>:update<CR>
 "   set guioptions-=a
 " endif
 
-nnoremap <C-Z> u  " CTRL-Z is Undo
+
+nnoremap <C-Z> u|  " CTRL-Z is Undo
+" 竖线前的空格，视为map后的一部分。上行等价于：
+" nnoremap <C-Z> u
+"" CTRL-Z is Undo
+
 inoremap <C-Z> <C-O>u
 
-nnoremap <C-Y> <C-R>      " CTRL-Y is Redo (although not repeat)
+nnoremap <C-Y> <C-R>|   " CTRL-Y is Redo (although not repeat)
 inoremap <C-Y> <C-O><C-R>
 
 " ---------------------------------------msvim-------------------------------]]
@@ -901,30 +913,11 @@ set showmode
 
 
 
-" set statusline=
-" set statusline +=%<%f\ %h%m%r%{kite#statusline()}%=%-14.(%l,%c%V%)\ %P
-" set statusline +=%1*\ %n\ %*                      "buffer number
-" set statusline +=%5*%{&ff}%*                      "file format
-" set statusline +=%3*%y%*                              "file type
-" set statusline +=%4*\ %<%F%*                      "full path
-" set statusline +=%2*%m%*                              "modified flag
-" set statusline +=%1*%=%5l%*                           "current line
-" set statusline +=%2*/%L%*                             "total lines
-" set statusline +=%1*%4v\ %*                           "virtual column number
-" set statusline +=%2*0x%04B\ %*                    "character under cursor
-
-
-" set statusline +=%<%f\ %h%m%r%{kite#statusline()}%=%-14.(%l,%c%V%)\ %P
-set laststatus=2    " always display the status line
-
-
-" 命令行（在状态行下）的高度，默认为1，这里是2
-" set statusline=%<%f\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-14.(%l,%c%V%)\ %P
-
 " 括号配对情况, 跳转并高亮一下匹配的括号
 set showmatch
 " How many tenths of a second to blink when matching brackets
 set matchtime=5
+
 
 
 " Turn off search wrapping:
@@ -962,14 +955,6 @@ set foldlevel=99
 " endfunc
 " nnoremap <C-n> :call NumberToggle()<cr>
 
-" 防止tmux下vim的背景色显示异常
-" Refer: http://sunaku.github.io/vim-256color-bce.html
-" if &term =~ '256color'
-    " set t_ut=
-            " disable Background Color Erase (BCE) so that color schemes
-            " render properly when inside 256-color tmux and GNU screen.
-            " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-" endif
 
 "==========================================
 " FileEncode Settings 文件编码,格式
@@ -1097,32 +1082,6 @@ nnoremap U <C-r>
 
 autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
 
-" Todo
-" 设置可以高亮的关键字
-if has("autocmd")
-    " Highlight TODO, FIXME, NOTE, etc.
-    if v:version > 701
-        autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
-        autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
-    endif
-endif
-
-"==========================================
-" TEMP 设置, 尚未确定要不要
-"==========================================
-
-" https://dougblack.io/words/a-good-vimrc.html
-"==========================================
-
-" 防止错误整行标红 导致看不清
-" highlight clear SpellBad
-" highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
-" highlight clear SpellCap
-" highlight SpellCap term=underline cterm=underline
-" highlight clear SpellRare
-" highlight SpellRare term=underline cterm=underline
-" highlight clear SpellLocal
-" highlight SpellLocal term=underline cterm=underline
 
 
 " 放前面会被某些内容覆盖掉
@@ -1130,83 +1089,45 @@ nnoremap <C-E> $
 
 
 
-" Using this operator we can surround swaths of text using it as you would any other operator within Vim:
-" ds' to delete the surrounding ' (ds{char})
-" cs'" to change the surrounding ' for " (cs{old}{new})
-" ysaptli> to surround a paragraph with an <li> tag (ys{motion}{char})
-" You can also use vim-surround by selecting a bit of text in visual mode and then using S{desired character}
 
 
+" 每行超过 n 个字的时候 , vim 自动加上换行符
+set textwidth=100
+
+source /home/wf/dot_file/.config/nvim/beautify_wf.vim
+
+" set statusline=%=%<%f分割%m%r%=%-14.(%l,%c%V%)\ %P
+
+" 不加bold时，背景前景会 对调
+hi StatusLine     gui=bold guibg=#a4e4e4 guifg=#004040
+hi StatusLineNC   gui=bold guibg=#e0f0f0 guifg=#0099a0
+
+" todo printf style '%' items interspersed with  normal text.
+" Each status line item is of the form:
+"       %-0{minwid}.{maxwid}{item}
+"     All fields except the {item} are optional.
+" 在上面的基础上：  (几表示某个highlight设置)
+" %几*某内容%*
+
+" %=   右对齐
+" %r  readonly, 显示 [RO]
+set statusline=%=%r
+set statusline=%=%t
+set statusline +=%=缓存:%n\                       "buffer number
+set statusline +=%=%m                              "modified flag
+set statusline +=%=文件格式:%{&ff}                      "file format
+set statusline +=%=\ %h
+" flag [Preview]
+set statusline +=%=\ %w
+set statusline +=%=\ %k
+set statusline +=%=\ %q
+set statusline +=%999X
+set statusline +=%=第%l行(%p%%)\ %v列                           "virtual column number (screen column)
+" set statusline +=/%L行                              "total lines
+set statusline +=
+" set statusline +=\ %c                           " Column number (byte index).
+" set statusline +=\ 0x%B\                     "character under cursor
 
 
-" 用过，垃圾，别用：
+set laststatus=1  " only if there are at least two windows
 
-" Plug 'unblevable/quick-scope'
-" Trigger a highlight in the appropriate direction when pressing these keys:
-" let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']  " qs是quick-scope的意思
-" highlight QuickScopePrimary guifg='#7cbd3c80' gui=underline ctermfg=155 cterm=underline
-" highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
-
-" 自动换行是每行超过 n 个字的时候 , vim 自动加上换行符用。最好别用，坑?
-set textwidth=100  " 没起作用
-
-
-
-" [[---------------------------------------Theme Settings    主题设置
-
-
-set background=light
-if !exists('g:vscode')
-    colorscheme PaperColor
-endif
-
-if &diff
-    " colorscheme PaperColor  " 默认就和 if &diff外设置的主题一致
-    set cursorline
-    " 反应变慢，不好
-    " map ] ]c
-    " map [ [c
-
-    " hi DiffAdd    guifg=#003300 guibg=#DDFFDD gui=none
-    " hi DiffChange guibg=#ececec gui=none
-    " hi DiffText   guifg=#000033 guibg=#DDDDFF gui=none
-endif
-
-autocmd BufWritePost * if &diff == 1 | diffupdate | endif
-
-
-set cursorline
-hi CursorLine guibg=#bbddcc
-" hi Cursor guibg=#0000cc  " 似乎被mobaxterm控制着
-
-" 古老：For terminal Vim, with colors, we're most interested in the cterm
-" 支持真彩色 true color
-set termguicolors   " Nvim emits true (24-bit) colours. 下面改颜色只用改 guibg guifg
-hi Search guibg=#ffffff guifg=#00aeae  " 放文件前部分不行
-
-
-" [[--底栏：
-let g:airline_theme='papercolor'
-let g:airline_section_b = ''
-let g:airline_section_c = ''
-" let g:airline_section_gutter  (csv)
-" let g:airline_section_x       (tagbar, filetype, virtualenv)
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-" let g:airline_section_y       (fileencoding, fileformat, 'bom', 'eol')
-" let g:airline_section_z=      (percentage, line number, column number)
-" let g:airline_section_error   (ycm_error_count, syntastic-err, eclim,  languageclient_error_count)
-" let g:airline_section_warning (ycm_warning_count, syntastic-warn,  languageclient_warning_count, whitespace)
-"  底栏--]]
-
-
-
-" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1  " 被下面的代替了
-" 不生效
-set guicursor=n-v-c:block,
-            \i-ci-ve:ver25,
-            \r-cr:hor20,
-            \o:hor50
-            \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-            \,sm:block-blinkwait175-blinkoff150-blinkon175
-
-syntax enable
