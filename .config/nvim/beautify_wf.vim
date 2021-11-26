@@ -31,7 +31,7 @@ hi Search guibg=#ffffff guifg=#00aeae  " 放文件前部分不行
 
 
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1  " 被下面的代替了
-" 不生效
+" mobaxterm里insert mode还是方块。vscode里是正常的
 set guicursor=n-v-c:block,
             \i-ci-ve:ver25,
             \r-cr:hor20,
