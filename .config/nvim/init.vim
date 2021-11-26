@@ -1077,7 +1077,6 @@ nnoremap U <C-r>
 " 放前面会被某些内容覆盖掉
 nnoremap <C-E> $
 
-source ~/dot_file/.config/nvim/beautify_wf.vim
 
 " >>>---------------------------------------------------------------------LeaderF
 " don't show the help in normal mode
