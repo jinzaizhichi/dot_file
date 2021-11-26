@@ -874,6 +874,12 @@ f(){
     # bat ~/.t/.find_results.log
 }
 
+# todo
+# 选中就会进入
+# -d
+# cd `cat ~/.t/.find_results.log | peco `
+# -f
+# v `cat ~/.t/.find_results.log | peco `
 # found a directory
 fd(){
     cd `sed --quiet $1p ~/.t/.find_results.log`

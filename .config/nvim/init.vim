@@ -30,13 +30,23 @@ noremap <Down> <C-I>
 " 记忆：c for block c发音:ke
 " vscod里不生效：
 nnoremap <C-c> <C-v>
-inoremap <C-C> <C-V>  " 变成^   显示ASCII码吧
-" nnoremap <C-J>  " 待用 但vscode里是切到terminal
+
+" 变成^  作用是 显示ASCII码?
+
+inoremap <C-C> <C-V>
+
+" nnoremap <C-J>  " vscode里是切到terminal
+
+noremap <BS> X
+" normal模式：<C-X>  数字减1 
+" shift在ctrl上，加1 vs 减一，刚好
+nnoremap X <C-A>
+
+" <C-X> 调自带的omnicomplete
+inoremap <C-F> <C-X><C-F>
+nnoremap <C-F> i<C-X><C-F>
 
 
-" As far as Vim is concerned <C-M> and <CR> 一样
-nnoremap <C-X> :echo '该按键 待用'<CR>
-inoremap <C-F> <C-X><C-F>  " 自带的omnicomplete
 " 对于vscode-nvim：insert mode is being handled by vscode 所以<C-X>没反应
 
 						" *i_CTRL-X* *insert_expand*
@@ -589,18 +599,15 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 " let g:neosnippet#snippets_directory = '~/.SpaceVim.d/snippets'
 
 " let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<C-m>"
+
+" let g:UltiSnipsJumpForwardTrigger="<CR>"
 " let g:UltiSnipsJumpBackwardTrigger="<C-.>"
 """ If you want :UltiSnipsEdit to split your window.
 " let g:UltiSnipsEditSplit="vertical"
 
 
-inoremap _pp print()<ESC>i
-" 不行
-" vnoremap _p :call Wfprint_v()<CR>
-vnoremap _p :yoprint('看:') <ESC>hhhhpoprint()<ESC>hp
 
-nnoremap _p :call Wfprint_n()<CR>
+
 func! Wfprint_n()
         if &filetype == 'python'
             exec "normal yawoprint('看: ')" | exec "normal hhhhp" | exec "normal oprint()"  | exec "normal hp"
@@ -610,6 +617,8 @@ func! Wfprint_n()
         endif
 endfunc
 
+nnoremap _p :call Wfprint_n()<CR>
+vnoremap _p :yoprint('看:') <ESC>hhhhpoprint()<ESC>hp
 
 " 还不能用
 func! Wfprint_v()
@@ -620,6 +629,8 @@ func! Wfprint_v()
         elseif &filetype == 'sh'
         endif
 endfunc
+" 不行
+" vnoremap _p :call Wfprint_v()<CR>
 
 
 
@@ -700,9 +711,6 @@ nnoremap <TAB> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Righ
 
 " 不在下面加这行，<C-i>会等效于TAB  Ctrl-p用不了
 " noremap <C-z> <C-i>
-
-" vim中:map看现在的绑定, 能看到spacevim的
-
 
 
 " 用不了

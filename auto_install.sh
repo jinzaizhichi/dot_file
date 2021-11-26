@@ -67,7 +67,7 @@ yes | (ai ctags; ai build-essential; ai cmake; ai python-dev)
 yes | (ai curl  ffmpeg libsm6 libxext6)
 yes | (ai python3-setuptools ;  ai xsel)
 # under ubuntu16 try this:
-yes | (ai language-pack-zh-hans language-pack-zh-hans-base ; ai peco wget ; ai tldr)
+yes | (ai language-pack-zh-hans language-pack-zh-hans-base ; ai wget ; ai tldr)
 yes | (ai rename)
 # yes | (mutt msmtp)
 # touch ~/.msmtp.log
