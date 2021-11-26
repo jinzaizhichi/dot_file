@@ -24,7 +24,7 @@ __pycache__
 .config/Code
 .config/Code/*
 # .config/nvim
-.config/nvim/*
+# .config/nvim/*
 tmux/plugins
 tmux/plugins/*
 # .config/dconf/*
