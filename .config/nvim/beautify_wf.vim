@@ -3,22 +3,19 @@
 
 
 
+source ~/dot_file/.config/nvim/lucius.vim
 set background=light
 if !exists('g:vscode')
-    colorscheme PaperColor
+    colorscheme lucius
+    LuciusLight
+    " LuciusWhite
 endif
 
-if &diff
-    " colorscheme PaperColor  " 默认就和 if &diff外设置的主题一致
-    set cursorline
-    " 反应变慢，不好
-    " map ] ]c
-    " map [ [c
-
+" if &diff
     " hi DiffAdd    guifg=#003300 guibg=#DDFFDD gui=none
     " hi DiffChange guibg=#ececec gui=none
     " hi DiffText   guifg=#000033 guibg=#DDDDFF gui=none
-endif
+" endif
 
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
 
@@ -33,29 +30,14 @@ set termguicolors   " true (24-bit) colours. 下面改颜色只用改 guibg guif
 hi Search guibg=#ffffff guifg=#00aeae  " 放文件前部分不行
 
 
-"  ---------------------------------------------------------------------《《《底栏--]]
-" let g:airline_theme     = 'papercolor'
-" let g:airline_section_b = ''
-" let g:airline_section_c = ''
-" let g:airline_section_gutter = ''
-" let g:airline_section_x = ''
-" let g:airline#parts#ffenc#skip_expected_string = 'utf-8[unix]'
-" let g:airline_section_y       (fileencoding, fileformat, 'bom', 'eol')
-" let g:airline_section_z=      (percentage, line number, column number)
-" let g:airline_section_error   (ycm_error_count, syntastic-err, eclim,  languageclient_error_count)
-" let g:airline_section_warning (ycm_warning_count, syntastic-warn,  languageclient_warning_count, whitespace)
-"  ---------------------------------------------------------------------《《《底栏--]]
-
-
-
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1  " 被下面的代替了
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1  " 被下面的代替了
 " 不生效
-" set guicursor=n-v-c:block,
-"             \i-ci-ve:ver25,
-"             \r-cr:hor20,
-"             \o:hor50
-"             \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-"             \,sm:block-blinkwait175-blinkoff150-blinkon175
+set guicursor=n-v-c:block,
+            \i-ci-ve:ver25,
+            \r-cr:hor20,
+            \o:hor50
+            \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+            \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 syntax enable
 
@@ -127,4 +109,7 @@ hi StatusLineNC   gui=bold guibg=#e0f0f0 guifg=#0099a0
 
 set laststatus=1  " only if there are at least two windows
 
+
 highlight Search guibg='#dffefa' gui=none 
+
+

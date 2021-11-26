@@ -11,6 +11,7 @@ if has('autocmd') " ignore this section if your vim does not support autocommand
     augroup END
 endif
 
+
 augroup my_filetype_settings
 autocmd!
 " winnr: 当前window的编号，top winodw是1
@@ -96,7 +97,14 @@ autocmd BufReadPost *
 " end-------------------------------------------------------------】】
 
 
+
+if &diff
+    " 反应变慢，不好
+    " map ] ]c
+    " map [ [c
+endif
 " map 默认是recursive的
+
 "set wrap 后，同物理行上线直接跳。
 if exists('g:vscode')
     nmap j gj
@@ -104,6 +112,9 @@ if exists('g:vscode')
 else
     nnoremap j gj
     nnoremap k gk
+
+    nnoremap <c-\> <c-w>v
+    nnoremap <c-w>-  <c-w>s
 endif
 
 
@@ -280,6 +291,7 @@ endfunction
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug' " 为了能用:help plug-options
 
+Plug 'jonathanfilip/vim-lucius'
 Plug 'andymass/vim-matchup'
 
 " [[==============================easymotion 配置=====================begin
@@ -290,6 +302,8 @@ Plug 'andymass/vim-matchup'
 Plug 'easymotion/vim-easymotion', VimPlugConds(!exists('g:vscode'))  " exists(): 变量存在，则返回TRUE，否则0
 Plug 'asvetliakov/vim-easymotion', VimPlugConds(exists('g:vscode'), { 'as': 'leo-jump' })  " as的名字随便起，
                                                                                         " 下面map时，还是 nmap s <Plug>(easymotion-f2)之类的
+                                                                                        "
+
 
 " 这样可能更容易理解，没那么绕: 【an empty `on` or `for` option : plugin is registered but not loaded by default depending on the condition.】
 " Plug 'easymotion/vim-easymotion',  has('g:vscode') ? { as': 'ori-easymotion', 'on': [] } : {}
@@ -327,11 +341,7 @@ Plug 'machakann/vim-sandwich'
 "  Plug 'sgur/vim-textobj-parameter'
 
 Plug 'scrooloose/nerdcommenter'
-" Plug 'vim-airline/vim-airline', VimPlugConds(!exists('g:vscode'))
-" Plug 'vim-airline/vim-airline-themes', VimPlugConds(!exists('g:vscode'))
-Plug 'NLKNguyen/papercolor-theme', VimPlugConds(!exists('g:vscode'))
-
-
+Plug  'Yggdroot/LeaderF'
 Plug 'sisrfeng/toggle-bool'
 
 noremap <leader>r :ToggleBool<CR>
@@ -373,6 +383,7 @@ call plug#end()
 " 用了vim-pug, 会自动 `filetype plugin indent on` and `syntax enable`?
 " =============================================vim-plug===============================end
 
+source ~/dot_file/.config/nvim/beautify_wf.vim
 
 
 " [[----------------------------nerdcommenter-config-------------------------------begin
@@ -1066,5 +1077,40 @@ nnoremap U <C-r>
 " 放前面会被某些内容覆盖掉
 nnoremap <C-E> $
 
-source ~/dot_file/.config/nvim/beautify_wf.vim
 
+" >>>---------------------------------------------------------------------LeaderF
+" don't show the help in normal mode
+let g:Lf_HideHelp = 1
+let g:Lf_UseCache = 0
+let g:Lf_UseVersionControlTool = 0
+let g:Lf_IgnoreCurrentBufferName = 1
+
+
+" popup mode
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+
+let g:Lf_ShortcutF = "<leader>o"
+noremap <leader>ob :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <leader>ot :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
+noremap <leader>ol :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+
+" noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
+" noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+
+" search visually selected text literally
+" xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
+" noremap go :<C-U>Leaderf! rg --recall<CR>
+
+" should use `Leaderf gtags --update` first
+let g:Lf_GtagsAutoGenerate = 0
+let g:Lf_Gtagslabel = 'native-pygments'
+" noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+" noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+" noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
+" noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
+" noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+" ---------------------------------------------------------------------<<<LeaderF

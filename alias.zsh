@@ -826,7 +826,7 @@ compdef _dirs d  # 让函数d能被自动补全
 #   '(-)*:directory:_directories'
 
 # alias -g ...='../..'
-alias -- -='cd -'
+alias -- _='cd -'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
