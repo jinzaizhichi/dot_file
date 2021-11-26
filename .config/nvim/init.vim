@@ -415,21 +415,8 @@ else
     " 有缩进时，有时会把开头的注释符号删掉，别完美主义吧
 endif
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
 nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
-
-=======
-  
-nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
- 
->>>>>>> Stashed changes
-=======
-
-nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
-
->>>>>>> Stashed changes
 
 " 好慢：
 " nnoremap = :<plug>nerdcommentertoggle<cr>j
@@ -1141,13 +1128,12 @@ set statusline +=
 " set statusline +=\ %c                           " Column number (byte index).
 " set statusline +=\ 0x%B\                     "character under cursor
 
-=======
 
 
 " 每行超过 n 个字的时候 , vim 自动加上换行符
 set textwidth=100
 
-source /home/wf/dot_file/.config/nvim/beautify_wf.vim
+source ~/dot_file/.config/nvim/beautify_wf.vim
 
 " set statusline=%=%<%f分割%m%r%=%-14.(%l,%c%V%)\ %P
 
@@ -1181,7 +1167,6 @@ set statusline +=
 " set statusline +=\ %c                           " Column number (byte index).
 " set statusline +=\ 0x%B\                     "character under cursor
 
->>>>>>> Stashed changes
 
 set laststatus=1  " only if there are at least two windows
 
