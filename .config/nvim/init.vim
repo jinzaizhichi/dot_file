@@ -26,7 +26,6 @@ set clipboard+=unnamedplus
 nnoremap <C-V> p|  " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
 
 
-
 nnoremap <Right> *
 nnoremap <Left> #
 " 和ctrl O 一样:
@@ -123,7 +122,10 @@ endfunc
 " autocmd对neovim-vscode无效？ 暂时手动敲吧
 autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()"
 
+autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
 
+" python文件中输入新行时#号注释不切回行首
+" autocmd BufNewFile,BufRead *.py inoremap # X<c-h>#
 
 if exists('g:vscode')
     " 不行：
@@ -135,7 +137,6 @@ if exists('g:vscode')
     unmap gd
     " 不行
     " nnoremap zz ZZ
-    "echo 'wf: using vscode-neovim '
 
 else
     " echo '没在用 vscode-neovim, 纯 nvim'
@@ -985,23 +986,9 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
 
-" 用了它，看着有点晕
-" Keep search pattern at the center of the screen.
-" nnoremap  n nzz
-" nnoremap <silent> N Nzz
-
-
-
-" python文件中输入新行时#号注释不切回行首
-" autocmd BufNewFile,BufRead *.py inoremap # X<c-h>#
-
-
-
 " tab 操作
-" http://vim.wikia.com/wiki/Alternative_tab_navigation
 " http://stackoverflow.com/questions/2005214/switching-to-a-particular-tab-in-vim
 
-" tab切换
 map <leader>th :tabfirst<cr>
 map <leader>tl :tablast<cr>
 map <leader>tj :tabnext<cr>
@@ -1029,13 +1016,11 @@ nnoremap <silent> <leader>tt :execute 'tabnext ' . g:last_active_tab<cr>
 autocmd TabLeave * let g:last_active_tab = tabpagenr()
 
 
-" => 选中及操作改键
 
-" 调整缩进后自动选中，方便再次操作
+"缩进后自动选中，方便再次操作
 vnoremap < <gv
 vnoremap > >gv
 
-" 复制到行末
 map Y y$
 
 " 复制选中区到系统剪切板中
@@ -1075,11 +1060,7 @@ nnoremap ` '
 " remap U to <C-r> for easier redo
 nnoremap U <C-r>
 
-"==========================================
-" FileType Settings  文件类型设置
-"==========================================
 
-autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
 
 
 " 放前面会被某些内容覆盖掉

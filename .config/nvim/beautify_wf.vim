@@ -127,3 +127,4 @@ hi StatusLineNC   gui=bold guibg=#e0f0f0 guifg=#0099a0
 
 set laststatus=1  " only if there are at least two windows
 
+highlight Search guibg='#dffefa' gui=none 
