@@ -383,7 +383,19 @@ call plug#end()
 " 用了vim-pug, 会自动 `filetype plugin indent on` and `syntax enable`?
 " =============================================vim-plug===============================end
 
-source ~/dot_file/.config/nvim/beautify_wf.vim
+
+
+" 从这里学来的：
+" https://github.com/SpaceVim/SpaceVim/blob/b2d1d7460690648951d6685a3a947e9b4248e38c/autoload/SpaceVim/layers/leaderf.vim#L489
+exe 'source ' . expand('%:p:h') . "/beautify_wf.vim"
+
+" 这么写比较啰嗦：
+" 字符串concat，用点号
+" let s:beauty_path = expand('%:p:h') . "/beautify_wf.vim"
+" exe 'source ' . s:beauty_path
+" 不行： source  . s:beauty_path
+
+
 
 
 " [[----------------------------nerdcommenter-config-------------------------------begin
