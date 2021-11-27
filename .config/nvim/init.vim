@@ -384,16 +384,22 @@ call plug#end()
 " =============================================vim-plug===============================end
 
 
+if exists('g:vscode')
+    let s:a = 'useless'
 
-" 从这里学来的：
-" https://github.com/SpaceVim/SpaceVim/blob/b2d1d7460690648951d6685a3a947e9b4248e38c/autoload/SpaceVim/layers/leaderf.vim#L489
-exe 'source ' . expand('%:p:h') . "/beautify_wf.vim"
+    " 不行
+    " source  \wsl\Ubuntu\root\dot_file\.config\nvim\beautify_wf.vim"
+else
+    " 从这里学来的：
+    " https://github.com/SpaceVim/SpaceVim/blob/b2d1d7460690648951d6685a3a947e9b4248e38c/autoload/SpaceVim/layers/leaderf.vim#L489
+    exe 'source ' . expand('%:p:h') . "/beautify_wf.vim"
 
-" 这么写比较啰嗦：
-" 字符串concat，用点号
-" let s:beauty_path = expand('%:p:h') . "/beautify_wf.vim"
-" exe 'source ' . s:beauty_path
-" 不行： source  . s:beauty_path
+    " 这么写比较啰嗦：
+    " 字符串concat，用点号
+    " let s:beauty_path = expand('%:p:h') . "/beautify_wf.vim"
+    " exe 'source ' . s:beauty_path
+    " 不行： source  . s:beauty_path
+endif
 
 
 
