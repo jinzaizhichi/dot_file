@@ -862,16 +862,24 @@ docker start $1 ; docker exec -it $1 zsh
 #  这样会一直卡着: echo `docker exec -it $1 zsh`
 }
 
+# f(){
+    # find . \
+    # -path '/d/docker' -prune -o  \
+    # -path '~/.t' -prune -o       \
+    # -path '/proc' -prune -o      \
+    # -name "*$1*" > ~/.t/.find_results.log
+
+    ## rg能高亮关键词，进了bat还能显示
+    # rg $1 ~/.t/.find_results.log | bat
+    ## bat ~/.t/.find_results.log
+# }
 f(){
     find . \
     -path '/d/docker' -prune -o  \
     -path '~/.t' -prune -o       \
     -path '/proc' -prune -o      \
-    -name "*$1*" > ~/.t/.find_results.log
+    -name "*$1*" | peco
 
-    # rg能高亮关键词，进了bat还能显示
-    rg $1 ~/.t/.find_results.log | bat
-    # bat ~/.t/.find_results.log
 }
 
 # todo

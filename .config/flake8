@@ -3,8 +3,8 @@
 max-line-length = 180
 exclude=*.egg/*,build,dist
 
-# 需要检查的类型
-select =  
+# 需要帮我检查的类型
+select =
     E1,
     E3,
     E502,
@@ -15,8 +15,9 @@ select =
     W1,
     W5,
     W6,
+
 # 别管的类型
-ignore = 
+ignore =
     E121,
     E127,
     E123,
@@ -34,7 +35,7 @@ ignore =
     W504,
     W505,
     # 没select的类型,放着,避免以后select了大类 要排除里面的这些小类
-    E231, 
+    E231,
     E262,
     E202,
     E211,
