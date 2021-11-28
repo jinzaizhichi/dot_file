@@ -349,9 +349,10 @@ noremap <leader>r :ToggleBool<CR>
 " nnoremap <F3> cawFalse<ESC>
 
 Plug 'mbbill/undotree'
+
 if has("persistent_undo")
-    " let target_path = expand('~/.undodir')
-    let target_path = expand('~/.undodir_nvim_wf')
+    let target_path = expand('~/.undodir')
+    " let target_path = expand('~/.undodir_nvim_wf')
     if !isdirectory(target_path) " if the location does not exist.
         call mkdir(target_path, "p", 0700) " create the directory and any parent directories
     endif
@@ -392,7 +393,7 @@ if exists('g:vscode')
 else
     " 从这里学来的：
     " https://github.com/SpaceVim/SpaceVim/blob/b2d1d7460690648951d6685a3a947e9b4248e38c/autoload/SpaceVim/layers/leaderf.vim#L489
-    exe 'source ' . expand('%:p:h') . "/beautify_wf.vim"
+    source ~/dot_file/.config/nvim/beautify_wf.vim
 
     " 这么写比较啰嗦：
     " 字符串concat，用点号
