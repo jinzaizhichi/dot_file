@@ -203,7 +203,8 @@ mt(){
 #移到垃圾箱
 alias tvsc='t'
 # alias hg='history -i 1000 | bat' # 待用
-alias his='noglob history -i 1000 | bat'
+# alias his='noglob history -i 1000 | bat'
+alias his='noglob history -i 1000 | peco'
 # 统计命令输入频率
 alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | head -n 30'
 
