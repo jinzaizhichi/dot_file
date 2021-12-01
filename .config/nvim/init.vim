@@ -1,3 +1,6 @@
+" behave mswin
+let g:selecmode="mouse"
+
 " 让配置变更立即生效
 if has('autocmd') " ignore this section if your vim does not support autocommands
     " 1. Select the group with ":augroup {name}".
@@ -309,7 +312,10 @@ Plug 'asvetliakov/vim-easymotion', VimPlugConds(exists('g:vscode'), { 'as': 'leo
 " Plug 'easymotion/vim-easymotion',  has('g:vscode') ? { as': 'ori-easymotion', 'on': [] } : {}
 " Plug 'asvetliakov/vim-easymotion', has('g:vscode') ? {} : { 'on': [] }
 
-map <Leader> <Plug>(easymotion-prefix)
+" map <Leader> <Plug>(easymotion-prefix)
+" 默认:
+map <Leader><Leader> <Plug>(easymotion-prefix)  
+
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase = 1 " 敲小写，能匹配大写。反之不然
 
@@ -319,7 +325,11 @@ map <Leader>k <Plug>(easymotion-k)
 
 " todo  debug buggy 出了问题来这里
 "s for search
-nmap s <Plug>(easymotion-f)
+" 用了vim-sandwich的默认keymapping，sa代表sandwich add.  sd 代表sandwich delete
+" 干脆用大写的S算了，避免冲突
+nmap S <Plug>(easymotion-f)
+" nnoremap s <Plug>(easymotion-f)  " 用nnoremap不行
+"
 " Need one more keystroke
 nmap f <Plug>(easymotion-f2)
 
@@ -335,10 +345,12 @@ nmap f <Plug>(easymotion-f2)
 " ================================easymotion 配置=====================]]
 
 Plug 'machakann/vim-sandwich'
-" 同类:
+" 别再试同类(前浪)
 "  Plug 'tpope/vim-surround'
 "  Plug 'kana/vim-textobj-user'
 "  Plug 'sgur/vim-textobj-parameter'
+
+
 
 Plug 'scrooloose/nerdcommenter'
 Plug  'Yggdroot/LeaderF'
@@ -572,10 +584,6 @@ set pastetoggle=<F9>
 "nnoremap <silent> <Leader>pu :PlugUpdate<Cr>
 
 
-"" vim-surround
-"nmap <silent> , ysiw
-"let g:surround_35 = "#{\r}"
-"let g:surround_36 = "${\r}"
 
 
 "" vim-textobj-parameter
@@ -618,9 +626,9 @@ inoremap <C-a> <ESC>I
 nnoremap <C-a> ^h
 
 noremap <Leader>y "*y
-noremap <Leader>p "*p
 noremap <Leader>Y "+y
-noremap <Leader>P "+p
+" noremap <Leader>p "*p
+" noremap <Leader>P "+p
 
 " 有个自动补全插件 导致(变成选中候选，只能这样map
 inoremap ( (
@@ -857,7 +865,12 @@ set fencs=utf8,gbk,gb2312,gb18030
 " vmap <silent> <Leader>w <Plug>TranslateWV
 
 
+
+
+
+
 "==========================================
+" 参考了：
 " Author:  wklken
 " Sections:
 "               -> Initial Plugin 加载插件
@@ -869,13 +882,11 @@ set fencs=utf8,gbk,gb2312,gb18030
 "               -> 针对文件类型的设置
 "
 "               -> 插件配置和具体设置在vimrc.bundles中
-
 "==========================================
-" Initial Plugin 加载插件
-"==========================================
-
-
-
+"
+"
+"
+"
 " General Settings 基础设置
 
 " history存储容量
@@ -1061,8 +1072,6 @@ vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
 
-" select all
-map <Leader>sa ggVG
 
 " 选中并高亮最后一次插入的内容
 nnoremap gv `[v`]
@@ -1112,6 +1121,7 @@ let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu S
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 
 let g:Lf_ShortcutF = "<leader>o"
+let g:Lf_ShortcutF = "<leader>f"
 noremap <leader>ob :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
 noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
 noremap <leader>ot :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
@@ -1133,3 +1143,33 @@ let g:Lf_Gtagslabel = 'native-pygments'
 " noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 " noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 " ---------------------------------------------------------------------<<<LeaderF
+
+
+
+
+
+
+let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+
+" easy-motion用了map s  注意避免冲突
+" let g:operator_sandwich_no_default_key_mappings = 1
+"
+    " NOTE: To prevent unintended operation, the following setting is s trongly  recommended to add to your vimrc.
+
+    " 没必要吧？
+    " nmap s <Nop>
+    " xmap s <Nop>
+    
+    " xmap creates a mapping for just Visual mode   
+    " vmap creates one for both Visual mode and Select mode. select mode很少用
+
+    " <NOP>		no-op: do nothing (useful in mappings)
+" 不知道为什么不生效：
+" xnoremap sa <Plug>(operator-sandwich-add)
+" xnoremap sd <Plug>(operator-sandwich-delete)
+" xnoremap sr <Plug>(operator-sandwich-replace)
+"
+"
+" nnoremap <Leader>pa <Plug>(operator-sandwich-add)
+" nnoremap <Leader>pb <Plug>(operator-sandwich-add-query1st)
+" nnoremap sa <Plug>(operator-sandwich-add-query1st)

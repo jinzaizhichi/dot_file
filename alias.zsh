@@ -227,7 +227,7 @@ a(){
     # read TMP
     # TMP2 ="`print -r ${(q)TMP}`"
     # \rg --pretty --hidden TMP2 | bat # 沿用ag的a
-     \rg --pretty --hidden  --before-context 1 --after-context 2  --smart-case  | peco # 沿用ag的a
+     \rg --pretty --hidden  --before-context 1 --after-context 2  --smart-case "$*"  | bat # 沿用ag的a
 }
 a4(){
     # read TMP
@@ -778,7 +778,7 @@ vb(){
     cd -;zsh
 }
 # al: alias
-alias al='code ~/dot_file/alias.zsh'
+alias al='code ~/dot_file/alias.zsh; zsh'
 
 sycn_init(){
     cd ~/dot_file
