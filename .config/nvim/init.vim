@@ -1145,6 +1145,7 @@ let g:Lf_Gtagslabel = 'native-pygments'
 
 
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+" 在vscode里 只有sa生效，其他不行，不知道为啥
 
 " easy-motion用了map s  注意避免冲突
 " let g:operator_sandwich_no_default_key_mappings = 1
