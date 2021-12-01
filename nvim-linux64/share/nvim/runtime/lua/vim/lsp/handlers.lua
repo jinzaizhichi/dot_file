@@ -3,15 +3,14 @@ local protocol = require 'vim.lsp.protocol'
 local util = require 'vim.lsp.util'
 local vim = vim
 local api = vim.api
-local buf = require 'vim.lsp.buf'
 
 local M = {}
 
 -- FIXME: DOC: Expose in vimdocs
 
---@private
+---@private
 --- Writes to error buffer.
---@param ... (table of strings) Will be concatenated before being written
+---@param ... (table of strings) Will be concatenated before being written
 local function err_message(...)
   vim.notify(table.concat(vim.tbl_flatten{...}), vim.log.levels.ERROR)
   api.nvim_command("redraw")
@@ -29,6 +28,7 @@ local function progress_handler(_, result, ctx, _)
   local client_name = client and client.name or string.format("id=%d", client_id)
   if not client then
     err_message("LSP[", client_name, "] client has shut down after sending the message")
+    return
   end
   local val = result.value    -- unspecified yet
   local token = result.token  -- string or number
@@ -59,7 +59,7 @@ local function progress_handler(_, result, ctx, _)
   vim.api.nvim_command("doautocmd <nomodeline> User LspProgressUpdate")
 end
 
---@see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#progress
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#progress
 M['$/progress'] = progress_handler
 
 --see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#window_workDoneProgress_create
@@ -70,6 +70,7 @@ M['window/workDoneProgress/create'] =  function(_, result, ctx)
   local client_name = client and client.name or string.format("id=%d", client_id)
   if not client then
     err_message("LSP[", client_name, "] client has shut down after sending the message")
+    return
   end
   client.messages.progress[token] = {}
   return vim.NIL
@@ -107,40 +108,6 @@ M['client/registerCapability'] = function(_, _, ctx)
   local warning = string.format(warning_tpl, client_name)
   log.warn(warning)
   return vim.NIL
-end
-
---see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_codeAction
-M['textDocument/codeAction'] = function(_, result)
-  if result == nil or vim.tbl_isempty(result) then
-    print("No code actions available")
-    return
-  end
-
-  local option_strings = {"Code actions:"}
-  for i, action in ipairs(result) do
-    local title = action.title:gsub('\r\n', '\\r\\n')
-    title = title:gsub('\n', '\\n')
-    table.insert(option_strings, string.format("%d. %s", i, title))
-  end
-
-  local choice = vim.fn.inputlist(option_strings)
-  if choice < 1 or choice > #result then
-    return
-  end
-  local action_chosen = result[choice]
-  -- textDocument/codeAction can return either Command[] or CodeAction[].
-  -- If it is a CodeAction, it can have either an edit, a command or both.
-  -- Edits should be executed first
-  if action_chosen.edit or type(action_chosen.command) == "table" then
-    if action_chosen.edit then
-      util.apply_workspace_edit(action_chosen.edit)
-    end
-    if type(action_chosen.command) == "table" then
-      buf.execute_command(action_chosen.command)
-    end
-  else
-    buf.execute_command(action_chosen)
-  end
 end
 
 --see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#workspace_applyEdit
@@ -210,21 +177,27 @@ local function response_to_list(map_result, entity)
     else
       config = config or {}
       if config.loclist then
-        util.set_loclist(map_result(result, ctx.bufnr))
+        vim.fn.setloclist(0, {}, ' ', {
+          title = 'Language Server';
+          items = map_result(result, ctx.bufnr);
+        })
         api.nvim_command("lopen")
       else
-        util.set_qflist(map_result(result, ctx.bufnr))
-        api.nvim_command("copen")
+        vim.fn.setqflist({}, ' ', {
+          title = 'Language Server';
+          items = map_result(result, ctx.bufnr);
+        })
+        api.nvim_command("botright copen")
       end
     end
   end
 end
 
 
- --see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_references
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_references
 M['textDocument/references'] = response_to_list(util.locations_to_items, 'references')
 
- --see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_documentSymbol
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_documentSymbol
 M['textDocument/documentSymbol'] = response_to_list(util.symbols_to_items, 'document symbols')
 
 --see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#workspace_symbol
@@ -290,10 +263,10 @@ function M.hover(_, result, ctx, config)
   return util.open_floating_preview(markdown_lines, "markdown", config)
 end
 
---@see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_hover
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_hover
 M['textDocument/hover'] = M.hover
 
---@private
+---@private
 --- Jumps to a location. Used as a handler for multiple LSP methods.
 ---@param _ (not used)
 ---@param result (table) result of LSP method; a location or a list of locations.
@@ -320,16 +293,17 @@ local function location_handler(_, result, ctx, _)
   end
 end
 
---@see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_declaration
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_declaration
 M['textDocument/declaration'] = location_handler
---@see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_definition
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_definition
 M['textDocument/definition'] = location_handler
---@see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_typeDefinition
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_typeDefinition
 M['textDocument/typeDefinition'] = location_handler
---@see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_implementation
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_implementation
 M['textDocument/implementation'] = location_handler
 
---- |lsp-handler| for the method "textDocument/signatureHelp"
+--- |lsp-handler| for the method "textDocument/signatureHelp".
+--- The active parameter is highlighted with |hl-LspSignatureActiveParameter|.
 --- <pre>
 --- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 ---   vim.lsp.handlers.signature_help, {
@@ -348,7 +322,9 @@ function M.signature_help(_, result, ctx, config)
   -- When use `autocmd CompleteDone <silent><buffer> lua vim.lsp.buf.signature_help()` to call signatureHelp handler
   -- If the completion item doesn't have signatures It will make noise. Change to use `print` that can use `<silent>` to ignore
   if not (result and result.signatures and result.signatures[1]) then
-    print('No signature help available')
+    if config.silent ~= true then
+      print('No signature help available')
+    end
     return
   end
   local client = vim.lsp.get_client_by_id(ctx.client_id)
@@ -357,28 +333,37 @@ function M.signature_help(_, result, ctx, config)
   local lines, hl = util.convert_signature_help_to_markdown_lines(result, ft, triggers)
   lines = util.trim_empty_lines(lines)
   if vim.tbl_isempty(lines) then
-    print('No signature help available')
+    if config.silent ~= true then
+      print('No signature help available')
+    end
     return
   end
-  return util.open_floating_preview(lines, "markdown", config)
+  local fbuf, fwin = util.open_floating_preview(lines, "markdown", config)
+  if hl then
+    api.nvim_buf_add_highlight(fbuf, -1, "LspSignatureActiveParameter", 0, unpack(hl))
+  end
+  return fbuf, fwin
 end
 
---@see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_signatureHelp
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_signatureHelp
 M['textDocument/signatureHelp'] = M.signature_help
 
 --see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_documentHighlight
 M['textDocument/documentHighlight'] = function(_, result, ctx, _)
   if not result then return end
-  util.buf_highlight_references(ctx.bufnr, result)
+  local client_id = ctx.client_id
+  local client = vim.lsp.get_client_by_id(client_id)
+  if not client then return end
+  util.buf_highlight_references(ctx.bufnr, result, client.offset_encoding)
 end
 
---@private
+---@private
 ---
 --- Displays call hierarchy in the quickfix window.
 ---
---@param direction `"from"` for incoming calls and `"to"` for outgoing calls
---@returns `CallHierarchyIncomingCall[]` if {direction} is `"from"`,
---@returns `CallHierarchyOutgoingCall[]` if {direction} is `"to"`,
+---@param direction `"from"` for incoming calls and `"to"` for outgoing calls
+---@returns `CallHierarchyIncomingCall[]` if {direction} is `"from"`,
+---@returns `CallHierarchyOutgoingCall[]` if {direction} is `"to"`,
 local make_call_hierarchy_handler = function(direction)
   return function(_, result)
     if not result then return end
@@ -399,10 +384,10 @@ local make_call_hierarchy_handler = function(direction)
   end
 end
 
---@see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#callHierarchy/incomingCalls
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#callHierarchy_incomingCalls
 M['callHierarchy/incomingCalls'] = make_call_hierarchy_handler('from')
 
---@see https://microsoft.github.io/language-server-protocol/specifications/specification-current/#callHierarchy/outgoingCalls
+--see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#callHierarchy_outgoingCalls
 M['callHierarchy/outgoingCalls'] = make_call_hierarchy_handler('to')
 
 --see: https://microsoft.github.io/language-server-protocol/specifications/specification-current/#window_logMessage
@@ -461,7 +446,7 @@ for k, fn in pairs(M) do
       --  code: integer;
       --  message: string;
       --  data?: string | number | boolean | array | object | null;
-      return err_message(tostring(err.code) .. ': ' .. err.message)
+      return err_message(client_name .. ': ' .. tostring(err.code) .. ': ' .. err.message)
     end
 
     return fn(err, result, ctx, config)

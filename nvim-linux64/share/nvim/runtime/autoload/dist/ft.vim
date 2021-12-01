@@ -219,6 +219,23 @@ func dist#ft#FTe()
   endif
 endfunc
 
+" Distinguish between Forth and F#.
+" Provided by Doug Kearns.
+func dist#ft#FTfs()
+  if exists("g:filetype_fs")
+    exe "setf " . g:filetype_fs
+  else
+    let line = getline(nextnonblank(1))
+    " comments and colon definitions
+    if line =~ '^\s*\.\=( ' || line =~ '^\s*\\G\= ' || line =~ '^\\$'
+	  \ || line =~ '^\s*: \S'
+      setf forth
+    else
+      setf fsharp
+    endif
+  endif
+endfunc
+
 " Distinguish between HTML, XHTML and Django
 func dist#ft#FThtml()
   let n = 1
@@ -264,6 +281,16 @@ func dist#ft#ProtoCheck(default)
 endfunc
 
 func dist#ft#FTm()
+  if exists("g:filetype_m")
+    exe "setf " . g:filetype_m
+    return
+  endif
+
+  " excluding end(for|function|if|switch|while) common to Murphi
+  let octave_block_terminators = '\<end\%(_try_catch\|classdef\|enumeration\|events\|methods\|parfor\|properties\)\>'
+
+  let objc_preprocessor = '^\s*#\s*\%(import\|include\|define\|if\|ifn\=def\|undef\|line\|error\|pragma\)\>'
+
   let n = 1
   let saw_comment = 0 " Whether we've seen a multiline comment leader.
   while n < 100
@@ -274,10 +301,16 @@ func dist#ft#FTm()
       " anything more definitive.
       let saw_comment = 1
     endif
-    if line =~ '^\s*\(#\s*\(include\|import\)\>\|@import\>\|//\)'
+    if line =~ '^\s*//' || line =~ '^\s*@import\>' || line =~ objc_preprocessor
       setf objc
       return
     endif
+    if line =~ '^\s*\%(#\|%!\)' || line =~ '^\s*unwind_protect\>' ||
+	  \ line =~ '\%(^\|;\)\s*' .. octave_block_terminators
+      setf octave
+      return
+    endif
+    " TODO: could be Matlab or Octave
     if line =~ '^\s*%'
       setf matlab
       return
@@ -298,11 +331,8 @@ func dist#ft#FTm()
     " or Murphi based on the comment leader. Assume the former as it is more
     " common.
     setf objc
-  elseif exists("g:filetype_m")
-    " Use user specified default filetype for .m
-    exe "setf " . g:filetype_m
   else
-    " Default is matlab
+    " Default is Matlab
     setf matlab
   endif
 endfunc
