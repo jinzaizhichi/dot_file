@@ -121,12 +121,6 @@ else
 endif
 
 
-if has('win32')
-    " echo 'leo: 正在用win32，win32表示 32 or 64 bit的windows'
-    let g:python3_host_prog = "F:\\python39\\python.exe"  " ToggleBool会用到
-    " let g:python_host_prog = ""  " ToggleBool会用到   我fork了这个插件 并改了?
-    " let g:loaded_python_provider = 0
-endif
 
 
 func! TabToSpace()
@@ -397,12 +391,14 @@ call plug#end()
 " =============================================vim-plug===============================end
 
 
-if exists('g:vscode')
-    let s:a = 'useless'
+if has('win32')
+    " echo 'leo: 正在用win32，win32表示 32 or 64 bit的windows'
+    let g:python3_host_prog = "F:\\python39\\python.exe"  " ToggleBool会用到
+    " let g:python_host_prog = ""  " ToggleBool会用到   我fork了这个插件 并改了?
+    " let g:loaded_python_provider = 0
+endif
 
-    " 不行
-    " source  \wsl\Ubuntu\root\dot_file\.config\nvim\beautify_wf.vim"
-else
+if !has('win32')
     " 从这里学来的：
     " https://github.com/SpaceVim/SpaceVim/blob/b2d1d7460690648951d6685a3a947e9b4248e38c/autoload/SpaceVim/layers/leaderf.vim#L489
     source ~/dot_file/.config/nvim/beautify_wf.vim
@@ -413,7 +409,6 @@ else
     " exe 'source ' . s:beauty_path
     " 不行： source  . s:beauty_path
 endif
-
 
 
 
