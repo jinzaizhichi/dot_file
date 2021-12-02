@@ -308,7 +308,7 @@ Plug 'asvetliakov/vim-easymotion', VimPlugConds(exists('g:vscode'), { 'as': 'leo
 
 " map <Leader> <Plug>(easymotion-prefix)
 " 默认:
-map <Leader><Leader> <Plug>(easymotion-prefix)  
+map <Leader><Leader> <Plug>(easymotion-prefix)
 
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase = 1 " 敲小写，能匹配大写。反之不然
@@ -467,8 +467,10 @@ nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 " ---------------------------nerdcommenter-config----------------------------------end]]
 
 
-" todo: vscode中会复制了 前后空格
+" todo: vscode中会复制到 前后空格
 nnoremap vp vawp
+" 类似于Y D C等，到行末
+nnoremap P v$p
 
 nnoremap v' vi'
 nnoremap v" vi"
@@ -1155,8 +1157,8 @@ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
     " 没必要吧？
     " nmap s <Nop>
     " xmap s <Nop>
-    
-    " xmap creates a mapping for just Visual mode   
+
+    " xmap creates a mapping for just Visual mode
     " vmap creates one for both Visual mode and Select mode. select mode很少用
 
     " <NOP>		no-op: do nothing (useful in mappings)
