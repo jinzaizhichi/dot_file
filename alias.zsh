@@ -264,11 +264,13 @@ alias rl='readlink -f'
 alias j='ln -s --interactive --verbose --logical'
 #logical: dereference TARGETs that are symbolic links
 #alias lk='ln -s'
-#
+
 # co for command
 # 代替where which type
 # -v for verbose, 不过好像没用
 alias co='whence -ca'
+alias cm='whence -ca'
+
 alias help=run-help
 
 #==============================ls相关===================================
@@ -1000,11 +1002,11 @@ alias sftp='noglob sftp'
 alias sl=ls
 # rm safely
 alias rs='rm -Irf --preserve-root'
-alias to=htop
+alias to=htop 
+alias sm='htop --user=`whoami` --delay=30 --no-colour --tree'  # system monitor
 alias top=htop
 alias toc='htop -s %CPU'
 alias tom='htop -s %MEM'
-alias type='type -a'
 
 alias vd='vim -d'
 alias wg='axel'
