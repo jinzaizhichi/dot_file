@@ -72,12 +72,7 @@ yes | (ai rename)
 # yes | (mutt msmtp)
 # touch ~/.msmtp.log
 
-axel https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-chmod u+x nvim.appimage
-./nvim.appimage
 
-# chmod u+x nvim.appimage
-# ./nvim.appimage --appimage-extract
 
 rm -rf ~/.SpaceVim.d ~/.Spacevim
 
