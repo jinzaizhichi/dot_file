@@ -480,7 +480,8 @@ md(){
         fi
     done
 }
-alias mkdir='md'
+# 尽量别覆盖原本的命令名
+# alias mkdir='md'
 
 cl(){
     echo $((`\ls -l | wc -l`-1))
