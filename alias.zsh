@@ -1,6 +1,9 @@
 # The shell evaluation order (per POSIX) for the entities in your question is:
 # aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
 
+aps(){
+    apt search $1 | bat
+}
 
 # file1=`cat answer.txt` 不及：
 # file1 = $(cat answer.txt)  # 能避免特殊字符发挥作用
@@ -991,18 +994,16 @@ alias po=popd
 alias pu=pushd
 
 
-# alias rake='noglob rake'
-alias rm='rm -Irv --preserve-root'
-alias rmi='nocorrect rm -i'
-alias rsync='noglob rsync'
+alias rm='nocorrect rm -Irv --preserve-root'
+
+# alias rsync='noglob rsync'
+#
 # o for open (source .zsrc,  as if opening a new zsh, to make new config take effect)
 # alias o='source ~/.zshrc'  # 有时source后，alias就算在文件中被删了，还在"
 alias o='zsh'  # 有时source后，alias就算在文件中被删了，还在"
-# search alias
+
 alias sftp='noglob sftp'
-alias sl=ls
-# rm safely
-alias rs='rm -Irf --preserve-root'
+
 alias to=htop 
 alias sm='htop --user=`whoami` --delay=30 --no-colour --tree'  # system monitor
 alias top=htop

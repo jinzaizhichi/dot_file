@@ -15,13 +15,41 @@ if has('autocmd') " ignore this section if your vim does not support autocommand
 endif
 
 
-augroup my_filetype_settings
-autocmd!
-" winnr: 当前window的编号，top winodw是1
-" $: last window
-autocmd FileType help if winnr('$') > 2 | wincmd K | else | wincmd L | endif
-augroup END
+" I want to redefine :e * as :tab *
+cnoreabbrev <expr> e getcmdtype() == ":" && getcmdline() == 'e' ? 'tabedit' : 'e'
+cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'tab help' : 'h'
+" 新tab打开help
 
+" 竖着分屏打开help
+" augroup my_filetype_settings
+" autocmd!
+" winnr: 当前window的编号，top winodw是1
+" $  表示 last window
+" autocmd FileType help if winnr('$') > 2 | wincmd K | else | wincmd L | endif
+" augroup END
+
+" 1.4 LISTING MAPPINGS					*map-listing*
+" When listing mappings the characters in the first two columns are:
+
+"       CHAR	MODE	~
+"      <Space>	Normal, Visual, Select and Operator-pending
+"     n	Normal
+"     v	Visual and Select
+"     s	Select
+"     x	Visual
+"     o	Operator-pending
+"     !	Insert and Command-line
+"     i	Insert
+"     l	":lmap" mappings for Insert, Command-line and Lang-Arg
+"     c	Command-line
+"     t	Terminal-Job
+"
+" Just before the {rhs} a special character can appear:
+"     *	indicates that it is not remappable
+"     &	indicates that only script-local mappings are remappable
+"     @	indicates a buffer-local mapping
+
+noremap qq :q!<CR>
 
 "  "+   Use the + register (clipboard) :
 "   gP : paste before the current position, placing the cursor after the new text.
