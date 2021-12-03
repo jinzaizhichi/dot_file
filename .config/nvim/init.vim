@@ -650,6 +650,9 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 
 
 
+" todo 不匹配行首空白符
+"
+" 其实 vscode里 按ctrl 】  就不会找注释里的内容。对vim有点帮助而已
 " Search_no_comment()
 if &filetype == 'python'
     nnoremap ? /^[^#]*
