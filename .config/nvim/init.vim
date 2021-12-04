@@ -707,10 +707,11 @@ elseif &filetype == 'vim'
 " au BufNewFile,BufRead *.ahk			setf autohotkey
 elseif &filetype == 'autohotkey'
     nnoremap ? /^[^;]*
-elseif &filetype == 'autohotkey'
-    nnoremap ? /^[^;]*
 else
-    nnoremap ? /^[^#]*
+    " 这么写，本地vscode打开ahk，还是#在生效
+    " nnoremap ? /^[^#]*
+    nnoremap ? /^[^;]*
+
 endif
 
 
