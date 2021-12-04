@@ -49,7 +49,7 @@ cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'tab help' : '
 "     &	indicates that only script-local mappings are remappable
 "     @	indicates a buffer-local mapping
 
-noremap qq :q!<CR>
+
 
 "  "+   Use the + register (clipboard) :
 "   gP : paste before the current position, placing the cursor after the new text.
@@ -136,11 +136,19 @@ if &diff
 endif
 " map 默认是recursive的
 
-"set wrap 后，同物理行上线直接跳。
 if exists('g:vscode')
+    "set wrap 后，同物理行上线直接跳。
     nmap j gj
     nmap k gk
+    " vscode里，这样搞只退出插件，文件还打开着
+    " noremap qq :q!<CR>
+
 else
+    noremap qq :q!<CR>
+    " 按一次q要等一会才退出， 不如连续按2次快
+    " nnoremap q :wq<CR>
+    
+    " inoremap qq <ESC>:wq<CR>
     nnoremap j gj
     nnoremap k gk
 
@@ -836,11 +844,6 @@ nnoremap - :call nerdcommenter#Comment('n', 'toggle')<CR>k
 " 这行 不行:
 " nnoremap = :call <Plug>NERDCommenterInvert<CR>
 
-
-" 按一次z要等一会才退出， 不如连续按2次快
-" nnoremap q :wq<CR>
-" nnoremap qq :wq<CR>
-" inoremap qq <ESC>:wq<CR>
 
 
 
