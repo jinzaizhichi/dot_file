@@ -684,14 +684,15 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 " Search_no_comment()
 if &filetype == 'python'
     nnoremap ? /^[^#]*
-" elseif &filetype == 'zsh'
-"     nnoremap ? /^[^#]*
-" elseif &filetype == 'sh'
-"     nnoremap ? /^[^#]*
-
+elseif &filetype == 'zsh'
+    nnoremap ? /^[^#]*
+elseif &filetype == 'sh'
+    nnoremap ? /^[^#]*
 elseif &filetype == 'vim'
     nnoremap ? /^[^"]*
 elseif &filetype == 'ahk'
+    nnoremap ? /^[^;]*
+elseif &filetype == 'autohotkey'
     nnoremap ? /^[^;]*
 else
     nnoremap ? /^[^#]*
