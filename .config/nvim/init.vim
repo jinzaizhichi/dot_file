@@ -158,7 +158,7 @@ endfunc
 " autocmd对neovim-vscode无效？ 暂时手动敲吧
 autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()"
 
-autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
+
 
 " python文件中输入新行时#号注释不切回行首
 " autocmd BufNewFile,BufRead *.py inoremap # X<c-h>#
@@ -173,6 +173,8 @@ if exists('g:vscode')
     unmap gd
     " 不行
     " nnoremap zz ZZ
+    " 不会和vscode 打架吧
+    filetype on        " 检测文件类型
 
 else
     " echo '没在用 vscode-neovim, 纯 nvim'
@@ -264,7 +266,8 @@ else
             %s/\s\+$//e
             call cursor(l, c)
     endfun
-    autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+    " autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+    autocmd FileType c,cpp,javascript,python,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 
     set hlsearch " 高亮search命中的文本
@@ -678,6 +681,8 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 
 
 
+
+
 " todo 不匹配行首空白符
 "
 " 其实 vscode里 按ctrl 】  就不会找注释里的内容。对vim有点帮助而已
@@ -690,7 +695,9 @@ elseif &filetype == 'sh'
     nnoremap ? /^[^#]*
 elseif &filetype == 'vim'
     nnoremap ? /^[^"]*
-elseif &filetype == 'ahk'
+" vim的某个文件设置了
+" au BufNewFile,BufRead *.ahk			setf autohotkey
+elseif &filetype == 'autohotkey'
     nnoremap ? /^[^;]*
 elseif &filetype == 'autohotkey'
     nnoremap ? /^[^;]*
