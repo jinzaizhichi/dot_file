@@ -127,6 +127,10 @@ export ZPLUG_HOME=$HOME/.zplug
 export ZPLUG_CACHE_DIR=$ZPLUG_HOME/.cache  # 默认就是这样
 export ZPLUG_REPOS=$ZPLUG_HOME/repos  # 默认就是这样
 
+# could be set to Linux for normal systems.
+# Without that setting, ps follows the useless and bad parts of the Unix98 standard.
+export PS_PERSONALITY=linux
+
 source $ZPLUG_HOME/init.zsh
 
 # zplug "modules/prompt", from:prezto
@@ -252,3 +256,4 @@ compctl -K _pip_completion pip
 compctl -K _pip_completion pip3
 
 # pip zsh completion end
+

@@ -21,7 +21,7 @@ export LESS_TERMCAP_so=$(tput bold; tput setaf 37; tput setab 255)  # stand-out 
 export LESS_TERMCAP_se=$(tput rmso; tput sgr0) # Stop stand-out effect  和下面这行效果一样？
 
 
-export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 111) # Underline effect Start
+export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 54) # Underline effect Start
 export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)  # Stop underline effect.
 
 # todo 有些蓝色字后面的字是灰的 dim？

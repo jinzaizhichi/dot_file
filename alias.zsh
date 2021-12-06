@@ -1,6 +1,8 @@
 # The shell evaluation order (per POSIX) for the entities in your question is:
 # aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
 
+alias nvtop='/home/wf/nvtop_wf_built/usr/local/bin/nvtop'
+
 aps(){
     apt search $1 | bat
 }
@@ -527,14 +529,67 @@ t() {
     done
 }
 
-# ps 表头
-# USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+
+# stat:  BSD style, 比state的内容详细
+# state: standard sytle
+# format里面那一堆，不能有空格
+alias psp='ps --headers  --User "${1:-$LOGNAME}" --format=pid,start_time,cputime,stat,comm,command | peco'
+
+# 我自己的回答
+# https://unix.stackexchange.com/a/680293/457327
+
+pid(){
+    # echo "pid |  开始于  在跑吗  %CPU  %MEM   |  CPU占用 [DD-]hh:mm:ss |  程序  |   完整路径"
+    echo '状态：
+    R    running or runnable (on run queue)
+    S    interruptible sleep (waiting for an event to complete)
+    s    is a session leader
+    l    is multi-threaded
+    +    in the foreground process group
+    '
+
+    # TIME: amount of CPU in minutes and seconds that the process has been running
+    for pidN in $*
+    do
+        echo '------'
+        # ps --headers --pid=$pidN --format=pid,start_time,stat,comm,command
+        ps --headers  --pid=$pidN --format=pid,start_time,cputime,stat,comm,command
+
+
+        # TIME::accumulated cpu time, user + system 比真实世界的运行时间长？
+        # bsdtime      The display format is usually "MMM:SS",
+                    # but can be `shifted to the right` if the process used more
+                    # than 999 minutes of cpu time??
+        # time      "[天数-]时:分:秒" format.  (alias cputime).
+        
+
+        # START::time the command started.-- 下面两种情况，只有细微差异
+        # bsdstart   If the process was started less than 24 hours ago,
+                    # the output format is  " HH:MM",
+                    # else it is " Mmm:SS" (where Mmm is the  three letters of the month). 
+
+        # start_time  没超过一年前:
+                    # "月 日" if it was not started the same day,
+                    # or "HH:MM" otherwise. 
+
+        # 笔记：
+        # --User "${1:-$LOGNAME}" : 当前用户的所有process
+        # 各选项在select process时，取并集， 而非交集
+        # ps -a -ux | grep --invert-match grep | grep $pidN
+        # --headers repeat header lines, one per page of output.
+    done
+
+}
+
 psu () {
+        # todo 删掉
         # @argv ：操作参数
         # https://perlmaven.com/argv-in-perl#:~:text=%40ARGV%20is%20just%20a%20regular%20array%20in%20Perl.,them%20one%20by%20one%20using%20an%20index%3A%20%24ARGV.
-        # ps -U "${1:-$LOGNAME}" -o 'pid,%cpu,%mem,command' "${(@)argv[2-1]}"
-        ps -U "${1:-$LOGNAME}" --format 'pid,%cpu,%mem,command'
+        # ps --User "${1:-$LOGNAME}" --format  "${(@)argv[2-1]}"
+        ps --User "${1:-$LOGNAME}" --format 'pid,%cpu,%mem,command'
 }
+
+
 
 # conda create --name new_name --clone old_name
 # conda remove --name old_name --all # or its alias: `conda env remove --name old_name`
@@ -552,7 +607,6 @@ alias giwf='gi --your-name wf'
 alias au='apt update'
 
 alias nv='nvidia-smi'
-alias pid='ps -aux |grep -v grep|grep'
 
 # count line number
 #$ echo "$((20+5))"
@@ -1007,8 +1061,8 @@ alias sftp='noglob sftp'
 alias to=htop 
 alias sm='htop --user=`whoami` --delay=30 --no-colour --tree'  # system monitor
 alias top=htop
-alias toc='htop -s %CPU'
-alias tom='htop -s %MEM'
+alias toc='htop -s %cpu'
+alias tom='htop -s %mem'
 
 alias vd='vim -d'
 alias wg='axel'
