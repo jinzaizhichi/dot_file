@@ -209,9 +209,13 @@ mt(){
 alias tvsc='t'
 # alias hg='history -i 1000 | bat' # 待用
 # alias his='noglob history -i 1000 | bat'
-alias his='noglob history -i 1000 | peco'
+
+# -i:  ISO8601 `yyyy-mm-dd  hh:mm' format
+alias his='noglob history -i 1000 | peco'  # 仅用于翻阅历史。要输入命令，还是直接ctrl r方便
+#
 # 统计命令输入频率
 alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | head -n 30'
+
 
 
 
@@ -677,9 +681,6 @@ bk(){
     # git push
 # }
 
-# alias example='f() { echo Your arg was $1. };f'
-# use anonymous function: alias example='(){ echo Your arg was $1. ;}'
-# Why make an alias at all? Just call the function example
 
 
 #find . -maxdepth 1 -printf '%Cm月%Cd日   %CH:%CM:%CS    %s         %f \n'
@@ -940,6 +941,7 @@ docker start $1 ; docker exec -it $1 zsh
 # }
 
 f(){
+    echo '找到一堆文件后，进入peco'
     find . \
     -path '/d/docker' -prune -o  \
     -path '~/.t' -prune -o       \

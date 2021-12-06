@@ -39,8 +39,13 @@ export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)  # Stop underline effect.
 # https://www.topbug.net/blog/2016/09/27/make-gnu-less-more-powerful/
 # export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --no-init '
 
+# 不能用\换行
 export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=2'
 # export LESS='-R --use-color -Dd+r$Du+b'
+# Man-db passes extra options to the pager via the `LESS` environment variable,
+# which Less interprets in the same way as command line options.
+# The setting is hard-coded at compile time and starts with -i.
+# (The value is "-ix8RmPm%s$PM%s$" as of Man-db 2.6.2; the P…$ part is the prompt string.)
 
 # Get color support for 'less'
 # export LESS="--RAW-CONTROL-CHARS"

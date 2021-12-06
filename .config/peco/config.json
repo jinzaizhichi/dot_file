@@ -3,8 +3,9 @@
         "Basic": ["on_default", "default"],
         "SavedSelection": ["bold", "on_yellow", "white"],
         "Selected": ["underline", "on_250", "black"],
-        "Query": ["yellow", "bold"],
-        "Matched": ["red", "on_blue"]
+        "Query": ["black", "bold"],
+        "Matched": ["yellow"]
     },
     "Use256Color": true
 }
+
