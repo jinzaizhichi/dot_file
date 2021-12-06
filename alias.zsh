@@ -207,14 +207,6 @@ mt(){
 
 #移到垃圾箱
 alias tvsc='t'
-# alias hg='history -i 1000 | bat' # 待用
-# alias his='noglob history -i 1000 | bat'
-
-# -i:  ISO8601 `yyyy-mm-dd  hh:mm' format
-alias his='noglob history -i 1000 | peco'  # 仅用于翻阅历史。要输入命令，还是直接ctrl r方便
-#
-# 统计命令输入频率
-alias hist-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | head -n 30'
 
 
 
@@ -796,14 +788,12 @@ alias scp='noglob scp -r'
 ##换行输出
 ##echo "${PATH//:/$'\n'}"
 ##echo "${fpath// /$\n}"
-# alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e ''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'')"'
 
 
 alias disimg='~/dot_file/imcat/imcat'
 alias pt='ptpython --vi'
 #alias pt='ptpython --vi --config-dir=~/dot_file/.config/ptpython'
 alias pti='ptipython --vi'
-alias alert='notify-send --urgency=critical -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e ''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'')"'
 alias matlab='matlab -nosplash -nodesktop'
 # alias ml='matlab -nosplash -nodesktop'
 alias do='cd ~/dot_file/'
