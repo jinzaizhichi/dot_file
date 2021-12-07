@@ -142,6 +142,8 @@ if exists('g:vscode')
     nmap k gk
     " vscode里，这样搞只退出插件，文件还打开着
     " noremap qq :q!<CR>
+    " vscode-neovim 有map ZQ <Cmd>Quit!<CR>  但这么map还是不行
+    " noremap qq ZQ
 
 else
     noremap qq :q!<CR>
