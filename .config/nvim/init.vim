@@ -183,9 +183,7 @@ if exists('g:vscode')
     unmap gd
     " 不行
     " nnoremap zz ZZ
-    " 不会和vscode 打架吧
-    filetype on        " 检测文件类型
-
+    filetype on        " 检测文件类型  不会和vscode 打架吧
 else
     " echo '没在用 vscode-neovim, 纯 nvim'
 
@@ -695,7 +693,7 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 
 " todo 不匹配行首空白符
 "
-" 其实 vscode里 按ctrl 】  就不会找注释里的内容。对vim有点帮助而已
+" vscode里 按ctrl 】也不会搜到comment的内容
 " Search_no_comment()
 if &filetype == 'python'
     nnoremap ? /^[^#]*
@@ -705,14 +703,13 @@ elseif &filetype == 'sh'
     nnoremap ? /^[^#]*
 elseif &filetype == 'vim'
     nnoremap ? /^[^"]*
-" vim的某个文件设置了
-" au BufNewFile,BufRead *.ahk			setf autohotkey
+" vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk			setf autohotkey
 elseif &filetype == 'autohotkey'
     nnoremap ? /^[^;]*
 else
     " 这么写，本地vscode打开ahk，还是#在生效
     " nnoremap ? /^[^#]*
-    nnoremap ? /^[^;]*
+    nnoremap ? /^[^#]*
 
 endif
 

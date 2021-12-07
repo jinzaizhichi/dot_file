@@ -29,7 +29,7 @@ ht(){
     # 2>1  1会被当作为文件名
     # 把这个视为“std重定向符”：  >&
     # https://stackoverflow.com/questions/818255/in-the-shell-what-does-21-mean
-
+    
     nohup $* 2>&1 &
     # 例子：
     # ht python train.py > ./mylog.txt
@@ -557,16 +557,16 @@ pid(){
                     # but can be `shifted to the right` if the process used more
                     # than 999 minutes of cpu time??
         # time      "[天数-]时:分:秒" format.  (alias cputime).
-
+        
 
         # START::time the command started.-- 下面两种情况，只有细微差异
         # bsdstart   If the process was started less than 24 hours ago,
                     # the output format is  " HH:MM",
-                    # else it is " Mmm:SS" (where Mmm is the  three letters of the month).
+                    # else it is " Mmm:SS" (where Mmm is the  three letters of the month). 
 
         # start_time  没超过一年前:
                     # "月 日" if it was not started the same day,
-                    # or "HH:MM" otherwise.
+                    # or "HH:MM" otherwise. 
 
         # 笔记：
         # --User "${1:-$LOGNAME}" : 当前用户的所有process
@@ -637,7 +637,7 @@ sy(){
 
 # Sometimes it is convenient to create separate tmux servers,
 # perhaps to ensure an important process is completely isolated or to test a tmux configuration.
-# S socket-path:  Specify a full alternative path to the server socket.
+# S socket-path:  Specify a full alternative path to the server socket. 
 # If -S is specified, the default socket directory is not  used and any -L flag is ignored
 alias tmux='\tmux \
             -S ~/d/.socket_file_for_tmux_svr  \
@@ -955,7 +955,7 @@ function peco-find-file() {
     # cut -c 8-  去掉序号和空格
     BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | $HOME/dot_file/peco --query "$LBUFFER")
     BUFFER=${BUFFER:18}  # history加了-i，显示详细时间，回车后删掉时间
-    CURSOR=$#BUFFER
+    CURSOR=$#BUFFER 
     # 这个表示 数后面的字符串长度 ：$#
     # BUFFER改成其他的，不行
     # CURSOR变成小写 就不行了
@@ -1075,7 +1075,7 @@ alias o='zsh'  # 有时source后，alias就算在文件中被删了，还在"
 
 alias sftp='noglob sftp'
 
-alias to=htop
+alias to=htop 
 alias sm='htop --user=`whoami` --delay=30 --no-colour --tree'  # system monitor
 alias top=htop
 alias toc='htop -s %cpu'
