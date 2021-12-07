@@ -489,8 +489,6 @@ cl(){
     }
 
 
-# alias t=to_trash  # 函数后别加()
-# 直接写成下面这样更好：
 
 # t() {
 #     the_time=$(date  +"%H时%M分S%-%m月%d日")
@@ -517,11 +515,8 @@ cl(){
 t() {
     for my_file in $*
     do
-        trash=${my_file}_`date  +"%m月%d日%H:%M:%S"`
-        # mkdir -p ~/.t/${trash}
-        # mv ${my_file} ~/.t/${trash}/my_file
-        mv ${my_file} ~/.t/${trash}
-        echo ${trash}
+        trash=`basename ${my_file}`_`date  +"%m月%d日%H:%M:%S"`
+        mv ${my_file} ~/.t/${trash} && echo "成功把文件挪成~/.t下的 ${trash} "
     done
 }
 
@@ -635,13 +630,12 @@ sy(){
     cd -
 }
 
-# Sometimes it is convenient to create separate tmux servers, perhaps to ensure an
-# important process is completely isolated or to test a tmux configuration.
-# This can be done by using the -L flag which creates a socket in /tmp but with a name other than default
-# S socket-path:   Specify a full alternative path to the server socket.  If -S is specified, the default socket directory is not
-                   # used and any -L flag is ignored
+# Sometimes it is convenient to create separate tmux servers,
+# perhaps to ensure an important process is completely isolated or to test a tmux configuration.
+# S socket-path:  Specify a full alternative path to the server socket. 
+# If -S is specified, the default socket directory is not  used and any -L flag is ignored
 alias tmux='\tmux \
-            -S /tmp/leo_tmux_socket_path \
+            -S ~/d/.socket_file_for_tmux_svr  \
             -f ~/dot_file/tmux_tools_wf/tmux.conf'
 
 tm() {
@@ -935,6 +929,7 @@ f(){
     find . \
     -path '/d/docker' -prune -o  \
     -path '~/.t' -prune -o       \
+    -path '~/d/.t' -prune -o       \
     -path '/proc' -prune -o      \
     -name "*$1*" | peco
 
