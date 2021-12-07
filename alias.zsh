@@ -935,6 +935,31 @@ f(){
 
 }
 
+function peco-find-file() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+        # BSD 'tail' (the one with '-r') can only reverse files that are at most as large as its buffer, which is typically 32k.
+        # A more reliable and versatile way to reverse files is the GNU 'tac' command.
+    fi
+    # 别用系统的根目录下的peco，太老，用dot_file下的
+    # -1000: 最近1000条历史
+    # tac后，最新的在最上
+    # cut -c 8-  去掉序号和空格
+    BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | $HOME/dot_file/peco --query "$LBUFFER")
+    BUFFER=${BUFFER:18}  # history加了-i，显示详细时间，回车后删掉时间
+    CURSOR=$#BUFFER 
+    # 这个表示 数后面的字符串长度 ：$#
+    # BUFFER改成其他的，不行
+    # CURSOR变成小写 就不行了
+
+     # 我没存peco的源码 “Yes, it is a single binary! You can put it anywhere you want"
+}
+zle -N peco-find-file
+bindkey '^F' peco-find-file
+
 # todo
 # 选中就会进入
 # -d
