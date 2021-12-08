@@ -55,7 +55,9 @@ cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'tab help' : '
 "   gP : paste before the current position, placing the cursor after the new text.
 inoremap <C-V> "+gP
 set clipboard+=unnamedplus
-nnoremap <C-V> p|  " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
+
+" 啥玩意?
+" nnoremap <C-V> p|  " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
 
 
 nnoremap <Right> *

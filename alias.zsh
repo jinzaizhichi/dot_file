@@ -313,7 +313,6 @@ lf(){
     --long \
     --classify \
     --colour=always \
-    -F  \
     --header  \
     --no-user  \
     --no-permissions  \
@@ -330,7 +329,6 @@ l(){
     --long \
     --classify \
     --colour=always \
-    -F  \
     --header  \
     --no-user  \
     --no-permissions  \

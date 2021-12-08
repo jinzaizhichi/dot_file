@@ -76,9 +76,11 @@ bindkey -s '\ep' 'echo "待用" \n'
 # DIRSTACKSIZE=15 # Setup dir stack
 # setopt autopushd  pushdminus pushdsilent pushdtohome pushdignoredups cdablevars
 bindkey -s '\eu' '..\n' # u for up  # 不行： bindkey -s '<atl>+u' '..\n'
-bindkey -s '\ek' '.. \n'  # 目录 前进一次
-bindkey -s '\eh' 'cd - \n'  # 目录 后退一次
-bindkey -s '\el' 'cd - \n'  # 目录 后退一次
+
+# bindkey -s '\ek' '.. \n'  # 目录 前进一次
+
+# # autohotkey 使得lalt & vk88, 实现了这功能.避免干扰zsh-vim-mode:
+# bindkey -s '\el' 'cd - \n'  # 目录 后退一次
 
 # bindkey '\ek' up-line-or-history
 bindkey '^p'  up-line-or-history  # 有了history-substring-search-up 似乎用不到了

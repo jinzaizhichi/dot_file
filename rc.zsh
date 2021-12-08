@@ -91,8 +91,8 @@ autoload run-help-git
 # export TERM="xterm-256color" # Enable 256 color to make auto-suggestions look nice
 # export TERM="xterm-truecolor"   # 报错
 
-# export TERM="screen-256color"  #之前没在zshrc设TERM，没进tmux就不会用vi-mode。 设了这个，没进tmux也会用vi-mode,
-export TERM="tmux-256color"  #之前没在zshrc设TERM，没进tmux就不会用vi-mode。 设了这个，没进tmux也会用vi-mode,
+export TERM="screen-256color"  #之前没在zshrc设TERM，没进tmux就不会用vi-mode。 设了这个，没进tmux也会用vi-mode,
+# export TERM="tmux-256color"  #之前没在zshrc设TERM，没进tmux就不会用vi-mode。 设了这个，没进tmux也会用vi-mode,
 
 # 如果终端支持truecolor, 用之
 case $TERM in
