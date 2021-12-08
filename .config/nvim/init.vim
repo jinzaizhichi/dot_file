@@ -492,10 +492,10 @@ if exists('g:vscode')
 
 
     " vscode-neovim的 VSCodeCommentary is just a simple function which calls editor.action.commentLine.
-    xmap <C-_>  <Plug>VSCodeCommentary
-    nmap <C-_>  <Plug>VSCodeCommentary
-    omap <C-_>  <Plug>VSCodeCommentary
-    nmap <C-_>  <Plug>VSCodeCommentaryLine
+    " xmap <C-_>  <Plug>VSCodeCommentary
+    " nmap <C-_>  <Plug>VSCodeCommentary
+    " omap <C-_>  <Plug>VSCodeCommentary
+    " nmap <C-_>  <Plug>VSCodeCommentaryLine
 else
     " let g:NERDCreateDefaultMappings = 0  " 之前设为1，导致vscode用不了nerdcommenter?
     nnoremap ce A<space><space><Esc>o/<Esc><Esc>:call nerdcommenter#Comment("n", "Comment")<CR>kJA<BS>
