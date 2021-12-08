@@ -71,7 +71,7 @@ def vpp(*args, end='\n'): #这里的end，到了vpp_single就叫leo—_end
     # value = 10
     # variables = {name: value}
     # print(variables['number'])
-    
+
     # args是一个tuple，vpp()时，args为空tuple，()
     if args  == ():
         print()

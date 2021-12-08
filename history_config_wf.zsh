@@ -27,7 +27,8 @@ function peco-history-selection() {
     local tac
     # GNU 'tail' can output any amount of data (some other versions of 'tail' cannot).
     # It also has no '-r' option (print in reverse), since reversing a file is really a different job from printing the end of a file;
-    if which tac > /dev/null; then
+    if which tac > /dev/null  # 把送到stdout /bin/tac啥的 扔到"黑洞". 只作判断,用户不需要看到stdout
+    then
         tac="tac"
     else
         tac="tail -r"
@@ -40,7 +41,7 @@ function peco-history-selection() {
     # cut -c 8-  去掉序号和空格
     BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | $HOME/dot_file/peco --query "$LBUFFER")
     BUFFER=${BUFFER:18}  # history加了-i，显示详细时间，回车后删掉时间
-    CURSOR=$#BUFFER 
+    CURSOR=$#BUFFER
     # 这个表示 数后面的字符串长度 ：$#
     # BUFFER改成其他的，不行
     # CURSOR变成小写 就不行了

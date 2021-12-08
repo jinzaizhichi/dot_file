@@ -119,13 +119,10 @@ alias -s zip=unzip_multi
 
 # Use [] : if you want your script to be portable across shells.
 # Use [[]] : if you want conditional expressions not supported by `[]` and don't need to be portable.
+#
+
 alias nls='export chpwd_functions=()'
-alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path '/proc' -prune -o -name "*$1*" -exec ~/.squashfs-root/AppRun {} + ; }; fv'
 # alias cd='export chpwd_functions=() ; builtin cd' #  加了这行，就算没敲cd，chpwd_functions也废掉了
-
-
-# u for use
-# alias u='git clone'
 
 
 
@@ -137,6 +134,7 @@ alias fv='fv(){ find . -path '~/d/docker' -prune -o -path '~/.t' -prune -o -path
 # tac  倒着列出  # cat倒过来
 # %y表示  `modify time`
 mt(){
+    # todo: 送到peco
     echo '如果在目录下新增内容，该目录的mtime会变。如果只是修改其下内容，该目录的mtime不变'
     # %y得到的  +0800表示东八区
     find $1 -type f -print0 | xargs --null stat --format "%y 改%n"  | \
@@ -917,89 +915,36 @@ docker start $1 ; docker exec -it $1 zsh
 #  这样会一直卡着: echo `docker exec -it $1 zsh`
 }
 
-# f(){
-    # find . \
-    # -path '/d/docker' -prune -o  \
-    # -path '~/.t' -prune -o       \
-    # -path '/proc' -prune -o      \
-    # -name "*$1*" > ~/.t/.find_results.log
 
-    ## rg能高亮关键词，进了bat还能显示
-    # rg $1 ~/.t/.find_results.log | bat
-    ## bat ~/.t/.find_results.log
-# }
-
-f(){
-    echo '找到一堆文件后，进入peco'
-    find . \
-    -path '/d/docker' -prune -o  \
-    -path '~/.t' -prune -o       \
-    -path '~/d/.t' -prune -o       \
-    -path '/proc' -prune -o      \
-    -name "*$1*" | peco
-
-}
-
-f(){
-    echo '找到一堆文件后，进入peco'
-    find . \
-    -path '/d/docker' -prune -o  \
-    -path '~/.t' -prune -o       \
-    -path '~/d/.t' -prune -o       \
-    -path '/proc' -prune -o      \
-    -name "*$1*" | peco
-
-}
 function peco-find-file() {
     local tac
-    if which tac > /dev/null; then
+    if which tac > /dev/null  # # 把送到stdout /bin/tac啥的 扔到"黑洞". 只作判断,用户不需要看到stdout
+    then
         tac="tac"
     else
         tac="tail -r"
         # BSD 'tail' (the one with '-r') can only reverse files that are at most as large as its buffer, which is typically 32k.
         # A more reliable and versatile way to reverse files is the GNU 'tac' command.
     fi
-    # 别用系统的根目录下的peco，太老，用dot_file下的
-    # -1000: 最近1000条历史
-    # tac后，最新的在最上
-    # cut -c 8-  去掉序号和空格
-    BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | $HOME/dot_file/peco --query "$LBUFFER")
-    BUFFER=${BUFFER:18}  # history加了-i，显示详细时间，回车后删掉时间
-    CURSOR=$#BUFFER
-    # 这个表示 数后面的字符串长度 ：$#
-    # BUFFER改成其他的，不行
-    # CURSOR变成小写 就不行了
 
-     # 我没存peco的源码 “Yes, it is a single binary! You can put it anywhere you want"
+    BUFFER=$(find . \
+    -path '/d/docker' -prune -o  \
+    -path '~/.t' -prune -o       \
+    -path '~/d/.t' -prune -o       \
+    -path '/proc' -prune -o      \
+    -name "*$1*"  | $HOME/dot_file/peco --query "$LBUFFER")
+    # 别用系统的根目录下的peco，太老，用dot_file下的
+    CURSOR=$#BUFFER
 }
 zle -N peco-find-file
 bindkey '^F' peco-find-file
 
-# todo
-# 选中就会进入
-# -d
-# cd `cat ~/.t/.find_results.log | peco `
-# -f
-# v `cat ~/.t/.find_results.log | peco `
-# found a directory
-fd(){
-    cd `sed --quiet $1p ~/.t/.find_results.log`
-}
-
-ff(){
-    v `sed --quiet $1p ~/.t/.find_results.log`
-}
-
-fp(){
-    # cd `sed --quiet $1p ~/.z`  # todo 扔掉~/.z每行竖线后的内容
-    cd `sed --quiet $1p ~/.t/.cd_stack.log`
-}
 
 # /proc写成/proc/据说不行
 alias f/='f_2(){ find / -path '/proc' -prune -o -path '/proc' -prune -o  -name "*$1*" | grep $1;}; f_2'
-alias f12='f_wf(){ find "$1" -name "*$2*" | grep $1; }; f_wf'
 
 th(){ touch $1.n }
+
 # noglob
 # Filename generation (globbing) is not performed on any of the words.
 # 又叫 filename generation 或者 globbing，对特殊字符 *、?、[ 和 ]进行处理，试着用对应目录下存在文件的文件名来进行补全或匹配，如果匹配失败，不会进行扩展。
