@@ -91,6 +91,9 @@ autoload run-help-git
 # export TERM="xterm-256color" # Enable 256 color to make auto-suggestions look nice
 # export TERM="xterm-truecolor"   # 报错
 
+# export TERM="screen-256color"  #之前没在zshrc设TERM，没进tmux就不会用vi-mode。 设了这个，没进tmux也会用vi-mode,
+export TERM="tmux-256color"  #之前没在zshrc设TERM，没进tmux就不会用vi-mode。 设了这个，没进tmux也会用vi-mode,
+
 # 如果终端支持truecolor, 用之
 case $TERM in
   iterm            |\
@@ -155,10 +158,13 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2  # 对命令行中的目录 �
 
 zplug "zsh-users/zsh-history-substring-search"  # 要在syntax-highlighting后面  , 在我建的bindky.zsh里面改快捷键
 
-# zplug "jeffreytse/zsh-vi-mode"  # 有奇怪错误，提issue很繁琐，不用了。自己配吧。
-#
 
-# zplug "softmoth/zsh-vim-mode"
+
+# select viins keymap and bind it to main
+# bindkey -v  # 在softmoth/zsh-vim-mode里面已经有这行
+zplug "softmoth/zsh-vim-mode"  # 没有这个，也会进vim-mode, 或者vi-mode？用了它，ctrl →和←都能正常在单词间跳转
+# todo: 自己配键位
+# zplug "jeffreytse/zsh-vi-mode"  # 有奇怪错误，提issue很繁琐，别用了。
 
 
 # zplug "hchbaw/zce.zsh"

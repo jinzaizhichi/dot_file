@@ -149,7 +149,7 @@ else
     noremap qq :q!<CR>
     " 按一次q要等一会才退出， 不如连续按2次快
     " nnoremap q :wq<CR>
-    
+
     " inoremap qq <ESC>:wq<CR>
     nnoremap j gj
     nnoremap k gk
@@ -481,11 +481,21 @@ vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
 "     exec "normal kJA"
 " endfunc
 
+
+
 if exists('g:vscode')
-    " vscode里，<C-_>注释，不是vim的命令,这样不行：
+    " vscode里，<C-_>注释，用的是vscode的"editor.action.comment"之类的,不是vim的命令,这样不行：
     " nnoremap ce A<space><space><Esc>o/<Esc><Esc><Esc><Esc><Esc><Esc><C-_>kJA<BS>
+
     " 有时会弄脏代码，可能是vscode-nvim弹出窗口太慢了？它不能接管inputmode？  " 提issue吧
     nnoremap ce A<space><space><Esc>o/<Esc><Esc>:::::call nerdcommenter#Comment("n", "Comment")<space><CR>kJA<BS>
+
+
+    " vscode-neovim的 VSCodeCommentary is just a simple function which calls editor.action.commentLine.
+    xmap <C-_>  <Plug>VSCodeCommentary
+    nmap <C-_>  <Plug>VSCodeCommentary
+    omap <C-_>  <Plug>VSCodeCommentary
+    nmap <C-_>  <Plug>VSCodeCommentaryLine
 else
     " let g:NERDCreateDefaultMappings = 0  " 之前设为1，导致vscode用不了nerdcommenter?
     nnoremap ce A<space><space><Esc>o/<Esc><Esc>:call nerdcommenter#Comment("n", "Comment")<CR>kJA<BS>
@@ -696,20 +706,20 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 " vscode里 按ctrl 】也不会搜到comment的内容
 " Search_no_comment()
 if &filetype == 'python'
-    nnoremap ? /^[^#]*
+    nnoremap ? /^[^#].*
 elseif &filetype == 'zsh'
-    nnoremap ? /^[^#]*
+    nnoremap ? /^[^#].*
 elseif &filetype == 'sh'
-    nnoremap ? /^[^#]*
+    nnoremap ? /^[^#].*
 elseif &filetype == 'vim'
-    nnoremap ? /^[^"]*
+    nnoremap ? /^[^"].*
 " vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk			setf autohotkey
 elseif &filetype == 'autohotkey'
-    nnoremap ? /^[^;]*
+    nnoremap ? /^[^;].*
 else
     " 这么写，本地vscode打开ahk，还是#在生效
     " nnoremap ? /^[^#]*
-    nnoremap ? /^[^#]*
+    nnoremap ? /^[^#].*
 
 endif
 

@@ -539,9 +539,9 @@ pid(){
     echo '状态：
     R    running or runnable (on run queue)
     S    interruptible sleep (waiting for an event to complete)
-    s    is a session leader
-    l    is multi-threaded
-    +    in the foreground process group
+    s    a session leader
+    l    multi-threaded
+    +    foreground process
     '
 
     # TIME: amount of CPU in minutes and seconds that the process has been running
@@ -940,6 +940,16 @@ f(){
 
 }
 
+f(){
+    echo '找到一堆文件后，进入peco'
+    find . \
+    -path '/d/docker' -prune -o  \
+    -path '~/.t' -prune -o       \
+    -path '~/d/.t' -prune -o       \
+    -path '/proc' -prune -o      \
+    -name "*$1*" | peco
+
+}
 function peco-find-file() {
     local tac
     if which tac > /dev/null; then

@@ -122,7 +122,8 @@ bindkey -s '^s'  'echo "覆盖了原来的锁屏" \n'
 # zle -N deer
 # bindkey ............
 
-# bindkey -v vi模式的键位
+# select viins keymap and bind it to main
+# bindkey -v 别在这里用,放在rc.zsh的zplug那块的zsh-vim-mode插件附近吧
 
 # 改了不生效
 # bindkey '^x^e' vi-find-next-char
