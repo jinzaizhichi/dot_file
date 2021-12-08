@@ -1216,7 +1216,7 @@ let g:Lf_Gtagslabel = 'native-pygments'
 
 
 
-let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+" let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 " 在vscode里 只有sa生效，其他不行，不知道为啥
 
 " easy-motion用了map s  注意避免冲突
@@ -1232,12 +1232,14 @@ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
     " vmap creates one for both Visual mode and Select mode. select mode很少用
 
     " <NOP>		no-op: do nothing (useful in mappings)
-" 不知道为什么不生效：
+" 之前不知道为什么不生效： 现在 没加这几行,也能用,应该是默认的
 " xnoremap sa <Plug>(operator-sandwich-add)
 " xnoremap sd <Plug>(operator-sandwich-delete)
 " xnoremap sr <Plug>(operator-sandwich-replace)
 "
-"
-" nnoremap <Leader>pa <Plug>(operator-sandwich-add)
+" sc:  sandwich surround Code
 " nnoremap <Leader>pb <Plug>(operator-sandwich-add-query1st)
 " nnoremap sa <Plug>(operator-sandwich-add-query1st)
+"
+" 加了没反应
+" nnoremap sc <Plug>(operator-sandwich-add)iw
