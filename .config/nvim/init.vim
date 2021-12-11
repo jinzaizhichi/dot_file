@@ -862,13 +862,12 @@ nnoremap - :call nerdcommenter#Comment('n', 'toggle')<CR>k
 " 重复了
 " autocmd filetype python nnoremap <C-c> :w <bar> !python % <CR>
 
-" Quickly Run
-cnoremap <F1> call WfRunScript()<CR>
-inoremap <F1> <ESC>:call WfRunScript()<CR>
-nnoremap <F1> :call WfRunScript()<CR>
-func! WfRunScript()
+cnoremap <F1> call WfRun()<CR>
+inoremap <F1> <ESC>:call WfRun()<CR>
+nnoremap <F1> :call WfRun()<CR>
+func! WfRun()
     exec "w"
-    echo"wf_已保存"
+    echo "wf_已保存"
     if &filetype == 'python'
         "跑votenet的某个文件时,若这样执行,pc_util.write_ply没被调用; 若正常敲python执行,则正常
         "% 代表当前文件

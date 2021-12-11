@@ -17,6 +17,11 @@ export LESS_TERMCAP_me=$(tput sgr0)  # turn off bold, blink and underline
 
 
 # export LESS_TERMCAP_so=$(tput bold; tput setaf "#ff0000";   # 只支持256色
+# 更新:
+# todo
+# Terminfo has supported the 24-bit TrueColor capability since ncurses-6.0-20180121, under the name "RGB".
+# You need to use the "setaf" and "setab" commands to set the foreground and background respectively.
+
 export LESS_TERMCAP_so=$(tput bold; tput setaf 37; tput setab 255)  # stand-out (reverse text).
 export LESS_TERMCAP_se=$(tput rmso; tput sgr0) # Stop stand-out effect  和下面这行效果一样？
 

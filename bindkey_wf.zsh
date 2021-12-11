@@ -1,26 +1,75 @@
-# "^C" self-insert  # 原样输入
-#
+# bindkey "^C" self-insert  # 原样输入
+
+
+
+
+# 声明key这个变量是not local的,且是arrays?
+typeset -g -A key
+# -g do not restrict parameter to local scope
+# -A specify that arguments refer to associative arrays
+
+# 这些都叫function keys?
+key[F1]='^[OP'
+key[F2]='^[OQ'
+key[F3]='^[OR'
+key[F4]='^[OS'
+key[F5]='^[[15~'
+key[F6]='^[[17~'
+key[F7]='^[[18~'
+key[F8]=''''
+key[F9]='^[[20~'
+key[F10]='^[[21~'
+key[F11]='^[[23~'
+key[F12]='^[[24~'
+
+key[Backspace]='^?'
+key[Insert]='^[[2~'
+
+key[Home]='^[[1~'
+key[End]='^[[4~'
+
+key[Delete]='^[[3~'
+
+key[PageUp]='^[[5~'
+key[PageDown]='^[[6~'
+
+key[Up]='^[[A'
+key[Down]='^[[B'
+key[Right]='^[[C'
+key[Left]='^[[D'
+key[Menu]=''''
+
+
+
+# bindkey -m
+# -m  | add builtin meta-key (win键) bindings to selected keymap
+
+# bindkey [ options ] -s in-string out-string
+bindkey -s "\C-o" "cle \C-j"
 
 # todo  ^[^H等hard coded的鬼画符 换成这些
-# key=(
-#     BackSpace  "${terminfo[kbs]}"
-#     Home       "${terminfo[khome]}"
-#     End        "${terminfo[kend]}"
-#     Insert     "${terminfo[kich1]}"
-#     Delete     "${terminfo[kdch1]}"
-#     Up         "${terminfo[kcuu1]}"
-#     Down       "${terminfo[kcud1]}"
-#     Left       "${terminfo[kcub1]}"
-#     Right      "${terminfo[kcuf1]}"
-#     PageUp     "${terminfo[kpp]}"
-#     PageDown   "${terminfo[knp]}"
-# )
+# 系统的zshrc(就算我没source,开新的zsh时会自动source)里设置了:
+    # typeset -A key
+    # key=(
+        # BackSpace  "${terminfo[kbs]}"
+        # Home       "${terminfo[khome]}"
+        # End        "${terminfo[kend]}"
+        # Insert     "${terminfo[kich1]}"
+        # Delete     "${terminfo[kdch1]}"
+        # Up         "${terminfo[kcuu1]}"
+        # Down       "${terminfo[kcud1]}"
+        # Left       "${terminfo[kcub1]}"
+        # Right      "${terminfo[kcuf1]}"
+        # PageUp     "${terminfo[kpp]}"
+        # PageDown   "${terminfo[knp]}"
+    # )
+
 
 # autoload一个函数和source函数所在文件，效果一样？
 
 # autoload -U:
-# autoload: 把fpath定义的函数load进来，这样才能调用。类似python的import？
-# -U  | unalias?  suppress alias expansion for functions
+# 1. autoload: 把fpath定义的函数load进来，这样才能调用。类似python的import？
+# 2. -U  | suppress alias expansion for functions  (记作unalias?  )
 
 
 # https://unix.stackexchange.com/a/677162/457327
@@ -28,21 +77,40 @@ autoload -U history-search-end
 # -k  | mark function for ksh-style autoloading
 # -z  | mark function for zsh-style autoloading
 
-zle -N history-beginning-search-backward-end        history-search-end
-zle -N history-beginning-search-forward-end         history-search-end
-# bindkey "$key[Up]" history-beginning-search-backward-end  # 别用"^[[A"了,$key[Up]好看
+zle -N   history-beginning-search-backward-end        history-search-end
+zle -N   history-beginning-search-forward-end         history-search-end
+
+# ^A: start of hearder
+# ^H: back space 退格键
+
+# 别用"^[[A"了,$key[Up]好看
+# bindkey "$key[Up]" history-beginning-search-backward-end
 # bindkey "$key[Down]" history-beginning-search-forward-end
-bindkey "$key[Up]" history-substring-search-up  # 比上面2行更灵活
+### 比上面2行更灵活
+bindkey "$key[Up]" history-substring-search-up
 bindkey "$key[Down]" history-substring-search-down
 
-bindkey "$key[Home]" beginning-of-line # HOME键 "\033[1~"
+
+bindkey "$key[Home]" beginning-of-line
+# `Escape character`的ascii码的十进制 十六进制 表示:
+    # 八进制          \033
+    # 十进制          27
+    # 16进制          \x1b  或者\x1B
+    # 用转义序列表示  \e
+    # ctrl-key        ^[      ^是Caret(敲ctrl), 加上[ 就成了ESC
+
+
+# Control Sequence Introducer: sequence starting with `ESC [`,  即`^[[`
+
+
 bindkey "$key[End]" end-of-line # END  "\033[4~"
+# 或者
+# bindkey "\e[F"  end-of-line
 
+# todo 参考:
+# bindkey "\e[3~" delete-char  # del
+# bindkey "\e\d"  undo  # alt-bs
 
-# A key sequence typed by the user can be turned into a command name
-
-# bindkey [ options ] -s in-string out-string
-bindkey -s "\C-o" "cle \C-j"
 
 
 # t for try
@@ -133,3 +201,5 @@ bindkey -s '^s'  'echo "覆盖了原来的锁屏" \n'
 # bindkey '^g'
 # 设不设好像都一样，默认的吧
 # bindkey '^q' push-line-or-edit
+
+

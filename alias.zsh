@@ -53,6 +53,9 @@ h(){
     then
         run-help $1
     fi
+    # todo
+    # man可以指定pager,  less这个pager可以指定打开的位置
+    # man --pager="less --pattern 'keyboard definition'" zshcontrib
 }
 # built-in的r:    Same as fc -e -      重复你敲的上一条命令
 # help zshbuiltins 查看内置命令

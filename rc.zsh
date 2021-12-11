@@ -88,20 +88,49 @@ autoload -Uz run-help
 autoload -Uz run-help-ip # -z  | mark function for zsh-style autoloading
 autoload run-help-git
 
-# export TERM="xterm-256color" # Enable 256 color to make auto-suggestions look nice
-# export TERM="xterm-truecolor"   # 报错
 
-export TERM="screen-256color"  #之前没在zshrc设TERM，没进tmux就不会用vi-mode。 设了这个，没进tmux也会用vi-mode,
+# https://gist.github.com/bbqtd/a4ac060d6f6b9ea6fe3aabe735aa9d95  :
+# 对于tmux:
+# The screen-256color in most cases is enough and more portable solution.
+# But it does not support any italic font style.
+
+# Unfortunately, The latest (6.2) ncurses version does not work properly:
+# set -g default-terminal "tmux-256color"  # 先别用
+#
+# export TERM="screen-256color"  #之前没在zshrc设TERM，没进tmux就不会用vi-mode。 设了这个，没进tmux也会用vi-mode,
 # export TERM="tmux-256color"  #之前没在zshrc设TERM，没进tmux就不会用vi-mode。 设了这个，没进tmux也会用vi-mode,
+
+
+# case EXPRESSION in
+#  (PATTERN_1)
+#     STATEMENTS
+#     ;;
+#  (PATTERN_2)
+#     STATEMENTS
+#     ;;
+#  (PATTERN_N)
+#     STATEMENTS
+#     ;;
+#  (*)
+#     STATEMENTS
+#     ;;
+# esac
 
 # 如果终端支持truecolor, 用之
 case $TERM in
-  iterm            |\
-  linux-truecolor  |\
-  screen-256color |\
-  tmux-256color   |\
-  xterm-256color  )    export COLORTERM=truecolor ;;
-  vte*)
+    # export TERM="xterm-256color" # Enable 256 color to make auto-suggestions look nice
+    (screen-256color |  tmux-256color   |  xterm-256color  )
+        # Set the COLORTERM environment variable to 'truecolor' to advertise 24-bit color support
+        # COLORTERM 的选项:no|yes|truecolor
+        export COLORTERM=truecolor
+        ;;           # 一个分号能把2个命令串在一起,所以要2个分号
+    (*)              #  (*) :  a final pattern to define the default case  This pattern will always match? 不是啊, 就跟if else差不多
+        echo 'TERM是:'
+        echo $TERM
+        echo '---'
+        echo 'COLORTERM是'
+        echo ${COLORTERM}
+        ;;
 esac
 
 fpath=(~/dot_file/zfunc_in_fpath_leo $fpath)  # zfunc_in_fpath_leo用于存放自动补全命令  要在compinit之前.
