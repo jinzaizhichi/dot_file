@@ -560,9 +560,10 @@ alias ci='conda install -y'
 
 alias snp='~/dot_file/wf_snippet.py'
 
-# alias gitp='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
-# alias gip='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
+#alias gitpush='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
+
 sy(){
+    chpwd_functions=()
     cd ~/dot_file
     git stash
     git pull  # Update the branch to the latest code .   = fetch + merge? 还是只fetch?
@@ -571,6 +572,7 @@ sy(){
     git commit -m "提交原因_$1"
     git push
     cd -
+    chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 }
 
 # Sometimes it is convenient to create separate tmux servers,
