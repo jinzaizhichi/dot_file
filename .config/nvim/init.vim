@@ -850,7 +850,9 @@ nnoremap gd g<C-]>
 
 
 " <Plug>NERDCommenterToggle<CR>和 :call NERDComment('n', 'toggle')<CR> 应该一样
-nnoremap = :call nerdcommenter#Comment('n', 'toggle')<CR>j
+" nnoremap = :call nerdcommenter#Comment('n', 'toggle')<CR>j
+" vim的等号：用来indent
+" ==     4= 等
 nnoremap - :call nerdcommenter#Comment('n', 'toggle')<CR>k
 
 " 这行 不行:
@@ -1215,22 +1217,19 @@ let g:Lf_Gtagslabel = 'native-pygments'
 
 
 
-" let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 " 在vscode里 只有sa生效，其他不行，不知道为啥
 
-" easy-motion用了map s  注意避免冲突
-" let g:operator_sandwich_no_default_key_mappings = 1
-"
-    " NOTE: To prevent unintended operation, the following setting is s trongly  recommended to add to your vimrc.
+" easy-motion的nmap用的是S
+let g:operator_sandwich_no_default_key_mappings = 1
 
-    " 没必要吧？
-    " nmap s <Nop>
-    " xmap s <Nop>
+" NOTE: To prevent unintended operation
+nmap s <Nop>
+xmap s <Nop>
+" xmap creates a mapping for just Visual mode
+" vmap creates one for both Visual mode and Select mode. select mode很少用
+" <NOP>		no-opperation? do nothing (useful in mappings)
 
-    " xmap creates a mapping for just Visual mode
-    " vmap creates one for both Visual mode and Select mode. select mode很少用
-
-    " <NOP>		no-op: do nothing (useful in mappings)
 " 之前不知道为什么不生效： 现在 没加这几行,也能用,应该是默认的
 " xnoremap sa <Plug>(operator-sandwich-add)
 " xnoremap sd <Plug>(operator-sandwich-delete)
@@ -1241,4 +1240,4 @@ let g:Lf_Gtagslabel = 'native-pygments'
 " nnoremap sa <Plug>(operator-sandwich-add-query1st)
 "
 " 加了没反应
-" nnoremap sc <Plug>(operator-sandwich-add)iw
+nnoremap sc <Plug>(operator-sandwich-add)
