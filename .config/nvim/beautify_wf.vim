@@ -21,7 +21,7 @@ autocmd BufWritePost * if &diff == 1 | diffupdate | endif
 
 
 set cursorline
-hi CursorLine guibg=#bbddcc
+hi CursorLine guibg=#ededcf
 " hi Cursor guibg=#0000cc  " 似乎被mobaxterm控制着
 
 " 古老：For terminal Vim, with colors, we're most interested in the cterm
