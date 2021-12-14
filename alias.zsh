@@ -573,11 +573,11 @@ sy(){
     git stash apply  # Merge your local changes into the latest code:
     echo "\n---------add commit push三连---------"
     git add --verbose .
-    if [[ "$1" == ""]]
-        then
-            git commit -m "又改了"
-        else
-            git commit -m "$1"
+    if [[ "$1" != "" ]]
+    then
+        git commit -m "$1"
+    else
+        git commit -m "又改了"
     fi
     git push
     cd -
