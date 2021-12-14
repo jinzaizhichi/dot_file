@@ -565,11 +565,14 @@ alias snp='~/dot_file/wf_snippet.py'
 sy(){
     chpwd_functions=()
     cd ~/dot_file
+    echo "正在stash"
     git stash
+    echo "正在pull"
     git pull  # Update the branch to the latest code .   = fetch + merge? 还是只fetch?
     git stash apply  # Merge your local changes into the latest code:
     git add --verbose .
     git commit -m "提交原因_$1"
+    echo "正在pull"
     git push
     cd -
     zsh
