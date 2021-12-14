@@ -572,7 +572,7 @@ sy(){
     git commit -m "提交原因_$1"
     git push
     cd -
-    chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
+    zsh
 }
 
 # Sometimes it is convenient to create separate tmux servers,
