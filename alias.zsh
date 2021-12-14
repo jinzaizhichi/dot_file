@@ -19,10 +19,7 @@ alias ver='~/dot_file/show_version_of_any_tool/version'
 
 alias grep='grep --color=always'
 alias gr='grep'
-cj(){
-    # cj: 意思是 see json
-    jq -C "" $1 |less -R  # jq: json query？
-}
+
 
 ht(){
     # 2>&1  : stderr > stdout
@@ -109,14 +106,14 @@ zi(){
 
 # () 含义：declaring a function.
 unzip_multi(){
-#  for 循环不放文件最开头 就报错，奇怪了
-for x in $*
-do
-    #${varible:n1:n2}:截取变量varible从n1到n2之间的字符串。 类似python
-    dir=${x:0:-4}
-    \mkdir ${dir}
-    unzip ${x} -d ${dir} && t ${x}
-done
+    #  for 循环不放文件最开头 就报错，奇怪了
+    for x in $*
+    do
+        #${varible:n1:n2}:截取变量varible从n1到n2之间的字符串。 类似python
+        dir=${x:0:-4}
+        \mkdir ${dir}
+        unzip ${x} -d ${dir} && t ${x}
+    done
 }
 alias -s zip=unzip_multi
 
@@ -525,69 +522,6 @@ t() {
 }
 
 
-# stat:  BSD style, 比state的内容详细
-# state: standard sytle
-# format里面那一堆，不能有空格
-alias psp='ps --headers  --User "${1:-$LOGNAME}" --format=pid,start_time,cputime,stat,comm,command | peco'
-
-# 我自己的回答
-# https://unix.stackexchange.com/a/680293/457327
-
-pid(){
-    # echo "pid |  开始于  在跑吗  %CPU  %MEM   |  CPU占用 [DD-]hh:mm:ss |  程序  |   完整路径"
-    echo '状态：
-    R    running or runnable (on run queue)
-    S    interruptible sleep (waiting for an event to complete)
-    s    a session leader
-    l    multi-threaded
-    +    foreground process
-    '
-
-    # TIME: amount of CPU in minutes and seconds that the process has been running
-    for pidN in $*
-    do
-        echo '------'
-        # ps --headers --pid=$pidN --format=pid,start_time,stat,comm,command
-        ps --headers  --pid=$pidN --format=pid,start_time,cputime,stat,comm,command
-
-
-        # TIME::accumulated cpu time, user + system 比真实世界的运行时间长？
-        # bsdtime      The display format is usually "MMM:SS",
-                    # but can be `shifted to the right` if the process used more
-                    # than 999 minutes of cpu time??
-        # time      "[天数-]时:分:秒" format.  (alias cputime).
-
-
-        # START::time the command started.-- 下面两种情况，只有细微差异
-        # bsdstart   If the process was started less than 24 hours ago,
-                    # the output format is  " HH:MM",
-                    # else it is " Mmm:SS" (where Mmm is the  three letters of the month).
-
-        # start_time  没超过一年前:
-                    # "月 日" if it was not started the same day,
-                    # or "HH:MM" otherwise.
-
-        # 笔记：
-        # --User "${1:-$LOGNAME}" : 当前用户的所有process
-        # 各选项在select process时，取并集， 而非交集
-        # ps -a -ux | grep --invert-match grep | grep $pidN
-        # --headers repeat header lines, one per page of output.
-    done
-
-}
-
-psu () {
-        # todo 删掉
-        # @argv ：操作参数
-        # https://perlmaven.com/argv-in-perl#:~:text=%40ARGV%20is%20just%20a%20regular%20array%20in%20Perl.,them%20one%20by%20one%20using%20an%20index%3A%20%24ARGV.
-        # ps --User "${1:-$LOGNAME}" --format  "${(@)argv[2-1]}"
-        ps --User "${1:-$LOGNAME}" --format 'pid,%cpu,%mem,command'
-}
-
-
-
-# conda create --name new_name --clone old_name
-# conda remove --name old_name --all # or its alias: `conda env remove --name old_name`
 
 # gpustat and grep wf
 #
@@ -618,7 +552,12 @@ alias tt='python ~/d/tmp.py'
 # bd : 本地
 alias bd='code ~/.zshrc ; zsh'
 alias jn='jupyter notebook'
+
+alias con='conda'
 alias ci='conda install -y'
+# conda create --name new_name --clone old_name
+# conda remove --name old_name --all # or its alias: `conda env remove --name old_name`
+
 alias snp='~/dot_file/wf_snippet.py'
 
 # alias gitp='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
@@ -917,28 +856,67 @@ docker start $1 ; docker exec -it $1 zsh
 }
 
 
-function peco-find-file() {
-    local tac
-    if which tac > /dev/null  # # 把送到stdout /bin/tac啥的 扔到"黑洞". 只作判断,用户不需要看到stdout
-    then
-        tac="tac"
-    else
-        tac="tail -r"
-        # BSD 'tail' (the one with '-r') can only reverse files that are at most as large as its buffer, which is typically 32k.
-        # A more reliable and versatile way to reverse files is the GNU 'tac' command.
-    fi
+alias peco='$HOME/dot_file/peco --rcfile $HOME/.config/peco/config.json'
 
-    BUFFER=$(find . \
-    -path '/d/docker' -prune -o  \
-    -path '~/.t' -prune -o       \
-    -path '~/d/.t' -prune -o       \
-    -path '/proc' -prune -o      \
-    -name "*$1*"  | $HOME/dot_file/peco --query "$LBUFFER")
-    # 别用系统的根目录下的peco，太老，用dot_file下的
-    CURSOR=$#BUFFER
+
+# stat:  BSD style, 比state的内容详细
+# state: standard sytle
+# format里面那一堆，不能有空格
+# psp: process status 送到peco
+alias psp='ps --headers  --User "${1:-$LOGNAME}" --format=pid,start_time,cputime,stat,comm,command | peco'
+
+# 我自己的回答
+# https://unix.stackexchange.com/a/680293/457327
+
+pid(){
+    # echo "pid |  开始于  在跑吗  %CPU  %MEM   |  CPU占用 [DD-]hh:mm:ss |  程序  |   完整路径"
+    echo '状态：
+    R    running or runnable (on run queue)
+    S    interruptible sleep (waiting for an event to complete)
+    s    a session leader
+    l    multi-threaded
+    +    foreground process
+    '
+
+    # TIME: amount of CPU in minutes and seconds that the process has been running
+
+    # 加了循环报错，错了done啥的
+    # for pidN in $*
+    # do
+        echo '------'
+        # ps --headers --pid=$pidN --format=pid,start_time,stat,comm,command
+        # ps --headers  --pid=$pidN --format=pid,start_time,cputime,stat,comm,command
+        ps --headers  --pid=$* --format=pid,start_time,cputime,stat,comm,command
+
+
+        # TIME::accumulated cpu time, user + system 比真实世界的运行时间长？
+        # bsdtime      The display format is usually "MMM:SS",
+                    # but can be `shifted to the right` if the process used more
+                    # than 999 minutes of cpu time??
+        # time      "[天数-]时:分:秒" format.  (alias cputime).
+
+
+        # START::time the command started.-- 下面两种情况，只有细微差异
+        # bsdstart   If the process was started less than 24 hours ago,
+                    # the output format is  " HH:MM",
+                    # else it is " Mmm:SS" (where Mmm is the  three letters of the month).
+
+        # start_time  没超过一年前:
+                    # "月 日" if it was not started the same day,
+                    # or "HH:MM" otherwise.
+
+        # 笔记：
+        # --User "${1:-$LOGNAME}" : 当前用户的所有process
+        # 各选项在select process时，取并集， 而非交集
+        # ps -a -ux | grep --invert-match grep | grep $pidN
+        # --headers repeat header lines, one per page of output.
+
+    # done
+    # 加了循环报错，错了done啥的
+
 }
-zle -N peco-find-file
-bindkey '^F' peco-find-file
+
+
 
 
 # /proc写成/proc/据说不行
@@ -1078,6 +1056,11 @@ alias -s html=bat
 alias -s yaml=vim
 alias -s yml=vim
 
+cj(){
+    # cj: 意思是 see json
+    jq -C "" $1 |less -R  # jq: json query？
+}
+alias -s json=cj
 
 if [[ -n "$TMUX" ]];
 then

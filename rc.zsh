@@ -1,6 +1,8 @@
 # echo "$foo" instead of just echo $foo.
 # Without double-quotes the variable's contents get parsed in a somewhat weird way that tends to cause bugs.
 
+# 这3行 解决peco里复制的问题, 很多人都unset这个，（它的功能是防止粘贴多行时，乱执行命令）
+unset zle_bracketed_paste
 
 
 # [[===========================================================================begin

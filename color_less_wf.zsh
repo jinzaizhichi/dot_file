@@ -1,16 +1,17 @@
 # 改了这文件，要新开zsh才生效
 #[[[--------------------------------less color-------------------------------------
 
-# termcap terminfo
-# ks      smkx      make the keypad send commands
-# ke      rmkx      make the keypad send digits
-# vb      flash     emit visual bell
-# mb      blink     start blink
-# me      sgr0      # turn off bold, blink and underline
-# so      smso      start standout (reverse video)
-# se      rmso      stop standout
-# us      smul      start underline
-# ue      rmul      stop underline
+# termcap(被淘汰了) terminfo
+# ks                smkx      make the keypad send commands
+# ke                rmkx      make the keypad send digits
+
+# vb                flash     emit visual bell
+# mb                blink     start blink
+# me                sgr0      # turn off bold, blink and underline
+# so                smso      start standout (reverse video)
+# se                rmso      stop standout
+# us                smul      start underline
+# ue                rmul      stop underline
 
 export LESS_TERMCAP_md=$(tput bold; tput setaf 22) # Stop bold effect.
 export LESS_TERMCAP_me=$(tput sgr0)  # turn off bold, blink and underline

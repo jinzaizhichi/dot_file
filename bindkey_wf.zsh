@@ -1,18 +1,25 @@
 # bindkey "^C" self-insert  # 原样输入
 
-
-
-
-# 声明key这个变量是not local的,且是arrays?
+# 声明key这个变量是not local的,且是arrays
 typeset -g -A key
 # -g do not restrict parameter to local scope
 # -A specify that arguments refer to associative arrays
 
-# 这些都叫function keys?
+
+# todo
+# ^D在当前行 有字符时, 相当于Del
+#            无字符是, 退出 (但无字符时, 按真正的Del, 不会退出)
+#
+# 没有unbind命令, 想unbind,可以把某个key, bind为不存在的function, 报错后删掉
+
+# 来自zkbd, 根据你自己的电脑的情况设置, 比terminfo靠谱
+# function keys (commonly at the top of a PC keyboard)
 key[F1]='^[OP'
 key[F2]='^[OQ'
 key[F3]='^[OR'
 key[F4]='^[OS'
+
+# 亲测,确实如此. 为啥会突变?
 key[F5]='^[[15~'
 key[F6]='^[[17~'
 key[F7]='^[[18~'
@@ -26,7 +33,11 @@ key[Backspace]='^?'
 key[Insert]='^[[2~'
 
 key[Home]='^[[1~'
+# 等价于:
+# ^[[H
 key[End]='^[[4~'
+# 等价于:
+# ^[[F
 
 key[Delete]='^[[3~'
 
@@ -40,15 +51,9 @@ key[Left]='^[[D'
 key[Menu]=''''
 
 
-
-# bindkey -m
-# -m  | add builtin meta-key (win键) bindings to selected keymap
-
-# bindkey [ options ] -s in-string out-string
-bindkey -s "\C-o" "cle \C-j"
-
-# todo  ^[^H等hard coded的鬼画符 换成这些
+# 不再需要了:
 # 系统的zshrc(就算我没source,开新的zsh时会自动source)里设置了:
+# terminfo的东西是在application mode下的, 而zsh用的是raw mode, 所以自己指定吧
     # typeset -A key
     # key=(
         # BackSpace  "${terminfo[kbs]}"
@@ -63,6 +68,15 @@ bindkey -s "\C-o" "cle \C-j"
         # PageUp     "${terminfo[kpp]}"
         # PageDown   "${terminfo[knp]}"
     # )
+
+# bindkey -m
+# -m  | add builtin meta-key (win键) bindings to selected keymap
+
+# bindkey [ options ] -s in-string out-string
+bindkey -s "\C-o" "cle \C-j"
+
+
+
 
 
 # autoload一个函数和source函数所在文件，效果一样？
@@ -80,10 +94,7 @@ autoload -U history-search-end
 zle -N   history-beginning-search-backward-end        history-search-end
 zle -N   history-beginning-search-forward-end         history-search-end
 
-# ^A: start of hearder
-# ^H: back space 退格键
 
-# 别用"^[[A"了,$key[Up]好看
 # bindkey "$key[Up]" history-beginning-search-backward-end
 # bindkey "$key[Down]" history-beginning-search-forward-end
 ### 比上面2行更灵活
@@ -103,14 +114,14 @@ bindkey "$key[Home]" beginning-of-line
 # Control Sequence Introducer: sequence starting with `ESC [`,  即`^[[`
 
 
-bindkey "$key[End]" end-of-line # END  "\033[4~"
+bindkey "$key[End]" end-of-line
 # 或者
-# bindkey "\e[F"  end-of-line
 
 # todo 参考:
-# bindkey "\e[3~" delete-char  # del
+bindkey "$key[Delete]" delete-char
 # bindkey "\e\d"  undo  # alt-bs
 
+bindkey '^ ' delete-word
 
 
 # t for try
@@ -135,10 +146,19 @@ bindkey "$key[End]" end-of-line # END  "\033[4~"
 # bindkey '^m' 和回车键 同体
 #
 
-
+# \e表示Esc键，但敲alt也行. 先按Ecs键，再按字母，等价于：按下alt，再按字母
 bindkey -s '\eo' 'echo "待用" \n'
 bindkey -s '\ei' 'echo "待用" \n'
 bindkey -s '\ep' 'echo "待用" \n'
+
+bindkey -s '\c-s' 'echo "待用" \n'
+bindkey -s "\C-q" 'echo "待用" \n'
+
+
+# 不生效：
+bindkey -s "\C-q" 'echo "待用" \n'
+# (暂停输出) 不生效：
+bindkey -s '\c-s' 'echo "待用" \n'
 
 # todo
 # DIRSTACKSIZE=15 # Setup dir stack
@@ -203,3 +223,83 @@ bindkey -s '^s'  'echo "覆盖了原来的锁屏" \n'
 # bindkey '^q' push-line-or-edit
 
 
+# json里写不了注释：
+# C-c	peco.Cancel
+
+# 待绑定：
+# C-f
+# C-b
+# C-d
+# C-8
+# C-g
+# C-Space
+
+# 不知道怎么用, 敲了没反应：
+# C-k	 peco.KillEndOfLine
+# C-t	peco.ToggleQuery:  Toggle list between filtered by query and not filtered.
+
+# 熟悉后删掉：
+# C-u	    peco.KillBeginningOfLine
+# C-w	    peco.DeleteBackwardWord
+# C-n	    peco.SelectDown
+# C-p	    peco.SelectUp
+
+# C-r	    peco.RotateFilter
+
+function peco-find-file() {
+    local tac
+    if which tac > /dev/null  # # 把送到stdout /bin/tac啥的 扔到"黑洞". 只作判断,用户不需要看到stdout
+    then
+        tac="tac"
+    else
+        tac="tail -r"
+        # BSD 'tail' (the one with '-r') can only reverse files that are at most as large as its buffer, which is typically 32k.
+        # A more reliable and versatile way to reverse files is the GNU 'tac' command.
+    fi
+
+
+    # BUFFER (scalar):   The entire contents of the edit buffer.
+    # https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html#index-BUFFER
+    BUFFER=$(find . \
+    -path '/d/docker' -prune -o  \
+    -path '~/.t' -prune -o       \
+    -path '~/d/.t' -prune -o       \
+    -path '/proc' -prune -o      \
+    -name "*$1*"  | peco --query "$BUFFER" )
+    # 别用系统的根目录下的peco，太老，用dot_file下的
+    CURSOR=$#BUFFER
+
+}
+zle -N peco-find-file
+bindkey '^F' peco-find-file
+
+function peco-history-selection() {
+    local tac
+    # GNU 'tail' can output any amount of data (some other versions of 'tail' cannot).
+    # It also has no '-r' option (print in reverse), since reversing a file is really a different job from printing the end of a file;
+    if which tac > /dev/null  # 把送到stdout /bin/tac啥的 扔到"黑洞". 只作判断,用户不需要看到stdout
+    then
+        tac="tac"
+    else
+        tac="tail -r"
+        # BSD 'tail' (the one with '-r') can only reverse files that are at most as large as its buffer, which is typically 32k.
+        # A more reliable and versatile way to reverse files is the GNU 'tac' command.
+    fi
+    # 别用系统的根目录下的peco，太老，用dot_file下的
+    # -1000: 最近1000条历史
+    # tac后，最新的在最上
+    # cut -c 8-  去掉序号和空格
+    # 命令前加个\，避免多个alias打架了
+    # 正则， 通配年-月-日 时:分:秒："\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}\\s{2}"
+    BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | $HOME/dot_file/peco --query "\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}\\s{2}$BUFFER")
+    BUFFER=${BUFFER:18}  # history加了-i，显示详细时间，回车后只取第19个字符开始的内容，（删掉时间)
+    CURSOR=$#BUFFER
+    # 这个表示 数后面的字符串长度 ：$#
+    # BUFFER改成其他的，不行
+    # CURSOR变成小写 就不行了
+
+     # 我没存peco的源码 “Yes, it is a single binary! You can put it anywhere you want"
+}
+zle -N peco-history-selection
+# bindkey '^R' peco-history-selection  # 放到bindkey_wf.zsh里
+bindkey '^R' peco-history-selection

@@ -1,4 +1,7 @@
 {
+   "Prompt": "保持微笑>",
+    "InitialFilter": "Regexp",
+    "MaxScanBufferSize": 256,
     "Style": {
         "Basic": ["on_default", "default"],
         "SavedSelection": ["bold", "on_yellow", "white"],
@@ -6,6 +9,15 @@
         "Query": ["black", "bold"],
         "Matched": ["yellow"]
     },
-    "Use256Color": true
+    "Use256Color": true,
+    "Keymap": {
+        "C-x": "peco.Cancel",
+        "Home": "peco.BeginningOfLine",
+        "End":  "peco.EndOfLine",
+        "ArrowLeft": "peco.BackwardChar",
+        "ArrowRight": "peco.ForwardChar",
+        "Delete": "peco.DeleteForwardChar",
+        "C-Space": "peco.DeleteForwardWord"
+    }
 }
 
