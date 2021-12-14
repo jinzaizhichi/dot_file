@@ -260,7 +260,7 @@ a4(){
 #     # "$*" | bat  # # 不能保留颜色高亮
 # }
 
-alias ac='_ack(){ nocorrect ack "$*";};_ack'
+alias ac='_ack(){ ack "$*";};_ack'
 
 #找到软链接的真实路径
 alias rl='readlink -f'
@@ -953,7 +953,6 @@ gc(){
 }
 alias gcc='nocorrect gcc'
 alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
-alias gist='nocorrect gist'
 # alias git='pro &&  git'
 alias globurl='noglob urlglobber '
 alias hl='f_hl(){ du -sh $1* | sort -h; }; f_hl'
@@ -971,7 +970,6 @@ alias mv='\mv -iv'
 alias mm='\mv -iv -t `pwd`'
 alias m.='\mv -iv -t `pwd`'
 
-alias man='nocorrect man'
 
 # Makes a directory and changes to it.
 mcd() {
