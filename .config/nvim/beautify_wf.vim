@@ -26,10 +26,15 @@ set cursorline
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 " 很浅的绿色
 hi CursorLine guibg=#e3efe3
 =======
 hi CursorLine guibg=#ededcf
+>>>>>>> Stashed changes
+=======
+" 很浅的绿色
+hi CursorLine guibg=#e3efe3
 >>>>>>> Stashed changes
 =======
 " 很浅的绿色
