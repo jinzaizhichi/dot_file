@@ -149,10 +149,9 @@ if exists('g:vscode')
 
 else
     noremap qq :q!<CR>
-    " 按一次q要等一会才退出， 不如连续按2次快
-    " nnoremap q :wq<CR>
+    " nnoremap q :wq<CR>  按一次q要等一会才退出， 不如连续按2次快
+    " inoremap qq <ESC>:wq<CR>  别这么干，容易在编辑时敲错
 
-    " inoremap qq <ESC>:wq<CR>
     nnoremap j gj
     nnoremap k gk
 
@@ -523,7 +522,21 @@ nnoremap vp vawp
 " 类似于Y D C等，到行末
 nnoremap P v$p
 
-nnoremap v' vi'
+
+" todo: `omap`代替下面的有点重复的各种operator的map
+" omap ' i'
+" omap " vi"
+" omap ( i(
+" omap ) i)
+" omap [ i[
+" omap ] i]
+" omap { i{
+" omap } i}
+" omap } i}
+" omap ' i'
+
+
+
 nnoremap v" vi"
 nnoremap v( vi(
 nnoremap v) vi)

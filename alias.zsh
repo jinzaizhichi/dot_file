@@ -4,7 +4,7 @@
 alias nvtop='/home/wf/nvtop_wf_built/usr/local/bin/nvtop'
 
 aps(){
-    apt search $1 | bat
+    apt search $1 | peco
 }
 
 # file1=`cat answer.txt` 不及：
@@ -69,7 +69,7 @@ alias cle='clear -x'
 alias pipc='pqi' # pip change
 alias pq='pqi'  # PyQuickInstall
 q(){
-    tree -L 2 --filelimit=50 $1 | bat
+    tree -L 2 --filelimit=50 $1 | peco
 }
 
 # alias git='LANG=en_GB git' # 不行
@@ -100,8 +100,9 @@ zi(){
     # fi
 
     zip -r ~/tmp_at_home.zip $1
-    # alias hl='f_hl(){ du -sh $1* | sort -h; }; f_hl'
-    du -sh  ~/tmp_at_home.zip
+    # 看多大：
+    du --summarize --human-readable ~/tmp_at_home.zip
+
 }
 
 # () 含义：declaring a function.
@@ -227,11 +228,14 @@ alias tvsc='t'
 alias rg='\rg --pretty --hidden --smart-case'
 
 # todo 结合peco
+# 沿用ag的a
+#  a 强行记忆法：at the snippet
 a(){
-    # read TMP
-    # TMP2 ="`print -r ${(q)TMP}`"
-    # \rg --pretty --hidden TMP2 | bat # 沿用ag的a
-     \rg --pretty --hidden  --before-context 1 --after-context 2  --smart-case "$*"  | bat # 沿用ag的a
+     \rg --pretty \
+         --hidden \
+         --before-context 1 \
+         --after-context 2  \
+         --smart-case "$*" |  less --pattern="$*"
 }
 a4(){
     # read TMP
@@ -284,7 +288,6 @@ alias ls='\ls -hrt --color=always'
 alias la='\ls -ACF1GhFtr --color=always --classify'
 alias lc='lt -c'
 alias lla='\ls -gGhtrFA --color=always'
-alias lm='la | "$PAGER"'
 alias lr='ls -gGhtF --color=always'
 alias lt='ll -tr'
 alias lx='\ls -l'
@@ -524,7 +527,7 @@ t() {
 
 
 # gpustat and grep wf
-#
+
 alias g='gpustat  --show-user --no-header  | cut -d',' -f2 | bat --number --language=py3'
 alias gw='g --your-name wf '
 alias gwf='g --your-name wf '
@@ -828,7 +831,9 @@ compdef _dirs d  # 让函数d能被自动补全
 #   '(* -c)-p[display directory entries one per line]' \
 #   '(-)*:directory:_directories'
 
+# global alias，有点危险， 别用
 # alias -g ...='../..'
+
 alias -- _='cd -'
 alias -- -='cd -'
 
@@ -853,7 +858,6 @@ alias c=cp
 alias cp='cp -ivr'
 alias c.='cp -ivr -t `pwd`'
 alias df='df -h'
-alias du='du -h'
 #e for exit 离开代理
 alias e='unset ALL_PROXY'
 
@@ -875,7 +879,15 @@ alias peco='$HOME/dot_file/peco --rcfile $HOME/.config/peco/config.json'
 # state: standard sytle
 # format里面那一堆，不能有空格
 # psp: process status 送到peco
-alias psp='ps --headers  --User "${1:-$LOGNAME}" --format=pid,start_time,cputime,stat,comm,command | peco'
+
+# alias psp='ps --headers  --User "${1:-$LOGNAME}" --format=pid,start_time,cputime,stat,comm,command | peco'
+# zsh-syntax-highlighting 把他当作unknown token
+## 因为在alias中用了`| peco` ?  但`| head` 又没这问题
+psp(){
+    ps --headers  \
+    --User "${1:-$LOGNAME}" \
+    --format=pid,start_time,cputime,stat,comm,command | peco
+}
 
 # 我自己的回答
 # https://unix.stackexchange.com/a/680293/457327
@@ -928,11 +940,18 @@ pid(){
 
 }
 
-
-
-
 # /proc写成/proc/据说不行
-alias f/='f_2(){ find / -path '/proc' -prune -o -path '/proc' -prune -o  -name "*$1*" | grep $1;}; f_2'
+# 写成函数无法补全, 哪怕没加pipe  （ | grep   ）
+# find root
+fr(){
+     find /    \
+     -path '/proc' -prune  -o  \
+     -name "*$1*" | grep $1
+    #  -name "*$1*"
+     }
+
+# 这样就可以补全：
+alias ffr='find /   -path "/proc" -prune  -o   -name '
 
 th(){ touch $1.n }
 
@@ -967,7 +986,9 @@ alias gcc='nocorrect gcc'
 alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
 # alias git='pro &&  git'
 alias globurl='noglob urlglobber '
-alias hl='f_hl(){ du -sh $1* | sort -h; }; f_hl'
+hl(){
+    du --summarize --human-readable $* | sort --human-numeric-sort --reverse| bat
+ }
 
 alias http-serve='python3 -m http.server'
 alias i='curl cip.cc'

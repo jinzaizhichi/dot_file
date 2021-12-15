@@ -82,9 +82,6 @@ curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --c
 	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 
-#Linux日期不准确，要更改 Linux 系统整个系统范围的时区可以使用如下命令：
-locale-gen zh_CN.UTF-8
-rm -f /etc/localtime &&  ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 mkdir ~/.cache
 yes |(mv ~/.tmux ~/.tmux_bk)
 yes |(mv ~/.config/ ~/.old_config ;  ln -s ~/dot_file/.config ~)
@@ -121,15 +118,31 @@ git clone https://github.com/zplug/zplug $ZPLUG_HOME
 mkdir -p ~/.config/nvim/pack/kite/start/kite
 git clone https://github.com/kiteco/vim-plugin.git ~/.config/nvim/pack/kite/start/kite/
 
+
+
+# [[中文
+# 使用中文的ubuntu会有什么坏处吗？ - 君子笑的回答 - 知乎https://www.zhihu.com/question/340272351/answer/799642709
 echo 'LANG="zh_CN.UTF-8"
 LANGUAGE="zh_CN:zh:en_US:en"'>>/etc/environment
+
 touch /var/lib/locales/supported.d/local
+
 echo 'en_US.UTF-8 UTF-8
 zh_CN.UTF-8 UTF-8
 zh_CN.GBK GBK
 zh_CN GB2312'>>/var/lib/locales/supported.d/local
+
 locale-gen
-ai fonts-droid-fallback ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-arphic-uming
+ai fonts-droid-fallback
+ai ttf-wqy-zenhei
+ai ttf-wqy-microhei
+ai fonts-arphic-ukai
+ai fonts-arphic-uming
+
+locale-gen zh_CN.UTF-8
+rm -f /etc/localtime &&  ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  #改 Linux 系统的时区
+
+# 中文]]
 
 git config --global pull.rebase true
 git config --global fetch.prune true
