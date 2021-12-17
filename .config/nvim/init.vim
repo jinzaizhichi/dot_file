@@ -330,6 +330,16 @@ Plug 'junegunn/vim-plug' " 为了能用:help plug-options
 
 Plug 'jonathanfilip/vim-lucius'
 Plug 'andymass/vim-matchup'
+Plug 'junegunn/vim-easy-align'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+
+" ga :  记作 get alignment,  本来是get ascii
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " [[==============================easymotion 配置=====================begin
 
@@ -338,8 +348,8 @@ Plug 'andymass/vim-matchup'
 
 Plug 'easymotion/vim-easymotion', VimPlugConds(!exists('g:vscode'))  " exists(): 变量存在，则返回TRUE，否则0
 Plug 'asvetliakov/vim-easymotion', VimPlugConds(exists('g:vscode'), { 'as': 'leo-jump' })  " as的名字随便起，
-                                                                                        " 下面map时，还是 nmap s <Plug>(easymotion-f2)之类的
-                                                                                        "
+                                                                                        " 下面map时，还是 nmap S <Plug>(easymotion-f2)之类的
+                                                                                        
 
 
 " 这样可能更容易理解，没那么绕: 【an empty `on` or `for` option : plugin is registered but not loaded by default depending on the condition.】
@@ -374,7 +384,7 @@ nmap f <Plug>(easymotion-f2)
 " unmap f
 
 " 会显示高亮字母后，光标到下一行
-" nmap s <Plug>(easymotion-f2) " {char}{char} 怎样可以上下文都搜索？现在只能搜下文
+" nmap S <Plug>(easymotion-f2) " {char}{char} 怎样可以上下文都搜索？现在只能搜下文
 " map  <Leader>w <Plug>(easymotion-w) " Move to word    " buftype option is set??
 " ================================easymotion 配置=====================]]
 
@@ -391,8 +401,6 @@ Plug  'Yggdroot/LeaderF'
 Plug 'sisrfeng/toggle-bool'
 
 noremap <leader>r :ToggleBool<CR>
-" nnoremap <F2> cawTrue<ESC>
-" nnoremap <F3> cawFalse<ESC>
 
 Plug 'mbbill/undotree'
 
@@ -548,7 +556,7 @@ nnoremap v} vi}
 
 
 nnoremap yp yyp
-nnoremap yw yaw
+nnoremap yw yiw
 nnoremap y' yi'
 nnoremap y" yi"
 nnoremap y( yi(
@@ -558,7 +566,7 @@ nnoremap y] yi]
 nnoremap y{ yi{
 nnoremap y} yi}
 
-nnoremap cw caw
+nnoremap cw ciw
 nnoremap c' :call DoubleAsSingleC()<CR>
 func! DoubleAsSingleC()
     " When [!] is added, error messages will also be skipped,
@@ -587,7 +595,7 @@ nnoremap c] ci]
 nnoremap c{ ci{
 nnoremap c} ci}
 
-nnoremap dw daw
+nnoremap dw diw
 nnoremap d" da"
 nnoremap d( da(
 nnoremap d) da)
@@ -1234,17 +1242,18 @@ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 " 在vscode里 只有sa生效，其他不行，不知道为啥
 
 " easy-motion的nmap用的是S
-let g:operator_sandwich_no_default_key_mappings = 1
+" let g:operator_sandwich_no_default_key_mappings = 1
+
 
 " NOTE: To prevent unintended operation
-nmap s <Nop>
-xmap s <Nop>
+" nmap s <Nop>
+" xmap s <Nop>
 " xmap creates a mapping for just Visual mode
 " vmap creates one for both Visual mode and Select mode. select mode很少用
 " <NOP>		no-opperation? do nothing (useful in mappings)
 
 " 之前不知道为什么不生效： 现在 没加这几行,也能用,应该是默认的
-" xnoremap sa <Plug>(operator-sandwich-add)
+xnoremap sa <Plug>(operator-sandwich-add)
 " xnoremap sd <Plug>(operator-sandwich-delete)
 " xnoremap sr <Plug>(operator-sandwich-replace)
 "
