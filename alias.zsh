@@ -1,6 +1,8 @@
 # The shell evaluation order (per POSIX) for the entities in your question is:
 # aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
 
+
+alias ch='curl  cheat.sh/'
 alias nvtop='/home/wf/nvtop_wf_built/usr/local/bin/nvtop'
 
 aps(){
