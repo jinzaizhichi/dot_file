@@ -590,9 +590,12 @@ nnoremap y] yi]
 nnoremap y{ yi{
 nnoremap y} yi}
 
+
 nnoremap cw ciw
-nnoremap c' :call DoubleAsSingleC()<CR>
-func! DoubleAsSingleC()
+
+
+
+func! DoubleAsSingle()
     " When [!] is added, error messages will also be skipped,
     " and commands and mappings will not be aborted
     " when an error is detected.  |v:errmsg| is still set.
@@ -601,14 +604,17 @@ func! DoubleAsSingleC()
     if (v:errmsg == "")
         echo "双变单"
     endif
-
-    exec "normal ci'"
 endfunc
 
-nnoremap y' :s#\"\([^"]*\)\"#'\1'#g<CR>yi'
-nnoremap v' :s#\"\([^"]*\)\"#'\1'#g<CR>vi'
-" nnoremap d' da'
-nnoremap d' :s#\"\([^"]*\)\"#'\1'#g<CR>da'
+nnoremap c' :call DoubleAsSingle()<CR>ci'
+nnoremap v' :call DoubleAsSingle()<CR>vi'
+nnoremap y' :call DoubleAsSingle()<CR>yi'
+nnoremap d' :call DoubleAsSingle()<CR>da'
+" nnoremap c' :s#\"\([^"]*\)\"#'\1'#g<CR>ci'
+" nnoremap d' :s#\"\([^"]*\)\"#'\1'#g<CR>da'
+" nnoremap v' :s#\"\([^"]*\)\"#'\1'#g<CR>vi'
+" nnoremap y' :s#\"\([^"]*\)\"#'\1'#g<CR>ya'
+
 
 
 nnoremap c" ci"
