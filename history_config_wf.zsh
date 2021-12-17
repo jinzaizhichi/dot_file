@@ -41,7 +41,7 @@ setopt HIST_FIND_NO_DUPS         # When searching for history entries in the lin
 # setopt histignorespace           # skip cmds w/ leading space from history
 
 # 导致多行输入变单行，加\n  ？
-# setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 

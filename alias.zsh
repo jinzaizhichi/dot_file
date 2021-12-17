@@ -1,8 +1,16 @@
 # The shell evaluation order (per POSIX) for the entities in your question is:
 # aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
 
+#  never use normal sudo to start graphical applications as root
+# 否则普通用户可能无法登陆（文件变成root的了）
 
-alias ch='curl  cheat.sh/'
+# alias ch=
+alias ch='~/dot_file/cht.sh --shell'
+# cheat website
+chw(){
+    curl  "cheat.sh/$1"
+    }
+
 alias nvtop='/home/wf/nvtop_wf_built/usr/local/bin/nvtop'
 
 aps(){
