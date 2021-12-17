@@ -48,6 +48,8 @@ export TF_CPP_MIN_LOG_LEVEL=2
 
 
 # >>>---------------------------------------------------------------------语言等locale
+# https://wiki.ubuntu.org.cn/Locale
+
 # 待阅: https://www.linux.com/news/controlling-your-locale-environment-variables/
 # 如果因为locales无法安装，locale-gens啥的失败，报LC等错误，删掉这行：
 # LC应该是locale的意思
@@ -69,12 +71,13 @@ export LANGUAGE=en_US.UTF-8:zh_CN.UTF-8:en:zh  #  used only by GNU gettext, the 
 # for many programs. Unlike the others, this variable can be `assigned multiple locales` separated by colons.
 # The locales are tried `in order`` until a message catalog is found.
 
-export LANG=zh_CN.UTF-8   # 类似LC_ALL，对各种LC_类型起作用，但会被覆盖
+export LANG=zh_CN.UTF-8   # 类似LC_ALL，对各种LC_类型起作用，但会被覆盖  (默认设置)
 
 export LC_MESSAGES=en_US.UTF-8 #  determines the language and encoding of messages
 # as well as of labels in GUI components,  if they use GNU `gettext` or one of its relatives to obtain translations
 
-export LC_CTYPE=en_US.UTF-8 #  defines character classes, a named sets of characters
+# 要支持输入中文，就设这个：
+export LC_CTYPE=zh_CN.UTF-8 #  defines character classes, a named sets of characters
 export LC_COLLATE=en_US.UTF-8 # in ASCII order: A B C … a b c…  有些loal是A a B b排的
 export LC_NUMERIC=en_US.UTF-8
 

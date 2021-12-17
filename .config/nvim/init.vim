@@ -50,6 +50,12 @@ cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'tab help' : '
 "     @	indicates a buffer-local mapping
 
 
+" todo
+" shif left
+" map <S-Left>
+" map <S-Right>
+" map <C-Left>
+" map <C-Right>
 
 "  "+   Use the + register (clipboard) :
 "   gP : paste before the current position, placing the cursor after the new text.
