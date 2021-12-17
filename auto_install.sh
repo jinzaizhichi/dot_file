@@ -62,16 +62,45 @@ ln -s /usr/bin/batcat /usr/local/bin/bat
 
 yes | (ai aptitude ;aptitude update -q ; ai zsh; ai progress; ai libevent-dev)
 yes | (ai htop ;ai ack ;ai axel; ai intltool; ai tmux ; ai fontconfig; ai xdg-utils)
-yes | (ai exiftool htop tree tzdata locales language-pack-zh-hans language-pack-zh-hans-base)
+yes | (ai exiftool htop tree tzdata locales)
 yes | (ai ctags; ai build-essential; ai cmake; ai python-dev)
 yes | (ai curl  ffmpeg libsm6 libxext6)
 yes | (ai python3-setuptools ;  ai xsel)
-# under ubuntu16 try this:
-yes | (ai language-pack-zh-hans language-pack-zh-hans-base ; ai wget ; ai tldr)
-yes | (ai rename)
+yes | (ai rename wget  tldr)
+
 # yes | (mutt msmtp)
 # touch ~/.msmtp.log
 
+
+# under ubuntu16 try this:
+yes | (ai language-pack-zh-hans language-pack-zh-hans-base)
+
+# [[中文
+
+# 使用中文的ubuntu会有什么坏处吗？ - 君子笑的回答 - 知乎https://www.zhihu.com/question/340272351/answer/799642709
+
+# echo 'LANG="zh_CN.UTF-8"
+# LANGUAGE="zh_CN:zh:en_US:en"'>>/etc/environment
+#
+# touch /var/lib/locales/supported.d/local
+#
+# echo 'en_US.UTF-8 UTF-8
+# zh_CN.UTF-8 UTF-8
+# zh_CN.GBK GBK
+# zh_CN GB2312'>>/var/lib/locales/supported.d/local
+
+locale-gen
+
+ai fonts-droid-fallback
+ai ttf-wqy-zenhei
+ai ttf-wqy-microhei
+ai fonts-arphic-ukai
+ai fonts-arphic-uming
+
+locale-gen zh_CN.UTF-8
+rm -f /etc/localtime &&  ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  #改 Linux 系统的时区
+
+# 中文]]
 
 
 rm -rf ~/.SpaceVim.d ~/.Spacevim
@@ -120,29 +149,6 @@ git clone https://github.com/kiteco/vim-plugin.git ~/.config/nvim/pack/kite/star
 
 
 
-# [[中文
-# 使用中文的ubuntu会有什么坏处吗？ - 君子笑的回答 - 知乎https://www.zhihu.com/question/340272351/answer/799642709
-echo 'LANG="zh_CN.UTF-8"
-LANGUAGE="zh_CN:zh:en_US:en"'>>/etc/environment
-
-touch /var/lib/locales/supported.d/local
-
-echo 'en_US.UTF-8 UTF-8
-zh_CN.UTF-8 UTF-8
-zh_CN.GBK GBK
-zh_CN GB2312'>>/var/lib/locales/supported.d/local
-
-locale-gen
-ai fonts-droid-fallback
-ai ttf-wqy-zenhei
-ai ttf-wqy-microhei
-ai fonts-arphic-ukai
-ai fonts-arphic-uming
-
-locale-gen zh_CN.UTF-8
-rm -f /etc/localtime &&  ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  #改 Linux 系统的时区
-
-# 中文]]
 
 git config --global pull.rebase true
 git config --global fetch.prune true
