@@ -150,8 +150,8 @@ if exists('g:vscode')
     nmap k gk
 
     " 还是跳到物理行的 非空白开头
-    " nmap H g^
-    nmap H g$<ESC>wk
+    nmap H g0
+    " nmap H g$<ESC>wk
     nmap 0 g0
     nmap L g$
 
