@@ -142,6 +142,13 @@ if exists('g:vscode')
     "set wrap 后，同物理行上线直接跳。
     nmap j gj
     nmap k gk
+
+    " 还是跳到物理行的 非空白开头
+    " nmap H g^
+    nmap H g$<ESC>wk
+    nmap 0 g0
+    nmap L g$
+
     " vscode里，这样搞只退出插件，文件还打开着
     " noremap qq :q!<CR>
     " vscode-neovim 有map ZQ <Cmd>Quit!<CR>  但这么map还是不行
@@ -155,11 +162,22 @@ else
     nnoremap j gj
     nnoremap k gk
 
+    nnoremap H g^
+    " nnoremap H g0
+    nnoremap 0 g0
+    nnoremap <Home> g0
+    nnoremap L g$
+    nnoremap <End> g$
+
+
     nnoremap <c-\> <c-w>v
     nnoremap <c-w>-  <c-w>s
 endif
 
 
+nnoremap gm g^
+nnoremap gm g$
+" nnoremap M
 
 
 func! TabToSpace()
@@ -622,10 +640,6 @@ nnoremap < <<
 nnoremap > >>
 vnoremap < <gv
 
-
-
-noremap H ^
-noremap L $
 
 noremap K r<CR><UP>
 nnoremap J Ji <Esc>
