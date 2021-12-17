@@ -373,7 +373,7 @@ nmap ga <Plug>(EasyAlign)
 Plug 'easymotion/vim-easymotion', VimPlugConds(!exists('g:vscode'))  " exists(): 变量存在，则返回TRUE，否则0
 Plug 'asvetliakov/vim-easymotion', VimPlugConds(exists('g:vscode'), { 'as': 'leo-jump' })  " as的名字随便起，
                                                                                         " 下面map时，还是 nmap S <Plug>(easymotion-f2)之类的
-                                                                                        
+
 
 
 " 这样可能更容易理解，没那么绕: 【an empty `on` or `for` option : plugin is registered but not loaded by default depending on the condition.】
