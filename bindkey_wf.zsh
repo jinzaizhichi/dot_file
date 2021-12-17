@@ -5,6 +5,8 @@ typeset -g -A key
 # -g do not restrict parameter to local scope
 # -A specify that arguments refer to associative arrays
 
+bindkey -s '\eh' 'cd ~ \n'
+bindkey -s '\ed' 'do \n'
 
 # todo
 # ^D在当前行 有字符时, 相当于Del
