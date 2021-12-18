@@ -82,9 +82,14 @@ yes | (ai language-pack-zh-hans language-pack-zh-hans-base)
 
 ln -sf ~/dot_file/zshenv ~/.zshenv 
 ln -sf ~/dot_file/zprofile ~/.zprofile
+
+# 在.zshrc里export LANGUAGE就行，
+# 不用：
 # echo 'LANG="zh_CN.UTF-8"
+# LANGUAGE="zh_CN:zh:en_US:en"'>> ~/.zshrc
 # LANGUAGE="zh_CN:zh:en_US:en"'>> ~/.zshenv
-# /etc/environment
+# LANGUAGE="zh_CN:zh:en_US:en"'>> ~/.zshenv
+# LANGUAGE="zh_CN:zh:en_US:en"'>> /etc/environment
 
 # touch /var/lib/locales/supported.d/local
 #
