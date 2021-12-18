@@ -8,7 +8,7 @@
 alias ch='~/dot_file/cht.sh --shell'
 # cheat website
 chw(){
-    curl  "cheat.sh/$1"
+    curl  "cheat.sh/$1" | bat
     }
 
 alias nvtop='/home/wf/nvtop_wf_built/usr/local/bin/nvtop'
