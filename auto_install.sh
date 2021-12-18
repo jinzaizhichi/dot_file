@@ -79,9 +79,13 @@ yes | (ai language-pack-zh-hans language-pack-zh-hans-base)
 
 # 使用中文的ubuntu会有什么坏处吗？ - 君子笑的回答 - 知乎https://www.zhihu.com/question/340272351/answer/799642709
 
+
+ln -sf ~/dot_file/zshenv ~/.zshenv 
+ln -sf ~/dot_file/zprofile ~/.zprofile
 # echo 'LANG="zh_CN.UTF-8"
-# LANGUAGE="zh_CN:zh:en_US:en"'>>/etc/environment
-#
+# LANGUAGE="zh_CN:zh:en_US:en"'>> ~/.zshenv
+# /etc/environment
+
 # touch /var/lib/locales/supported.d/local
 #
 # echo 'en_US.UTF-8 UTF-8
