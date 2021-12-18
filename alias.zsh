@@ -648,8 +648,8 @@ alias oc='_oc(){ g++ -g $* -o ${1%.*} `pkg-config --cflags --libs opencv` ; ./${
 # ./demo
 
 alias nvim='~/dot_file/nvim-linux64/bin/nvim'
-alias vi='~/dot_file/nvim-linux64/bin/nvim'
-alias vim='~/dot_file/nvim-linux64/bin/nvim'  # 不用加-u 指定 因为默认就在~/.config/下
+alias vim='~/dot_file/nvim-linux64/bin/nvim'
+alias vi='~/dot_file/nvim-linux64/bin/nvim'   # 不用加-u 指定 因为默认就在~/.config/下
 # alias vim='~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim'
 
 alias vsc='code'

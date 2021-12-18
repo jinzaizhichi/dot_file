@@ -1,6 +1,9 @@
 " behave mswin
 let g:selecmode="mouse"
 
+set linebreak
+set list
+
 " 让配置变更立即生效
 if has('autocmd') " ignore this section if your vim does not support autocommands
     " 1. Select the group with ":augroup {name}".
@@ -146,14 +149,14 @@ endif
 
 if exists('g:vscode')
     "set wrap 后，同物理行上线直接跳。
-    nmap j gj
-    nmap k gk
+    map j gj
+    map k gk
 
     " 还是跳到物理行的 非空白开头
-    nmap H g0
+    map H g0
     " nmap H g$<ESC>wk
-    nmap 0 g0
-    nmap L g$
+    map 0 g0
+    map L g$
 
     " vscode里，这样搞只退出插件，文件还打开着
     " noremap qq :q!<CR>
@@ -165,15 +168,16 @@ else
     " nnoremap q :wq<CR>  按一次q要等一会才退出， 不如连续按2次快
     " inoremap qq <ESC>:wq<CR>  别这么干，容易在编辑时敲错
 
-    nnoremap j gj
-    nnoremap k gk
+    noremap j gj
+    noremap k gk
 
-    nnoremap H g^
+    " map vs map! : map控制“字母不是用于输入”的几个mode，map！控制“字母 是用于输入的字符串的”mode
+    noremap H g^
     " nnoremap H g0
-    nnoremap 0 g0
-    nnoremap <Home> g0
-    nnoremap L g$
-    nnoremap <End> g$
+    noremap 0 g0
+    noremap <Home> g0
+    noremap L g$
+    noremap <End> g$
 
 
     nnoremap <c-\> <c-w>v
@@ -357,6 +361,7 @@ Plug 'andymass/vim-matchup'
 Plug 'junegunn/vim-easy-align'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Plug 'FredKSchott/CoVim' VimPlugConds(!exists('g:vscode'))  " exists(): 变量存在，则返回TRUE，否则0 " 同时编辑一个文件。避免多处打开同一个文件
 
 " ga :  记作 get alignment,  本来是get ascii
 " Start interactive EasyAlign in visual mode (e.g. vipga)
