@@ -361,7 +361,8 @@ Plug 'andymass/vim-matchup'
 Plug 'junegunn/vim-easy-align'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Plug 'FredKSchott/CoVim' VimPlugConds(!exists('g:vscode'))  " exists(): 变量存在，则返回TRUE，否则0 " 同时编辑一个文件。避免多处打开同一个文件
+" 允许多人同时编辑一个文件。避免多处打开同一个文件
+Plug 'FredKSchott/CoVim', VimPlugConds(!exists('g:vscode'))
 
 " ga :  记作 get alignment,  本来是get ascii
 " Start interactive EasyAlign in visual mode (e.g. vipga)
