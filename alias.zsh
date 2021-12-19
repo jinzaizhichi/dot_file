@@ -953,15 +953,15 @@ pid(){
 
 }
 
-
+# 为啥还是会搜~/.t底下？
 f(){
-
-    find . \
-    -path '/d/docker' -prune -o  \
-    -path '~/.t' -prune -o       \
-    -path './.t' -prune -o       \
-    -path '~/d/.t' -prune -o       \
-    -path '/proc' -prune -o      \
+    find  \
+    -path /d/docker -prune -o  \
+    -path ~/d/docker -prune -o  \
+    -path ~/.t -prune -o       \
+    -path ./.t -prune -o       \
+    -path ~/d/.t -prune -o       \
+    -path /proc -prune -o      \
     -name "*$1*" 
 }
 
