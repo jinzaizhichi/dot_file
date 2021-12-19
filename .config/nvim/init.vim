@@ -4,6 +4,9 @@ let g:selecmode="mouse"
 set linebreak
 set list
 
+set listchars=
+
+
 " 让配置变更立即生效
 if has('autocmd') " ignore this section if your vim does not support autocommands
     " 1. Select the group with ":augroup {name}".
@@ -374,10 +377,27 @@ vmap <silent> <Leader>h <Plug>TranslateWV
 Plug 'jonathanfilip/vim-lucius'
 Plug 'andymass/vim-matchup'
 Plug 'junegunn/vim-easy-align'
+
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+
+" 装了没啥变化，neovim本身就可以实现：多个窗口编辑同一个文件时，只要一个窗口保存了，
+" 跳到另一个窗口，会看到变化
+    " Plug 'gioele/vim-autoswap'
+    " set title
+    " " the default titlestring will work just fine
+    " set titlestring=
+    " let g:autoswap_detect_tmux = 1
+
+
+
+" 要编译python+，难搞 放弃
 " 允许多人同时编辑一个文件。避免多处打开同一个文件
 " Plug 'FredKSchott/CoVim', VimPlugConds(!exists('g:vscode'))
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 " ga :  记作 get alignment,  本来是get ascii
 " Start interactive EasyAlign in visual mode (e.g. vipga)
