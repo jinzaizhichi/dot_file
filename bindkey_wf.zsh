@@ -266,12 +266,7 @@ function peco-find-file() {
 
     # BUFFER (scalar):   The entire contents of the edit buffer.
     # https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html#index-BUFFER
-    BUFFER=$(find . \
-    -path '/d/docker' -prune -o  \
-    -path '~/.t' -prune -o       \
-    -path '~/d/.t' -prune -o       \
-    -path '/proc' -prune -o      \
-    -name "*$1*"  | peco --query "$BUFFER" )
+    BUFFER=$(find . -path '/d/docker' -prune -o  -path '~/.t' -prune -o  -path '~/d/.t' -prune -o -path '/proc' -prune -o  -name "*$1*"  | peco --query "$BUFFER" )
     # 别用系统的根目录下的peco，太老，用dot_file下的
     CURSOR=$#BUFFER
 

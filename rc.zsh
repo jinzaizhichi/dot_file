@@ -302,3 +302,21 @@ compctl -K _pip_completion pip3
 
 # pip zsh completion end
 
+
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Setup fzf
+# ---------
+if [[ ! "$PATH" == */home/wf/.fzf/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}/home/wf/.fzf/bin"
+fi
+
+# Auto-completion  # 不灵，因为没严格按照教程按照？
+# ---------------
+# zsh --interative ？
+[[ $- == *i* ]] && source "/home/wf/.fzf/shell/completion.zsh" 2> /dev/null
+
+# Key bindings
+# ------------
+# source "/home/wf/.fzf/shell/key-bindings.zsh"
+

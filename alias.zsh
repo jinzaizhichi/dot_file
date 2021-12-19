@@ -3,6 +3,9 @@
 
 #  never use normal sudo to start graphical applications as root
 # 否则普通用户可能无法登陆（文件变成root的了）
+#
+
+# alias fzf='~/dot_file/fuzzy_finder__fzf/bin/fzf --height 40% --layout=reverse --border'
 
 # alias ch=
 alias ch='~/dot_file/cht.sh --shell'
@@ -950,6 +953,18 @@ pid(){
 
 }
 
+
+f(){
+
+    find . \
+    -path '/d/docker' -prune -o  \
+    -path '~/.t' -prune -o       \
+    -path './.t' -prune -o       \
+    -path '~/d/.t' -prune -o       \
+    -path '/proc' -prune -o      \
+    -name "*$1*" 
+}
+
 # /proc写成/proc/据说不行
 # 写成函数无法补全, 哪怕没加pipe  （ | grep   ）
 # find root
@@ -959,6 +974,7 @@ fr(){
      -name "*$1*" | grep $1
     #  -name "*$1*"
      }
+
 
 # 这样就可以补全：
 alias ffr='find /   -path "/proc" -prune  -o   -name '
