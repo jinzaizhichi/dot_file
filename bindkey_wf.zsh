@@ -8,6 +8,7 @@ typeset -g -A key
 bindkey -s '\eh' 'cd ~ \n'
 bindkey -s '\ed' 'do \n'
 bindkey -s '\et' '~/.t \n'
+bindkey -s '\e3' '~/3 \n'
 
 # todo
 # ^D在当前行 有字符时, 相当于Del
