@@ -394,10 +394,6 @@ Plug 'junegunn/vim-easy-align'
 " 要编译python+，难搞 放弃
 " 允许多人同时编辑一个文件。避免多处打开同一个文件
 " Plug 'FredKSchott/CoVim', VimPlugConds(!exists('g:vscode'))
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 " ga :  记作 get alignment,  本来是get ascii
 " Start interactive EasyAlign in visual mode (e.g. vipga)
