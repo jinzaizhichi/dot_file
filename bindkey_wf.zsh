@@ -1,5 +1,7 @@
 # bindkey "^C" self-insert  # 原样输入
 
+# 按2下ctrl，相当于敲了ctrl c，因为有道翻译取词翻译时，应该要悄悄复制
+
 # 声明key这个变量是not local的,且是arrays
 typeset -g -A key
 # -g do not restrict parameter to local scope

@@ -60,19 +60,23 @@ cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'tab help' : '
 " map <C-Left>
 " map <C-Right>
 
-"  "+   Use the + register (clipboard) :
-"   gP : paste before the current position, placing the cursor after the new text.
-inoremap <C-V> "+gP
+"  Use 系统粘贴板: "+
+" inoremap <C-V> "+p
 set clipboard+=unnamedplus
 
 " 啥玩意?
 " nnoremap <C-V> p|  " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
 
 
-nnoremap <Right> *
-nnoremap <Left> #
-" 和ctrl O 一样:
+noremap <Right> *
+noremap <Left> #
+" CTRL-O                Go to [count] Older cursor position in jump list
+                        " (not a motion command).
+" 在vusial mode下好像没功能
 noremap <Up> <C-O>
+" CTRL-I <Tab>          Go to [count] newer cursor position in jump list
+                        " (not a motion command)
+" 在vusial mode下好像没功能
 noremap <Down> <C-I>
 
 " block模式
@@ -356,13 +360,24 @@ endfunction
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug' " 为了能用:help plug-options
 
+
+Plug 'voldikss/vim-translator'
+" <Leader>t 翻译光标下的文本，在命令行回显
+nmap <silent> <Leader>t <Plug>Translate
+vmap <silent> <Leader>t <Plug>TranslateV
+
+" <Leader>h 翻译光标下的文本，在窗口中显示   h：here
+nmap <silent> <Leader>h <Plug>TranslateW
+vmap <silent> <Leader>h <Plug>TranslateWV
+
+
 Plug 'jonathanfilip/vim-lucius'
 Plug 'andymass/vim-matchup'
 Plug 'junegunn/vim-easy-align'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " 允许多人同时编辑一个文件。避免多处打开同一个文件
-Plug 'FredKSchott/CoVim', VimPlugConds(!exists('g:vscode'))
+" Plug 'FredKSchott/CoVim', VimPlugConds(!exists('g:vscode'))
 
 " ga :  记作 get alignment,  本来是get ascii
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -555,10 +570,10 @@ nnoremap <M-/> yy:call nerdcommenter#Comment('n', 'toggle')<CR>p
 " ---------------------------nerdcommenter-config----------------------------------end]]
 
 
-" todo: vscode中会复制到 前后空格
-nnoremap vp vawp
+" todo: vscode中会复制到 前后空格  " a变成i估计就行了
+nnoremap vp viwp
 " 类似于Y D C等，到行末
-nnoremap P v$p
+nnoremap P v$<left>p
 
 
 " todo: `omap`代替下面的有点重复的各种operator的map
@@ -978,12 +993,6 @@ set enc=utf8
 set fencs=utf8,gbk,gb2312,gb18030
 
 
-" <Leader>t 翻译光标下的文本，在命令行回显
-" nmap <silent> <Leader>t <Plug>Translate
-" vmap <silent> <Leader>t <Plug>TranslateV
-" Leader>w 翻译光标下的文本，在窗口中显示
-" nmap <silent> <Leader>w <Plug>TranslateW
-" vmap <silent> <Leader>w <Plug>TranslateWV
 
 
 
