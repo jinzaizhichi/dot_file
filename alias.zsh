@@ -540,8 +540,7 @@ t() {
 
 
 # gpustat and grep wf
-
-alias g='gpustat  --show-user --no-header  | cut -d',' -f2 | bat --number --language=py3'
+alias g='echo "gpu序号记得减1";  gpustat  --show-user --no-header  | cut --delimiter="," -f2 | bat  --number --language=py3 '
 alias gw='g --your-name wf '
 alias gwf='g --your-name wf '
 
@@ -962,7 +961,7 @@ f(){
     -path ./.t -prune -o       \
     -path ~/d/.t -prune -o       \
     -path /proc -prune -o      \
-    -name "*$1*" 
+    -name "*$1*"
 }
 
 # /proc写成/proc/据说不行
