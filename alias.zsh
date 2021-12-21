@@ -575,30 +575,6 @@ alias ci='conda install -y'
 
 alias snp='~/dot_file/wf_snippet.py'
 
-#alias gitpush='git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
-
-sy(){
-    chpwd_functions=()
-    cd ~/dot_file
-    echo "\n---------stash------------"
-    git stash
-    echo "\n---------pull------------"
-    git pull  # Update the branch to the latest code .   = fetch + merge? 还是只fetch?
-    echo "\n-----合并 your local changes into the pulled code------------"
-    git stash apply  # Merge your local changes into the latest code:
-    echo "\n---------add commit push三连---------"
-    git add --verbose .
-    # if [[ "$1" == "" ]] 容易chubug？一般都不这么写
-    if [[ "$1" != "" ]]
-    then
-        git commit -m "$1"
-    else
-        git commit -m "又改了"
-    fi
-    git push
-    cd -
-    zsh
-}
 
 # Sometimes it is convenient to create separate tmux servers,
 # perhaps to ensure an important process is completely isolated or to test a tmux configuration.
@@ -780,8 +756,31 @@ alias al='code ~/dot_file/alias.zsh; zsh'
 alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
 
 
-#同步
-alias y='cd ~/dot_file ; git pull ; git add . ; git commit -m "wf" ; git push ; cd - ; zsh'
+#y: yyds，我的配置yyds
+alias y=sy
+
+sy(){
+    chpwd_functions=()
+    cd ~/dot_file
+    echo "\n---------stash------------"
+    git stash
+    echo "\n---------pull------------"
+    git pull  # Update the branch to the latest code .   = fetch + merge? 还是只fetch?
+    echo "\n-----合并 your local changes into the pulled code------------"
+    git stash apply  # Merge your local changes into the latest code:
+    echo "\n---------add commit push三连---------"
+    git add --verbose .
+    # if [[ "$1" == "" ]] 容易chubug？一般都不这么写
+    if [[ "$1" != "" ]]
+    then
+        git commit -m "$1"
+    else
+        git commit -m "又改了"
+    fi
+    git push
+    cd -
+    zsh
+}
 
 
 # todo  # alt left 搞成和windows一样的体验
