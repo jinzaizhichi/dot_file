@@ -770,40 +770,12 @@ alias do='cd ~/dot_file/'
 # tmux config
 alias tc='code ~/dot_file/tmux_tools_wf/tmux.conf'
 alias s='code ~/dot_file/rc.zsh ; zsh'
-va(){
-    cd ~/dot_file
-    git pull
-    code ~/dot_file/auto_install.sh
-    git add .
-    git commit -m "wf"
-    git push
-    cd -
-}
 
 # az: 安装an zhuang
 alias az='code ~/dot_file/auto_install.sh'
-
-vb(){
-    cd ~/dot_file
-    git pull
-    code ~/dot_file/alias.zsh
-    git add .
-    git commit -m "wf"
-    git push
-    cd -;zsh
-}
 # al: alias
 alias al='code ~/dot_file/alias.zsh; zsh'
 
-sycn_init(){
-    cd ~/dot_file
-    git pull
-    code ~/dot_file/.config/nvim/init.vim
-    git add .
-    git commit -m "wf"
-    git push
-    cd -;zsh
-}
 # i for init.vim
 alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
 
