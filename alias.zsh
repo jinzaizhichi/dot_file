@@ -766,7 +766,7 @@ sy(){
     git stash
     echo "\n-----------------2. pull-----------------"
     git pull  # Update the branch to the latest code .   = fetch + merge? 还是只fetch?
-    echo "\n----------------------3. 合并 local changes into the pulled code----------"
+    echo "\n---------------------3. 合并 local changes into the pulled code----------"
     git stash apply  # Merge your local changes into the latest code:
     echo " "
     echo "\n--------------------------------4. add commit push三连-----------------------------------------------"
