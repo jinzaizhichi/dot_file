@@ -159,11 +159,24 @@ if exists('g:vscode')
     map j gj
     map k gk
 
-    " 还是跳到物理行的 非空白开头
+    " 还是跳到物理行的 空白开头 ? 现在是跳到非空白开头了，是vscode的设置起效了？
     map H g0
     " nmap H g$<ESC>wk
     map 0 g0
     map L g$
+
+    omap <silent> j gj
+    omap <silent> k gk
+    " 不好：
+        " nmap dd g^dg$i<BS><Esc>
+        " nmap yy g^yg$
+        " nmap cc g^cg$
+    " 不行：
+        " nmap A g$a
+        " nmap I g^i
+
+    " nmap gm g$
+    " nnoremap M
 
     " vscode里，这样搞只退出插件，文件还打开着
     " noremap qq :q!<CR>
@@ -186,15 +199,21 @@ else
     noremap L g$
     noremap <End> g$
 
+    onoremap <silent> j gj
+    onoremap <silent> k gk
+    " nnoremap dd g^dg$i<BS><Esc>
+    " nnoremap yy g^yg$
+    " nnoremap cc g^cg$
+    nnoremap A g$a
+    nnoremap I g^i
+
+    nnoremap gm g$
+    " nnoremap M
 
     nnoremap <c-\> <c-w>v
     nnoremap <c-w>-  <c-w>s
 endif
 
-
-nnoremap gm g^
-nnoremap gm g$
-" nnoremap M
 
 
 func! TabToSpace()
@@ -223,17 +242,20 @@ if exists('g:vscode')
 else
     " echo '没在用 vscode-neovim, 纯 nvim'
 
-    " nnoremap <F8> :call HideNumber()<CR>  " 记忆：  8 : byebye number
-    nnoremap <F8> :echo 'wfwfwf'
+    set  number relativenumber
+    nnoremap <F2> :call HideNumber()<CR> 
     function! HideNumber()
         if(&relativenumber == &number)
-            set relativenumber! number!
+            " 叹号或者加inv：表示toggle
+            set invrelativenumber invnumber
         elseif(&number)
-            set number!
+            set invnumber
         else
             set relativenumber!
         endif
-        set number?
+
+        " :se[t] {option}?	Show value of {option}.
+        " set number?
     endfunc
 
     set wrap    " vscode里, 要在setting.json设置warp
