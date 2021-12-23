@@ -28,7 +28,6 @@ export PTPYTHON_CONFIG_HOME=$HOME/dot_file/.config/ptpython
 export PTIPYTHON_CONFIG_HOME=$HOME/dot_file/.config/ptpython # ptipython
 export PYTHONSTARTUP=$HOME/dot_file/leo_python_startup.py
 
-# export PAGER=less
 # export PAGER='bat --theme="Solarized\ \(light\)"'  # 加了双引号反而不行
 export PAGER='bat --theme="Coldark-Cold"' # 导致下面的v无效，“can not 修改stdin啥的”
 
@@ -225,6 +224,23 @@ zplug load     # source plugins and add commands to $PATH
 
 
 # 放在插件管理后面，避免被别人的配置覆盖
+
+# 不能用\换行
+export LESS='--ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=2'
+    # Man-db passes extra options to the pager via the `LESS` environment variable,
+    # which Less interprets in the same way as command line options.
+    # The setting is hard-coded at compile time and starts with -i.
+    # (The value is "-ix8RmPm%s$PM%s$" as of Man-db 2.6.2; the P…$ part is the prompt string.)
+    # 这又是啥？
+    # export LESS='-Dd+r$Du+b'
+
+    # 其中的 "--RAW-CONTROL-CHARS":   Get color support for 'less'
+    # --no-init: This is sometimes  desirable if the deinitialization string does something unnecessary, like clearing the screen
+    # --HILITE-UNREAD:  highlight first unread line after forward movement
+
+    # https://www.topbug.net/blog/2016/09/27/make-gnu-less-more-powerful/
+source $HOME/dot_file/color_less_wf.zsh
+
 source $HOME/dot_file/color_highlight_style_wf.zsh
 source $HOME/dot_file/completion_color_config_敲tab补全.zsh  #  不只是颜色, 但为了想改颜色时容易找，这么命名。
 source $HOME/dot_file/color_ls_wf.zsh

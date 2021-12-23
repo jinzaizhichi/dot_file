@@ -8,6 +8,9 @@
 # alias fzf='~/dot_file/fuzzy_finder__fzf/bin/fzf --height 40% --layout=reverse --border'
 
 # alias ch=
+#
+
+alias cfg='~/dot_file/.config/'
 alias ch='~/dot_file/cht.sh --shell'
 # cheat website
 chw(){
@@ -240,6 +243,28 @@ alias tvsc='t'
 # 作为alias 可以同名
 alias rg='\rg --pretty --hidden --smart-case'
 
+alias w=bat
+
+# 用了这个不能自动补全
+# 还是有点问题：
+# copy file content
+cfc(){
+if [[ $DISPLAY != '' ]];then     # -z: 看是否empty
+# Localhost: server that is used on your own computer
+   cat $* | xsel --input --clipboard
+else
+    echo "没有开x11吧"
+fi
+}
+
+
+alias ca='cat'
+alias ba='bat'
+# /home/wf/dot_file/color_less_wf.zsh 里，export LESS='--quit-if-one-screen 一大串.....'
+alias le="less  --quit-if-one-screen"
+# alias le="less  "
+
+
 # todo 结合peco
 # 沿用ag的a
 #  a 强行记忆法：at the snippet
@@ -249,33 +274,19 @@ a(){
          --before-context 1 \
          --after-context 2  \
          --smart-case "$*" |  less --pattern="$*"
+                            # alias le="less  --quit-if-one-screen"
 }
 a4(){
     # read TMP
     # TMP2 ="`print -r ${(q)TMP}`"
     # \rg --pretty --hidden TMP2 | bat # 沿用ag的a
-     \rg --pretty --hidden  --before-context 4 --after-context 4  --smart-case "$*"  | bat # 沿用ag的a
+     \rg --pretty \
+         --hidden \
+         --before-context 4 \
+         --after-context 4  \
+         --smart-case "$*" |  less --pattern="$*"
+                            # alias le="less  --quit-if-one-screen"
 }
-# a(){
-#     echo "要转义：# , . - 等"
-#     # echo "这里指定的类型不搜: ~/dot_file/AgIgnore
-#     echo "========="
-#     echo " "
-#     nocorrect ag \
-#     --before=2  \
-#     --after=2  \
-#     --color-line-number=47 \
-#     --color-path=1 \
-#     --stats \
-#     --hidden \
-#     --all-text \
-#     --max-count 3  \
-#     --path-to-ignore ~/dot_file/AgIgnore \
-#     --silent   \
-#     "$*"
-#     # $*表示所有参数, *不表示 常见的shell字符通配
-#     # "$*" | bat  # # 不能保留颜色高亮
-# }
 
 alias ac='_ack(){ ack "$*";};_ack'
 
@@ -678,24 +689,6 @@ alias scp='scp -r'
 # p
 # x
 
-alias w=bat
-
-# 用了这个不能自动补全
-# Localhost: server that is used on your own computer
-# w(){
-# if [[ -z $DISPLAY ]];then     # -z: 看是否empty
-#    bat $1
-#    cat $1 | xsel -ib
-
-#fi
-# }
-
-# 没有x11时, 不启用复制功能
-
-alias wv='w'
-alias ca=cat
-alias ba='bat'
-alias le="less --HILITE-UNREAD --lesskey-file=$HOME/dot_file/.lesskey"
 
 
 alias vpv='vim'
@@ -1086,7 +1079,7 @@ alias -s yml=vim
 
 cj(){
     # cj: 意思是 see json
-    jq -C "" $1 |less -R  # jq: json query？
+    jq -C "" $1 |le -R  # jq: json query？
 }
 alias -s json=cj
 
