@@ -7,14 +7,15 @@
 
 # alias fzf='~/dot_file/fuzzy_finder__fzf/bin/fzf --height 40% --layout=reverse --border'
 
-# alias ch=
-#
 
 alias cfg='~/dot_file/.config/'
+
+CHTSH_CONF='~/dot_file/cht.sh.conf'
+
 alias ch='~/dot_file/cht.sh --shell'
 # cheat website
 chw(){
-    curl  "cheat.sh/$1" | bat
+    curl --silent "cheat.sh/$1" | bat
     }
 
 alias nvtop='/home/wf/nvtop_wf_built/usr/local/bin/nvtop'
