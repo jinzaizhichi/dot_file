@@ -1,6 +1,6 @@
 {
-   "Prompt": "保持微笑>",
-    "InitialFilter": "Regexp",
+   "Prompt": "^*_*^  >",
+    "InitialFilter": "SmartCase",
     "MaxScanBufferSize": 256,
     "Style": {
         "Basic": ["on_default", "default"],

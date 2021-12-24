@@ -299,7 +299,15 @@ function peco-history-selection() {
     # 命令前加个\，避免多个alias打架了
     # 正则， 通配年-月-日 时:分:秒："\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}\\s{2}"
     # history:  其实是 fc -l 的alias  fc记作find command history吧
-    BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | $HOME/dot_file/peco --query "\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}\\s{2} $BUFFER")
+    
+
+    # todo 下次别再搞那么复杂，记住就删掉这几行----
+    # WFpeco= `$HOME/dot_file/peco --rcfile /root/.config/peco/config_for_peco_history.json`
+    # $WFpeco 不是想要的结果
+    # BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | $HOME/dot_file/peco --rcfile /root/.config/peco/config_for_peco_history.json --query "\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}\\s{2} $BUFFER")
+    # todo 下次别再搞那么复杂，记住就删掉这几行----
+    
+    BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | peco --initial-filter="Regexp" --query "\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}\\s{2} $BUFFER")
     BUFFER=${BUFFER:18}  # history加了-i，显示详细时间，回车后只取第19个字符开始的内容，（删掉时间)
     CURSOR=$#BUFFER
     # 这个表示 数后面的字符串长度 ：$#

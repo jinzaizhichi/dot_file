@@ -547,8 +547,9 @@ cl(){
 t() {
     for my_file in $*
     do
-        trash=`basename ${my_file}`_`date  +"%m月%d日%H:%M:%S"`
-        mv ${my_file} ~/.t/${trash} && echo "成功把文件挪成~/.t下的 ${trash} "
+        # trash=`basename ${my_file}`_`date  +"%m月%d日%H:%M:%S"`
+        trash=`basename ${my_file}`
+        mv ${my_file} ~/.t/${trash} && echo "${trash}扔到了~/.t"
     done
 }
 
@@ -923,14 +924,37 @@ pid(){
 
 # 为啥还是会搜~/.t底下？
 f(){
-    find  \
-    -path /d/docker -prune -o  \
-    -path ~/d/docker -prune -o  \
-    -path ~/.t -prune -o       \
-    -path ./.t -prune -o       \
-    -path ~/d/.t -prune -o       \
-    -path /proc -prune -o      \
-    -name "*$1*"
+    if [[ `pwd` == "$HOME/d" || `pwd` == "/d" ]]
+    then
+        find . \
+        -path /d/docker -prune -o  \
+        -path ~/d/docker -prune -o  \
+        -path ~/d/.t -prune -o       \
+        -path ~/.t -prune -o       \
+        -path ./.t -prune -o       \
+        -path /proc -prune -o      \
+        -name "*$1*" | bat
+        echo '当前路径为： ~/d'
+    else
+        # 还是别这样，万一其他路径ln -s到~/d呢
+        # if [[ `pwd` == "$HOME" ]]
+        # then
+        #     echo '不搜 ~/d 或  /d'
+        # fi
+
+        find . \
+        -path /d/docker -prune -o  \
+        -path ~/d/docker -prune -o  \
+        -path ~/d/.t -prune -o       \
+        -path ~/d -prune -o       \
+        -path /d -prune -o       \
+        -path ./d -prune -o       \
+        -path ~/.t -prune -o       \
+        -path ./.t -prune -o       \
+        -path /proc -prune -o      \
+        -name "*$1*" | bat
+        echo '不搜 ~/d 或  /d'
+    fi
 }
 
 # /proc写成/proc/据说不行

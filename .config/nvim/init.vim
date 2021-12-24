@@ -1,4 +1,14 @@
-" behave mswin
+" 自动set option
+" 1.没懂
+" 2.autocmd
+" 3. If you start editing a new file, and the 'modeline' option is on, a
+   " number of lines at the beginning and end of the file are checked for  modelines. 
+" modeline默认 on (但对于root用户，反之，因为有可能执行有害的东西）
+
+
+" modeline， 一定要在最后？
+ " vim: set filetype=vim :
+
 let g:selecmode="mouse"
 
 set linebreak
@@ -14,7 +24,9 @@ if has('autocmd') " ignore this section if your vim does not support autocommand
         " 2. Delete any old autocommands with
         autocmd!
         " 3. Define the autocommands.   %表示当前文件
-        autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source % | echo '改了init.vim'
+        " autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source % | echo '改了init.vim'
+                " Using :echom will save the output and let you run :messages to view it later.
+        autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source % | echom '改了init.vim'
 
         " 4. Go back to the default group：  END
     augroup END
@@ -403,6 +415,7 @@ endfunction
 
 
 " =============================================vim-plug===============================begin
+" 插件 (plugin) 在~/.local/share/nvim/plugged
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug' " 为了能用:help plug-options
 
@@ -834,29 +847,40 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 
 
 
+
+
 " todo 不匹配行首空白符
 "
 " vscode里 按ctrl 】也不会搜到comment的内容
 " Search_no_comment()
-if &filetype == 'python'
-    nnoremap / /^[^#].*
-elseif &filetype == 'zsh'
-    nnoremap / /^[^#].*
-elseif &filetype == 'sh'
-    nnoremap / /^[^#].*
-elseif &filetype == 'vim'
-    nnoremap / /^[^"].*
-" vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk			setf autohotkey
+echo "vim识别到文件类型如下："
+echom &filetype
+echo ' '
+
+au BufNewFile,BufRead *.ahk  setf autohotkey
+
+if &filetype == 'vim'
+    nnoremap / msgg/^[^"].*
+        " 如果filetype检测错误，自己在文件里加上：
+            " (modeline， 一定要在最后？)
+                        " vim: set filetype=vim :
+
+" vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk  setf autohotkey
 elseif &filetype == 'autohotkey'
-    nnoremap / /^[^;].*
+    echo 'yes ahk yes'
+    nnoremap / msgg/^[^;]*
+    " todo 装个插件
+    " https://github.com/hnamikaw/vim-autohotkey
+elseif expand('%:t') == 'wf_key.ahk'
+    nnoremap / msgg/^[^;]*
+
 else
     " 这么写，本地vscode打开ahk，还是#在生效
     " nnoremap / /^[^#]*
-    nnoremap / /^[^#].*
-
+    nnoremap / msgg/^[^#]*
 endif
 
-nnoremap ? /
+nnoremap ? msgg/
 
 func! Wfprint_n()
         if &filetype == 'python'
@@ -1358,3 +1382,4 @@ xnoremap sa <Plug>(operator-sandwich-add)
 "
 " 加了没反应
 nnoremap sc <Plug>(operator-sandwich-add)
+
