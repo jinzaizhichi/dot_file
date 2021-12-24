@@ -75,12 +75,33 @@ noremap <Right> *
 noremap <Left> #
 " CTRL-O                Go to [count] Older cursor position in jump list
                         " (not a motion command).
+                        
+" <Tab>           
+" CTRL-I                  Go to [count] newer cursor position in jump list
+"                         (not a motion command).
+
 " 在vusial mode下好像没功能
 noremap <Up> <C-O>
+vnoremap <Up> <Esc><C-O>
 " CTRL-I <Tab>          Go to [count] newer cursor position in jump list
                         " (not a motion command)
 " 在vusial mode下好像没功能
-noremap <Down> <C-I>
+nnoremap <Down> <C-I>
+vnoremap <Down> <Esc><C-I>
+
+
+"       %       表示全文. Example: :%s/foo/bar/g.
+"       $       表示结尾
+"       .       当前行
+"       .,$     from the current line to the end of the file.
+nnoremap <TAB> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W><Left><Left>
+
+
+
+
+noremap <Up> <C-O>
+
+
 
 " block模式
 " <C-q>用不了，可能是kite占用了  [好像又能用了]
@@ -471,6 +492,8 @@ nmap f <Plug>(easymotion-f2)
 " map  <Leader>w <Plug>(easymotion-w) " Move to word    " buftype option is set??
 " ================================easymotion 配置=====================]]
 
+Plug 'kurkale6ka/vim-pairs'   " 和sandwich“互补”
+
 Plug 'machakann/vim-sandwich'
 " 别再试同类(前浪)
 "  Plug 'tpope/vim-surround'
@@ -693,13 +716,15 @@ nnoremap d] da]
 nnoremap d{ da{
 nnoremap d} da}
 
+
+
 " inoremap cb '''<Esc>Go'''<Esc><C-o>i
 " change a block  " 百分号 能自动跳到配对的符号
-" nnoremap cb cib
-nnoremap cb %cib
-" nnoremap vb vib
-nnoremap vb %vib
-nnoremap yb %yib
+onoremap b %ib
+" nnoremap cb %cib
+" nnoremap vb %vib
+" nnoremap yb %yib
+
 nnoremap db %dab
 
 
@@ -814,23 +839,24 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 " vscode里 按ctrl 】也不会搜到comment的内容
 " Search_no_comment()
 if &filetype == 'python'
-    nnoremap ? /^[^#].*
+    nnoremap / /^[^#].*
 elseif &filetype == 'zsh'
-    nnoremap ? /^[^#].*
+    nnoremap / /^[^#].*
 elseif &filetype == 'sh'
-    nnoremap ? /^[^#].*
+    nnoremap / /^[^#].*
 elseif &filetype == 'vim'
-    nnoremap ? /^[^"].*
+    nnoremap / /^[^"].*
 " vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk			setf autohotkey
 elseif &filetype == 'autohotkey'
-    nnoremap ? /^[^;].*
+    nnoremap / /^[^;].*
 else
     " 这么写，本地vscode打开ahk，还是#在生效
-    " nnoremap ? /^[^#]*
-    nnoremap ? /^[^#].*
+    " nnoremap / /^[^#]*
+    nnoremap / /^[^#].*
 
 endif
 
+nnoremap ? /
 
 func! Wfprint_n()
         if &filetype == 'python'
@@ -930,19 +956,9 @@ function! AutoSetFileHead()
         normal o
 endfunc
 
-" 分隔符#可以换成 / _      can use most non-alphanumeric characters (but not \, " or |)
-"% :表示全文. Example: :%s/foo/bar/g.
-" 开头,结尾
-" 所以：.,$ 表示 from the current line to the end of the file.
-" nnoremap <TAB> :%s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W>
-nnoremap <TAB> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W><Left><Left>
 
+    
 
-" 不在下面加这行，<C-i>会等效于TAB  Ctrl-p用不了
-" noremap <C-z> <C-i>
-
-
-" 用不了
 
 nnoremap gd g<C-]>
 " nnoremap gd :KiteGotoDefinition<CR>
