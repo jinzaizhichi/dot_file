@@ -10,12 +10,15 @@
 
 alias cfg='~/dot_file/.config/'
 
-CHTSH_CONF='~/dot_file/cht.sh.conf'
+export CHTSH_CONF='~/dot_file/cht.sh.conf'
 
 alias ch='~/dot_file/cht.sh --shell'
 # cheat website
 chw(){
-    curl --silent "cheat.sh/$1" | bat
+    # curl --silent "cheat.sh/$*""\?T" | bat
+    # 要下面这样写才行：
+    tmp="cheat.sh/$*"
+    curl --silent $tmp\?T | bat
     }
 
 alias nvtop='/home/wf/nvtop_wf_built/usr/local/bin/nvtop'
