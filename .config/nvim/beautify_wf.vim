@@ -28,7 +28,7 @@ hi CursorLine guibg=#e3efe3
 " 古老：For terminal Vim, with colors, we're most interested in the cterm
 " 支持真彩色 true color
 set termguicolors   " true (24-bit) colours. 下面改颜色只用改 guibg guifg
-hi Search guibg=#ffffff guifg=#00aeae  " 放文件前部分不行
+hi Search guibg=#afafef guifg=#00aeae  " 放文件前部分不行
 
 
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1  " 被下面的代替了

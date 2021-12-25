@@ -547,9 +547,9 @@ cl(){
 t() {
     for my_file in $*
     do
-        # trash=`basename ${my_file}`_`date  +"%m月%d日%H:%M:%S"`
-        trash=`basename ${my_file}`
-        mv ${my_file} ~/.t/${trash} && echo "${trash}扔到了~/.t"
+        ori=`basename ${my_file}`
+        trash=`basename ${my_file}`_`date  +"%m月%d日%H:%M:%S"`
+        mv ${my_file} ~/.t/${trash} && echo "${ori}扔到了~/.t"
     done
 }
 

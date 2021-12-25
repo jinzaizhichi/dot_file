@@ -249,10 +249,12 @@ endif
 
 
 
-func! TabToSpace()
+func TabToSpace()
     " vscode 有个插件：takumii.tabspace
     set ts=4 | set expandtab | %retab! | echo" Tab变成4空格"
 endfunc
+" 完整命令是endfunction，类似python的argparser？没有混淆时，任意缩写都可以？endfunc
+
 " autocmd对neovim-vscode无效？ 暂时手动敲吧
 autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()"
 
@@ -277,7 +279,7 @@ else
 
     set  number relativenumber
     nnoremap <F2> :call HideNumber()<CR> 
-    function! HideNumber()
+    func HideNumber()
         if(&relativenumber == &number)
             " 叹号或者加inv：表示toggle
             set invrelativenumber invnumber
@@ -332,7 +334,7 @@ else
     " 		the other ones.  See |indent-expression|.
     " set cindent
 
-    func! Indent_wf()
+    func Indent_wf()
         set ts=2 | set noexpandtab | %retab! | set ts=4 | set expandtab | %retab! | echo"Indent 2缩进变4"
     endfunc
     nnoremap <F10> :call Indent_wf()<CR>
@@ -359,12 +361,12 @@ else
     " 使用方向键切换buffer 。 vscode的map，别用command mode ?
 
     " 保存python文件时删除多余空格
-    fun! <SID>StripTrailingWhitespaces()
+    func <SID>StripTrailingWhitespaces()
             let l = line(".")
             let c = col(".")
             %s/\s\+$//e
             call cursor(l, c)
-    endfun
+    endfunc
     " autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
     autocmd FileType c,cpp,javascript,python,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
@@ -373,6 +375,27 @@ else
     " 要在设定颜色主题后面，覆盖颜色主题里面的设置
 
 endif
+
+
+ " 自动取消高亮
+let s:current_timer = -1
+
+func Highlight_Search_Off(timerId)
+  set nohlsearch
+endfunc
+
+func ResetTimer()
+  if s:current_timer > -1
+    call timer_stop(s:current_timer)
+  endif
+  " 2秒
+  let s:current_timer = timer_start(2000, 'Highlight_Search_Off')
+endfunc
+
+nnoremap <silent> n n:call ResetTimer()<CR>
+ " 自动取消高亮
+
+
 
 
 nnoremap yf ggyG<C-O>  " 让光标看着没动
@@ -393,7 +416,7 @@ let mapleader =" "
 " Lazy loading, my preferred way, as you can have both [避免被PlugClean删除没启动的插件]
 " https://github.com/junegunn/vim-plug/wiki/tips
 " leo改过
-function! VimPlugConds(arg1, ...)
+func VimPlugConds(arg1, ...)
 
     " a: 表示argument
     " You must prefix a parameter name with "a:" (argument).
@@ -410,7 +433,7 @@ function! VimPlugConds(arg1, ...)
     let out = (a:arg1 ? leo_opts : extend(leo_opts, { 'on': [], 'for': [] }))  " 括号不能换行
     " an empty `on` or `for` option : plugin is registered but not loaded by default depending on the condition.
     return  out
-endfunction
+endfunc
 
 
 
@@ -853,17 +876,20 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 "
 " vscode里 按ctrl 】也不会搜到comment的内容
 " Search_no_comment()
-echo "vim识别到文件类型如下："
-echom &filetype
-echo ' '
+
+" echo "vim识别到文件类型如下："
+" echom &filetype
+" echo ' '
 
 au BufNewFile,BufRead *.ahk  setf autohotkey
 
 if &filetype == 'vim'
     nnoremap / msgg/^[^"].*
-        " 如果filetype检测错误，自己在文件里加上：
+elseif expand('%:t') == 'init.vim'
+    nnoremap / msgg/^[^"]*
+    " 如果filetype检测错误，自己在文件里加上：
+            " vim: set filetype=vim :
             " (modeline， 一定要在最后？)
-                        " vim: set filetype=vim :
 
 " vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk  setf autohotkey
 elseif &filetype == 'autohotkey'
@@ -952,7 +978,7 @@ inoremap <F5> <ESC>oimport pudb<ESC>opu.db
 
 " 定义函数AutoSetFileHead，自动插入文件头
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
-function! AutoSetFileHead()
+func AutoSetFileHead()
         if &filetype == 'sh'
                 call setline(1, "\#!/bin/zsh")
         endif
@@ -1195,7 +1221,7 @@ set foldlevel=99
 " 插入模式下用绝对行号, 普通模式下用相对
 " autocmd InsertEnter * :set norelativenumber number
 " autocmd InsertLeave * :set relativenumber
-" function! NumberToggle()
+" func NumberToggle()
     " if(&relativenumber == 1)
         " set norelativenumber number
     " else
@@ -1215,7 +1241,7 @@ set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,eu
 
 " http://stackoverflow.com/questions/13194428/is-better-way-to-zoom-windows-in-vim-than-zoomwin
 " Zoom / Restore window.
-function! s:ZoomToggle() abort
+func s:ZoomToggle() abort
         if exists('t:zoomed') && t:zoomed
                 execute t:zoom_winrestcmd
                 let t:zoomed = 0
@@ -1225,7 +1251,7 @@ function! s:ZoomToggle() abort
                 vertical resize
                 let t:zoomed = 1
         endif
-endfunction
+endfunc
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <Leader>z :ZoomToggle<CR>
 
