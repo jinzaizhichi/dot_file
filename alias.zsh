@@ -625,6 +625,8 @@ alias tmux='\tmux \
             -f ~/dot_file/tmux_tools_wf/tmux.conf'
 
 tm() {
+    # https://stackoverflow.com/a/29369681/14972148
+    # export MY_VAR="some value"
     if [ "$1" != "" ] # or better, if [ -n "$1" ]
     then
         tmux  new -s s_$1 || tmux attach -t s_$1  -d

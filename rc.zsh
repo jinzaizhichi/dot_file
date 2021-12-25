@@ -288,18 +288,31 @@ add-zsh-hook chpwd chpwd_recent_dirs
 #     unset old_PATH x
 # fi
 
-# 用于tmux重新连接_不过真的需要吗
-#
-# 别用~代表$HOME ,  $HOME 要在双引号里
-DIS_TXT='~/d/.DISPLAY_for_tmux'
-DIS_TXT="$HOME/d/.DISPLAY_for_tmux"
-if [ -z "$TMUX" ]; then
-    echo $DISPLAY > ${DIS_TXT}
+
+if grep -q WSL2 /proc/version ; then  # set DISPLAY to use X terminal in WSL
+    # execute route.exe in the windows to determine its IP address
+    export PATH="$PATH:/mnt/c/Windows/System32"  # many exe files here, such as curl.exe, route.exe
+    DISPLAY=$(route.exe print | grep 0.0.0.0 | head -1 | awk '{print $4}'):0.0
+
+else # set DISPLAY  under tmux
+
+    # 用于tmux重新连接_不过真的需要吗
+    if [[ -z "$TMUX" ]]; then
+        echo $DISPLAY
+    else 
+        session_name=`tmux display-message -p "#S"`
+        # DIS_file='~/d/.DISPLAY_for_tmux'  别用~代表$HOME ,  $HOME 要在双引号里
+        DIS_file="$HOME/d/.DISPLAY_for_$session_name"
+        if [[ -f $DIS_file ]]; then
+            export DISPLAY=`cat ${DIS_file}` 
+        else
+            echo $DISPLAY > ${DIS_file}
+        fi
+    fi
 fi
-export DISPLAY=`cat ${DIS_TXT}` # todo DISPLAY还是空白
 
 if [[ -z  $DISPLAY ]]; then
-   echo "if DISPLAY isn't set, it's no use setting it manually"
+   echo "DISPLAY isn't set.   it's no use setting it manually"
 fi
 
 
