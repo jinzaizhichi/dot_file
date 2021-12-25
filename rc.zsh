@@ -226,7 +226,8 @@ zplug load     # source plugins and add commands to $PATH
 # 放在插件管理后面，避免被别人的配置覆盖
 
 # 不能用\换行
-export LESS='--ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=2 --incsearch'
+# 不用LESS这个环境变量, 放到alias里? 不，man要用LESS
+export LESS='--incsearch --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=2'
     # Man-db passes extra options to the pager via the `LESS` environment variable,
     # which Less interprets in the same way as command line options.
     # The setting is hard-coded at compile time and starts with -i.
