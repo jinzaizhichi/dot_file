@@ -781,9 +781,9 @@ alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
 
 
 #y: yyds，我的配置yyds
-alias y=sy
+# alias y=sy
 
-sy(){
+y(){
     chpwd_functions=()
     cd ~/dot_file
     echo "\n--------------1. stash-------------"
