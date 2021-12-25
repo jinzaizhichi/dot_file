@@ -293,7 +293,9 @@ if grep -q WSL2 /proc/version ; then  # set DISPLAY to use X terminal in WSL
     # execute route.exe in the windows to determine its IP address
     export PATH="$PATH:/mnt/c/Windows/System32"  # many exe files here, such as curl.exe, route.exe
     # DISPLAY为空，也可以用tmux-yank, 因为是本地 而非远程？
-    DISPLAY=$(route.exe print | grep 0.0.0.0 | head -1 | awk '{print $4}'):0.0
+    # DISPLAY=$(route.exe print | grep 0.0.0.0 | head -1 | awk '{print $4}'):0.0
+    export DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2}'):0.0
+
 
 else # set DISPLAY  under tmux
 
