@@ -324,8 +324,12 @@ compctl -K _pip_completion pip3
 # Setup fzf
 # ---------
 if [[ ! "$PATH" == */home/wf/.fzf/bin* ]]; then
-  export PATH="${PATH:+${PATH}:}/home/wf/.fzf/bin"
+    export PATH="${PATH:+${PATH}:}/home/wf/.fzf/bin"
 fi
+
+# 别多手把前面的export PATH中的export扔了。万一脚本中途 子shell依赖的变量没export呢？
+# time测时间，export耗时太短忽略不计？
+
 
 # Auto-completion  # 不灵，因为没严格按照教程按照？
 # ---------------

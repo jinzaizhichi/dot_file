@@ -270,17 +270,41 @@ alias le="less  --quit-if-one-screen"
 
 
 # todo 结合peco
-# 沿用ag的a
 #  a 强行记忆法：at the snippet
-a(){
+#  改了.  还是用r吧，recursively  grep. (ripgrep, 不知道啥意思。)
+r(){
      \rg --pretty \
+         --glob=!"$HOME/.t" \
+         --glob=!"$HOME/d" \
+         --iglob=!"~/.zsh_history" \
+         --iglob=!"$HOME/.zsh_history" \
+         --iglob=!"./.zsh_history" \
+         --glob=!"/d" \
+         --hidden \
+         --before-context 1 \
+         --after-context 2  \
+         --smart-case "$*" |  less --pattern="$*"
+         # --iglob:  case insensitve
+     echo '没搜~/.t  ~/d  /d'
+     echo 'todo，.zsh_history怎么去掉？'
+                            # alias le="less  --quit-if-one-screen"
+}
+
+
+rd(){
+     \rg --pretty \
+         --glob="$HOME/d" \
+         --glob="/d" \
          --hidden \
          --before-context 1 \
          --after-context 2  \
          --smart-case "$*" |  less --pattern="$*"
                             # alias le="less  --quit-if-one-screen"
+                            
+     echo '只搜 ~/d  /d'
 }
-a4(){
+
+r4(){
     # read TMP
     # TMP2 ="`print -r ${(q)TMP}`"
     # \rg --pretty --hidden TMP2 | bat # 沿用ag的a

@@ -1,13 +1,14 @@
 
-export PATH="/usr/local/cuda-10.2/bin:$PATH"
+PATH="/usr/local/cuda-10.2/bin:$PATH"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64/"
 export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/cuda-10.2/lib64"
 
 
 
 source ~/dot_file/rc.zsh
+
 # 没有x11时, 不启用复制功能
-alias w='_w(){ less $1 ;};_w'
+# alias w='_w(){ less $1 ;};_w'
 
 # dai li
 alias dl='export ALL_PROXY=socks5://你的ip：端口'
