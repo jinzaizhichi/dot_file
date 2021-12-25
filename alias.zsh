@@ -926,50 +926,40 @@ pid(){
 f(){
     if [[ `pwd` == "$HOME/d" || `pwd` == "/d" ]]
     then
+        # find 的路径，用$HOME, 别用~,  用双引号括起来
         find . \
-        -path /d/docker -prune -o  \
-        -path ~/d/docker -prune -o  \
-        -path ~/d/.t -prune -o       \
-        -path ~/.t -prune -o       \
-        -path ./.t -prune -o       \
-        -path /proc -prune -o      \
+        -path "/d/docker" -prune -o  \
+        -path "$HOME/d/docker" -prune -o  \
+        -path "$HOME/d/.t" -prune -o       \
+        -path "$HOME/t" -prune -o       \
+        -path "./.t" -prune -o       \
         -name "*$1*" | bat
-        echo '当前路径为： ~/d'
+        echo "当前路径为： ~/d"
+        echo "(没进去搜的目录, 仍会输出一行 )"
     else
         # 还是别这样，万一其他路径ln -s到~/d呢
         # if [[ `pwd` == "$HOME" ]]
         # then
-        #     echo '不搜 ~/d 或  /d'
+        #     echo "不搜 ~/d 或  /d"
         # fi
 
+        # find 的路径，用$HOME, 别用~,  用双引号括起来
         find . \
-        -path /d/docker -prune -o  \
-        -path ~/d/docker -prune -o  \
-        -path ~/d/.t -prune -o       \
-        -path ~/d -prune -o       \
-        -path /d -prune -o       \
-        -path ./d -prune -o       \
-        -path ~/.t -prune -o       \
-        -path ./.t -prune -o       \
-        -path /proc -prune -o      \
+        -path "/d/docker" -prune -o  \
+        -path "$HOME/d/docker" -prune -o  \
+        -path "$HOME/d" -prune -o       \
+        -path "./d" -prune -o       \
+        -path "$HOME/d/.t" -prune -o       \
+        -path "$HOME/t" -prune -o       \
+        -path "./.t" -prune -o       \
+        -path "/proc" -prune -o      \
+        -path "/dev" -prune -o      \
         -name "*$1*" | bat
-        echo '不搜 ~/d 或  /d'
+        echo "不搜 ~/d 或  /d "
+        echo "(没进去搜的目录, 仍会输出一行 )"
     fi
 }
 
-# /proc写成/proc/据说不行
-# 写成函数无法补全, 哪怕没加pipe  （ | grep   ）
-# find root
-fr(){
-     find /    \
-     -path '/proc' -prune  -o  \
-     -name "*$1*" | grep $1
-    #  -name "*$1*"
-     }
-
-
-# 这样就可以补全：
-alias ffr='find /   -path "/proc" -prune  -o   -name '
 
 th(){ touch $1.n }
 

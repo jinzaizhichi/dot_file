@@ -7,10 +7,16 @@ typeset -g -A key
 # -g do not restrict parameter to local scope
 # -A specify that arguments refer to associative arrays
 
+# alt 负责路径跳转
 bindkey -s '\eh' 'cd ~ \n'
-bindkey -s '\ed' 'do \n'
-bindkey -s '\et' '~/.t \n'
+# t太难按了
+# bindkey -s '\et' '~/.l \n'
+# l for laji 垃圾
+bindkey -s '\el' '~/.t \n'
 bindkey -s '\e3' '~/3 \n'
+bindkey -s '\ed' '~/d \n'
+# m for modify，修改配置
+bindkey -s '\em' 'do \n'
 
 # todo
 # ^D在当前行 有字符时, 相当于Del
@@ -263,19 +269,43 @@ function peco-find-file() {
         # A more reliable and versatile way to reverse files is the GNU 'tac' command.
     fi
 
+    # 见alias.zsh里的f()
+    if [[ `pwd` == "$HOME/d" || `pwd` == "/d" ]]
+    then
+        # BUFFER (scalar):   The entire contents of the edit buffer.
+        # https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html#index-BUFFER
+        BUFFER=$(find . \
+        -path "/d/docker" -prune -o  \
+        -path "$HOME/d/docker" -prune -o  \
+        -path "$HOME/d/.t" -prune -o       \
+        -path "$HOME/t" -prune -o       \
+        -path "./.t" -prune -o       \
+        -name "*$1*"  | peco --query "$BUFFER" )
+        # 别用系统的根目录下的peco，太老，用dot_file下的
+        CURSOR=$#BUFFER
 
-    # BUFFER (scalar):   The entire contents of the edit buffer.
-    # https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html#index-BUFFER
-    BUFFER=$(find . \
-    -path '/d/docker' -prune -o  \
-    -path '~/.t' -prune -o       \
-    -path './.t' -prune -o       \
-    -path '~/d/.t' -prune -o       \
-    -path '/proc' -prune -o      \
-    -name "*$1*"  | peco --query "$BUFFER" )
-    # 别用系统的根目录下的peco，太老，用dot_file下的
-    CURSOR=$#BUFFER
+        echo '当前路径为： ~/d'
+        echo '(没进去搜的目录, 仍会输出一行 )'
+    else
+        BUFFER=$(find . \
+        -path "/d/docker" -prune -o  \
+        -path "$HOME/d/docker" -prune -o  \
+        -path "$HOME/d" -prune -o       \
+        -path "./d" -prune -o       \
+        -path "$HOME/d/.t" -prune -o       \
+        -path "$HOME/t" -prune -o       \
+        -path "./.t" -prune -o       \
+        -path "/proc" -prune -o      \
+        -path "/dev" -prune -o      \
+        -name "*$1*"  | peco --query "$BUFFER" )
+        # 别用系统的根目录下的peco，太老，用dot_file下的
+        CURSOR=$#BUFFER
+
+        echo '不搜 ~/d 或  /d '
+        echo '(没进去搜的目录, 仍会输出一行 )'
+    fi
 }
+
 
 zle -N peco-find-file
 bindkey '^F' peco-find-file
