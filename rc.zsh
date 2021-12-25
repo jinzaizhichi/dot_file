@@ -288,7 +288,6 @@ add-zsh-hook chpwd chpwd_recent_dirs
 #     unset old_PATH x
 # fi
 
-<<<<<<< Updated upstream
 
 if grep -q WSL2 /proc/version ; then  # set DISPLAY to use X terminal in WSL
     # execute route.exe in the windows to determine its IP address
@@ -314,20 +313,6 @@ fi
 
 if [[ -z  $DISPLAY ]]; then
    echo "DISPLAY isn't set.   it's no use setting it manually"
-=======
-# 用于tmux重新连接_不过真的需要吗
-#
-# 别用~代表$HOME ,  $HOME 要在双引号里
-DIS_TXT='~/d/.DISPLAY_for_tmux'
-DIS_TXT="$HOME/d/.DISPLAY_for_tmux"
-if [ -z "$TMUX" ]; then
-    echo $DISPLAY > ${DIS_TXT}
-fi
-export DISPLAY=`cat ${DIS_TXT}` # todo DISPLAY还是空白
-
-if [[ -z  $DISPLAY ]]; then
-   echo "if DISPLAY isn't set, it's no use setting it manually"
->>>>>>> Stashed changes
 fi
 
 
