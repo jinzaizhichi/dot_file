@@ -288,18 +288,19 @@ add-zsh-hook chpwd chpwd_recent_dirs
 #     unset old_PATH x
 # fi
 
+# 用于tmux重新连接_不过真的需要吗
+#
+# 别用~代表$HOME ,  $HOME 要在双引号里
+DIS_TXT='~/d/.DISPLAY_for_tmux'
+DIS_TXT="$HOME/d/.DISPLAY_for_tmux"
 if [ -z "$TMUX" ]; then
-    echo $DISPLAY > ~/.t/display.txt
+    echo $DISPLAY > ${DIS_TXT}
 fi
+export DISPLAY=`cat ${DIS_TXT}` # todo DISPLAY还是空白
 
-dis_tmux(){
-    export DISPLAY=$(cat ~/.t/display.txt) # todo DISPLAY还是空白
-}
-dis_tmux
-
-# if [[ -z  $DISPLAY ]]; then
-#    echo "if DISPLAY isn't set, it's no use setting it manually"
-# fi
+if [[ -z  $DISPLAY ]]; then
+   echo "if DISPLAY isn't set, it's no use setting it manually"
+fi
 
 
 
