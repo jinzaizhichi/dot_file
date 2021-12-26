@@ -882,10 +882,7 @@ au BufNewFile,BufRead *.ahk  setf autohotkey
 
 echom '文件类型:'
 echom &filetype
-<<<<<<< Updated upstream
 echom  ' '
-=======
->>>>>>> Stashed changes
 if &filetype == 'vim'
     nnoremap / msgg/^[^"].*
 " 防止检测filetype不准
