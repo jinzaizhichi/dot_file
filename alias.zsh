@@ -793,7 +793,7 @@ y(){
     echo "\n此时，本地的修改还被藏着，一般打开文件是找不到修改的"
     echo "\n---------------------3. stashed的东西并到 本地的当前代码 ---------------------"
     git stash apply  # Merge your local changes into the latest code:
-    echo "\n 亲，检查一下有没有冲突 "
+    echo "\n 【亲，检查一下有没有冲突】 "
 }
 
 yy(){
