@@ -280,11 +280,7 @@ else
     " <C-]>只能在本文件内跳转
     nnoremap gd g<C-]>
     " nnoremap gd :KiteGotoDefinition<CR>
-<<<<<<< Updated upstream
 
-=======
-    
->>>>>>> Stashed changes
     set  number relativenumber
     nnoremap <F2> :call HideNumber()<CR>
     func HideNumber()
