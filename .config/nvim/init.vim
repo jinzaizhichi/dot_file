@@ -21,12 +21,12 @@ filetype plugin indent on " 实现了上面3行
 filetype detect
 echom "文件类型是"
 echom &filetype
-echom "文件类型输出结束】】"
+echom "文件类型输出结束】"
 
 au BufNewFile,BufRead *.ahk  setf autohotkey
 
 if &filetype == 'vim'
-    nnoremap / msgg/^[^"].*
+    nnoremap / msgg/^[^"]*
 " 防止检测filetype不准
 elseif expand('%:t') == 'init.vim'
     nnoremap / msgg/^[^"]*
@@ -43,9 +43,12 @@ elseif &filetype == 'autohotkey'
 elseif expand('%:t') == 'wf_key.ahk'
     nnoremap / msgg/^[^;]*
 
-else
-    " 这么写，本地vscode打开ahk，还是#在生效
+elseif &filetype  == 'shell'
     nnoremap / msgg/^[^#]*
+else
+    " vscode neovim无法识别filetype?
+    " 暂时一锅乱炖
+    nnoremap / msgg/^[^#";(//)(/*)]*
 endif
 
 nnoremap ? msgg/
