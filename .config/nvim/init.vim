@@ -270,13 +270,16 @@ if exists('g:vscode')
     " todo
     " insert mode下，neovim不管事，（但esc退回normal还是可以的），imap都用不了
     " nnoremap gd vaw<F12>
-    unmap gd
     " 不行
     " nnoremap zz ZZ
     filetype on        " 检测文件类型  不会和vscode 打架吧
 else
     " echo '没在用 vscode-neovim, 纯 nvim'
 
+    " <C-]>只能在本文件内跳转
+    nnoremap gd g<C-]>
+    " nnoremap gd :KiteGotoDefinition<CR>
+    
     set  number relativenumber
     nnoremap <F2> :call HideNumber()<CR> 
     func HideNumber()
@@ -335,7 +338,7 @@ else
     " set cindent
 
     func Indent_wf()
-        set ts=2 | set noexpandtab | %retab! | set ts=4 | set expandtab | %retab! | echo"Indent 2缩进变4"
+        set ts=2 | set noexpandtab | %retab! | set ts=4 | set expandtab | %retab! | echom "Indent 2缩进变4"
     endfunc
     nnoremap <F10> :call Indent_wf()<CR>
     inoremap <F10> <ESC>:call Indent_wf()<CR>i
@@ -893,7 +896,7 @@ elseif expand('%:t') == 'init.vim'
 
 " vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk  setf autohotkey
 elseif &filetype == 'autohotkey'
-    echo 'yes ahk yes'
+    echo '检测到文件类型是ahk'
     nnoremap / msgg/^[^;]*
     " todo 装个插件
     " https://github.com/hnamikaw/vim-autohotkey
@@ -1007,11 +1010,9 @@ func AutoSetFileHead()
 endfunc
 
 
-    
 
 
-nnoremap gd g<C-]>
-" nnoremap gd :KiteGotoDefinition<CR>
+
 
 
 
