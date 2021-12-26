@@ -46,7 +46,7 @@ elseif &filetype == 'autohotkey'
 elseif expand('%:t') == 'wf_key.ahk'
     nnoremap / msgg/\v^[^;]*
 
-elseif &filetype  == 'shell'
+elseif &filetype  == 'zsh'
     nnoremap / msgg/\v^[^#]*
 else
     " vscode neovim无法识别filetype?
