@@ -804,7 +804,7 @@ yy(){
     then
         git commit -m "$1"
     else
-        git commit -m "commit名：`date  +"%m月%d日%H:%M"`"
+        git commit -m "我是commit名——`date  +"%m月%d日%H:%M"`"
     fi
     git push
     cd -
