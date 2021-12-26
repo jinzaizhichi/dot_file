@@ -7,6 +7,49 @@
         " a number of lines(默认是5) at the beginning and end of the file are checked for  modelines.
         " modeline默认 on (但对于root用户，反之，因为有可能执行有害的东西）
 
+" filetype        on        " 检测文件类型
+" filetype plugin on        " 针对不同的文件类型, load不同plugin
+" filetype indent on        " 针对不同的文件类型采用不同的缩进格式
+filetype plugin indent on " 实现了上面3行
+                            " There is no need  to do ":filetype on" after ":syntax on".
+
+" If the file type is not detected automatically, or it finds the wrong type,
+" you can  add a modeline to your  file. 
+" for an IDL file use the command:
+" :set filetype=vim
+" 但我用笔记本时，root用户或者vscode-neovim使得modeline是off的，这时要靠这行：
+filetype detect
+echom "文件类型是"
+echom &filetype
+echom "文件类型输出结束】】"
+
+au BufNewFile,BufRead *.ahk  setf autohotkey
+
+if &filetype == 'vim'
+    nnoremap / msgg/^[^"].*
+" 防止检测filetype不准
+elseif expand('%:t') == 'init.vim'
+    nnoremap / msgg/^[^"]*
+    " 如果filetype检测错误，自己在文件里加上：
+            " modeline
+            "  一定要在最后？
+
+" vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk  setf autohotkey
+elseif &filetype == 'autohotkey'
+    echo '检测到文件类型是ahk'
+    nnoremap / msgg/^[^;]*
+    " todo 装个插件
+    " https://github.com/hnamikaw/vim-autohotkey
+elseif expand('%:t') == 'wf_key.ahk'
+    nnoremap / msgg/^[^;]*
+
+else
+    " 这么写，本地vscode打开ahk，还是#在生效
+    nnoremap / msgg/^[^#]*
+endif
+
+nnoremap ? msgg/
+
 
 
 let g:selecmode="mouse"
@@ -300,17 +343,12 @@ else
 
     nnoremap <F4> :UndotreeToggle<CR>
 
+
+
+
+
+
     " vscode上有插件自动处理，不用加这些:
-
-
-
-    " filetype        on        " 检测文件类型
-    " filetype plugin on        " 针对不同的文件类型, load不同plugin
-    " filetype indent on        " 针对不同的文件类型采用不同的缩进格式
-    filetype plugin indent on " 实现了上面3行
-                              " There is no need  to do ":filetype on" after ":syntax on".
-
-
     set expandtab " 将Tab自动转化成空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
     set tabstop=4 " 设置Tab键等同的空格数
     set shiftwidth=4 " 每一次缩进对应的空格数
@@ -874,39 +912,7 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 " vscode里 按ctrl 】也不会搜到comment的内容
 " Search_no_comment()
 
-" echo "vim识别到文件类型如下："
-" echom &filetype
-" echo ' '
 
-au BufNewFile,BufRead *.ahk  setf autohotkey
-
-echom '文件类型:'
-echom &filetype
-echom  ' '
-if &filetype == 'vim'
-    nnoremap / msgg/^[^"].*
-" 防止检测filetype不准
-elseif expand('%:t') == 'init.vim'
-    nnoremap / msgg/^[^"]*
-    " 如果filetype检测错误，自己在文件里加上：
-            " modeline
-            "  一定要在最后？
-
-" vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk  setf autohotkey
-elseif &filetype == 'autohotkey'
-    echo '检测到文件类型是ahk'
-    nnoremap / msgg/^[^;]*
-    " todo 装个插件
-    " https://github.com/hnamikaw/vim-autohotkey
-elseif expand('%:t') == 'wf_key.ahk'
-    nnoremap / msgg/^[^;]*
-
-else
-    " 这么写，本地vscode打开ahk，还是#在生效
-    nnoremap / msgg/^[^#]*
-endif
-
-nnoremap ? msgg/
 
 func! Wfprint_n()
         if &filetype == 'python'
