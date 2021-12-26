@@ -786,13 +786,14 @@ alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
 y(){
     chpwd_functions=()  # 别显示 所去目录下的文件
     cd ~/dot_file
-    echo "\n-----------1. stash------------"
+    echo "\n-----------1. stash，先藏起最近修改------------"
     git stash
-    echo "\n-----------------2. pull-----------------"
+    echo "\n-----------------2. pull, 拉远程的新代码-----------------"
     git pull  # Update the branch to the latest code   = fetch + merge? 还是只fetch?
+    echo "\n--此时，本地的修改还是被藏着，一般打开文件是找不到修改的"
     echo "\n---------------------3. stashed的东西并到 本地的当前代码 ---------------------"
     git stash apply  # Merge your local changes into the latest code:
-    # echo " "
+    echo " 检查一下有没有冲突 "
 }
 
 yy(){
