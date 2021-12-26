@@ -1,13 +1,14 @@
-" 自动set option
-" 1.没懂
-" 2.autocmd
-" 3. If you start editing a new file, and the 'modeline' option is on, a
-   " number of lines at the beginning and end of the file are checked for  modelines. 
-" modeline默认 on (但对于root用户，反之，因为有可能执行有害的东西）
-
 
 " modeline， 一定要在最后？
- " vim: set filetype=vim :
+" vim: set filetype=vim :
+
+    " 1.没懂
+    " 2.autocmd
+    " 3. If you start editing a new file, and the 'modeline' option is on,
+        " a number of lines(默认是5) at the beginning and end of the file are checked for  modelines.
+        " modeline默认 on (但对于root用户，反之，因为有可能执行有害的东西）
+
+
 
 let g:selecmode="mouse"
 
@@ -87,8 +88,8 @@ noremap <Right> *
 noremap <Left> #
 " CTRL-O                Go to [count] Older cursor position in jump list
                         " (not a motion command).
-                        
-" <Tab>           
+
+" <Tab>
 " CTRL-I                  Go to [count] newer cursor position in jump list
 "                         (not a motion command).
 
@@ -279,9 +280,9 @@ else
     " <C-]>只能在本文件内跳转
     nnoremap gd g<C-]>
     " nnoremap gd :KiteGotoDefinition<CR>
-    
+
     set  number relativenumber
-    nnoremap <F2> :call HideNumber()<CR> 
+    nnoremap <F2> :call HideNumber()<CR>
     func HideNumber()
         if(&relativenumber == &number)
             " 叹号或者加inv：表示toggle
@@ -597,10 +598,8 @@ if !has('win32')
     source ~/dot_file/.config/nvim/beautify_wf.vim
 
     " 这么写比较啰嗦：
-    " 字符串concat，用点号
-    " let s:beauty_path = expand('%:p:h') . "/beautify_wf.vim"
-    " exe 'source ' . s:beauty_path
-    " 不行： source  . s:beauty_path
+    " let s:beauty_path = expand('%:p:h') . "/beautify_wf.vim"    " 字符串concat，用点号
+    " exe 'source ' . s:beauty_path      " 这样不行： source  . s:beauty_path
 endif
 
 
@@ -886,13 +885,16 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 
 au BufNewFile,BufRead *.ahk  setf autohotkey
 
+echom '文件类型:'
+echom &filetype
 if &filetype == 'vim'
     nnoremap / msgg/^[^"].*
+" 防止检测filetype不准
 elseif expand('%:t') == 'init.vim'
     nnoremap / msgg/^[^"]*
     " 如果filetype检测错误，自己在文件里加上：
-            " vim: set filetype=vim :
-            " (modeline， 一定要在最后？)
+            " modeline
+            "  一定要在最后？
 
 " vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk  setf autohotkey
 elseif &filetype == 'autohotkey'
@@ -905,7 +907,6 @@ elseif expand('%:t') == 'wf_key.ahk'
 
 else
     " 这么写，本地vscode打开ahk，还是#在生效
-    " nnoremap / /^[^#]*
     nnoremap / msgg/^[^#]*
 endif
 
@@ -1090,7 +1091,6 @@ set backspace=indent,eol,start
 " start   allow backspacing over the start of insert; CTRL-W and CTRL-U stop once at the start of insert.
 
 
-set history=2000
 set timeoutlen=800
 
 set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
@@ -1100,48 +1100,29 @@ set fencs=utf8,gbk,gb2312,gb18030
 
 
 
-
-
-
-
-"==========================================
-" 参考了：
-" Author:  wklken
-" Sections:
-"               -> Initial Plugin 加载插件
-"               -> General Settings 基础设置
-"               -> Display Settings 展示/排版等界面格式设置
-"               -> 文件编码设置
-"               -> Others 其它配置
-"               -> HotKey Settings  自定义快捷键
-"               -> 针对文件类型的设置
-"
-"               -> 插件配置和具体设置在vimrc.bundles中
-"==========================================
-"
-"
-"
-"
-" General Settings 基础设置
-
+" >>>---------------------------------------------------------------------  `1.` 基础设置
 " history存储容量
 set history=2000
 
-
 " 文件修改之后自动载入
 set autoread
-" 启动的时候不显示那个援助乌干达儿童的提示
-set shortmess=atI
 
-" 备份,到另一个位置. 防止误删, 目前是取消备份
-"set backup
-"set backupext=.bak
-"set backupdir=/tmp/vimbk/
+" shortmess: short messages, 简略提示
+" I:启动的时候不显示多余提示
+" t: trunc
+set shortmess=tI
 
-" 取消备份。 视情况自己改
-set nobackup
-" 关闭交换文件
-set noswapfile
+let s:noSwapSuck_file = expand('%:p:h') . "/noswapsuck.vim"    " 字符串concat，用点号
+            " :echo @%                |" directory/name of file
+            " :echo expand('%:t')     |" name of file ('tail')
+            " :echo expand('%:p')     |" full path
+            " :echo expand('%:p:h')   |" directory containing file ('head')
+exe 'source ' . s:noSwapSuck_file
+ " 这样不行： source  . s:noSwapSuck_file
+
+        " 取代了这些：
+                " set nobackup  取消备份。 视情况自己改
+                " set noswapfile  关闭交换文件
 
 
 " TODO: remove this, use gundo
