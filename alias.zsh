@@ -786,7 +786,7 @@ alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
 y(){
     chpwd_functions=()  # 别显示 所去目录下的文件
     cd ~/dot_file
-    echo "\n-----------1. stash，先藏起最近修改------------"
+    echo "\n-----------1. stash，藏起本地修改（但忽略新增文件）------------"
     git stash
     echo "\n-----------------2. pull, 拉远程的新代码-----------------"
     git pull  # Update the branch to the latest code   = fetch + merge? 还是只fetch?
