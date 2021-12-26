@@ -593,7 +593,7 @@ if !has('win32')
     source ~/dot_file/.config/nvim/beautify_wf.vim
 
     " 这么写比较啰嗦：
-    " let s:beauty_path = expand('%:p:h') . "/beautify_wf.vim"    " 字符串concat，用点号
+    " let s:beauty_path = fnamemodify($MYVIMRC, ":p:h") . "/beautify_wf.vim"    " 字符串concat，用点号
     " exe 'source ' . s:beauty_path      " 这样不行： source  . s:beauty_path
 endif
 
@@ -1108,11 +1108,12 @@ set autoread
 " t: trunc
 set shortmess=tI
 
-let s:noSwapSuck_file = expand('%:p:h') . "/noswapsuck.vim"    " 字符串concat，用点号
+let s:noSwapSuck_file = fnamemodify($MYVIMRC, ":p:h")  . "/noswapsuck.vim"    " 字符串concat，用点号
+            " fnamemodify比expand的功能更强
             " :echo @%                |" directory/name of file
-            " :echo expand('%:t')     |" name of file ('tail')
             " :echo expand('%:p')     |" full path
             " :echo expand('%:p:h')   |" directory containing file ('head')
+            " :echo expand('%:t')     |" name of file ('tail')
 exe 'source ' . s:noSwapSuck_file
  " 这样不行： source  . s:noSwapSuck_file
 

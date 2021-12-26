@@ -300,6 +300,7 @@ if grep -q WSL2 /proc/version ; then  # set DISPLAY to use X terminal in WSL
 else # set DISPLAY  under tmux
 
     # 用于tmux重新连接_不过真的需要吗
+    
     # if [[ -z "$TMUX" ]]; then
     # -z： 变量为空，记作zero？
     # -v: variable is set
@@ -307,10 +308,10 @@ else # set DISPLAY  under tmux
         session_name=`tmux display-message -p "#S"`
         # DIS_file='~/d/.DISPLAY_for_tmux'  别用~代表$HOME ,  $HOME 要在双引号里
         DIS_file="$HOME/d/.DISPLAY_for_$session_name"
-        if [[ -f $DIS_file ]]; then
+        if [[ -f $DIS_file ]]; then  # 读
             export DISPLAY=`cat ${DIS_file}`
         else
-            echo $DISPLAY > ${DIS_file}
+            echo $DISPLAY > ${DIS_file}  # 存
         fi
     fi
 fi
