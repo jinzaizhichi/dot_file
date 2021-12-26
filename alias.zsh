@@ -793,6 +793,7 @@ y(){
     echo "\n---------------------3. 合并 ---------------------"
     git stash apply  # Merge your local changes into the latest code:
     # echo " "
+}
 
 yy(){
     echo "\n--------------------------------4. add commit push三连-----------------------------------------------"
