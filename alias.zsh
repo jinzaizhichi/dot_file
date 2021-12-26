@@ -793,6 +793,7 @@ y(){
     echo "\n如果giithub上领先于本地，那么 此时本地的修改还被藏着，现在打开本地文件和github上一样？"
     echo "\n---------------------3. stashed的东西并到 本地的当前代码 ---------------------"
     git stash pop  # Merge your local changes into the latest code, 并且在没有conflict时，删掉stash里的这个东西
+    # echo '会报：Dropped refs/stash@{0}'
     echo "\n 【亲，检查一下有没有冲突】 "
 }
 
@@ -804,7 +805,7 @@ yy(){
     then
         git commit -m "$1"
     else
-        git commit -m "我是commit名——`date  +"%m月%d日%H:%M"`"
+        git commit -m "我是commit名__`date  +"%m月%d日%H:%M"`"
     fi
     git push
     cd -
