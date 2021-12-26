@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 " modeline， 一定要在最后？
 " vim: set filetype=vim :
 
@@ -8,6 +9,19 @@
         " modeline默认 on (但对于root用户，反之，因为有可能执行有害的东西）
 
 
+=======
+
+" modeline， 一定要在最后？
+" vim: set filetype=vim :
+
+    " 1.没懂
+    " 2.autocmd
+    " 3. If you start editing a new file, and the 'modeline' option is on,
+        " a number of lines(默认是5) at the beginning and end of the file are checked for  modelines.
+        " modeline默认 on (但对于root用户，反之，因为有可能执行有害的东西）
+
+
+>>>>>>> Stashed changes
 
 let g:selecmode="mouse"
 
@@ -882,7 +896,10 @@ au BufNewFile,BufRead *.ahk  setf autohotkey
 
 echom '文件类型:'
 echom &filetype
+<<<<<<< Updated upstream
 echom  ' '
+=======
+>>>>>>> Stashed changes
 if &filetype == 'vim'
     nnoremap / msgg/^[^"].*
 " 防止检测filetype不准
