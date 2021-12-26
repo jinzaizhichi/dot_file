@@ -25,11 +25,14 @@ echom "文件类型输出结束】"
 
 au BufNewFile,BufRead *.ahk  setf autohotkey
 
+" ms: mark as searh, 回头敲's跳回来
+" https://stackoverflow.com/a/3760486/14972148
+" 据说map了slash会影响其他插件. 不过先用着吧
 if &filetype == 'vim'
-    nnoremap / msgg/^[^"]*
+    nnoremap / msgg/\v^[^"]*
 " 防止检测filetype不准
 elseif expand('%:t') == 'init.vim'
-    nnoremap / msgg/^[^"]*
+    nnoremap / msgg/\v^[^"]*
     " 如果filetype检测错误，自己在文件里加上：
             " modeline
             "  一定要在最后？
@@ -37,23 +40,23 @@ elseif expand('%:t') == 'init.vim'
 " vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk  setf autohotkey
 elseif &filetype == 'autohotkey'
     echo '检测到文件类型是ahk'
-    nnoremap / msgg/^[^;]*
+    nnoremap / msgg/\v^[^;]*
     " todo 装个插件
     " https://github.com/hnamikaw/vim-autohotkey
 elseif expand('%:t') == 'wf_key.ahk'
-    nnoremap / msgg/^[^;]*
+    nnoremap / msgg/\v^[^;]*
 
 elseif &filetype  == 'shell'
-    nnoremap / msgg/^[^#]*
+    nnoremap / msgg/\v^[^#]*
 else
     " vscode neovim无法识别filetype?
     " 暂时一锅乱炖
-    nnoremap / msgg/^[^#";(//)(/*)]*
+    nnoremap / msgg/\v^[^#";(//)(/*)]*
 endif
 
-nnoremap ? msgg/
-
-
+nnoremap ? msgg/\v
+" nnoremap / /\v
+cnoremap s/ s/\v
 
 let g:selecmode="mouse"
 
@@ -429,10 +432,10 @@ func ResetTimer()
     call timer_stop(s:current_timer)
   endif
   " 2秒
-  let s:current_timer = timer_start(2000, 'Highlight_Search_Off')
+  let s:current_timer = timer_start(4000, 'Highlight_Search_Off')
 endfunc
 
-nnoremap <silent> n n:call ResetTimer()<CR>
+nnoremap <silent> N N:call ResetTimer()<CR>
  " 自动取消高亮
 
 
@@ -1105,7 +1108,7 @@ set fencs=utf8,gbk,gb2312,gb18030
 
 
 
-" >>>---------------------------------------------------------------------  `1.` 基础设置
+" >>>`1.` 基础设置---------------------------------------------------------------------  
 " history存储容量
 set history=2000
 
