@@ -14,7 +14,7 @@ filetype plugin indent on " 实现了上面3行
                             " There is no need  to do ":filetype on" after ":syntax on".
 
 " If the file type is not detected automatically, or it finds the wrong type,
-" you can  add a modeline to your  file. 
+" you can  add a modeline to your  file.
 " for an IDL file use the command:
 " :set filetype=vim
 " 但我用笔记本时，root用户或者vscode-neovim使得modeline是off的，这时要靠这行：
@@ -912,40 +912,6 @@ let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 " vscode里 按ctrl 】也不会搜到comment的内容
 " Search_no_comment()
 
-<<<<<<< Updated upstream
-=======
-" echo "vim识别到文件类型如下："
-" echom &filetype
-" echo ' '
-
-au BufNewFile,BufRead *.ahk  setf autohotkey
-
-echom '文件类型:'
-echom &filetype
-echom  ' '
-if &filetype == 'vim'
-    nnoremap / msgg/^[^"].*
-" 防止检测filetype不准
-elseif expand('%:t') == 'init.vim'
-    nnoremap / msgg/^[^"]*
-    " 如果filetype检测错误，自己在文件里加上：
-            " modeline
-            "  一定要在最后？
-
-" vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk  setf autohotkey
-elseif &filetype == 'autohotkey'
-    echo '检测到文件类型是ahk'
-    nnoremap / msgg/^[^;]*
-    " todo 装个插件
-    " https://github.com/hnamikaw/vim-autohotkey
-elseif expand('%:t') == 'wf_key.ahk'
-    nnoremap / msgg/^[^;]*
-
-else
-    " 这么写，本地vscode打开ahk，还是#在生效
-    nnoremap / msgg/^[^#]*
-endif
->>>>>>> Stashed changes
 
 
 func! Wfprint_n()
