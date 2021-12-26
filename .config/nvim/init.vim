@@ -29,7 +29,11 @@ au BufNewFile,BufRead *.ahk  setf autohotkey
 " https://stackoverflow.com/a/3760486/14972148
 " 据说map了slash会影响其他插件. 不过先用着吧
 if &filetype == 'vim'
+<<<<<<< Updated upstream
     nnoremap / msgg/\v^[^"]*
+=======
+    nnoremap / msgg/^[^"]*
+>>>>>>> Stashed changes
 " 防止检测filetype不准
 elseif expand('%:t') == 'init.vim'
     nnoremap / msgg/\v^[^"]*
@@ -47,11 +51,19 @@ elseif expand('%:t') == 'wf_key.ahk'
     nnoremap / msgg/\v^[^;]*
 
 elseif &filetype  == 'shell'
+<<<<<<< Updated upstream
     nnoremap / msgg/\v^[^#]*
 else
     " vscode neovim无法识别filetype?
     " 暂时一锅乱炖
     nnoremap / msgg/\v^[^#";(//)(/*)]*
+=======
+    nnoremap / msgg/^[^#]*
+else
+    " vscode neovim无法识别filetype?
+    " 暂时一锅乱炖
+    nnoremap / msgg/^[^#";(//)(/*)]*
+>>>>>>> Stashed changes
 endif
 
 nnoremap ? msgg/\v
