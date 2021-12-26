@@ -1,4 +1,3 @@
-
 " modeline， 一定要在最后？
 " vim: set filetype=vim :
 
@@ -273,7 +272,7 @@ if exists('g:vscode')
     " nnoremap gd vaw<F12>
     " 不行
     " nnoremap zz ZZ
-    filetype on        " 检测文件类型  不会和vscode 打架吧
+    " filetype on        " 检测文件类型  不会和vscode 打架吧
 else
     " echo '没在用 vscode-neovim, 纯 nvim'
 
@@ -300,28 +299,24 @@ else
     set wrap    " vscode里, 要在setting.json设置warp
 
     nnoremap <F4> :UndotreeToggle<CR>
-    " [[==============================缩进==============================
-    " vscode上有插件自动处理，不用加这些:
-    "
-    " filetype 和 setlocal 一般成对出现？
-    " autocmd Filetype python setlocal et sta sw=4 sts=4
-    " Put them in vimfiles/ftplugin/python.vim (but change set to setlocal) and add filetype plugin on to .vimrc.
 
-    filetype on        " 检测文件类型
-    filetype indent on " 针对不同的文件类型采用不同的缩进格式
-    filetype plugin on " a file's plugin file is loaded (if there is one for the detected filetype).
-    filetype plugin indent on  " 启动自动补全
+    " vscode上有插件自动处理，不用加这些:
+    
+    
+
+    " filetype        on        " 检测文件类型
+    " filetype plugin on        " 针对不同的文件类型, load不同plugin
+    " filetype indent on        " 针对不同的文件类型采用不同的缩进格式
+    filetype plugin indent on " 实现了上面3行
+                              " There is no need  to do ":filetype on" after ":syntax on".
+
 
     set expandtab " 将Tab自动转化成空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
     set tabstop=4 " 设置Tab键等同的空格数
-
     set shiftwidth=4 " 每一次缩进对应的空格数
-
     set smarttab " insert tabs on the start of a line according to shiftwidth
     set shiftround " 用shiftwidth的整数倍， when indenting with '<' and '>'
-
     set softtabstop=4 " 按退格键时可以一次删掉 4 个空格
-
     " 如果要仅对python有效：
     " autocmd Filetype python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab shiftround
 
@@ -887,6 +882,7 @@ au BufNewFile,BufRead *.ahk  setf autohotkey
 
 echom '文件类型:'
 echom &filetype
+echom  ' '
 if &filetype == 'vim'
     nnoremap / msgg/^[^"].*
 " 防止检测filetype不准
