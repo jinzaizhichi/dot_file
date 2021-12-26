@@ -808,6 +808,7 @@ yy(){
     git push
     cd -
     zsh
+
 }
 
 sy(){
