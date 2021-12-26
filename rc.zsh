@@ -48,7 +48,8 @@ export TF_CPP_MIN_LOG_LEVEL=2
 
 
 # LANGUAGE: 是唯一不会被LC_ALL覆盖的同类环境变量？ 也优先于 LC_MESSAGES, and LANG.
-export LANGUAGE=en_US.UTF-8:zh_CN.UTF-8:en:zh  #  used only by GNU gettext, the system that provides translations of messages
+# export LANGUAGE=en_US.UTF-8:zh_CN.UTF-8  #  used only for messages (GNU gettext)
+export LANGUAGE=en_US.UTF-8  #  used only for messages (GNU gettext)
 export LANG=en_US.UTF-8   # 类似LC_ALL，对各种LC_类型起作用，但会被覆盖
 # export LC_MESSAGES=zh_CN.UTF-8 #  determines the language and encoding of messages
 export LC_MESSAGES=en_US.UTF-8 #  determines the language and encoding of messages
