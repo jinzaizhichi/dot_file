@@ -300,7 +300,7 @@ rd(){
          --after-context 2  \
          --smart-case "$*" |  less --pattern="$*"
                             # alias le="less  --quit-if-one-screen"
-                            
+
      echo '只搜 ~/d  /d'
 }
 
@@ -784,23 +784,50 @@ alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
 # alias y=sy
 
 y(){
-    chpwd_functions=()
+    chpwd_functions=()  # 别显示 所去目录下的文件
     cd ~/dot_file
-    echo "\n--------------1. stash-------------"
+    echo "\n-----------1. stash------------"
     git stash
     echo "\n-----------------2. pull-----------------"
-    git pull  # Update the branch to the latest code .   = fetch + merge? 还是只fetch?
-    echo "\n---------------------3. 合并 local changes into the pulled code----------"
+    git pull  # Update the branch to the latest code   = fetch + merge? 还是只fetch?
+    echo "\n---------------------3. 合并 ---------------------"
     git stash apply  # Merge your local changes into the latest code:
-    echo " "
+    # echo " "
+
+yy(){
     echo "\n--------------------------------4. add commit push三连-----------------------------------------------"
     git add --verbose .
-    # if [[ "$1" == "" ]] 容易chubug？一般都不这么写
+    # if [[ "$1" == "" ]] 容易出bug？一般都不这么写
     if [[ "$1" != "" ]]
     then
         git commit -m "$1"
     else
-        git commit -m "又改了"
+        git commit -m "改"
+    fi
+    git push
+    cd -
+    zsh
+}
+
+sy(){
+    echo '确定没有冲突时，才这么用'
+    chpwd_functions=()  # 别显示 所去目录下的文件
+    cd ~/dot_file
+    echo "\n-----------1. stash------------"
+    git stash
+    echo "\n-----------------2. pull-----------------"
+    git pull  # Update the branch to the latest code   = fetch + merge? 还是只fetch?
+    echo "\n---------------------3. 合并 ---------------------"
+    git stash apply  # Merge your local changes into the latest code:
+    echo " "
+    echo "\n--------------------------------4. add commit push三连-----------------------------------------------"
+    git add --verbose .
+    # if [[ "$1" == "" ]] 容易出bug？一般都不这么写
+    if [[ "$1" != "" ]]
+    then
+        git commit -m "$1"
+    else
+        git commit -m "改"
     fi
     git push
     cd -

@@ -301,7 +301,6 @@ else
     nnoremap <F4> :UndotreeToggle<CR>
 
     " vscode上有插件自动处理，不用加这些:
-<<<<<<< Updated upstream
 
 
 
@@ -311,17 +310,6 @@ else
     filetype plugin indent on " 实现了上面3行
                               " There is no need  to do ":filetype on" after ":syntax on".
 
-=======
-    
-    
-
-    " filetype        on        " 检测文件类型
-    " filetype plugin on        " 针对不同的文件类型, load不同plugin
-    " filetype indent on        " 针对不同的文件类型采用不同的缩进格式
-    filetype plugin indent on " 实现了上面3行
-                              " There is no need  to do ":filetype on" after ":syntax on".
-
->>>>>>> Stashed changes
 
     set expandtab " 将Tab自动转化成空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
     set tabstop=4 " 设置Tab键等同的空格数
