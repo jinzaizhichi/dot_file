@@ -801,14 +801,15 @@ y(){
 yy(){
     # echo "\n--------------------------------4. add commit push三连-----------------------------------------------"
     echo "\n--------------------------------add commit push三连-----------------------------------------------"
-    git add --verbose .
+    git add --all .
     if [[ "$1" != "" ]]  # if [[ "$1" == "" ]] 容易出bug？一般都不这么写
     then
         git commit --message "$1"
     else
         git commit --message "我是commit名__`date  +"%m月%d日%H:%M"`"
     fi
-    git push 2>&1 >~/.t/git_push的stdout
+    git push --quite  #  只在出错时有输出
+    # git push 2>&1 >~/.t/git_push的stdout  # 不行
     cd -
     zsh
 }
