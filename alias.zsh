@@ -808,7 +808,7 @@ yy(){
     else
         git commit --message "我是commit名__`date  +"%m月%d日%H:%M"`"
     fi
-    git push --quite  #  只在出错时有输出
+    git push --quiet  #  只在出错时有输出
     # git push 2>&1 >~/.t/git_push的stdout  # 不行
     cd -
     zsh
