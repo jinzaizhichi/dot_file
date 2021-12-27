@@ -810,7 +810,6 @@ yy(){
     git push &2>1 > ~/.t/git_push的输出
     cd -
     zsh
-
 }
 
 
