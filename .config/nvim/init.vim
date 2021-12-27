@@ -58,6 +58,7 @@ nnoremap ? msgg/\v
 " nnoremap / /\v
 cnoremap s/ s/\v
 
+
 let g:selecmode="mouse"
 
 set linebreak
