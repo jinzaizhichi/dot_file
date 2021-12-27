@@ -70,7 +70,7 @@ else
     nnoremap / msgg/\v^[^#";]*
 endif
 
-nnoremap ? /\V
+nnoremap ? /\v
 cnoremap s/ s/\v
 " endls===================================================================<_<_< 1.
 
