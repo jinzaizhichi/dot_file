@@ -804,7 +804,7 @@ yy(){
     git add --verbose  --all .
     if [[ "$1" != "" ]]  # if [[ "$1" == "" ]] 容易出bug？一般都不这么写
     then
-        git commit --verbose --message "$1"
+        git commit  --message "$1"
     else
         git commit --message "我是commit名__`date  +"%m月%d日%H:%M"`"
     fi
