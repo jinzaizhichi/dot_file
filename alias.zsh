@@ -806,9 +806,10 @@ yy(){
     git add --verbose  --all .
     if [[ "$1" != "" ]]  # if [[ "$1" == "" ]] 容易出bug？一般都不这么写
     then
-        git commit  --message "$1"
+        # 不加--all时，如过github有些文件，而本地删掉了，则github上不想要的文件 还在
+        git commit --all --message "$1"
     else
-        git commit --message "我是commit名__`date  +"%m月%d日%H:%M"`"
+        git commit --all --message "我是commit名__`date  +"%m月%d日%H:%M"`"
     fi
     git push --quiet  #  只在出错时有输出
     # git push 2>&1 >~/.t/git_push的stdout  # 不行
