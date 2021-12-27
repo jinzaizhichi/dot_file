@@ -42,9 +42,9 @@ alias gr='grep'
 
 
 ht(){
+    # 把这个视为“std重定向符”：  >&
     # 2>&1  : stderr > stdout
     # 2>1  1会被当作为文件名
-    # 把这个视为“std重定向符”：  >&
     # https://stackoverflow.com/questions/818255/in-the-shell-what-does-21-mean
 
     nohup $* 2>&1 &
@@ -807,7 +807,7 @@ yy(){
     else
         git commit --message "我是commit名__`date  +"%m月%d日%H:%M"`"
     fi
-    git push &2>1 > ~/.t/git_push的输出
+    git push 2>&1 > ~/.t/git_push的输出
     cd -
     zsh
 }
