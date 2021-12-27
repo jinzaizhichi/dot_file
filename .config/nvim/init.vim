@@ -1,4 +1,5 @@
-" >_>_>filetype not search comment========================================begin
+
+" >_>_>1.  filetype not search comment========================================begin
 " filetype        on        " 检测文件类型
 " filetype plugin on        " 针对不同的文件类型, load不同plugin
 " filetype indent on        " 针对不同的文件类型采用不同的缩进格式
@@ -22,6 +23,8 @@ set hlsearch " 高亮search
 " nnoremap <silent><leader>/ :nohls<CR> " 搜索时 不高亮
 nnoremap <Leader>h :set hlsearch!<CR>
 
+
+" >_>_>1.1 =====================================================begin
 " " 自动取消高亮
 " let s:current_timer = -1
 
@@ -39,8 +42,7 @@ nnoremap <Leader>h :set hlsearch!<CR>
 
 " nnoremap N N:call ResetTimer()<CR>
 " nnoremap n n:call ResetTimer()<CR>
- " 自动取消高亮
-
+" end========================================================<_<_<1.1
 
 
 " ms: mark as searh, 回头敲's跳回来
@@ -68,9 +70,12 @@ else
     nnoremap / msgg/\v^[^#";]*
 endif
 
-nnoremap ? msgg/\V
+nnoremap ? /\V
 cnoremap s/ s/\v
-" end=====================================================================<_<_<
+" endls===================================================================<_<_< 1.
+
+" U is seldom useful in practice,
+nnoremap U <C-R>
 
 let g:selecmode="mouse"
 
@@ -94,7 +99,6 @@ if has('autocmd') " ignore this section if your vim does not support autocommand
         " 4. Go back to the default group：  END
     augroup END
 endif
-
 
 " I want to redefine :e * as :tab *
 cnoreabbrev <expr> e getcmdtype() == ":" && getcmdline() == 'e' ? 'tabedit' : 'e'
@@ -169,8 +173,7 @@ vnoremap <Down> <Esc><C-I>
 "       $       表示结尾
 "       .       当前行
 "       .,$     from the current line to the end of the file.
-nnoremap <TAB> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W><Left><Left>
-
+nnoremap <F2> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W><Left><Left>
 
 
 
@@ -344,7 +347,7 @@ else
     " nnoremap gd :KiteGotoDefinition<CR>
 
     set  number relativenumber
-    nnoremap <F2> :call HideNumber()<CR>
+    nnoremap <Leader>n :call HideNumber()<CR>
     func HideNumber()
         if(&relativenumber == &number)
             " 叹号或者加inv：表示toggle
@@ -362,10 +365,6 @@ else
     set wrap    " vscode里, 要在setting.json设置warp
 
     nnoremap <F4> :UndotreeToggle<CR>
-
-
-
-
 
 
     " vscode上有插件自动处理，不用加这些:
@@ -472,16 +471,20 @@ call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug' " 为了能用:help plug-options
 
 
-if exists('g:vscode')
+" todo mobaxterm 2080ti上不行
+if !exists('g:vscode')
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'voldikss/vim-translator'
+
     " <Leader>t 翻译光标下的文本，在命令行回显
-    nnoremap <silent> <Leader>t <Plug>Translate
-    vnoremap <silent> <Leader>t <Plug>TranslateV
+    nnoremap <silent> <Leader>a <Plug>Translate
+    vnoremap <silent> <Leader>a <Plug>TranslateV
 
     " <Leader>h 翻译光标下的文本，在窗口中显示   h：here
-    " nnoremap <silent> <Leader>h <Plug>TranslateW
-    " vnoremap <silent> <Leader>h <Plug>TranslateWV
+    nnoremap <silent> <Leader>a <Plug>TranslateW
+    vnoremap <silent> <Leader>a <Plug>TranslateWV
     " Leader h被 set hlsearch！占用了
+    
 endif
 
 
@@ -489,7 +492,6 @@ Plug 'jonathanfilip/vim-lucius'
 Plug 'andymass/vim-matchup'
 Plug 'junegunn/vim-easy-align'
 
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 
 " 装了没啥变化，neovim本身就可以实现：多个窗口编辑同一个文件时，只要一个窗口保存了，
@@ -864,11 +866,6 @@ set pastetoggle=<F9>
 autocmd VimEnter * set autochdir
 
 
-" 数字加15
-nnoremap <C-k> <C-a>
-inoremap <C-a> <ESC>I
-nnoremap <C-a> ^h
-
 noremap <Leader>y "*y
 noremap <Leader>Y "+y
 " noremap <Leader>p "*p
@@ -1089,9 +1086,6 @@ set backspace=indent,eol,start
 
 set timeoutlen=800
 
-set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
-set enc=utf8
-set fencs=utf8,gbk,gb2312,gb18030
 
 
 
@@ -1141,122 +1135,55 @@ set viminfo^=%
 " Display Settings 展示/排版等界面格式设置
 "==========================================
 
-" 显示当前的行号列号
-set ruler
-" 在状态栏显示正在输入的命令
-set showcmd
-" 左下角显示当前vim模式
-set showmode
-
-" 没啥用，文字容易跑走
-" 在上下移动光标时，光标的上方或下方至少会保留显示的行数
-" set scrolloff=7
+set ruler  " 显示当前的行号列号
+set showmatch  " 括号配对情况, 跳转并高亮一下匹配的括号
+set matchtime=5  " How many tenths of a second to blink when matching brackets
 
 
-
-" 括号配对情况, 跳转并高亮一下匹配的括号
-set showmatch
-" How many tenths of a second to blink when matching brackets
-set matchtime=5
-
-
-
-" Turn off search wrapping:
-" set nowrapscan
-" It'll give an error and stop at both the top and bottom of the buffer:
-" E384: search hit TOP without match for: set
-" E385: search hit BOTTOM without match for: set
-
-set incsearch " 增量搜索模式,随着键入即时搜索
-set ignorecase " 搜索时忽略大小写 , 但,
-" 敲了大写字母时, 仍大小写敏感:
+set nowrapscan  " search时，到了顶部/底部，别再跑
 set smartcase
 
 " 代码折叠
-set foldenable
 set foldmethod=indent  " 初步尝试, 缩进最好
-set foldlevel=99
+" set foldlevel=99
 
 
-" nnoremap <F1> :set number! number?<CR>
-" 开了这个, 按F 1还是去不掉相对行号, 除非进入insert mode
-" 相对行号: 行号变成相对，可以用 nj/nk 进行跳转
-" set relativenumber number
-" au FocusLost * :set norelativenumber number
-" au FocusGained * :set relativenumber
-" 插入模式下用绝对行号, 普通模式下用相对
-" autocmd InsertEnter * :set norelativenumber number
-" autocmd InsertLeave * :set relativenumber
-" func NumberToggle()
-    " if(&relativenumber == 1)
-        " set norelativenumber number
-    " else
-        " set relativenumber
-    " endif
-" endfunc
-" nnoremap <C-n> :call NumberToggle()<cr>
-
-
-"==========================================
-" FileEncode Settings 文件编码,格式
-"==========================================
-" 设置新文件的编码为 UTF-8
-set encoding=utf-8
 " 自动判断编码时，依次尝试以下编码：
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,eu
+set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1,big5,eu
+set fencs=utf8,gbk,gb2312,gb18030
 
-" http://stackoverflow.com/questions/13194428/is-better-way-to-zoom-windows-in-vim-than-zoomwin
-" Zoom / Restore window.
-func s:ZoomToggle() abort
-        if exists('t:zoomed') && t:zoomed
-                execute t:zoom_winrestcmd
-                let t:zoomed = 0
-        else
-                let t:zoom_winrestcmd = winrestcmd()
-                resize
-                vertical resize
-                let t:zoomed = 1
-        endif
-endfunc
-command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> <Leader>z :ZoomToggle<CR>
-
-
-" 命令行模式增强，ctrl - a到行首， -e 到行尾
+nnoremap <C-a> ^
+inoremap <C-a> <ESC>I
 cnoremap <C-a> <Home>
+
+nnoremap <C-e> $
+inoremap <C-e> <ESC>A
 cnoremap <C-e> <End>
 
 
-" tab 操作
 " http://stackoverflow.com/questions/2005214/switching-to-a-particular-tab-in-vim
 
-map <leader>th :tabfirst<cr>
-map <leader>tl :tablast<cr>
-map <leader>tj :tabnext<cr>
-map <leader>tk :tabprev<cr>
-map <leader>tn :tabnext<cr>
-map <leader>tp :tabprev<cr>
-map <leader>te :tabedit<cr>
-map <leader>td :tabclose<cr>
-map <leader>tm :tabm<cr>
+map <leader>th :tabprev<cr>
+map <leader>tl :tabnext<cr>
 
 " normal模式下切换到确切的tab
 noremap <leader>1 1gt
 noremap <leader>2 2gt
 noremap <leader>3 3gt
 noremap <leader>4 4gt
-noremap <leader>0 :tablast<cr>
 
 " Toggles between the active and last active tab "
 " The first tab is always 1 "
 let g:last_active_tab = 1
-" nnoremap <leader>gt :execute 'tabnext ' . g:last_active_tab<cr>
-" nnoremap <silent> <c-o> :execute 'tabnext ' . g:last_active_tab<cr>
-" vnoremap <silent> <c-o> :execute 'tabnext ' . g:last_active_tab<cr>
 nnoremap <silent> <leader>tt :execute 'tabnext ' . g:last_active_tab<cr>
-autocmd TabLeave * let g:last_active_tab = tabpagenr()
+autocmd TabLeave * let g:last_active_tab = tabpagenr()  " tabpagenr(): 换取当前tab的序号
+" autocmd [group] {event} {pat} {cmd}
 
 
+cnoremap ,tc tabedit ~/dot_file/tmux_tools_wf/tmux.conf
+cnoremap ,in tabedit ~/dot_file/.config/nvim/init.vim
+cnoremap ,al tabedit ~/dot_file/alias.zsh
+cnoremap ,s tabedit ~/dot_file/rc.zsh
 
 "缩进后自动选中，方便再次操作
 vnoremap < <gv
@@ -1375,3 +1302,164 @@ xnoremap sa <Plug>(operator-sandwich-add)
 " 加了没反应
 nnoremap sc <Plug>(operator-sandwich-add)
 
+" >_>_>coc补全==================================================================begin
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
+
+" Some servers have issues with backup files, see #649.
+set nowritebackup
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" 在前面的基础上，加上c
+set shortmess+=c  " Don't pass messages to |ins-completion-menu|.
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+
+" pumvisible(): Returns non-zero when the popup menu is visible
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+" 这是干啥的
+func! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunc
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" end=====================================================================<_<_<
+
+" 垃圾别用
+" >_>_>===================================================================begin
+" 没啥用，文字容易跑走
+" 在上下移动光标时，光标的上方或下方至少会保留显示的行数
+" set scrolloff=7
+" end=====================================================================<_<_<
