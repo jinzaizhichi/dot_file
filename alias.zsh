@@ -808,7 +808,7 @@ yy(){
     else
         git commit --message "我是commit名__`date  +"%m月%d日%H:%M"`"
     fi
-    git push 2>&1 >~/.t/git_push的输出
+    nohug git push 2>&1 >~/.t/git_push的输出
     cd -
     zsh
 }
