@@ -783,7 +783,8 @@ alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
 #y: yyds，我的配置yyds
 # alias y=sy
 
-y(){
+# get github
+gg(){
     chpwd_functions=()  # 别显示 所去目录下的文件
     cd ~/dot_file
     # echo "\n-----------1. stash，藏起本地修改（但忽略新增文件）------------"
@@ -798,6 +799,7 @@ y(){
     # echo "\n 【亲，检查一下有没有冲突】 "
 }
 
+# 我最新的配置 真是yyds
 yy(){
     # echo "\n--------------------------------4. add commit push三连-----------------------------------------------"
     echo "\n--------------------------------add commit push三连-----------------------------------------------"
@@ -1068,8 +1070,6 @@ mcd() {
 
 alias pi='pip3 install'
 alias pip='pip3'
-alias po=popd
-alias pu=pushd
 
 
 alias rm='nocorrect rm -Irv --preserve-root'
