@@ -1,29 +1,47 @@
-" modeline， 一定要在最后？
-" vim: set filetype=vim :
-
-    " 1.没懂
-    " 2.autocmd
-    " 3. If you start editing a new file, and the 'modeline' option is on,
-        " a number of lines(默认是5) at the beginning and end of the file are checked for  modelines.
-        " modeline默认 on (但对于root用户，反之，因为有可能执行有害的东西）
-
+" >_>_>filetype not search comment========================================begin
 " filetype        on        " 检测文件类型
 " filetype plugin on        " 针对不同的文件类型, load不同plugin
 " filetype indent on        " 针对不同的文件类型采用不同的缩进格式
 filetype plugin indent on " 实现了上面3行
-                            " There is no need  to do ":filetype on" after ":syntax on".
+                            " there is no need  to do ":filetype on" after ":syntax on".
 
-" If the file type is not detected automatically, or it finds the wrong type,
+" if the file type is not detected automatically, or it finds the wrong type,
 " you can  add a modeline to your  file.
-" for an IDL file use the command:
+" for an idl file use the command:
 " :set filetype=vim
 " 但我用笔记本时，root用户或者vscode-neovim使得modeline是off的，这时要靠这行：
 filetype detect
-echom "文件类型是"
-echom &filetype
-echom "文件类型输出结束】"
+" echom "文件类型是"
+" echom &filetype
+" echom "文件类型输出结束】"
 
-au BufNewFile,BufRead *.ahk  setf autohotkey
+
+let mapleader =" "
+
+set hlsearch " 高亮search
+" nnoremap <silent><leader>/ :nohls<CR> " 搜索时 不高亮
+nnoremap <Leader>h :set hlsearch!<CR>
+
+" " 自动取消高亮
+" let s:current_timer = -1
+
+" func Highlight_Search_Off(timerId)
+"   set hlsearch!
+" endfunc
+
+" func ResetTimer()
+"   if s:current_timer > -1
+    " call timer_stop(s:current_timer)
+"   endif
+"   " 2秒
+"   let s:current_timer = timer_start(1000, 'Highlight_Search_Off')
+" endfunc
+
+" nnoremap N N:call ResetTimer()<CR>
+" nnoremap n n:call ResetTimer()<CR>
+ " 自动取消高亮
+
+
 
 " ms: mark as searh, 回头敲's跳回来
 " https://stackoverflow.com/a/3760486/14972148
@@ -33,13 +51,9 @@ if &filetype == 'vim'
 " 防止检测filetype不准
 elseif expand('%:t') == 'init.vim'
     nnoremap / msgg/\v^[^"]*
-    " 如果filetype检测错误，自己在文件里加上：
-            " modeline
-            "  一定要在最后？
 
 " vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk  setf autohotkey
 elseif &filetype == 'autohotkey'
-    echo '检测到文件类型是ahk'
     nnoremap / msgg/\v^[^;]*
     " todo 装个插件
     " https://github.com/hnamikaw/vim-autohotkey
@@ -51,13 +65,12 @@ elseif &filetype  == 'zsh'
 else
     " vscode neovim无法识别filetype?
     " 暂时一锅乱炖
-    nnoremap / msgg/\v^[^#";(//)(/*)]*
+    nnoremap / msgg/\v^[^#";]*
 endif
 
-nnoremap ? msgg/\v
-" nnoremap / /\v
+nnoremap ? msgg/\V
 cnoremap s/ s/\v
-
+" end=====================================================================<_<_<
 
 let g:selecmode="mouse"
 
@@ -392,7 +405,6 @@ else
 
     " ==============================缩进==============================]]
 
-    noremap <silent><leader>/ :nohls<CR> " 搜索时 不高亮
     " vscode里不行
     " nnoremap zz :wq<C-R>
     " inoremap zz <ESC>:wq<CR>
@@ -415,31 +427,8 @@ else
     autocmd FileType c,cpp,javascript,python,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 
-    set hlsearch " 高亮search命中的文本
-    " 要在设定颜色主题后面，覆盖颜色主题里面的设置
 
 endif
-
-
- " 自动取消高亮
-let s:current_timer = -1
-
-func Highlight_Search_Off(timerId)
-  set nohlsearch
-endfunc
-
-func ResetTimer()
-  if s:current_timer > -1
-    call timer_stop(s:current_timer)
-  endif
-  " 2秒
-  let s:current_timer = timer_start(4000, 'Highlight_Search_Off')
-endfunc
-
-nnoremap <silent> N N:call ResetTimer()<CR>
- " 自动取消高亮
-
-
 
 
 nnoremap yf ggyG<C-O>  " 让光标看着没动
@@ -452,10 +441,6 @@ nnoremap vf ggVGp:echo"已粘贴之前复制的内容"<CR>
 
 " vscode里不行，别试了:
 " inoremap yf <Esc>ggyG<C-O>
-
-let mapleader =" "
-" https://stackoverflow.com/questions/54787831/map-space-to-leader-in-vim
-
 
 " Lazy loading, my preferred way, as you can have both [避免被PlugClean删除没启动的插件]
 " https://github.com/junegunn/vim-plug/wiki/tips
@@ -487,14 +472,17 @@ call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug' " 为了能用:help plug-options
 
 
-Plug 'voldikss/vim-translator'
-" <Leader>t 翻译光标下的文本，在命令行回显
-nmap <silent> <Leader>t <Plug>Translate
-vmap <silent> <Leader>t <Plug>TranslateV
+if exists('g:vscode')
+    Plug 'voldikss/vim-translator'
+    " <Leader>t 翻译光标下的文本，在命令行回显
+    nnoremap <silent> <Leader>t <Plug>Translate
+    vnoremap <silent> <Leader>t <Plug>TranslateV
 
-" <Leader>h 翻译光标下的文本，在窗口中显示   h：here
-nmap <silent> <Leader>h <Plug>TranslateW
-vmap <silent> <Leader>h <Plug>TranslateWV
+    " <Leader>h 翻译光标下的文本，在窗口中显示   h：here
+    " nnoremap <silent> <Leader>h <Plug>TranslateW
+    " vnoremap <silent> <Leader>h <Plug>TranslateWV
+    " Leader h被 set hlsearch！占用了
+endif
 
 
 Plug 'jonathanfilip/vim-lucius'
@@ -589,11 +577,10 @@ Plug 'sisrfeng/toggle-bool'
 noremap <leader>r :ToggleBool<CR>
 
 Plug 'mbbill/undotree'
-
-if has("persistent_undo")
+if has('persistent_undo')
     let target_path = expand('~/.undodir')
-    " let target_path = expand('~/.undodir_nvim_wf')
-    if !isdirectory(target_path) " if the location does not exist.
+    " let target_path = expand('~/.undo_dir_nvim_wf')
+    if !isdirectory(target_path)
         call mkdir(target_path, "p", 0700) " create the directory and any parent directories
     endif
 
@@ -1109,7 +1096,7 @@ set fencs=utf8,gbk,gb2312,gb18030
 
 
 
-" >>>`1.` 基础设置---------------------------------------------------------------------  
+" >>>`1.` 基础设置---------------------------------------------------------------------
 " history存储容量
 set history=2000
 
@@ -1128,25 +1115,12 @@ let s:noSwapSuck_file = fnamemodify($MYVIMRC, ":p:h")  . "/noswapsuck.vim"    " 
             " :echo expand('%:p:h')   |" directory containing file ('head')
             " :echo expand('%:t')     |" name of file ('tail')
 exe 'source ' . s:noSwapSuck_file
- " 这样不行： source  . s:noSwapSuck_file
+         " 这样不行： source  . s:noSwapSuck_file
+" 取代了这些：
+    " set nobackup  取消备份。 视情况自己改
+    " set noswapfile  关闭交换文件
 
-        " 取代了这些：
-                " set nobackup  取消备份。 视情况自己改
-                " set noswapfile  关闭交换文件
 
-
-" TODO: remove this, use gundo
-" create undo file
-" if has('persistent_undo')
-    " " How many undos
-    " set undolevels=1000
-    " " number of lines to save for undo
-    " set undoreload=10000
-    " " So is persistent undo ...
-    " "set undofile
-    " set noundofile
-    " " set undodir=/tmp/vimundo/
-" endif
 
 
 " 突出显示当前行
