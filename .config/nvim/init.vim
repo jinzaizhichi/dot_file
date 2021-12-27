@@ -71,11 +71,19 @@ else
 endif
 
 nnoremap ? /\v
-cnoremap s/ s/\v
-" endls===================================================================<_<_< 1.
+if !exists('g:vscode')
+    cnoremap s/ s/\v
+endif
+" end===================================================================<_<_< 1.
 
-" U is seldom useful in practice,
+" U is seldom useful in practice,U 本身的功能，不及C-R
 nnoremap U <C-R>
+
+set timeoutlen=400  " 主要影响imap
+inoremap jj <esc> 
+
+" set notimeout
+set ttimeout ttimeoutlen=10
 
 let g:selecmode="mouse"
 
@@ -198,10 +206,10 @@ noremap <BS> X
 " shift在ctrl上，加1 vs 减一，刚好
 nnoremap X <C-A>
 
+" 被coc占用了？
 " <C-X> 调自带的omnicomplete
 inoremap <C-F> <C-X><C-F>
 nnoremap <C-F> i<C-X><C-F>
-
 
 " 对于vscode-nvim：insert mode is being handled by vscode 所以<C-X>没反应
 
@@ -1031,9 +1039,12 @@ nnoremap - :call nerdcommenter#Comment('n', 'toggle')<CR>k
 " 重复了
 " autocmd filetype python nnoremap <C-c> :w <bar> !python % <CR>
 
-cnoremap <F1> call WfRun()<CR>
-inoremap <F1> <ESC>:call WfRun()<CR>
-nnoremap <F1> :call WfRun()<CR>
+
+if !exists('g:vscode')
+    cnoremap <C-R> call WfRun()<CR>
+    inoremap <C-R> <ESC>:call WfRun()<CR>
+endif
+nnoremap <C-R> :call WfRun()<CR>
 func! WfRun()
     exec "w"
     echo "wf_已保存"
@@ -1082,13 +1093,6 @@ set backspace=indent,eol,start
 " indent  allow backspacing over autoindent
 " eol     allow backspacing over line breaks (join lines)
 " start   allow backspacing over the start of insert; CTRL-W and CTRL-U stop once at the start of insert.
-
-
-set timeoutlen=800
-
-
-
-
 
 " >>>`1.` 基础设置---------------------------------------------------------------------
 " history存储容量
@@ -1310,8 +1314,7 @@ set encoding=utf-8
 " Some servers have issues with backup files, see #649.
 set nowritebackup
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
+" longer updatetime (default is 4000 ms = ) leads to  delays and poor user experience.
 set updatetime=300
 
 " 在前面的基础上，加上c
