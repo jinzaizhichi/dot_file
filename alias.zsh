@@ -794,7 +794,8 @@ y(){
     echo "\n---------------------3. stashed的东西并到 本地的当前代码 ---------------------"
     git stash pop  # Merge your local changes into the latest code, 并且在没有conflict时，删掉stash里的这个东西
     # echo '会报：Dropped refs/stash@{0}'
-    echo "\n 【亲，检查一下有没有冲突】 "
+    # echo "\n 【亲，检查一下有没有冲突】 "
+    # echo "\n 【亲，检查一下有没有冲突】 "
 }
 
 yy(){
