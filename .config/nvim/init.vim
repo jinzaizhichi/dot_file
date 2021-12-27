@@ -1,4 +1,3 @@
-
 " >_>_>1.  filetype not search comment========================================begin
 " filetype        on        " 检测文件类型
 " filetype plugin on        " 针对不同的文件类型, load不同plugin
@@ -201,7 +200,7 @@ inoremap <C-C> <C-V>
 
 " nnoremap <C-J>  " vscode里是切到terminal
 
-noremap <BS> X
+noremap <BS> <left>
 " normal模式：<C-X>  数字减1
 " shift在ctrl上，加1 vs 减一，刚好
 nnoremap X <C-A>
@@ -1309,7 +1308,7 @@ nnoremap sc <Plug>(operator-sandwich-add)
 " longer updatetime (default is 4000 ms = ) leads to  delays and poor user experience.
 set updatetime=300
 
-if !exists('g:vscode')
+if !exists('g:vscode') " or hostname() == 'redmi14-leo'  不要这样，起码保证ubuntu下的workflow一致
     " >_>_>coc补全==================================================================begin
 
     " 在前面的基础上，加上c
