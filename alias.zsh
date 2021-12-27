@@ -787,14 +787,13 @@ y(){
     chpwd_functions=()  # 别显示 所去目录下的文件
     cd ~/dot_file
     echo "\n-----------1. stash，藏起本地修改（但忽略新增文件）------------"
-    git stash
+    git stash --include-untracked --message="stash的message__`date  +"%m月%d日%H:%M"`"
     echo "\n-----------------2. pull, 拉远程的新代码-----------------"
     git pull  # Update the branch to the latest code   = fetch + merge? 还是只fetch?
     echo "\n如果giithub上领先于本地，那么 此时本地的修改还被藏着，现在打开本地文件和github上一样？"
     echo "\n---------------------3. stashed的东西并到 本地的当前代码 ---------------------"
     git stash pop  # Merge your local changes into the latest code, 并且在没有conflict时，删掉stash里的这个东西
     # echo '会报：Dropped refs/stash@{0}'
-    # echo "\n 【亲，检查一下有没有冲突】 "
     # echo "\n 【亲，检查一下有没有冲突】 "
 }
 
@@ -808,7 +807,7 @@ yy(){
     else
         git commit --message "我是commit名__`date  +"%m月%d日%H:%M"`"
     fi
-    git push
+    git push &2>1 > ~/.t/git_push的输出
     cd -
     zsh
 
