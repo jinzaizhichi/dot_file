@@ -1,3 +1,4 @@
+nnoremap ko O
 " >_>_>1. filetype not search comment========================================begin
 " filetype        on        " 检测文件类型
 " filetype plugin on        " 针对不同的文件类型, load不同plugin
