@@ -1,4 +1,4 @@
-" >_>_>1.  filetype not search comment========================================begin
+" >_>_>1. filetype not search comment========================================begin
 " filetype        on        " 检测文件类型
 " filetype plugin on        " 针对不同的文件类型, load不同plugin
 " filetype indent on        " 针对不同的文件类型采用不同的缩进格式
@@ -79,7 +79,7 @@ endif
 nnoremap U <C-R>
 
 set timeoutlen=400  " 主要影响imap
-inoremap jj <esc> 
+inoremap jj <esc>
 
 " set notimeout
 set ttimeout ttimeoutlen=10
@@ -284,13 +284,14 @@ if exists('g:vscode')
     " nmap gm g$
     " nnoremap M
 
-    " vscode里，这样搞只退出插件，文件还打开着
-    " noremap qq :q!<CR>
-    " vscode-neovim 有map ZQ <Cmd>Quit!<CR>  但这么map还是不行
-    " noremap qq ZQ
+    nnoremap ss <Cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>
+    nnorem qq <Cmd>call VSCodeNotify('workbench.action.revertAndCloseActiveEditor')<CR>
+    " noremap qq :q!<CR>  vscode里，这样搞只退出插件，文件还打开着
+
 
 else
-    noremap qq :q!<CR>
+    nnoremap ss :wq<CR>
+    nnoremap qq :q!<CR>
     " nnoremap q :wq<CR>  按一次q要等一会才退出， 不如连续按2次快
     " inoremap qq <ESC>:wq<CR>  别这么干，容易在编辑时敲错
 
@@ -490,7 +491,7 @@ if !exists('g:vscode')
     nnoremap <silent> <Leader>a <Plug>TranslateW
     vnoremap <silent> <Leader>a <Plug>TranslateWV
     " Leader h被 set hlsearch！占用了
-    
+
 endif
 
 
@@ -1322,7 +1323,7 @@ if !exists('g:vscode') " or hostname() == 'redmi14-leo'  不要这样，起码�
     else
     set signcolumn=yes
     endif
-            
+
 
     " pumvisible(): Returns non-zero when the popup menu is visible
     inoremap <silent><expr> <TAB>
