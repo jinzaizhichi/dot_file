@@ -86,7 +86,7 @@ endif
 " end===================================================================<_<_< 1.
 
 " U is seldom useful in practice,U 本身的功能，不及C-R
-nnoremap U <C-R>
+nnoremap <M-u> <C-R>
 
 set timeoutlen=400  " 主要影响imap
 inoremap jj <esc>
