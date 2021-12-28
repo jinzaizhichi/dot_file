@@ -1143,8 +1143,8 @@ set showmatch  " 括号配对情况, 跳转并高亮一下匹配的括号
 set matchtime=5  " How many tenths of a second to blink when matching brackets
 
 
-set nowrapscan  " search时，到了顶部/底部，别再跑
-set smartcase
+set nowrapscan  " serch时，到了顶部/底部，别再跑
+set ignorecase smartcase
 
 " 代码折叠
 set foldmethod=indent  " 初步尝试, 缩进最好
