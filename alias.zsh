@@ -1,6 +1,8 @@
 # The shell evaluation order (per POSIX) for the entities in your question is:
 # aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
 
+alias names='~/dot_file/massren'
+alias rename='~/dot_file/massren'
 #  never use normal sudo to start graphical applications as root
 # 否则普通用户可能无法登陆（文件变成root的了）
 #
@@ -60,6 +62,7 @@ ht(){
 
 
 # # 敲`zsh 某.sh`时，这里的东西全都不起作用. 覆盖built-in命令也不怕翻车
+# 博客也有教覆盖的：https://www.tecmint.com/create-and-use-bash-aliases-in-linux/
 # alias r='~/.local/bin/tldr'  # pip安装的，比apt安装的显示好些 但不翻墙就有时连不上网。。。。。翻了也用不了....
 h(){
     /usr/bin/tldr $1 | bat
@@ -245,8 +248,6 @@ alias tvsc='t'
 # 作为alias 可以同名
 alias rg='\rg --pretty --hidden --smart-case'
 
-alias w=bat
-alias tw=t
 
 
 # 用了这个不能自动补全
@@ -497,9 +498,48 @@ chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 
 #==============================ls相关===================================]]
 
+
+# >_>_>edit want python trash=============================================begin
+# w: want
+# e: edit (nvim或code)
+# p: python
+# b: pudb
+# t: trash
+
+alias w=bat
+
+alias e='nvim'
+# edit diff
+alias ed='nvim -d'
+if [[ $HOST != 'redmi14-leo' ]] && [[ -z "$TMUX" ]];then  # 远程服务器且用vscode
+    alias e='code'
+    alias ed='code -d'
+fi
+
+# ed是一个没啥用的系统bin
+alias vd='nvim -d'
+
+alias ep='e'
+alias eb='e'
+# alias epe='e'  # 太复杂了，先不搞
+
+
+t() {
+    for my_file in $*
+    do
+        ori=`basename ${my_file}`
+        trash=`basename ${my_file}`_`date  +"%m月%d日%H:%M:%S"`
+        mv ${my_file} ~/.t/${trash} && echo "${ori}扔到了~/.t"
+    done
+}
+
+alias tw=t
+alias te=t
+alias tp=t
+alias tb=t
+
 # 第一次用才需要
 # alias p='python3 -W ignore -m pretty_errors'
-
 p(){
     chpwd_functions=()
     \python3 -W ignore $*  # 打断后就不再执行下面几行
@@ -507,40 +547,25 @@ p(){
 }
 alias python='p'
 alias python3='p'
-alias pv='p'
 
-# alias tp='t'  # 不行,下面有个tp： vim tmp.py
+alias pb='p'
+alias pe='p'
+alias pw='p'
 
-# t: trash
-# w: want
-# v: vim
-# p: python
-# b: pudb
-alias tw=t
-alias tv=t
-alias tp=t
-alias tb=t
+alias b='pudb3'
 
-# vw vp vb
-alias vs='code'
-alias v='code'
-alias vw='code'
+alias bp='b'
+alias be='b'
+alias bw='b'
 
-alias vp='code'   #p wf_run.py 跳到开头加个v，不用删p就能编辑
-# pw pv pb
-# bw bv bp
+alias ee='p'
+# ahk has set:
+    # insert & v::
+    # send, ^a
+    # send,v
+    # return
 
-alias tv='t'
-
-# insert & v::
-# send, ^a
-# send,v
-# return
-
-# alias vv='p'
-
-# 这个还在生效，注意别搞混。可借鉴
-alias di='code -d'
+# want python pudb edit===================================================<_<_<
 
 # ~/.antigen/bundles/sorin-ionescu/prezto/modules/utility
 md(){
@@ -562,38 +587,6 @@ cl(){
     echo $((`\ls -l | wc -l`-1))
     }
 
-
-
-# t() {
-#     the_time=$(date  +"%H时%M分S%-%m月%d日")
-#     #trash_bin1
-#     tb1=~/.t/${the_time} # 命令的结果 赋值给变。.shell的数据类型只有字符串
-#     if [ -d ${tb1} ]; then                                  # [ your_code ]才对  [your_code]少了空格
-#         tb2=~/.t/${the_time}_2
-#         if [ -d "${tb2}" ]; then
-#             #万一 时间__3 也存在，就会报错，别移动文件
-#             tb3=~/.t/${the_time}_3
-#             echo "新建垃圾箱： ${tb3}"  #这里如果有单引号，$后面的值就取不出来
-#             md ${tb3} && mv -ft ${tb3} $*
-#             echo '就算看见"已存在 某某"，还是会移到这个目录，不会新建目录--时间_4'
-#         else
-#             echo "新建垃圾箱： ${tb2}"
-#             md ${tb2} && mv -ft ${tb2} $*
-#         fi
-#     else
-#         echo "新建垃圾箱：${tb1}"
-#         md ${tb1} ; mv -ft ${tb1} $*
-#     fi
-#     # 星号通配失败时，就算加了分号,后面的命令也不会执行"
-# }
-t() {
-    for my_file in $*
-    do
-        ori=`basename ${my_file}`
-        trash=`basename ${my_file}`_`date  +"%m月%d日%H:%M:%S"`
-        mv ${my_file} ~/.t/${trash} && echo "${ori}扔到了~/.t"
-    done
-}
 
 
 
@@ -733,28 +726,6 @@ alias scp='scp -r'
 # p
 # x
 
-# e for edit
-
-# 不用考虑windows
-if [[ $HOST == 'redmi14-leo' ]];then  # 本地笔记本
-    alias e='nvim'
-else  # 远程服务器
-    alias e='vim'
-fi
-alias vpv='vim'
-alias vpp='vim'
-# alias vb='vim'  修改别名 占用了
-alias vbv='vim'
-
-alias pvp='python'
-alias pvv='python'
-alias pbv='python'
-alias pbp='python'
-alias pb='python'
-
-alias bp='b'
-alias bv='b'
-
 
 alias sa='chmod -R 777'  #share to all
 alias t_a='t *'
@@ -891,8 +862,6 @@ alias gb='echo -e "\033[?25h"'
 #加了这行导致./build_ops.sh等执行不了
 #alias alias -s sh=vi
 #大小写不敏感  If you want to ignore .gitignore and .hgignore, but still take .ignore into account, use -U
-alias b='pudb3'
-alias db=pudb3
 alias c=cp
 alias cp='cp -ivr'
 alias c.='cp -ivr -t `pwd`'
@@ -1035,8 +1004,6 @@ th(){ touch $1.n }
 #$ echo l*
 #l*
 
-alias fsh-alias=fast-theme
-alias ftp='noglob ftp'
 gc(){
     if [[ -z ${ALL_PROXY} ]]; then  # -z: 看是否empty
         echo '没开代理'
@@ -1056,7 +1023,28 @@ hl(){
  }
 
 alias http-serve='python3 -m http.server'
-alias i='curl cip.cc'
+
+# check ip
+cip(){
+curl --show-error --silent cip.cc 2> ~/.t/curl_cip.cc.out
+OUT=`cat ~/.t/curl_cip.cc.out`
+# string contain substring? shell处理字符串切片
+    # string='My string';
+    # if [[ $string =~ "My" ]]; then
+    #     echo "It's there!"
+    # fi
+if [[ $OUT == *"Recv failure"* ]];then
+    echo "curl cip.cc 的结果 >_> $OUT"
+    unset ALL_PROXY &&  echo "\n代理挂了，切回无代理" 
+    INDEX=0
+else
+
+fi
+# source ./apt_source.sh
+# source ./apt_source.sh
+
+}
+
 alias k='kill -9'
 
 
@@ -1101,7 +1089,6 @@ alias rm='nocorrect rm -Irv --preserve-root'
 # alias o='source ~/.zshrc'  # 有时source后，alias就算在文件中被删了，还在"
 alias o='zsh'  # 有时source后，alias就算在文件中被删了，还在"
 
-alias sftp='noglob sftp'
 
 alias to=htop
 alias sm='htop --user=`whoami` --delay=30 --no-colour --tree'  # system monitor
@@ -1109,7 +1096,6 @@ alias top=htop
 alias toc='htop -s %cpu'
 alias tom='htop -s %mem'
 
-alias vd='vim -d'
 alias wg='axel'
 alias wget='echo "using axel" ; axel'
 alias wgname='wget -c -O "wf_need_to_change_name"'

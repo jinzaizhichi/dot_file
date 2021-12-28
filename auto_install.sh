@@ -52,12 +52,17 @@ ln -s ~/dot_file/.config/.ssh/config ~/.ssh/config
 [[ -d /d ]] && ln -s /d ~/d
 
 yes | unminimize
-yes | (apt install software-properties-common)
-yes | (add-apt-repository ppa:ultradvorka/ppa && apt -qq update)
-yes | (apt install sudo)
-alias ai='\sudo apt install -y -qq'
+yes | (apt install software-properties-common)  # software-properties-common提供了这个bin：  add-apt-repository
+yes | (add-apt-repository ppa:ultradvorka/ppa )
+yes | (add-apt-repository ppa:deadsnakes/ppa && apt -qq update )
+yes | (apt install sudo)  # 仅限于容器内用root。容器外，没sudo别乱搞
+alias ai='sudo apt install -y -qq'
 
-yes | (ai man  bat)
+ai libatlas-base-dev  gfortran libopenblas-dev liblapack-dev
+ai python3.9
+ai python3.9-distutils
+
+yes | (ai man bat)
 ln -s /usr/bin/batcat /usr/local/bin/bat
 
 yes | (ai aptitude ;aptitude update -q ; ai zsh; ai progress; ai libevent-dev)
@@ -163,30 +168,20 @@ git config --global pull.rebase true
 git config --global fetch.prune true
 git config --global diff.colorMoved zebra
 
-apt-get install libatlas-base-dev
-apt-get install gfortran libopenblas-dev liblapack-dev
-
-sudo apt install software-properties-common
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt update
-sudo apt install python3.9
-apt install python3.9-distutils
 
 # `没跑过`
 echo "这些没跑过"
-sudo apt-get install fortune cowsay
-sudo add-apt-repository --yes ppa:vincent-c/ponysay
-sudo apt-get update
-sudo apt-get install ponysay
-sudo snap install ponysay
+# sudo apt-get install fortune cowsay
+# sudo add-apt-repository --yes ppa:vincent-c/ponysay
+# sudo apt-get update
+# sudo apt-get install ponysay
+# sudo snap install ponysay
 echo "这些没跑过-----------------------------end"
 
 # 别改系统默认python啊，不然apt都会出问题
 # sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
 # sudo update-alternatives --config python3
 
-# 考虑这个：
-# alias p9='/usr/bin/python3.9'
 
 yes | (ai python3-pip)
 \apt autoremove -y -q

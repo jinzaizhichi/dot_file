@@ -17,6 +17,7 @@ bindkey -s '\e3' '~/3 \n'
 bindkey -s '\ed' '~/d \n'
 # m for modify，修改配置
 bindkey -s '\em' 'do \n'
+bindkey -s '\et' '~/.t \n'
 
 # todo
 # ^D在当前行 有字符时, 相当于Del
