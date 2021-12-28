@@ -86,8 +86,6 @@ h(){
 
 
 alias cle='clear -x'
-alias pipc='pqi' # pip change
-alias pq='pqi'  # PyQuickInstall
 q(){
     tree -L 2 --filelimit=50 $1 | peco
 }
@@ -248,6 +246,8 @@ alias tvsc='t'
 alias rg='\rg --pretty --hidden --smart-case'
 
 alias w=bat
+alias tw=t
+
 
 # 用了这个不能自动补全
 # 还是有点问题：
@@ -325,10 +325,9 @@ alias j='ln -s --interactive --verbose --logical'
 #logical: dereference TARGETs that are symbolic links
 #alias lk='ln -s'
 
-# co for command
+# cm for command
 # 代替where which type
 # -v for verbose, 不过好像没用
-alias co='whence -ca'
 alias cm='whence -ca'
 
 alias help=run-help
@@ -510,9 +509,28 @@ alias python='p'
 alias python3='p'
 alias pv='p'
 
-# alias tp='t'  # 下面有个tp： vim tmp.py
+# alias tp='t'  # 不行,下面有个tp： vim tmp.py
+
+# t: trash
+# w: want
+# v: vim
+# p: python
+# b: pudb
+alias tw=t
+alias tv=t
+alias tp=t
+alias tb=t
+
+# vw vp vb
+alias vs='code'
+alias v='code'
+alias vw='code'
+
+alias vp='code'   #p wf_run.py 跳到开头加个v，不用删p就能编辑
+# pw pv pb
+# bw bv bp
+
 alias tv='t'
-alias vw='vim'
 
 # insert & v::
 # send, ^a
@@ -672,11 +690,6 @@ alias vim='~/dot_file/nvim-linux64/bin/nvim'
 alias vi='~/dot_file/nvim-linux64/bin/nvim'   # 不用加-u 指定 因为默认就在~/.config/下
 # alias vim='~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim'
 
-alias vsc='code'
-alias vs='code'
-alias v='code'
-
-alias vp='code'   #p wf_run.py 跳到开头加个v，不用删p就能编辑
 
 # 用autohotkey敲\ec吧
 # ech(){
@@ -720,8 +733,14 @@ alias scp='scp -r'
 # p
 # x
 
+# e for edit
 
-
+# 不用考虑windows
+if [[ $HOST == 'redmi14-leo' ]];then  # 本地笔记本
+    alias e='nvim'
+else  # 远程服务器
+    alias e='vim'
+fi
 alias vpv='vim'
 alias vpp='vim'
 # alias vb='vim'  修改别名 占用了
@@ -878,8 +897,8 @@ alias c=cp
 alias cp='cp -ivr'
 alias c.='cp -ivr -t `pwd`'
 alias df='df -h'
-#e for exit 离开代理
-alias e='unset ALL_PROXY'
+# bie dai li，别代理
+alias bdl='unset ALL_PROXY; pqi use tuna; conda conf'
 
 alias dkr='docker'
 alias dkrps='docker ps -a --format "table {{.Names}} 我是分隔符 {{.Image}}  "'

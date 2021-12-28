@@ -304,7 +304,7 @@ else # set DISPLAY  under tmux
     
     # if [[ -z "$TMUX" ]]; then
     # -z： 变量为空，记作zero？
-    # -v: variable is set
+    # -v更好？  -v: variable is set
     if [[ -v "$TMUX" ]]; then
         session_name=`tmux display-message -p "#S"`
         # DIS_file='~/d/.DISPLAY_for_tmux'  别用~代表$HOME ,  $HOME 要在双引号里
