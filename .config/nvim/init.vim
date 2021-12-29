@@ -980,15 +980,20 @@ vnoremap <C-S>		<C-C>:update<CR>
 " endif
 
 
-nnoremap <C-Z> u|  " CTRL-Z is Undo
+" nnoremap <C-Z> u|  " CTRL-Z is Undo
 " 竖线前的空格，视为map后的一部分。上行等价于：
-" nnoremap <C-Z> u
-"" CTRL-Z is Undo
+nnoremap <C-Z> u
+" CTRL-Z is Undo
 
 inoremap <C-Z> <C-O>u
+inoremap <C-R> <C-O>u
 
-nnoremap <C-Y> <C-R>|   " CTRL-Y is Redo (although not repeat)
-inoremap <C-Y> <C-O><C-R>
+" CTRL-Y is Redo (although not repeat)
+nnoremap <C-Y> <C-R>
+" inoremap <C-Y> <C-O><C-R>
+inoremap <C-Y> <Esc><C-R>a
+
+
 
 " ---------------------------------------msvim-------------------------------]]
 
@@ -1051,15 +1056,7 @@ nnoremap - :call nerdcommenter#Comment('n', 'toggle')<CR>k
 
 
 
-
-" 重复了
-" autocmd filetype python nnoremap <C-c> :w <bar> !python % <CR>
-
-
-if !exists('g:vscode')
-    inoremap <C-R> <ESC>:call WfRun()<CR>
-endif
-nnoremap <C-R> :call WfRun()<CR>
+nnoremap <Leader>r :call WfRun()<CR>
 
 func! WfRun()
     exec "w"
