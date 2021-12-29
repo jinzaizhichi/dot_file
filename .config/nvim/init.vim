@@ -72,7 +72,7 @@ else
     nnoremap / msgg/\v^[^#";]*
 endif
 
-nnoremap ? /\v
+nnoremap ? /
 if !exists('g:vscode')
     " cnoremap s/ s/\v
     " vscode里，用了camp时，必须在光标后有字符才能正常map
@@ -161,12 +161,11 @@ cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'tab help' : '
 " map <C-Right>
 
 "  Use 系统粘贴板: "+
-" inoremap <C-V> "+p
+inoremap <C-V> "+p
 " set clipboard+=unnamedplus
 
-" 啥玩意?
-" nnoremap <C-V> p|  " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
-
+inoremap <C-P> <Esc>pa
+" 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
 
 noremap <Right> *
 noremap <Left> #
