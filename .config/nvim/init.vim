@@ -74,7 +74,7 @@ endif
 
 nnoremap ? /\v
 if !exists('g:vscode')
-    cnoremap s/ s/\v
+    " cnoremap s/ s/\v
     " vscode里，用了camp时，必须在光标后有字符才能正常map
     cnoremap ,bd tabedit ~/.zshrc
     cnoremap ,az tabedit ~/dot_file/auto_install.sh
@@ -489,9 +489,13 @@ call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug' " 为了能用:help plug-options
 
 
-" todo mobaxterm 2080ti上不行
 if !exists('g:vscode')
+    Plug 'preservim/nerdtree'
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
     Plug 'voldikss/vim-translator'
+    " todo mobaxterm 2080ti上不行
 
     " <Leader>t 翻译光标下的文本，在命令行回显
     nnoremap <silent> <Leader>a <Plug>Translate
@@ -508,6 +512,7 @@ endif
 Plug 'jonathanfilip/vim-lucius'
 Plug 'andymass/vim-matchup'
 Plug 'junegunn/vim-easy-align'
+
 
 
 Plug 'neoclide/coc.nvim', VimPlugConds(!exists('g:vscode'), {'branch': 'release'})
@@ -1051,7 +1056,6 @@ nnoremap - :call nerdcommenter#Comment('n', 'toggle')<CR>k
 
 
 if !exists('g:vscode')
-    cnoremap <C-R> call WfRun()<CR>
     inoremap <C-R> <ESC>:call WfRun()<CR>
 endif
 nnoremap <C-R> :call WfRun()<CR>
