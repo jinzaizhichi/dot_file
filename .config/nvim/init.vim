@@ -166,7 +166,7 @@ set clipboard=""  " 默认 就是这样
 if hostname() != 'redmi14-leo'
     set clipboard+=unnamedplus  " vim外也可以粘贴vim的registry了
 else
-    echo 'wls有bug， 别设unnamedplus‘
+    echo 'wls有bug， 别设unnamedplus'
 endif
 
 inoremap <C-P> <Esc>pa
