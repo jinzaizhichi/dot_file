@@ -160,9 +160,14 @@ cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'tab help' : '
 " map <C-Left>
 " map <C-Right>
 
-"  Use 系统粘贴板: "+
+"  Use 系统粘贴板  "+
 inoremap <C-V> "+p
-" set clipboard+=unnamedplus
+set clipboard=""  " 默认 就是这样
+if hostname() != 'redmi14-leo'
+    set clipboard+=unnamedplus  " vim外也可以粘贴vim的registry了
+else
+    echo 'wls有bug， 别设unnamedplus‘
+endif
 
 inoremap <C-P> <Esc>pa
 " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
