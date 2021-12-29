@@ -162,7 +162,7 @@ cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'tab help' : '
 
 "  Use 系统粘贴板: "+
 " inoremap <C-V> "+p
-set clipboard+=unnamedplus
+" set clipboard+=unnamedplus
 
 " 啥玩意?
 " nnoremap <C-V> p|  " 现在的ctrl v能在normal模式下直接粘贴系统粘贴板的内容
