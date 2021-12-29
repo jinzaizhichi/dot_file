@@ -2054,6 +2054,46 @@
         "fileHash": "c139aaaad20008619fd6eccbca59d67f106df4b9100f2e0b81f44bacd729c0465ec0144d32018f879116b74ed734f82d0490a2eb9933b5e5da478c540d0390e9"
       },
       "expiry": 1640858874509
+    },
+    "/data/wf/anaconda3/envs/full_conv/bin/python.interpreter.displayName.v7": {
+      "data": {
+        "displayName": "Python 3.8.12 64-bit ('full_conv': conda)",
+        "hash": "6b8d3318f889f7bc2db373445de09d152d58a97a14182546724ebccd84a0a360a8295367692bf860782faace2798d67fc04cc423a4968890105d4da5462436ae-1a48235f2601fd8ef1e60cd6b9386aef"
+      },
+      "expiry": 1640864480832
+    },
+    "/data/wf/anaconda3/envs/full_conv/bin/python.interpreter.Details.v7": {
+      "data": {
+        "fileHash": "6b8d3318f889f7bc2db373445de09d152d58a97a14182546724ebccd84a0a360a8295367692bf860782faace2798d67fc04cc423a4968890105d4da5462436ae",
+        "info": {
+          "architecture": 3,
+          "path": "/data/wf/anaconda3/envs/full_conv/bin/python",
+          "version": {
+            "options": {
+              "loose": false,
+              "includePrerelease": false
+            },
+            "loose": false,
+            "raw": "3.8.12-final",
+            "major": 3,
+            "minor": 8,
+            "patch": 12,
+            "prerelease": [
+              "final"
+            ],
+            "build": [],
+            "version": "3.8.12-final"
+          },
+          "sysPrefix": "/data/wf/anaconda3/envs/full_conv",
+          "fileHash": "6b8d3318f889f7bc2db373445de09d152d58a97a14182546724ebccd84a0a360a8295367692bf860782faace2798d67fc04cc423a4968890105d4da5462436ae",
+          "companyDisplayName": "Anaconda, Inc.",
+          "type": "Conda",
+          "envPath": "/data/wf/anaconda3/envs/full_conv",
+          "envName": "full_conv",
+          "displayName": "Python 3.8.12 64-bit ('full_conv': conda)"
+        }
+      },
+      "expiry": 1640864480868
     }
   },
   "coc-python|/mnt/d/bg背景提取_羽毛球": {

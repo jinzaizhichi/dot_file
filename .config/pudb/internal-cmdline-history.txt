@@ -36,3 +36,13 @@ image.shape
 725/3 * 8
 image.shape
 725/3
+preds
+preds.max
+preds.max()
+predpred
+pred
+pred.shape
+class_idx
+class_idx.shape
+pred.shape
+pred
