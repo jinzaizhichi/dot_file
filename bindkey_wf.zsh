@@ -152,12 +152,13 @@ bindkey '^ ' delete-word
 
 
 # ctrl p/n  和 上下箭头 只能找到以特定内容开头的历史命令，这个可以所有？
-#  <alt>+b, \eb, <esc>+b, <Meta>+b or M-b. These are all the same.
-#  e: 表示escap吧
+# These are all the same.
+    #  <alt>+b <esc>+b <Meta>+b   M-b \eb, 
+    #  e: 表示escap吧
 
-# bindkey -s '^j' 'echo "vscode在用" \n'  #别改^j ，^j和\n同体？
+# bindkey -s '^j' 'echo "vscode在用" \n'  #别改 ^j ，^j和\n同体？
 # bindkey '^m' 和回车键 同体
-#
+
 
 # \e表示Esc键，但敲alt也行. 先按Ecs键，再按字母，等价于：按下alt，再按字母
 bindkey -s '\eo' 'echo "待用" \n'
@@ -168,10 +169,10 @@ bindkey -s '\c-s' 'echo "待用" \n'
 bindkey -s "\C-q" 'echo "待用" \n'
 
 
-# 不生效：
+# 改了 不生效：
 bindkey -s "\C-q" 'echo "待用" \n'
-# (暂停输出) 不生效：
-bindkey -s '\c-s' 'echo "待用" \n'
+# (暂停输出) 
+bindkey -s '\c-s' 'echo "bindkey succeed?" \n'
 
 # todo
 # DIRSTACKSIZE=15 # Setup dir stack

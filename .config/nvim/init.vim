@@ -49,30 +49,31 @@ nnoremap <Leader>h :set hlsearch!<CR>
 " https://stackoverflow.com/a/3760486/14972148
 " 据说map了slash会影响其他插件. 不过先用着吧
 if &filetype == 'vim'
-    nnoremap / msgg/\v^[^"]*
+    nnoremap ? msgg/\v^[^"]*
 " 防止检测filetype不准
 elseif expand('%:t') == 'init.vim'
-    nnoremap / msgg/\v^[^"]*
+    nnoremap ? msgg/\v^[^"]*
 
 " vim的某个文件已经设置了:  au BufNewFile,BufRead *.ahk  setf autohotkey
 elseif &filetype == 'autohotkey'
-    nnoremap / msgg/\v^[^;]*
+    nnoremap ? msgg/\v^[^;]*
     " todo 装个插件
     " https://github.com/hnamikaw/vim-autohotkey
 elseif expand('%:t') == 'wf_key.ahk'
-    nnoremap / msgg/\v^[^;]*
+    nnoremap ? msgg/\v^[^;]*
 
 elseif &filetype  == 'zsh'
-    nnoremap / msgg/\v^[^#]*
+    nnoremap ? msgg/\v^[^#]*
 elseif &filetype  == 'json'
-    nnoremap / msgg/\v^[^/]*
+    nnoremap ? msgg/\v^[^/]*
 else
     " vscode neovim无法识别filetype?
     " 暂时一锅乱炖
     nnoremap / msgg/\v^[^#";]*
 endif
 
-nnoremap ? /
+" 记作global search
+nnoremap g/ msgg/
 if !exists('g:vscode')
     " cnoremap s/ s/\v
     " vscode里，用了camp时，必须在光标后有字符才能正常map
@@ -81,6 +82,7 @@ if !exists('g:vscode')
     cnoremap ,tc tabedit ~/dot_file/tmux_tools_wf/tmux.conf
     cnoremap ,in tabedit ~/dot_file/.config/nvim/init.vim
     cnoremap ,al tabedit ~/dot_file/alias.zsh
+    cnoremap ,et tabedit ~/d/tmp.py<CR>
     cnoremap ,s  tabedit ~/dot_file/rc.zsh
 endif
 " end===================================================================<_<_< 1.
@@ -109,7 +111,7 @@ if has('autocmd') " ignore this section if your vim does not support autocommand
     augroup wf_reload_init.vim
         " 2. Delete any old autocommands with
         autocmd!
-        " 3. Define the autocommands.   %表示当前文件
+        " 3. Define the autocommands.   %（百分号）表示当前文件
         " autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source % | echo '改了init.vim'
                 " Using :echom will save the output and let you run :messages to view it later.
         autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source % | echom '改了init.vim'
@@ -213,7 +215,8 @@ nnoremap <C-c> <C-v>
 inoremap <C-C> <C-V>
 
 
-" nnoremap <C-J>  " vscode里是切到terminal
+" vscode里是切到terminal
+" nnoremap <C-J>  
 
 noremap <BS> <left>
 " normal模式：<C-X>  数字减1
@@ -339,14 +342,26 @@ endif
 
 
 func TabToSpace()
+    " autocmd对neovim-vscode无效？
     " vscode 有个插件：takumii.tabspace
-    set ts=4 | set expandtab | %retab! | echo" Tab变成4空格"
+    set expandtab tabstop=4
+    " [range]retab 百分号% 表示全文
+    %retab!
+    echo "  Tab变成4空格"
 endfunc
-" 完整命令是endfunction，类似python的argparser？没有混淆时，任意缩写都可以？endfunc
+" 没有混淆时，任意缩写都可以？endfunc
 
-" autocmd对neovim-vscode无效？ 暂时手动敲吧
+" autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()" | exec ":echo 'tab变space'"
 autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()"
 
+func TwoSpace_to_FourSpace()
+    echo "  2个空格 变成tab"
+    set noexpandtab tabstop=2  
+    " [range]retab 百分号% 表示全文
+    %retab!
+    call TabToSpace()
+    
+endfunc
 
 
 " python文件中输入新行时#号注释不切回行首
@@ -449,10 +464,9 @@ else
     autocmd FileType c,cpp,javascript,python,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 
-
 endif
 
-
+" 让光标看着没动
 nnoremap yf ggyG<C-O>  " 让光标看着没动
 nnoremap df ggdG
 " p后面一般没有参数，所以pf不好。选中全文，一般只是为了替换。所以vf选中后，多了p这一步
@@ -905,10 +919,6 @@ inoremap ( (
 set completeopt=noinsert,menuone
 
 
-let g:spacevim_force_global_config = 0
-" let g:spacevim_snippet_engine = 'ultisnips'
-
-" disable neosnippet to avoid conflict with UltiSnips
 let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
 " custom plugin
 " let g:neosnippet#snippets_directory = '~/.SpaceVim.d/snippets'
