@@ -69,7 +69,7 @@ elseif &filetype  == 'json'
 else
     " vscode neovim无法识别filetype?
     " 暂时一锅乱炖
-    nnoremap / msgg/\v^[^#";]*
+    nnoremap ? msgg/\v^[^#";]*
 endif
 
 " 记作global search
@@ -77,6 +77,16 @@ nnoremap g/ msgg/
 if !exists('g:vscode')
     " cnoremap s/ s/\v
     " vscode里，用了camp时，必须在光标后有字符才能正常map
+    
+    " <expr> 指明了right hand side是表达式
+    cnoreabbrev <expr> e     getcmdtype() == ":" && getcmdline() == 'e'   ? 'tabedit' : 'e'
+    cnoreabbrev <expr> h     getcmdtype() == ":" && getcmdline() == 'h'   ? 'tab help' : 'h'
+    cnoreabbrev <expr> in    getcmdtype() == ":" && getcmdline() == 'in'  ? 'tabedit ~/dot_file/.config/nvim/init.vim' : 'in' 
+    cnoreabbrev <expr> s     getcmdtype() == ":" && getcmdline() == 's'   ? 'tabedit ~/dot_file/rc.zsh' : 's'
+    cnoreabbrev <expr> map   getcmdtype() == ":" && getcmdline() == 'map'   ? 'verbose map' : 'map'
+    cnoreabbrev <expr> imap   getcmdtype() == ":" && getcmdline() == 'imap'   ? 'verbose imap' : 'imap'
+    " abbrev 和map的区别，就行ahk里 hotkey和hotstring
+
     cnoremap ,bd tabedit ~/.zshrc
     cnoremap ,az tabedit ~/dot_file/auto_install.sh
     cnoremap ,tc tabedit ~/dot_file/tmux_tools_wf/tmux.conf
@@ -85,8 +95,13 @@ if !exists('g:vscode')
     cnoremap ,et tabedit ~/d/tmp.py<CR>
     cnoremap ,s  tabedit ~/dot_file/rc.zsh
 
-    cnoremap map  verbose map
-    cnoremap imap verbose imap
+
+    " abbrev
+    " >_>_>==========================================================begin
+    " 触发： space, Escape, or Enter.
+    abbrev nore noremap
+
+
 endif
 " end===================================================================<_<_< 1.
 
@@ -123,9 +138,7 @@ if has('autocmd') " ignore this section if your vim does not support autocommand
     augroup END
 endif
 
-" I want to redefine :e * as :tab *
-cnoreabbrev <expr> e getcmdtype() == ":" && getcmdline() == 'e' ? 'tabedit' : 'e'
-cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'tab help' : 'h'
+
 " 新tab打开help
 
 " 竖着分屏打开help
