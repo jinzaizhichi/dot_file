@@ -84,6 +84,9 @@ if !exists('g:vscode')
     cnoremap ,al tabedit ~/dot_file/alias.zsh
     cnoremap ,et tabedit ~/d/tmp.py<CR>
     cnoremap ,s  tabedit ~/dot_file/rc.zsh
+
+    cnoremap map  verbose map
+    cnoremap imap verbose imap
 endif
 " end===================================================================<_<_< 1.
 
@@ -1184,12 +1187,14 @@ set fencs=utf8,gbk,gb2312,gb18030
 
 nnoremap <C-a> ^
 inoremap <C-a> <ESC>I
-" vscode-neovim里用不了cmap？
-cnoremap <C-a> <Home>
 
 nnoremap <C-e> $
 inoremap <C-e> <ESC>A
-cnoremap <C-e> <End>
+
+if !exists('g:code')
+    cnoremap <C-a> <Home>
+    cnoremap <C-e> <End>
+endif
 
 
 " http://stackoverflow.com/questions/2005214/switching-to-a-particular-tab-in-vim
@@ -1221,22 +1226,11 @@ map Y y$
 " 复制选中区到系统剪切板中
 vnoremap <leader>y "+y
 
-" auto jump to end of select
-vnoremap <silent> y y`]
-vnoremap <silent> p p`]
-nnoremap <silent> p p`]
-
 
 " 选中并高亮最后一次插入的内容
 nnoremap gv `[v`]
 
-" select block
-nnoremap <leader>v V`}
 
-
-" 滚动Speed up scrolling of the viewport slightly
-" nnoremap <C-e> 2<C-e>
-" nnoremap <C-y> 2<C-y>  " 用作tmux的激活键了
 
 
 " Jump to start and end of line using the home row keys
@@ -1381,4 +1375,26 @@ endif
 " 没啥用，文字容易跑走
 " 在上下移动光标时，光标的上方或下方至少会保留显示的行数
 " set scrolloff=7
+" end=====================================================================<_<_<
+"
+"
+"
+" 没啥用吧
+" >_>_>===================================================================begin
+"
+" auto jump to end of select
+" 这是在vscode里 会到下一行？
+" vnoremap <silent> y y`]
+" vnoremap <silent> p p`]
+" nnoremap <silent> p p`]
+
+" select block
+" nnoremap <leader>v V`}
+"
+
+" 滚动Speed up scrolling of the viewport slightly
+" nnoremap <C-e> 6<C-e>
+" nnoremap <C-y> 8<C-y>
+"
+"
 " end=====================================================================<_<_<
