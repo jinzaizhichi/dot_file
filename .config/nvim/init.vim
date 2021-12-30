@@ -133,26 +133,26 @@ cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'tab help' : '
 " autocmd FileType help if winnr('$') > 2 | wincmd K | else | wincmd L | endif
 " augroup END
 
-" 1.4 LISTING MAPPINGS					*map-listing*
+" 1.4 LISTING MAPPINGS                  *map-listing*
 " When listing mappings the characters in the first two columns are:
 
-"       CHAR	MODE	~
-"      <Space>	Normal, Visual, Select and Operator-pending
-"     n	Normal
-"     v	Visual and Select
-"     s	Select
-"     x	Visual
-"     o	Operator-pending
-"     !	Insert and Command-line
-"     i	Insert
-"     l	":lmap" mappings for Insert, Command-line and Lang-Arg
-"     c	Command-line
-"     t	Terminal-Job
+"       CHAR    MODE    ~
+"      <Space>  Normal, Visual, Select and Operator-pending
+"     n Normal
+"     v Visual and Select
+"     s Select
+"     x Visual
+"     o Operator-pending
+"     ! Insert and Command-line
+"     i Insert
+"     l ":lmap" mappings for Insert, Command-line and Lang-Arg
+"     c Command-line
+"     t Terminal-Job
 "
 " Just before the {rhs} a special character can appear:
-"     *	indicates that it is not remappable
-"     &	indicates that only script-local mappings are remappable
-"     @	indicates a buffer-local mapping
+"     * indicates that it is not remappable
+"     & indicates that only script-local mappings are remappable
+"     @ indicates a buffer-local mapping
 
 
 " todo
@@ -230,7 +230,7 @@ nnoremap <C-F> i<C-X><C-F>
 
 " 对于vscode-nvim：insert mode is being handled by vscode 所以<C-X>没反应
 
-						" *i_CTRL-X* *insert_expand*
+                        " *i_CTRL-X* *insert_expand*
 " CTRL-X enters a sub-mode where several commands can be used.  Most of these
 " commands do keyword completion; see |ins-completion|.
 
@@ -340,10 +340,9 @@ else
 endif
 
 
-
-func TabToSpace()
-    " autocmd对neovim-vscode无效？
-    " vscode 有个插件：takumii.tabspace
+" T:tab, tab to space
+func T2S()
+    " vscode 有个插件：takumii.tabspace  " 不过应该用不着了
     set expandtab tabstop=4
     " [range]retab 百分号% 表示全文
     %retab!
@@ -351,15 +350,16 @@ func TabToSpace()
 endfunc
 " 没有混淆时，任意缩写都可以？endfunc
 
+" autocmd对neovim-vscode无效？
 " autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()" | exec ":echo 'tab变space'"
 autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()"
 
-func TwoSpace_to_FourSpace()
+func T2F()
     echo "  2个空格 变成tab"
     set noexpandtab tabstop=2  
     " [range]retab 百分号% 表示全文
     %retab!
-    call TabToSpace()
+    call T2S()
     
 endfunc
 
@@ -396,7 +396,7 @@ else
             set relativenumber!
         endif
 
-        " :se[t] {option}?	Show value of {option}.
+        " :se[t] {option}?  Show value of {option}.
         " set number?
     endfunc
 
@@ -418,14 +418,14 @@ else
     set smartindent
     " `各种indent方法`
     " 只是对c语言家族而言？
-    " 'autoindent'	uses the indent from the previous line.
-    " 'smartindent'	is like 'autoindent' but also recognizes some C syntax to
+    " 'autoindent'  uses the indent from the previous line.
+    " 'smartindent' is like 'autoindent' but also recognizes some C syntax to
     "                 increase/reduce the indent where appropriate.
-    " 'cindent'	Works more cleverly than the other two and is configurable to
+    " 'cindent' Works more cleverly than the other two and is configurable to
     "             different indenting styles.
-    " 'indentexpr'	The most flexible of all: Evaluates an expression to compute
-    " 		the indent of a line.  When non-empty this method overrides
-    " 		the other ones.  See |indent-expression|.
+    " 'indentexpr'  The most flexible of all: Evaluates an expression to compute
+    "       the indent of a line.  When non-empty this method overrides
+    "       the other ones.  See |indent-expression|.
     " set cindent
 
     func Indent_wf()
@@ -891,13 +891,13 @@ set pastetoggle=<F9>
 
 " pressing  Ctrl[   will usually get you the equivalent of pressing Esc.
 " *i_CTRL-V*
-" CTRL-V	Insert next non-digit `literally`.  For special keys, the
+" CTRL-V    Insert next non-digit `literally`.  For special keys, the
 "         terminal code is inserted.
 "         The characters typed right after CTRL-V are not considered for
 "         mapping.
 "
 " *i_CTRL-Q*
-" CTRL-Q		Same as CTRL-V.
+" CTRL-Q        Same as CTRL-V.
 
 
 
@@ -982,10 +982,10 @@ set autowrite
 
 
 " saving,
-noremap <C-S>		:update<CR>
-inoremap <C-S>		<C-O>:update<CR>
+noremap <C-S>       :update<CR>
+inoremap <C-S>      <C-O>:update<CR>
 " *v_CTRL-C*  v表示 Visual mode; Stop Visual mode
-vnoremap <C-S>		<C-C>:update<CR>
+vnoremap <C-S>      <C-C>:update<CR>
 
 " For CTRL-V to work autoselect must be off.
 " On Unix we have two selections, autoselect can be used.
@@ -1315,7 +1315,7 @@ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 " xmap s <Nop>
 " xmap creates a mapping for just Visual mode
 " vmap creates one for both Visual mode and Select mode. select mode很少用
-" <NOP>		no-opperation? do nothing (useful in mappings)
+" <NOP>     no-opperation? do nothing (useful in mappings)
 
 " 之前不知道为什么不生效： 现在 没加这几行,也能用,应该是默认的
 xnoremap sa <Plug>(operator-sandwich-add)
