@@ -351,8 +351,8 @@ endfunc
 " 没有混淆时，任意缩写都可以？endfunc
 
 " autocmd对neovim-vscode无效？
-" autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()" | exec ":echo 'tab变space'"
-autocmd BufNewFile,BufRead *.py  exec ":call TabToSpace()"
+" autocmd BufNewFile,BufRead *.py  exec ":call T2S()" | exec ":echo 'tab变space'"
+autocmd BufNewFile,BufRead *.py  exec ":call T2S()"
 
 func T2F()
     echo "  2个空格 变成tab"
