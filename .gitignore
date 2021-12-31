@@ -25,8 +25,10 @@ __pycache__
 .config/Code/*
 # .config/nvim
 # .config/nvim/*
-# tmux/plugins
-# tmux/plugins/*
+#
+# todo：设为git submodul ，不然同步时 会得到空目录，还无法重新装
+tmux/plugins
+tmux/plugins/*
 # .config/dconf/*
 .config/dconf/user
 .config/dconf/user/*
