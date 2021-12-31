@@ -38,7 +38,8 @@ nnoremap <Leader>h :set hlsearch!<CR>
 "   endif
 "   " 2秒
 "   let s:current_timer = timer_start(1000, 'Highlight_Search_Off')
-" endfunc
+" endfuc
+
 
 " nnoremap N N:call ResetTimer()<CR>
 " nnoremap n n:call ResetTimer()<CR>
@@ -79,15 +80,21 @@ if !exists('g:vscode')
     " vscode里，用了camp时，必须在光标后有字符才能正常map
     
     " <expr> 指明了right hand side是表达式
+    " cnoremap    <expr> bd    getcmdtype() == ":" && getcmdline() == 'bd'   ? 'tabedit ~/.zshrc' : 'tabedit'
+    " bd 本来是buffer delete的意思。现在用bde代替吧
+    cnoreabbrev <expr> bd    getcmdtype() == ":" && getcmdline() == 'bd'   ? 'tabedit ~/.zshrc' : 'bd'
     cnoreabbrev <expr> e     getcmdtype() == ":" && getcmdline() == 'e'   ? 'tabedit' : 'e'
     cnoreabbrev <expr> h     getcmdtype() == ":" && getcmdline() == 'h'   ? 'tab help' : 'h'
-    cnoreabbrev <expr> in    getcmdtype() == ":" && getcmdline() == 'in'  ? 'tabedit ~/dot_file/.config/nvim/init.vim' : 'in' 
+    cnoreabbrev <expr> in    getcmdtype() == ":" && getcmdline() == 'in'  ? 'tabedit ~/dot_file/.config/nvim/init.vim' : 'in'
     cnoreabbrev <expr> s     getcmdtype() == ":" && getcmdline() == 's'   ? 'tabedit ~/dot_file/rc.zsh' : 's'
+    cnoreabbrev <expr> al    getcmdtype() == ":" && getcmdline() == 'al'   ? 'tabedit ~/dot_file/alias.zsh' : 'al'
     cnoreabbrev <expr> map   getcmdtype() == ":" && getcmdline() == 'map'   ? 'verbose map' : 'map'
-    cnoreabbrev <expr> imap   getcmdtype() == ":" && getcmdline() == 'imap'   ? 'verbose imap' : 'imap'
-    " abbrev 和map的区别，就行ahk里 hotkey和hotstring
+    cnoreabbrev <expr> imap  getcmdtype() == ":" && getcmdline() == 'imap'   ? 'verbose imap' : 'imap'
+    cnoreabbrev <expr> cmap  getcmdtype() == ":" && getcmdline() == 'cmap'   ? 'verbose cmap' : 'cmap'
+    cnoreabbrev <expr> cm    getcmdtype() == ":" && getcmdline() == 'cm'   ? 'tab help' : 'cm'
 
-    cnoremap ,bd tabedit ~/.zshrc
+    " abbrev 和map的区别，就像ahk里 hotkey和hotstring
+
     cnoremap ,az tabedit ~/dot_file/auto_install.sh
     cnoremap ,tc tabedit ~/dot_file/tmux_tools_wf/tmux.conf
     cnoremap ,in tabedit ~/dot_file/.config/nvim/init.vim
@@ -100,7 +107,11 @@ if !exists('g:vscode')
     " >_>_>==========================================================begin
     " 触发： space, Escape, or Enter.
     abbrev nore noremap
-
+    inoreabbrev ali alias
+    inoreabbrev ali alias
+    inoreabbrev al alias
+    inoreabbrev df ~/dot_file/
+    inoreabbrev HO $HOME/
 
 endif
 " end===================================================================<_<_< 1.
@@ -213,7 +224,7 @@ vnoremap <Down> <Esc><C-I>
 "       $       表示结尾
 "       .       当前行
 "       .,$     from the current line to the end of the file.
-nnoremap <F2> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W><Left><Left>
+nnoremap <F2> :.,$s#\<\>##gc<Left><Left><Left><Left><Left><Left><C-R><C-W><Right><Right><Right><C-R><C-W>
 
 
 
@@ -296,6 +307,8 @@ endif
 
 if exists('g:vscode')
     "set wrap 后，同物理行上线直接跳。
+    "  they are not recursively mapped themselves (I don't know why this matters) but 
+    "  you can still recursively map to them.
     map j gj
     map k gk
 
@@ -1405,9 +1418,10 @@ endif
 " nnoremap <leader>v V`}
 "
 
-" 滚动Speed up scrolling of the viewport slightly
-" nnoremap <C-e> 6<C-e>
-" nnoremap <C-y> 8<C-y>
+" 滚动scrolling of the viewport
+" c-d本来是翻页，光标会动
+nnoremap <C-d> 8<C-e>
+nnoremap <C-u> 8<C-y>
 "
 "
 " end=====================================================================<_<_<

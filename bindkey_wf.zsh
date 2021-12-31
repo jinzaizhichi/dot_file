@@ -16,7 +16,7 @@ bindkey -s '\el' '~/.t \n'
 bindkey -s '\e3' '~/3 \n'
 bindkey -s '\ed' '~/d \n'
 # m for modify，修改配置
-bindkey -s '\em' 'do \n'
+bindkey -s '\em' '~/dot_file \n'
 bindkey -s '\et' '~/.t \n'
 
 # todo

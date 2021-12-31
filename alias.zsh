@@ -744,13 +744,12 @@ alias scp='noglob scp -r'
 ##echo "${fpath// /$\n}"
 
 
-alias disimg='~/dot_file/imcat/imcat'
 alias pt='ptpython --vi'
 #alias pt='ptpython --vi --config-dir=~/dot_file/.config/ptpython'
 alias pti='ptipython --vi'
 alias matlab='matlab -nosplash -nodesktop'
 # alias ml='matlab -nosplash -nodesktop'
-alias do='cd ~/dot_file/'
+# alias do='cd ~/dot_file/'  # 有alt-m了
 #不记得当时为啥加了这个
 #alias sudo=''
 # alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux_tools_wf/tmux.conf; sy'
@@ -1035,7 +1034,7 @@ OUT=`cat ~/.t/curl_cip.cc.out`
     # fi
 if [[ $OUT == *"Recv failure"* ]];then
     echo "curl cip.cc 的结果 >_> $OUT"
-    unset ALL_PROXY &&  echo "\n代理挂了，切回无代理" 
+    unset ALL_PROXY &&  echo "\n代理挂了，切回无代理"
     INDEX=0
 else
 
@@ -1107,6 +1106,11 @@ alias z='_z 2>&1'
 #  -z (同 --gzip, --gunzip, --ungzip)  通过 gzip 过滤归档
 # alias -s gz='wf_gz(){ tar -xzf $* ; t $* ; };wf_gz'
 
+alias disimg="~/dot_file/imcat/imcat"
+alias imcat="~/dot_file/imcat/imcat"
+alias -s png=imcat
+alias -s jpg=imcat
+alias -s jpeg=imcat
 
 # -x 等同 --extrac
 alias -s tar='tar -xf'
