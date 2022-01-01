@@ -1,4 +1,5 @@
-nnoremap ko O
+set iskeyword+=-
+
 " >_>_>1. filetype not search comment========================================begin
 " filetype        on        " 检测文件类型
 " filetype plugin on        " 针对不同的文件类型, load不同plugin
@@ -46,6 +47,9 @@ nnoremap <Leader>h :set hlsearch!<CR>
 " end========================================================<_<_<1.1
 
 
+" >_>_>===================================================================begin
+" vscode里 按ctrl 】也不会搜到comment的内容
+
 " ms: mark as searh, 回头敲's跳回来
 " https://stackoverflow.com/a/3760486/14972148
 " 据说map了slash会影响其他插件. 不过先用着吧
@@ -75,6 +79,10 @@ endif
 
 " 记作global search
 nnoremap g/ msgg/
+" end=====================================================================<_<_<
+
+
+
 if !exists('g:vscode')
     " cnoremap s/ s/\v
     " vscode里，用了camp时，必须在光标后有字符才能正常map
@@ -84,6 +92,8 @@ if !exists('g:vscode')
     " bd 本来是buffer delete的意思。现在用bde代替吧
     cnoreabbrev <expr> bd    getcmdtype() == ":" && getcmdline() == 'bd'   ? 'tabedit ~/.zshrc' : 'bd'
     cnoreabbrev <expr> e     getcmdtype() == ":" && getcmdline() == 'e'   ? 'tabedit' : 'e'
+    cnoreabbrev <expr> et    getcmdtype() == ":" && getcmdline() == 'et'   ? 'tabedit ~/d/tmp.py' : 'et'
+    cnoreabbrev <expr> tc    getcmdtype() == ":" && getcmdline() == 'tc'   ? 'tabedit ~/dot_file/tmux_tools_wf/tmux.conf' : 'tc'
     cnoreabbrev <expr> h     getcmdtype() == ":" && getcmdline() == 'h'   ? 'tab help' : 'h'
     cnoreabbrev <expr> in    getcmdtype() == ":" && getcmdline() == 'in'  ? 'tabedit ~/dot_file/.config/nvim/init.vim' : 'in'
     cnoreabbrev <expr> s     getcmdtype() == ":" && getcmdline() == 's'   ? 'tabedit ~/dot_file/rc.zsh' : 's'
@@ -95,12 +105,12 @@ if !exists('g:vscode')
 
     " abbrev 和map的区别，就像ahk里 hotkey和hotstring
 
-    cnoremap ,az tabedit ~/dot_file/auto_install.sh
-    cnoremap ,tc tabedit ~/dot_file/tmux_tools_wf/tmux.conf
-    cnoremap ,in tabedit ~/dot_file/.config/nvim/init.vim
-    cnoremap ,al tabedit ~/dot_file/alias.zsh
-    cnoremap ,et tabedit ~/d/tmp.py<CR>
-    cnoremap ,s  tabedit ~/dot_file/rc.zsh
+    " cnoremap ,az tabedit ~/dot_file/auto_install.sh
+    
+    " cnoremap ,in tabedit ~/dot_file/.config/nvim/init.vim
+    " cnoremap ,al tabedit ~/dot_file/alias.zsh
+    " cnoremap ,et tabedit ~/d/tmp.py<CR>
+    " cnoremap ,s  tabedit ~/dot_file/rc.zsh
 
 
     " abbrev
@@ -380,17 +390,18 @@ endfunc
 " 没有混淆时，任意缩写都可以？endfunc
 
 " autocmd对neovim-vscode无效？
-" autocmd BufNewFile,BufRead *.py  exec ":call T2S()" | exec ":echo 'tab变space'"
 autocmd BufNewFile,BufRead *.py  exec ":call T2S()"
 
 func T2F()
-    echo "  2个空格 变成tab"
+    echom "  2个空格 变成tab"
     set noexpandtab tabstop=2  
     " [range]retab 百分号% 表示全文
     %retab!
     call T2S()
-    
 endfunc
+
+" nnoremap <F10> :call Indent_wf()<CR>
+" inoremap <F10> <ESC>:call Indent_wf()<CR>i
 
 
 " python文件中输入新行时#号注释不切回行首
@@ -441,35 +452,25 @@ else
     set smarttab " insert tabs on the start of a line according to shiftwidth
     set shiftround " 用shiftwidth的整数倍， when indenting with '<' and '>'
     set softtabstop=4 " 按退格键时可以一次删掉 4 个空格
-    " 如果要仅对python有效：
-    " autocmd Filetype python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab shiftround
+    " 如果要仅对python有效：  autocmd Filetype python set 上面那堆
 
-    set smartindent
     " `各种indent方法`
-    " 只是对c语言家族而言？
-    " 'autoindent'  uses the indent from the previous line.
-    " 'smartindent' is like 'autoindent' but also recognizes some C syntax to
-    "                 increase/reduce the indent where appropriate.
-    " 'cindent' Works more cleverly than the other two and is configurable to
-    "             different indenting styles.
-    " 'indentexpr'  The most flexible of all: Evaluates an expression to compute
-    "       the indent of a line.  When non-empty this method overrides
-    "       the other ones.  See |indent-expression|.
-    " set cindent
-
-    func Indent_wf()
-        set ts=2 | set noexpandtab | %retab! | set ts=4 | set expandtab | %retab! | echom "Indent 2缩进变4"
-    endfunc
-    nnoremap <F10> :call Indent_wf()<CR>
-    inoremap <F10> <ESC>:call Indent_wf()<CR>i
-    " 遇到保存了tab作为缩进的文件，可以替换：
-    " %s/\t/    /g
-    " %retab中的%：表示在全文中
-
-    " 考虑用谷歌的规范？ setlocal indentexpr=GetGooglePythonIndent(v:lnum)
+        " 只是对c语言家族而言？
+        " 'autoindent'  uses the indent from the previous line.
+        " 'smartindent' is like 'autoindent' but also recognizes some C syntax to
+        "                 increase/reduce the indent where appropriate.
+        " 'cindent' Works more cleverly than the other two and is configurable to
+        "             different indenting styles.
+        " 'indentexpr'  The most flexible of all: Evaluates an expression to compute
+        "       the indent of a line.  When non-empty this method overrides
+        "       the other ones.  See |indent-expression|.
+    set cindent
+    " 考虑用谷歌的规范？ 
     " https://github.com/google/styleguide/blob/gh-pages/google_python_style.vim
-
+    " set indentexpr=GetGooglePythonIndent(v:lnum)
+    "
     " ==============================缩进==============================]]
+
 
     " vscode里不行
     " nnoremap zz :wq<C-R>
@@ -489,9 +490,7 @@ else
             %s/\s\+$//e
             call cursor(l, c)
     endfunc
-    " autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-    autocmd FileType c,cpp,javascript,python,vimrc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-
+    autocmd FileType c,cpp,javascript,python,vimrc,sh,zsh autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 endif
 
@@ -681,7 +680,6 @@ endif
 " Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 call plug#end()
-" 用了vim-pug, 会自动 `filetype plugin indent on` and `syntax enable`?
 " =============================================vim-plug===============================end
 
 
@@ -942,59 +940,39 @@ noremap <Leader>Y "+y
 " noremap <Leader>p "*p
 " noremap <Leader>P "+p
 
-" 有个自动补全插件 导致(变成选中候选，只能这样map
+" 有个自动补全插件 导致(变成  选中候选，只能这样map
 inoremap ( (
 
 set completeopt=noinsert,menuone
 
 
-let g:spacevim_disabled_plugins=[ ['Shougo/neosnippet.vim'], ]
-" custom plugin
-" let g:neosnippet#snippets_directory = '~/.SpaceVim.d/snippets'
+func Wfprint_n()
+    if &filetype == 'python'
+        exec "normal yiwoprint(f'{= }')" 
+        exec "normal hhhhhp" 
+    elseif &filetype == 'cpp'
+        exec 'normal yiwocout<<""<<'| exec 'normal hhhpf<lpa<<endl;'
+    elseif &filetype == 'zsh'
+        exec 'normal yiwoecho ${}'
+        exec "normal hp" 
+    elseif &filetype == 'vim'
+        exec 'normal yiwoecho &'
+        exec "normal p" 
+    endif
+endfunc
 
-" let g:UltiSnipsExpandTrigger="<tab>"
-
-" let g:UltiSnipsJumpForwardTrigger="<CR>"
-" let g:UltiSnipsJumpBackwardTrigger="<C-.>"
-""" If you want :UltiSnipsEdit to split your window.
-" let g:UltiSnipsEditSplit="vertical"
-
-
-
-
-
-
-
-" todo 不匹配行首空白符
-"
-" vscode里 按ctrl 】也不会搜到comment的内容
-" Search_no_comment()
-
-
-
-func! Wfprint_n()
-        if &filetype == 'python'
-            exec "normal yawoprint('看: ')" | exec "normal hhhhp" | exec "normal oprint()"  | exec "normal hp"
-        elseif &filetype == 'cpp'
-            exec 'normal yawocout<<""<<'| exec 'normal hhhpf<lpa<<endl;'
-        elseif &filetype == 'sh'
-        endif
+func Wfprint_v()
+    if &filetype == 'python'
+        " todo
+        exec "visual y"
+        exec "normal oprint(f'{= }')"
+        exec "normal k$hp"
+    endif 
 endfunc
 
 nnoremap _p :call Wfprint_n()<CR>
-vnoremap _p :yoprint('看:') <ESC>hhhhpoprint()<ESC>hp
+vnoremap _p :call Wfprint_v()<CR>
 
-" 还不能用
-func! Wfprint_v()
-        if &filetype == 'python'
-            exec "y" | exec "normal oprint('看: ')" | exec "normal hhhhp" | exec "normal oprint()"  | exec "normal hp"
-        elseif &filetype == 'cpp'
-            exec 'visual yocout<<""<<'| exec 'normal hhhpf<lpa<<endl;'
-        elseif &filetype == 'sh'
-        endif
-endfunc
-" 不行
-" vnoremap _p :call Wfprint_v()<CR>
 
 
 
@@ -1029,7 +1007,9 @@ nnoremap <C-Z> u
 " CTRL-Z is Undo
 
 inoremap <C-Z> <C-O>u
-inoremap <C-R> <C-O>u
+
+" inoremap <C-R> <C-O>u
+"<C-R>:    Insert the contents of a register
 
 " CTRL-Y is Redo (although not repeat)
 nnoremap <C-Y> <C-R>
@@ -1040,41 +1020,42 @@ inoremap <C-Y> <Esc><C-R>a
 
 " ---------------------------------------msvim-------------------------------]]
 
-
+" 要删完行末，敲D, dL用于删剩最后一个，比如引号 括号
+nnoremap dL v$hhd
 
 noremap <F5> <ESC>oimport pudb<ESC>opu.db
 inoremap <F5> <ESC>oimport pudb<ESC>opu.db
 
-" 定义函数AutoSetFileHead，自动插入文件头
-autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
-func AutoSetFileHead()
-        if &filetype == 'sh'
-                call setline(1, "\#!/bin/zsh")
-        endif
+" 定义函数AutoHead，自动插入文件头
+func AutoHead()
+    if &filetype == 'sh'
+        call setline(1, "\#!/bin/zsh")
+    elseif &filetype == 'python'
+        " google Python风格规范: 不要在行尾加分号, 也不要用分号将两条命令放在同一行。
+        " 但不会报错
+        
+        " call append(2, 'from dot_file.wf_snippet import *')
+        " call append(2, 'sys.path.append(wf_home)')
+        " call append(2, 'wf_home = os.path.expanduser("~/")')
+        call setline(1, 'import cv2 as cv,cv2')
 
-        if &filetype == 'python'
-                " google Python风格规范
-                " 不要在行尾加分号, 也不要用分号将两条命令放在同一行。
-                " 但不会报错
-                call append(2, 'from dot_file.wf_snippet import *')
-                call append(2, 'sys.path.append(wf_home)')
-                call append(2, 'wf_home = os.path.expanduser("~/")')
-                call append(2, 'import cv2 as cv; import numpy as np ; import json ; import sys; import os')
-                call append(2, '#-----------------------------^_^------------------------#')
+        call append(1, '#-----------------------自动import结束------------------------#')
+        call append(1, 'import sys os json')
+        call append(1, 'import numpy as np')
 
+        " call append(2, '    ')
+        " call append(2, '    print(round(wf_str,2))')
+        " call append(2, '    if type(wf_variable) ==r ')
+        " call append(2, 'def xprint(wf_variable):')
+        " 括号内部不能换行
+    endif
 
-                " call append(2, '    ')
-                " call append(2, '    print(round(wf_str,2))')
-                " call append(2, '    if type(wf_variable) ==r ')
-                " call append(2, 'def xprint(wf_variable):')
-                " 括号内部不能换行
-        endif
-
-        normal G
-        normal o
-        normal o
+    normal G
+    normal o
+    normal o
 endfunc
 
+autocmd BufNewFile *.sh,*.py exec ":call AutoHead()"
 
 
 
@@ -1395,6 +1376,17 @@ if !exists('g:vscode') " or hostname() == 'redmi14-leo'  不要这样，起码�
 
     " coc补全=====================================================================<_<_<
 endif
+
+" https://unix.stackexchange.com/a/8296/457327
+funct Vim_out(my_cmd)
+    redir =>my_output
+    " a 表示argument
+    silent exec a:my_cmd
+    redir END
+    return my_output
+endfunc
+
+nnoremap ko O
 
 " 垃圾别用
 " >_>_>===================================================================begin
