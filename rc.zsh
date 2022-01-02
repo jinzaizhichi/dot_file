@@ -362,3 +362,6 @@ fi
 # ------------
 # source "/home/wf/.fzf/shell/key-bindings.zsh"
 
+source ~/dot_file/zsh-git-prompt/zshrc.sh
+# an example prompt
+PROMPT='%B%m%~%b$(git_super_status) %# '
