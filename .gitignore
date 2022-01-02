@@ -6,7 +6,7 @@
 __pycache__
 
 .config/EasyConnect
-.config/EasyConnect/*
+# .config/EasyConnect/*
 .config/nautilus
 .config/nautilus/*
 .config/pulse
