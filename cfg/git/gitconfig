@@ -5,3 +5,5 @@
   helper = store
 [core]
 	excludesFile = $HOME/dotF/cfg/git/user_global_gitignore
+ # 这样可以正确输出中文文件名
+	quotepath = false
