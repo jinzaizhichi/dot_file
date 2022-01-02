@@ -1,8 +1,10 @@
 # The shell evaluation order (per POSIX) for the entities in your question is:
 # aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
 
-alias names='~/dot_file/massren'
-alias rename='~/dot_file/massren'
+
+# 在~/dot_file/bin_wf 下
+alias names='massren'
+alias rename='massren'
 #  never use normal sudo to start graphical applications as root
 # 否则普通用户可能无法登陆（文件变成root的了）
 #
@@ -14,7 +16,7 @@ alias cfg='~/dot_file/.config/'
 
 export CHTSH_CONF='~/dot_file/cht.sh.conf'
 
-alias ch='~/dot_file/cht.sh --shell'
+alias ch='cht.sh --shell'
 # cheat website
 chw(){
     # curl --silent "cheat.sh/$*""\?T" | bat
@@ -754,7 +756,7 @@ alias tc='e ~/dot_file/tmux_tools_wf/tmux.conf'
 alias s='e ~/dot_file/rc.zsh ; zsh'
 
 # az: 安装an zhuang
-alias az='e ~/dot_file/auto_install.sh'
+alias az='e ~/dot_file/auto_install/auto_install.sh'
 # al: alias
 alias al='e ~/dot_file/alias.zsh; zsh'
 
@@ -872,7 +874,7 @@ docker start $1 ; docker exec -it $1 zsh
 }
 
 
-alias peco='$HOME/dot_file/peco --rcfile $HOME/.config/peco/config.json'
+alias peco='$HOME/dot_file/bin_wf/peco --rcfile $HOME/.config/peco/config.json'
 
 
 # stat:  BSD style, 比state的内容详细

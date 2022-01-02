@@ -5,12 +5,12 @@ mv /etc/apt/sources.list /etc/apt/sources.list.origin_useless
 string=`cat /etc/issue`
 if [[ $string =~ "Ubuntu 18" ]]  # regex
 then
-	cp -rf sources_china_ubuntu18.py /etc/apt/sources.list
+	cp -rf auto_install/sources_china_ubuntu18.py /etc/apt/sources.list
 fi
 
 if [[ $string =~ "Ubuntu 20" ]]  # regex
 then
-	cp -rf sources_china_ubuntu20.py /etc/apt/sources.list
+	cp -rf auto_install/sources_china_ubuntu20.py /etc/apt/sources.list
 fi
 
 

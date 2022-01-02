@@ -28,8 +28,9 @@ __pycache__
 
 # todo：设为git submodul ，不然同步时 会得到空目录，还无法重新装
 # https://github.com/tmux-plugins/tpm/issues/34
-tmux/plugins
-tmux/plugins/*
+# tmux/plugins
+# tmux/plugins/*
+
 # .config/dconf/*
 .config/dconf/user
 .config/dconf/user/*

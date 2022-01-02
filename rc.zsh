@@ -85,6 +85,7 @@ if [ -d "$HOME/bin" ]; then
 fi
 
 export PAHT="$PATH:/usr/lib/w3m/w3mimagedisplay"
+export PAHT="$PATH:/home/wf/dot_file/bin_wf"
 
 # https://zsh.sourceforge.io/Intro/intro_6.html
 DIRSTACKSIZE=15 # Setup dir stack
@@ -143,7 +144,7 @@ case $TERM in
         ;;
 esac
 
-fpath=(~/dot_file/zfunc_in_fpath_leo $fpath)  # zfunc_in_fpath_leo用于存放自动补全命令  要在compinit之前.
+fpath=(~/dot_file/zsh_conf/zfunc_in_fpath_leo $fpath)  # zfunc_in_fpath_leo用于存放自动补全命令  要在compinit之前.
 autoload -U compinit # -U : suppress alias expansion for functions
 compinit
 
