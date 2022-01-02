@@ -772,7 +772,6 @@ gg(){
     chpwd_functions=()  # 别显示 所去目录下的文件
     cd ~/dotF
     # echo "\n-----------1. stash，藏起本地修改（但忽略新增文件）------------"
-    git stash clear  # 避免pull后有冲突，合并完后，再敲gg，死循环地有冲突
     git stash --include-untracked --message="【stash的message_`date  +"%m月%d日%H:%M"`】"
     # echo "\n-----------------2. pull, 拉远程的新代码-----------------"
     git pull  # Update the branch to the latest code   = fetch + merge? 还是只fetch?
@@ -788,6 +787,7 @@ gg(){
 yy(){
     # echo "\n--------------------------------4. add commit push三连-----------------------------------------------"
     cd ~/dotF
+    git stash clear  # 避免pull后有冲突，合并完后，再敲gg，死循环地有冲突
     echo "\n--------------------------------add commit push三连-----------------------------------------------"
     git add --verbose  --all .
     if [[ "$1" != "" ]]  # if [[ "$1" == "" ]] 容易出bug？一般都不这么写
