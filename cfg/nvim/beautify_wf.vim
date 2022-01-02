@@ -3,7 +3,7 @@
 
 
 
-source ~/dot_file/.config/nvim/lucius.vim
+source ~/dotF/cfg/nvim/lucius.vim
 set background=light
 if !exists('g:vscode')
     colorscheme lucius

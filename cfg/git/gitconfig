@@ -4,4 +4,4 @@
 [credential]
   helper = store
 [core]
-	excludesFile = $HOME/dot_file/.config/git/user_global_gitignore
+	excludesFile = $HOME/dotF/cfg/git/user_global_gitignore

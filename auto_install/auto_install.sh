@@ -20,9 +20,9 @@ echo  $ALL_PROXY
 echo  'ALL_PROXY is:  -------------------end'
 
 mv ~/.pip  ~/.pip_wf_bk
-ln -s ~/dot_file/.pip/ ~/
+ln -s ~/dotF/.pip/ ~/
 
-# ln -s ~/d/dot_file ~/
+# ln -s ~/d/dotF ~/
 
 
 cat ./auto_install/git_url.txt>>/etc/hosts
@@ -45,9 +45,9 @@ touch "$HOME/.z" # 这是zsh的z跳转的记录文件
 yes | (apt update ; apt install  nscd )
 /etc/init.d/nscd restart
 
-ln -s ~/dot_file/.config/.condarc ~/
+ln -s ~/dotF/cfg/.condarc ~/
 mkdir ~/.ssh
-ln -s ~/dot_file/.config/.ssh/config ~/.ssh/config
+ln -s ~/dotF/cfg/.ssh/config ~/.ssh/config
 
 [[ -d /d ]] && ln -s /d ~/d
 
@@ -85,8 +85,8 @@ yes | (ai language-pack-zh-hans language-pack-zh-hans-base)
 # 使用中文的ubuntu会有什么坏处吗？ - 君子笑的回答 - 知乎https://www.zhihu.com/question/340272351/answer/799642709
 
 
-ln -sf ~/dot_file/zshenv ~/.zshenv
-ln -sf ~/dot_file/zprofile ~/.zprofile
+ln -sf ~/dotF/zshenv ~/.zshenv
+ln -sf ~/dotF/zprofile ~/.zprofile
 
 # 在.zshrc里export LANGUAGE就行，
 # 不用：
@@ -127,10 +127,10 @@ curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --c
 
 mkdir ~/.cache
 yes |(mv ~/.tmux ~/.tmux_bk)
-yes |(mv ~/.config/ ~/.old_config ;  ln -s ~/dot_file/.config ~)
-yes |(cp ~/dot_file/local_template_zshrc.zsh ~/.zshrc )
+yes |(mv ~/.config/ ~/.old_config ;  ln -s ~/dotF/cfg ~)
+yes |(cp ~/dotF/local_template_zshrc.zsh ~/.zshrc )
 
-git clone https://github.com/tmux-plugins/tpm ~/dot_file/tmux_tools_wf/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm ~/dotF/tmux_wf/plugins/tpm
 
 
 # 不知道和github下载的nvim是否冲突
@@ -153,8 +153,8 @@ chsh -s `which zsh`
 
 
 
-export ZPLUG_HOME=$HOME/dot_file/zplug
-export ZPLUG_LOADFILE=$HOME/dot_file/zplug/zplug_loadfile.sh
+export ZPLUG_HOME=$HOME/dotF/zplug
+export ZPLUG_LOADFILE=$HOME/dotF/zplug/zplug_loadfile.sh
 git clone https://github.com/zplug/zplug $ZPLUG_HOME
 
 

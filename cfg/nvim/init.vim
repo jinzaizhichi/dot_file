@@ -95,7 +95,7 @@ if !exists('g:vscode')
     cnoreabbrev <expr> et    getcmdtype() == ":" && getcmdline() == 'et'   ? 'tabedit ~/d/tmp.py' : 'et'
     cnoreabbrev <expr> tc    getcmdtype() == ":" && getcmdline() == 'tc'   ? 'tabedit ~/dot_file/tmux_tools_wf/tmux.conf' : 'tc'
     cnoreabbrev <expr> h     getcmdtype() == ":" && getcmdline() == 'h'   ? 'tab help' : 'h'
-    cnoreabbrev <expr> in    getcmdtype() == ":" && getcmdline() == 'in'  ? 'tabedit ~/dot_file/.config/nvim/init.vim' : 'in'
+    cnoreabbrev <expr> in    getcmdtype() == ":" && getcmdline() == 'in'  ? 'tabedit ~/dotF/cfg/nvim/init.vim' : 'in'
     cnoreabbrev <expr> s     getcmdtype() == ":" && getcmdline() == 's'   ? 'tabedit ~/dot_file/rc.zsh' : 's'
     cnoreabbrev <expr> al    getcmdtype() == ":" && getcmdline() == 'al'   ? 'tabedit ~/dot_file/alias.zsh' : 'al'
     cnoreabbrev <expr> map   getcmdtype() == ":" && getcmdline() == 'map'   ? 'verbose map' : 'map'
@@ -107,7 +107,7 @@ if !exists('g:vscode')
 
     " cnoremap ,az tabedit ~/dot_file/auto_install.sh
     
-    " cnoremap ,in tabedit ~/dot_file/.config/nvim/init.vim
+    " cnoremap ,in tabedit ~/dotF/cfg/nvim/init.vim
     " cnoremap ,al tabedit ~/dot_file/alias.zsh
     " cnoremap ,et tabedit ~/d/tmp.py<CR>
     " cnoremap ,s  tabedit ~/dot_file/rc.zsh
@@ -694,7 +694,7 @@ endif
 if !has('win32')
     " 从这里学来的：
     " https://github.com/SpaceVim/SpaceVim/blob/b2d1d7460690648951d6685a3a947e9b4248e38c/autoload/SpaceVim/layers/leaderf.vim#L489
-    source ~/dot_file/.config/nvim/beautify_wf.vim
+    source ~/dotF/cfg/nvim/beautify_wf.vim
 
     " 这么写比较啰嗦：
     " let s:beauty_path = fnamemodify($MYVIMRC, ":p:h") . "/beautify_wf.vim"    " 字符串concat，用点号
@@ -1108,7 +1108,7 @@ let g:ackprg = 'ag --vimgrep'
 
 
 set cmdheight=2
-set fdm=indent
+" set fdm=indent
 
 
 

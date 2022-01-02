@@ -275,7 +275,7 @@ configure:3953: result: no
 configure:3963: checking for library containing regcmp
 configure:3994: gcc -o conftest -g -O2   conftest.c  >&5
 /bin/ld: /tmp/ccW3UvrC.o: in function `main':
-/root/dot_file/less-598/conftest.c:20: undefined reference to `regcmp'
+/root/dotF/less-598/conftest.c:20: undefined reference to `regcmp'
 collect2: error: ld returned 1 exit status
 configure:3994: $? = 1
 configure: failed program was:

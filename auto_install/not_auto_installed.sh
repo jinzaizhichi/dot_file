@@ -8,3 +8,10 @@ alias cp='cp -r'
 
 git clone --depth 1 https://github.com/junegunn/fzf.git /.fzf
 /.fzf/install
+
+
+ln -sf ~/dotF/.pip/ ~/
+ln -sf ~/dotF/cfg/.condarc ~/
+ln -sf ~/dotF/ssh/config ~/.ssh/config
+ln -sf ~/dotF/cfg/git/ ~/.ssh/config
+ln -sf ~/dotF/cfg/git/gitconfig ~/.gitconfig

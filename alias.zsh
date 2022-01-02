@@ -1,20 +1,21 @@
 # The shell evaluation order (per POSIX) for the entities in your question is:
 # aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
 
+alias bat=less
 
-# 在~/dot_file/bin_wf 下
+# 在~/dotF/bin_wf 下
 alias names='massren'
 alias rename='massren'
 #  never use normal sudo to start graphical applications as root
 # 否则普通用户可能无法登陆（文件变成root的了）
 #
 
-# alias fzf='~/dot_file/fuzzy_finder__fzf/bin/fzf --height 40% --layout=reverse --border'
+# alias fzf='~/dotF/fuzzy_finder__fzf/bin/fzf --height 40% --layout=reverse --border'
 
 
-alias cfg='~/dot_file/.config/'
+alias cfg='~/dotF/cfg/'
 
-export CHTSH_CONF='~/dot_file/cht.sh.conf'
+export CHTSH_CONF='~/dotF/cht.sh.conf'
 
 alias ch='cht.sh --shell'
 # cheat website
@@ -38,8 +39,8 @@ aps(){
 # alias echo='print "正在用print代替echo" && print -l'
 alias ec='print -l && print "正在用print代替echo" '
 
-alias version='~/dot_file/show_version_of_any_tool/version'
-alias ver='~/dot_file/show_version_of_any_tool/version'
+alias version='~/dotF/show_version_of_any_tool/version'
+alias ver='~/dotF/show_version_of_any_tool/version'
 
 alias grep='grep --color=always'
 alias gr='grep'
@@ -267,7 +268,7 @@ fi
 
 alias ca='cat'
 alias ba='bat'
-# /home/wf/dot_file/color_less_wf.zsh 里，export LESS='--quit-if-one-screen 一大串.....'
+# /home/wf/dotF/color_less_wf.zsh 里，export LESS='--quit-if-one-screen 一大串.....'
 alias le="less  --quit-if-one-screen"
 # alias le="less  "
 
@@ -326,7 +327,6 @@ alias rl='readlink -f'
 #j for jump
 alias j='ln -s --interactive --verbose --logical'
 #logical: dereference TARGETs that are symbolic links
-#alias lk='ln -s'
 
 # cm for command
 # 代替where which type
@@ -366,7 +366,7 @@ alias ll='\ls -1htr --color=always --classify | head -30'
 #     echo "列了所有：${tmp}"
 # }
 lf(){
-    $HOME/dot_file/exa/bin/exa \
+    $HOME/dotF/exa/bin/exa \
     --long \
     --classify \
     --colour=always \
@@ -382,7 +382,7 @@ lf(){
 }
 
 l(){
-    $HOME/dot_file/exa/bin/exa \
+    $HOME/dotF/exa/bin/exa \
     --long \
     --classify \
     --colour=always \
@@ -438,7 +438,7 @@ list_all_after_cd() {
     # -R  | reset all options instead of only those needed for script portability
     #  模拟 csh ksh sh 或者 （没加配置的）zsh
 
-    $HOME/dot_file/exa/bin/exa \
+    $HOME/dotF/exa/bin/exa \
         --long \
         --classify \
         --colour=always \
@@ -624,7 +624,7 @@ alias ci='conda install -y'
 # conda create --name new_name --clone old_name
 # conda remove --name old_name --all # or its alias: `conda env remove --name old_name`
 
-alias snp='~/dot_file/wf_snippet.py'
+alias snp='~/dotF/wf_snippet.py'
 
 
 # Sometimes it is convenient to create separate tmux servers,
@@ -633,7 +633,7 @@ alias snp='~/dot_file/wf_snippet.py'
 # If -S is specified, the default socket directory is not  used and any -L flag is ignored
 alias tmux='\tmux \
             -S ~/d/.socket_file_for_tmux_svr  \
-            -f ~/dot_file/tmux_tools_wf/tmux.conf'
+            -f ~/dotF/tmux_wf/tmux.s'
 
 tm() {
     # https://stackoverflow.com/a/29369681/14972148
@@ -678,10 +678,10 @@ alias oc='_oc(){ g++ -g $* -o ${1%.*} `pkg-config --cflags --libs opencv` ; ./${
 # oc demo.cpp draw.h draw.cpp
 # ./demo
 
-alias nvim='~/dot_file/nvim-linux64/bin/nvim'
-alias vim='~/dot_file/nvim-linux64/bin/nvim'
-alias vi='~/dot_file/nvim-linux64/bin/nvim'   # 不用加-u 指定 因为默认就在~/.config/下
-# alias vim='~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim'
+alias nvim='~/dotF/nvim-linux64/bin/nvim'
+alias vim='~/dotF/nvim-linux64/bin/nvim'
+alias vi='~/dotF/nvim-linux64/bin/nvim'   # 不用加-u 指定 因为默认就在~/.config/下
+# alias vim='~/dotF/nvim-linux64/bin/nvim -u ~/dotF/cfg/nvim/init.vim'
 
 
 # 用autohotkey敲\ec吧
@@ -745,23 +745,23 @@ alias scp='noglob scp -r'
 
 
 alias pt='ptpython --vi'
-#alias pt='ptpython --vi --config-dir=~/dot_file/.config/ptpython'
+#alias pt='ptpython --vi --config-dir=~/dotF/cfg/ptpython'
 alias pti='ptipython --vi'
 alias matlab='matlab -nosplash -nodesktop'
 # alias ml='matlab -nosplash -nodesktop'
 # 避免sudo后的alias失效？
 # alias sudo=''
 
-alias tc='e ~/dot_file/tmux_tools_wf/tmux.conf'
-alias s='e ~/dot_file/rc.zsh ; zsh'
+alias tc='e ~/dotF/tmux_wf/tmux.s'
+alias s='e ~/dotF/rc.zsh ; zsh'
 
 # az: 安装an zhuang
-alias az='e ~/dot_file/auto_install/auto_install.sh'
+alias az='e ~/dotF/auto_install/auto_install.sh'
 # al: alias
-alias al='e ~/dot_file/alias.zsh; zsh'
+alias al='e ~/dotF/alias.zsh; zsh'
 
 # i for init.vim
-alias in='e ~/dot_file/.config/nvim/init.vim'  # init.vim
+alias in='e ~/dotF/cfg/nvim/init.vim'  # init.vim
 
 
 #y: yyds，我的配置yyds
@@ -770,7 +770,7 @@ alias in='e ~/dot_file/.config/nvim/init.vim'  # init.vim
 # get github
 gg(){
     chpwd_functions=()  # 别显示 所去目录下的文件
-    cd ~/dot_file
+    cd ~/dotF
     # echo "\n-----------1. stash，藏起本地修改（但忽略新增文件）------------"
     git stash clear  # 避免pull后有冲突，合并完后，再敲gg，死循环地有冲突
     git stash --include-untracked --message="【stash的message_`date  +"%m月%d日%H:%M"`】"
@@ -787,7 +787,7 @@ gg(){
 # 我最新的配置 真是yyds
 yy(){
     # echo "\n--------------------------------4. add commit push三连-----------------------------------------------"
-    cd ~/dot_file
+    cd ~/dotF
     echo "\n--------------------------------add commit push三连-----------------------------------------------"
     git add --verbose  --all .
     if [[ "$1" != "" ]]  # if [[ "$1" == "" ]] 容易出bug？一般都不这么写
@@ -875,7 +875,7 @@ docker start $1 ; docker exec -it $1 zsh
 }
 
 
-alias peco='$HOME/dot_file/bin_wf/peco --rcfile $HOME/.config/peco/config.json'
+alias peco='$HOME/dotF/bin_wf/peco --rcfile $HOME/.config/peco/config.json'
 
 
 # stat:  BSD style, 比state的内容详细
@@ -1102,8 +1102,8 @@ alias z='_z 2>&1'
 #  -z (同 --gzip, --gunzip, --ungzip)  通过 gzip 过滤归档
 # alias -s gz='wf_gz(){ tar -xzf $* ; t $* ; };wf_gz'
 
-alias disimg="~/dot_file/imcat/imcat"
-alias imcat="~/dot_file/imcat/imcat"
+alias disimg="~/dotF/imcat/imcat"
+alias imcat="~/dotF/imcat/imcat"
 alias -s png=imcat
 alias -s jpg=imcat
 alias -s jpeg=imcat
@@ -1145,10 +1145,11 @@ alias -s json=cj
 if [[ -n "$TMUX" ]];
 then
     # zsh默认用vim打开，导致无法执行？有其他bug？但是很多人都这么写
-    alias -s {cpp,txt,zsh,vim,py,toml,conf.cfg}=vim
+    alias -s {cpp,txt,zsh,vim,py,toml,conf.cfg,s}=vim
+    # 后缀名s表示seting,简洁,代替conf
     # alias -s py=vim  # 要是想 让python被zsh自动补全,注释掉这行
 else
-    alias -s {cpp,txt,zsh,vim,py,toml,conf.cfg}=code
+    alias -s {cpp,txt,zsh,vim,py,toml,conf.cfg,s}=code
 fi
 
 alias ai='sudo apt install'

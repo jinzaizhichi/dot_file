@@ -24,18 +24,18 @@ setopt extended_glob  # 可能导致这些命令出bug, 使用时要注意:   gi
 # export 了某个变量后，再从.zsrhc删除对应的代码，再开子zsh，该环境变量还在的哦，除非另写（覆盖）
 
 export PYTHONPATH=
-export PTPYTHON_CONFIG_HOME=$HOME/dot_file/.config/ptpython
-export PTIPYTHON_CONFIG_HOME=$HOME/dot_file/.config/ptpython # ptipython
-export PYTHONSTARTUP=$HOME/dot_file/py_startup.py
+export PTPYTHON_CONFIG_HOME=$HOME/dotF/cfg/ptpython
+export PTIPYTHON_CONFIG_HOME=$HOME/dotF/cfg/ptpython # ptipython
+export PYTHONSTARTUP=$HOME/dotF/py_startup.py
 
 # export PAGER='bat --theme="Solarized\ \(light\)"'  # 加了双引号反而不行
 export PAGER='bat --theme="Coldark-Cold"' # 导致下面的v无效，“can not 修改stdin啥的”
 
 # less 敲v，先找VIUSAL指定的编辑器，没有再找EDITOR
 # pudb 敲ctrl E能用EDITOR打开文件编辑
-export VISUAL=~/dot_file/nvim-linux64/bin/nvim  # vscode不行
-export EDITOR=~/dot_file/nvim-linux64/bin/nvim   # 不用加-u 指定init.vim 因为默认就在~/.config/下
-# export EDITOR="~/dot_file/nvim-linux64/bin/nvim -u ~/dot_file/.config/nvim/init.vim"
+export VISUAL=~/dotF/nvim-linux64/bin/nvim  # vscode不行
+export EDITOR=~/dotF/nvim-linux64/bin/nvim   # 不用加-u 指定init.vim 因为默认就在~/.config/下
+# export EDITOR="~/dotF/nvim-linux64/bin/nvim -u ~/dotF/cfg/nvim/init.vim"
 
 export LOGURU_FORMAT="{time} | <lvl>{message}</lvl>"
 
@@ -85,7 +85,7 @@ if [ -d "$HOME/bin" ]; then
 fi
 
 export PAHT="$PATH:/usr/lib/w3m/w3mimagedisplay"
-export PAHT="$PATH:/home/wf/dot_file/bin_wf"
+export PAHT="$PATH:/home/wf/dotF/bin_wf"
 
 # https://zsh.sourceforge.io/Intro/intro_6.html
 DIRSTACKSIZE=15 # Setup dir stack
@@ -144,7 +144,7 @@ case $TERM in
         ;;
 esac
 
-fpath=(~/dot_file/zsh_conf/zfunc_in_fpath_leo $fpath)  # zfunc_in_fpath_leo用于存放自动补全命令  要在compinit之前.
+fpath=(~/dotF/zsh_conf/zfunc_in_fpath_leo $fpath)  # zfunc_in_fpath_leo用于存放自动补全命令  要在compinit之前.
 autoload -U compinit # -U : suppress alias expansion for functions
 compinit
 
@@ -243,17 +243,17 @@ export LESS='--incsearch --ignore-case --status-column --LONG-PROMPT --RAW-CONTR
     # --HILITE-UNREAD:  highlight first unread line after forward movement
 
     # https://www.topbug.net/blog/2016/09/27/make-gnu-less-more-powerful/
-source $HOME/dot_file/color_less_wf.zsh
+source $HOME/dotF/color_less_wf.zsh
 
-source $HOME/dot_file/color_highlight_style_wf.zsh
-source $HOME/dot_file/completion_color_config_敲tab补全.zsh  #  不只是颜色, 但为了想改颜色时容易找，这么命名。
-source $HOME/dot_file/color_ls_wf.zsh
+source $HOME/dotF/color_highlight_style_wf.zsh
+source $HOME/dotF/completion_color_config_敲tab补全.zsh  #  不只是颜色, 但为了想改颜色时容易找，这么命名。
+source $HOME/dotF/color_ls_wf.zsh
 
 
-source $HOME/dot_file/bindkey_wf.zsh
-source $HOME/dot_file/history_config_wf.zsh
+source $HOME/dotF/bindkey_wf.zsh
+source $HOME/dotF/history_config_wf.zsh
 
-source $HOME/dot_file/alias.zsh   # 里面有：chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
+source $HOME/dotF/alias.zsh   # 里面有：chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 autoload -Uz chpwd_recent_dirs  cdr add-zsh-hook  # -U: suppress alias expansion for functions
 add-zsh-hook chpwd chpwd_recent_dirs
 
@@ -362,6 +362,6 @@ fi
 # ------------
 # source "/home/wf/.fzf/shell/key-bindings.zsh"
 
-source ~/dot_file/zsh-git-prompt/zshrc.sh
+source ~/dotF/zsh-git-prompt/zshrc.sh
 # an example prompt
 PROMPT='%B%m%~%b$(git_super_status) %# '

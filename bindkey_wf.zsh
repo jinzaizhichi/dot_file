@@ -16,8 +16,9 @@ bindkey -s '\el' '~/.t \n'
 bindkey -s '\e3' '~/3 \n'
 bindkey -s '\ed' '~/d \n'
 # m for modify，修改配置
-bindkey -s '\em' '~/dot_file \n'
+bindkey -s '\em' '~/dotF \n'
 bindkey -s '\et' '~/.t \n'
+bindkey -s '\ec' 'cfg \n'
 
 # todo
 # ^D在当前行 有字符时, 相当于Del
@@ -153,7 +154,7 @@ bindkey '^ ' delete-word
 
 # ctrl p/n  和 上下箭头 只能找到以特定内容开头的历史命令，这个可以所有？
 # These are all the same.
-    #  <alt>+b <esc>+b <Meta>+b   M-b \eb, 
+    #  <alt>+b <esc>+b <Meta>+b   M-b \eb,
     #  e: 表示escap吧
 
 # bindkey -s '^j' 'echo "vscode在用" \n'  #别改 ^j ，^j和\n同体？
@@ -171,7 +172,7 @@ bindkey -s "\C-q" 'echo "待用" \n'
 
 # 改了 不生效：
 bindkey -s "\C-q" 'echo "待用" \n'
-# (暂停输出) 
+# (暂停输出)
 bindkey -s '\c-s' 'echo "bindkey succeed?" \n'
 
 # todo
@@ -283,7 +284,7 @@ function peco-find-file() {
         -path "$HOME/t" -prune -o       \
         -path "./.t" -prune -o       \
         -name "*$1*"  | peco --query "$BUFFER" )
-        # 别用系统的根目录下的peco，太老，用dot_file下的
+        # 别用系统的根目录下的peco，太老，用dotF下的
         CURSOR=$#BUFFER
 
         echo '当前路径为： ~/d'
@@ -300,7 +301,7 @@ function peco-find-file() {
         -path "/proc" -prune -o      \
         -path "/dev" -prune -o      \
         -name "*$1*"  | peco --query "$BUFFER" )
-        # 别用系统的根目录下的peco，太老，用dot_file下的
+        # 别用系统的根目录下的peco，太老，用dotF下的
         CURSOR=$#BUFFER
 
         echo '不搜 ~/d 或  /d '
@@ -324,21 +325,21 @@ function peco-history-selection() {
         # BSD 'tail' (the one with '-r') can only reverse files that are at most as large as its buffer, which is typically 32k.
         # A more reliable and versatile way to reverse files is the GNU 'tac' command.
     fi
-    # 别用系统的根目录下的peco，太老，用dot_file下的
+    # 别用系统的根目录下的peco，太老，用dotF下的
     # -1000: 最近1000条历史
     # tac后，最新的在最上
     # cut -c 8-  去掉序号和空格
     # 命令前加个\，避免多个alias打架了
     # 正则， 通配年-月-日 时:分:秒："\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}\\s{2}"
     # history:  其实是 fc -l 的alias  fc记作find command history吧
-    
+
 
     # todo 下次别再搞那么复杂，记住就删掉这几行----
-    # WFpeco= `$HOME/dot_file/peco --rcfile /root/.config/peco/config_for_peco_history.json`
+    # WFpeco= `$HOME/dotF/peco --rcfile /root/.config/peco/config_for_peco_history.json`
     # $WFpeco 不是想要的结果
-    # BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | $HOME/dot_file/peco --rcfile /root/.config/peco/config_for_peco_history.json --query "\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}\\s{2} $BUFFER")
+    # BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | $HOME/dotF/peco --rcfile /root/.config/peco/config_for_peco_history.json --query "\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}\\s{2} $BUFFER")
     # todo 下次别再搞那么复杂，记住就删掉这几行----
-    
+
     BUFFER=$(history -i -2000 | eval $tac | cut -c 8- | peco --initial-filter="Regexp" --query "\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}\\s{2} $BUFFER")
     BUFFER=${BUFFER:18}  # history加了-i，显示详细时间，回车后只取第19个字符开始的内容，（删掉时间)
     CURSOR=$#BUFFER

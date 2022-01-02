@@ -1,7 +1,7 @@
 #wf
 set -x
-ln -s ~/dot_file/.condarc ~/
-ln -s ~/dot_file/.wf_alias ~/
+ln -s ~/dotF/.condarc ~/
+ln -s ~/dotF/.wf_alias ~/
 
 shopt -s  expand_aliases 
 alias ai='apt install -y -qq'
@@ -27,15 +27,15 @@ touch ~/.msmtp.log
 yes | (pip install pynvim)
 
 mkdir ~/.cache
-yes |(cp  ~/dot_file/oh-my-tmux ~/dot_file/.SpaceVim ~/dot_file/.SpaceVim.d ~ ; cp ~/dot_file/.cache/Spacevim ~/.cache)
-rm -rf ~/.tmux.conf
-yes |(ln -s ~/dot_file/tmux.conf  ~/.tmux.conf)
-yes |(ln -s ~/dot_file/vimrc  ~/.config/nvim/init.vim)
+yes |(cp  ~/dotF/oh-my-tmux ~/dotF/.SpaceVim ~/dotF/.SpaceVim.d ~ ; cp ~/dotF/.cache/Spacevim ~/.cache)
+rm -rf ~/.tmux.s
+yes |(ln -s ~/dotF/tmux.s  ~/.tmux.s)
+yes |(ln -s ~/dotF/vimrc  ~/.config/nvim/init.vim)
 mkdir ~/.SpaceVim.d
 rm -f ~/.SpaceVim.d/init.toml
-yes |(ln -s ~/dot_file/init.toml ~/.SpaceVim.d/init.toml)
+yes |(ln -s ~/dotF/init.toml ~/.SpaceVim.d/init.toml)
 cp ~/ ~/.SpaceVim.d
-yes |(cp ~/dot_file/.zshrc ~/ )  
+yes |(cp ~/dotF/.zshrc ~/ )  
 
 
 chmod u+x nvim.appimage
@@ -47,7 +47,7 @@ mkdir /d
 mv squashfs-root /d 
 ln -sf /d/squashfs-root/AppRun /usr/bin/vim
 
-yes | ln -s ~/dot_file/vimrc ~/.config/nvim/init.vim
+yes | ln -s ~/dotF/vimrc ~/.config/nvim/init.vim
 
 yes | (ai silversearcher-ag)
 mv /etc/apt/apt.conf /etc/apt/apt.conf.luoyi

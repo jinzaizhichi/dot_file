@@ -4,7 +4,7 @@ from time import perf_counter as dida
 dida0 = dida()
 
 import sys, os
-sys.path.append(os.path.expanduser ('~/dot_file') )
+sys.path.append(os.path.expanduser ('~/dotF') )
 from wf_snippet import vpp as print
 
 
