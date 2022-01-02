@@ -1,0 +1,7 @@
+[user]
+  email = liuweifengemail@163.com
+  name = sisrfeng
+[credential]
+  helper = store
+[core]
+	excludesFile = $HOME/dot_file/.config/git/user_global_gitignore
