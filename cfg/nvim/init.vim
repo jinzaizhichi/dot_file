@@ -1109,6 +1109,7 @@ let g:ackprg = 'ag --vimgrep'
 
 set cmdheight=2
 " set fdm=indent
+set fdm=manual
 
 
 
