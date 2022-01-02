@@ -25,7 +25,7 @@ ln -s ~/dot_file/.pip/ ~/
 # ln -s ~/d/dot_file ~/
 
 
-cat git_url.txt>>/etc/hosts
+cat ./auto_install/git_url.txt>>/etc/hosts
 #### Ubuntu uses network-manager instead of the traditional Linux networking model. so you should restart the network-manager service instead of the network service
 # /etc/rc.d/init.d/network restart
 service network-manager restart
@@ -85,7 +85,7 @@ yes | (ai language-pack-zh-hans language-pack-zh-hans-base)
 # 使用中文的ubuntu会有什么坏处吗？ - 君子笑的回答 - 知乎https://www.zhihu.com/question/340272351/answer/799642709
 
 
-ln -sf ~/dot_file/zshenv ~/.zshenv 
+ln -sf ~/dot_file/zshenv ~/.zshenv
 ln -sf ~/dot_file/zprofile ~/.zprofile
 
 # 在.zshrc里export LANGUAGE就行，

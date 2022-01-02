@@ -1397,24 +1397,35 @@ nnoremap ko O
 " end=====================================================================<_<_<
 "
 "
-"
-" 没啥用吧
-" >_>_>===================================================================begin
-"
-" auto jump to end of select
-" 这是在vscode里 会到下一行？
-" vnoremap <silent> y y`]
-" vnoremap <silent> p p`]
-" nnoremap <silent> p p`]
+func _put_your_comment_here()
 
-" select block
-" nnoremap <leader>v V`}
+
+    echo fnamemodify(expand('<sfile>:p'), ':h').'/main.vim'
+    得到 ~/.Spacevim/main.vim
+    https://stackoverflow.com/questions/4976776/how-to-get-path-to-the-current-vimscript-being-executed/18734557
+
+    " 没啥用吧
+    " >_>_>===================================================================begin
+
+    auto jump to end of select
+    这是在vscode里 会到下一行？
+    vnoremap <silent> y y`]
+    vnoremap <silent> p p`]
+    nnoremap <silent> p p`]
+
+    select block
+    nnoremap <leader>v V`}
+
+    " end=====================================================================<_<_<
+
+
+endfunc
+
+
 "
 
 " 滚动scrolling of the viewport
 " c-d本来是翻页，光标会动
 nnoremap <C-d> 8<C-e>
 nnoremap <C-u> 8<C-y>
-"
-"
-" end=====================================================================<_<_<
+

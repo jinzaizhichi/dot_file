@@ -372,7 +372,7 @@ lf(){
     --no-user  \
     --no-permissions  \
     --sort=time  \
-    --time-style=iso $1 | less -E
+    --time-style=iso $1 | less
     # --group-directories-first    # 不好，
 
     tmp=$((`\ls -l | wc -l`-1))
