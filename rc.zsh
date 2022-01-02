@@ -228,7 +228,8 @@ zplug load     # source plugins and add commands to $PATH
 
 # 不能用\换行
 # 不用LESS这个环境变量, 放到alias里? 不，man要用LESS
-export LESS='--incsearch --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=2'
+export LESS='--incsearch --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=2 -X'
+
     # Man-db passes extra options to the pager via the `LESS` environment variable,
     # which Less interprets in the same way as command line options.
     # The setting is hard-coded at compile time and starts with -i.
@@ -237,7 +238,7 @@ export LESS='--incsearch --ignore-case --status-column --LONG-PROMPT --RAW-CONTR
     # export LESS='-Dd+r$Du+b'
 
     # 其中的 "--RAW-CONTROL-CHARS":   Get color support for 'less'
-    # --no-init: This is sometimes  desirable if the deinitialization string does something unnecessary, like clearing the screen
+    # --no-init: 即-X,  避免the deinitialization string does something unnecessary, like clearing the screen
     # --HILITE-UNREAD:  highlight first unread line after forward movement
 
     # https://www.topbug.net/blog/2016/09/27/make-gnu-less-more-powerful/
@@ -301,7 +302,7 @@ if grep -q WSL2 /proc/version ; then  # set DISPLAY to use X terminal in WSL
 else # set DISPLAY  under tmux
 
     # 用于tmux重新连接_不过真的需要吗
-    
+
     # if [[ -z "$TMUX" ]]; then
     # -z： 变量为空，记作zero？
     # -v更好？  -v: variable is set

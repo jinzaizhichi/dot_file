@@ -372,7 +372,7 @@ lf(){
     --no-user  \
     --no-permissions  \
     --sort=time  \
-    --time-style=iso $1 | bat
+    --time-style=iso $1 | less -E
     # --group-directories-first    # 不好，
 
     tmp=$((`\ls -l | wc -l`-1))
@@ -610,14 +610,12 @@ alias nv='nvidia-smi'
 #22
 
 # edit tempt
-alias et='vim ~/d/tmp.py'
-# code edit tempt
-alias cet='code ~/d/tmp.py'
+alias et='e ~/d/tmp.py'
 # try tempt
 alias tt='python ~/d/tmp.py'
 # bd : 本地
-alias bd='code ~/.zshrc ; zsh'
-alias jn='jupyter notebook'
+alias bd='e ~/.zshrc ; zsh'
+# alias jn='jupyter notebook'
 
 alias con='conda'
 alias ci='conda install -y'
@@ -749,24 +747,19 @@ alias pt='ptpython --vi'
 alias pti='ptipython --vi'
 alias matlab='matlab -nosplash -nodesktop'
 # alias ml='matlab -nosplash -nodesktop'
-# alias do='cd ~/dot_file/'  # 有alt-m了
-#不记得当时为啥加了这个
-#alias sudo=''
-# alias vt='cd ~/dot_file ; git pull ; code ~/dot_file/tmux_tools_wf/tmux.conf; sy'
+# 避免sudo后的alias失效？
+# alias sudo=''
 
-
-# alias jt='code ~/dot_file/tmux_tools_wf/tmux.conf'
-# tmux config
-alias tc='code ~/dot_file/tmux_tools_wf/tmux.conf'
-alias s='code ~/dot_file/rc.zsh ; zsh'
+alias tc='e ~/dot_file/tmux_tools_wf/tmux.conf'
+alias s='e ~/dot_file/rc.zsh ; zsh'
 
 # az: 安装an zhuang
-alias az='code ~/dot_file/auto_install.sh'
+alias az='e ~/dot_file/auto_install.sh'
 # al: alias
-alias al='code ~/dot_file/alias.zsh; zsh'
+alias al='e ~/dot_file/alias.zsh; zsh'
 
 # i for init.vim
-alias in='code ~/dot_file/.config/nvim/init.vim'  # init.vim
+alias in='e ~/dot_file/.config/nvim/init.vim'  # init.vim
 
 
 #y: yyds，我的配置yyds
@@ -1148,25 +1141,11 @@ alias -s json=cj
 
 if [[ -n "$TMUX" ]];
 then
-    alias    code=vim
-
-    alias -s py=vim
-    alias -s cpp=vim
-    alias -s toml=vim
-    alias -s vim=vim
-    alias -s zsh=vim
-    alias -s conf=vim
-    alias -s m=vim
-    alias -s cfg=vim
+    # zsh默认用vim打开，导致无法执行？有其他bug？但是很多人都这么写
+    alias -s {cpp,txt,zsh,vim,py,toml,conf.cfg}=vim
+    # alias -s py=vim  # 要是想 让python被zsh自动补全,注释掉这行
 else
-    alias -s py=code  # 要是想 让python被zsh自动补全,注释掉这行
-    alias -s cpp=code
-    alias -s toml=code
-    alias -s vim=code
-    alias -s zsh=code
-    alias -s conf=code
-    alias -s m=code
-    alias -s cfg=code
+    alias -s {cpp,txt,zsh,vim,py,toml,conf.cfg}=code
 fi
 
 alias ai='sudo apt install'
