@@ -130,10 +130,11 @@ endif
 nnoremap U <C-R>
 nnoremap <M-u> <C-R>
 
-set timeoutlen=400  " 主要影响imap
+set timeoutlen=500  " 主要影响map
 inoremap jj <esc>
 
 " set notimeout
+" tty?
 set ttimeout ttimeoutlen=10
 
 let g:selecmode="mouse"
