@@ -283,7 +283,6 @@ r(){
          --iglob=!"$HOME/.zsh_history" \
          --iglob=!"./.zsh_history" \
          --glob=!"/d" \
-         --glob="*git*" \
          --hidden \
          --before-context 1 \
          --after-context 2  \
