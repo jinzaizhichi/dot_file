@@ -6,8 +6,9 @@ alias apt='apt -y -qq'
 alias pip3='pip3 -qq'
 alias cp='cp -r'
 
-git clone --depth 1 https://github.com/junegunn/fzf.git /.fzf
-/.fzf/install
+# 不确定对不对
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/d/fzf
+~/d/fzf/install
 
 
 ln -sf ~/dotF/rc.zsh

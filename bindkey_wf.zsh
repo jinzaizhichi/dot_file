@@ -287,8 +287,8 @@ function peco-find-file() {
         # 别用系统的根目录下的peco，太老，用dotF下的
         CURSOR=$#BUFFER
 
-        echo '当前路径为： ~/d'
-        echo '(没进去搜的目录, 仍会输出一行 )'
+        # echo '当前路径为： ~/d'
+        # echo '(没进去搜的目录, 仍会输出一行 )'
     else
         BUFFER=$(find . \
         -path "/d/docker" -prune -o  \
@@ -304,8 +304,8 @@ function peco-find-file() {
         # 别用系统的根目录下的peco，太老，用dotF下的
         CURSOR=$#BUFFER
 
-        echo '不搜 ~/d 或  /d '
-        echo '(没进去搜的目录, 仍会输出一行 )'
+        # echo '不搜 ~/d 或  /d '
+        # echo '(没进去搜的目录, 仍会输出一行 )'
     fi
 }
 

@@ -1,5 +1,7 @@
 set iskeyword+=-
 
+
+
 " >_>_>1. filetype not search comment========================================begin
 " filetype        on        " 检测文件类型
 " filetype plugin on        " 针对不同的文件类型, load不同plugin
@@ -93,11 +95,11 @@ if !exists('g:vscode')
     cnoreabbrev <expr> bd    getcmdtype() == ":" && getcmdline() == 'bd'   ? 'tabedit ~/.zshrc' : 'bd'
     cnoreabbrev <expr> e     getcmdtype() == ":" && getcmdline() == 'e'   ? 'tabedit' : 'e'
     cnoreabbrev <expr> et    getcmdtype() == ":" && getcmdline() == 'et'   ? 'tabedit ~/d/tmp.py' : 'et'
-    cnoreabbrev <expr> tc    getcmdtype() == ":" && getcmdline() == 'tc'   ? 'tabedit ~/dot_file/tmux_tools_wf/tmux.conf' : 'tc'
+    cnoreabbrev <expr> tc    getcmdtype() == ":" && getcmdline() == 'tc'   ? 'tabedit ~/dotF/tmux_tools_wf/tmux.conf' : 'tc'
     cnoreabbrev <expr> h     getcmdtype() == ":" && getcmdline() == 'h'   ? 'tab help' : 'h'
     cnoreabbrev <expr> in    getcmdtype() == ":" && getcmdline() == 'in'  ? 'tabedit ~/dotF/cfg/nvim/init.vim' : 'in'
-    cnoreabbrev <expr> s     getcmdtype() == ":" && getcmdline() == 's'   ? 'tabedit ~/dot_file/rc.zsh' : 's'
-    cnoreabbrev <expr> al    getcmdtype() == ":" && getcmdline() == 'al'   ? 'tabedit ~/dot_file/alias.zsh' : 'al'
+    cnoreabbrev <expr> s     getcmdtype() == ":" && getcmdline() == 's'   ? 'tabedit ~/dotF/rc.zsh' : 's'
+    cnoreabbrev <expr> al    getcmdtype() == ":" && getcmdline() == 'al'   ? 'tabedit ~/dotF/alias.zsh' : 'al'
     cnoreabbrev <expr> map   getcmdtype() == ":" && getcmdline() == 'map'   ? 'verbose map' : 'map'
     cnoreabbrev <expr> imap  getcmdtype() == ":" && getcmdline() == 'imap'   ? 'verbose imap' : 'imap'
     cnoreabbrev <expr> cmap  getcmdtype() == ":" && getcmdline() == 'cmap'   ? 'verbose cmap' : 'cmap'
@@ -105,12 +107,12 @@ if !exists('g:vscode')
 
     " abbrev 和map的区别，就像ahk里 hotkey和hotstring
 
-    " cnoremap ,az tabedit ~/dot_file/auto_install.sh
+    " cnoremap ,az tabedit ~/dotF/auto_install.sh
     
     " cnoremap ,in tabedit ~/dotF/cfg/nvim/init.vim
-    " cnoremap ,al tabedit ~/dot_file/alias.zsh
+    " cnoremap ,al tabedit ~/dotF/alias.zsh
     " cnoremap ,et tabedit ~/d/tmp.py<CR>
-    " cnoremap ,s  tabedit ~/dot_file/rc.zsh
+    " cnoremap ,s  tabedit ~/dotF/rc.zsh
 
 
     " abbrev
@@ -120,7 +122,7 @@ if !exists('g:vscode')
     inoreabbrev ali alias
     inoreabbrev ali alias
     inoreabbrev al alias
-    inoreabbrev df ~/dot_file/
+    inoreabbrev df ~/dotF/
     inoreabbrev HO $HOME/
 
 endif
@@ -283,7 +285,7 @@ nnoremap <C-F> i<C-X><C-F>
 
 " 这样可以 不那么死板地 只能用~/AppData/Local/nvim/init.vim来进入windows的nvim, 从而管理插件(
     " windows的nvim和vscode的nvim共用):
-"nvim -u '\\wsl$\Ubuntu\root\dot_file\.config\nvim\init.vim'
+"nvim -u '\\wsl$\Ubuntu\root\dotF\.config\nvim\init.vim'
 " 插件位置:
 " C:\Users\noway\AppData\Local\nvim-data
 " 把wsl下的dotfile发送快捷方式到 ~/AppData/Local/nvim/init.vim , 不行.因为shortcut和软链接还不一样
@@ -985,7 +987,7 @@ vnoremap _p :call Wfprint_v()<CR>
 set autowrite
 
 " mswin.vim会导致visual mode 光标所在字符不被选中
-" ~/dot_file/mswin.vim里有用的内容都在这里
+" ~/dotF/mswin.vim里有用的内容都在这里
 " [[---------------------------------------msvim-------------------------------
 
 
@@ -1035,7 +1037,7 @@ func AutoHead()
         " google Python风格规范: 不要在行尾加分号, 也不要用分号将两条命令放在同一行。
         " 但不会报错
         
-        " call append(2, 'from dot_file.wf_snippet import *')
+        " call append(2, 'from dotF.wf_snippet import *')
         " call append(2, 'sys.path.append(wf_home)')
         " call append(2, 'wf_home = os.path.expanduser("~/")')
         call setline(1, 'import cv2 as cv,cv2')
@@ -1065,7 +1067,7 @@ autocmd BufNewFile *.sh,*.py exec ":call AutoHead()"
 
 
 " if 1
-    " echo ' wf初始化的文件: ~/dot_file/vimrc'
+    " echo ' wf初始化的文件: ~/dotF/vimrc'
 " endif
 " nvim中不了<HOME> <END>    $行末 ^行首 结合autohotkey
 
@@ -1105,11 +1107,6 @@ endfunc
 " map <CapsLock>] *
 
 let g:ackprg = 'ag --vimgrep'
-
-
-set cmdheight=2
-" set fdm=indent
-set fdm=manual
 
 
 
@@ -1185,8 +1182,17 @@ set matchtime=5  " How many tenths of a second to blink when matching brackets
 set nowrapscan  " serch时，到了顶部/底部，别再跑
 set ignorecase smartcase
 
+
+" 设了屏幕会很乱
+" set isprint=1-255
+" set isprint+=9
+
+" set cmdheight=2
+
 " 代码折叠
-set foldmethod=indent  " 初步尝试, 缩进最好
+" set foldmethod=indent  " 初步尝试, 缩进最好
+" set foldmethod
+" 初步尝试, 缩进最好
 " set foldlevel=99
 
 
@@ -1430,3 +1436,9 @@ endfunc
 nnoremap <C-d> 8<C-e>
 nnoremap <C-u> 8<C-y>
 
+autocmd BufRead *  exec ":call Conceal_strang_chr()"
+func Conceal_strang_chr()
+    syn match name_you_like  /[^[:print:]]/ conceal cchar= 
+    set conceallevel=2
+    set concealcursor=vc
+endfunc

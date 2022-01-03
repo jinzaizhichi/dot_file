@@ -341,26 +341,27 @@ compctl -K _pip_completion pip3
 # pip zsh completion end
 
 
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Setup fzf
-# ---------
-if [[ ! "$PATH" == */home/wf/.fzf/bin* ]]; then
-    export PATH="${PATH:+${PATH}:}/home/wf/.fzf/bin"
-fi
+export PATH="$PATH:$HOME/dotF/bin_wf"
 
 # 别多手把前面的export PATH中的export扔了。万一脚本中途 子shell依赖的变量没export呢？
 # time测时间，export耗时太短忽略不计？
 
 
+# >_>_>===================================================================begin
+# fuzzy finder
+
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# if [[ ! "$PATH" == *$HOME/.fzf/bin* ]]; then
+#     export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
+# fi
+
 # Auto-completion  # 不灵，因为没严格按照教程按照？
 # ---------------
 # zsh --interative ？
-[[ $- == *i* ]] && source "/home/wf/.fzf/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "$HOME/dotF/fuzzyF/shell/completion.zsh" 2> /dev/null
 
-# Key bindings
-# ------------
-# source "/home/wf/.fzf/shell/key-bindings.zsh"
+# source "$HOME/dotF/fuzzyF/shell/key-bindings.zsh"
+# end=====================================================================<_<_<
 
 source ~/dotF/zsh-git-prompt/zshrc.sh
 # an example prompt

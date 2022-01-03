@@ -10,14 +10,13 @@ alias rename='massren'
 # 否则普通用户可能无法登陆（文件变成root的了）
 #
 
-# alias fzf='~/dotF/fuzzy_finder__fzf/bin/fzf --height 40% --layout=reverse --border'
-
+alias fzf='~/dotF/fuzzyF/bin/fzf --height 40% --layout=reverse --border'
 
 alias cfg='~/dotF/cfg/'
 
-export CHTSH_CONF='~/dotF/cht.sh.conf'
-
+export CHTSH_CONF='~/dotF/cfg/cht.sh.conf'
 alias ch='cht.sh --shell'
+
 # cheat website
 chw(){
     # curl --silent "cheat.sh/$*""\?T" | bat
