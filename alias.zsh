@@ -267,6 +267,10 @@ fi
 
 alias ca='cat'
 alias ba='bat'
+alias w=bat
+
+_git(){git $* | bat}
+
 # /home/wf/dotF/color_less_wf.zsh 里，export LESS='--quit-if-one-screen 一大串.....'
 alias le="less  --quit-if-one-screen"
 # alias le="less  "
@@ -507,7 +511,6 @@ chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 # b: pudb
 # t: trash
 
-alias w=bat
 
 alias e='nvim'
 # edit diff
