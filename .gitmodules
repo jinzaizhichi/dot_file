@@ -1,3 +1,6 @@
 [submodule "fuzzyF"]
 	path = fuzzyF
 	url = https://github.com/junegunn/fzf.git
+[submodule "zsh-git-prompt"]
+	path = zsh-git-prompt
+	url = https://github.com/olivierverdier/zsh-git-prompt.git
