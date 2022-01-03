@@ -28,8 +28,7 @@ yes | (pip install pynvim)
 
 mkdir ~/.cache
 yes |(cp  ~/dotF/oh-my-tmux ~/dotF/.SpaceVim ~/dotF/.SpaceVim.d ~ ; cp ~/dotF/.cache/Spacevim ~/.cache)
-rm -rf ~/.tmux.s
-yes |(ln -s ~/dotF/tmux.s  ~/.tmux.s)
+rm -rf ~/.tmux.conf
 yes |(ln -s ~/dotF/vimrc  ~/.config/nvim/init.vim)
 mkdir ~/.SpaceVim.d
 rm -f ~/.SpaceVim.d/init.toml

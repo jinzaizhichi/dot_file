@@ -1440,25 +1440,25 @@
     },
     "InterpreterAutoSeletionRule-currentPath": {
       "architecture": 3,
-      "path": "/data/wf/anaconda3/envs/py3_10/bin/python",
+      "path": "/data/wf/anaconda3/envs/py38_torch18/bin/python3",
       "version": {
         "options": {
           "loose": false,
           "includePrerelease": false
         },
         "loose": false,
-        "raw": "3.10.0-final",
+        "raw": "3.8.12-final",
         "major": 3,
-        "minor": 10,
-        "patch": 0,
+        "minor": 8,
+        "patch": 12,
         "prerelease": [
           "final"
         ],
         "build": [],
-        "version": "3.10.0-final"
+        "version": "3.8.12-final"
       },
-      "sysPrefix": "/data/wf/anaconda3/envs/py3_10",
-      "fileHash": "f3c55a021effcec194d02434f7ab0e85c85c2045f5812b6f7911a7e82ad801646779f4ba9ff3837c96e52dafce0211d91d849ae1501cf191c66fd99fcf026aba",
+      "sysPrefix": "/data/wf/anaconda3/envs/py38_torch18",
+      "fileHash": "fd465d004b2630355127db4571c6d1d26932858bf02e253a7b960760d5c8ada01fc9d512ea9abbdb3cc108005358d80025607afb0bf105ea0d1bc0dbe3c72cd9",
       "type": "Unknown"
     },
     "/data/wf/anaconda3/envs/py38_torch18/bin/python.interpreter.displayName.v7": {
@@ -1500,7 +1500,6 @@
       "type": "Conda",
       "envPath": "/data/wf/anaconda3/envs/py3_10",
       "envName": "py3_10",
-      "cachedEntry": true,
       "displayName": "Python 3.10.0 64-bit ('py3_10': conda)"
     },
     "/data/wf/anaconda3/envs/py38_torch18/bin/python.interpreter.Details.v7": {
@@ -1975,7 +1974,7 @@
         "sysPrefix": "/data/wf/anaconda3/envs/full_conv",
         "fileHash": "6b8d3318f889f7bc2db373445de09d152d58a97a14182546724ebccd84a0a360a8295367692bf860782faace2798d67fc04cc423a4968890105d4da5462436ae"
       },
-      "expiry": 1641178385188
+      "expiry": 1641300170666
     },
     "/data/wf/anaconda3/envs/full_conv/bin/python3.v3": {
       "data": {
@@ -2000,7 +1999,7 @@
         "sysPrefix": "/data/wf/anaconda3/envs/full_conv",
         "fileHash": "6b8d3318f889f7bc2db373445de09d152d58a97a14182546724ebccd84a0a360a8295367692bf860782faace2798d67fc04cc423a4968890105d4da5462436ae"
       },
-      "expiry": 1641178385255
+      "expiry": 1641300170732
     },
     "/data/wf/anaconda3/envs/full_conv/bin/python3.8.v3": {
       "data": {
@@ -2025,7 +2024,7 @@
         "sysPrefix": "/data/wf/anaconda3/envs/full_conv",
         "fileHash": "c139aaaad20008619fd6eccbca59d67f106df4b9100f2e0b81f44bacd729c0465ec0144d32018f879116b74ed734f82d0490a2eb9933b5e5da478c540d0390e9"
       },
-      "expiry": 1641178385186
+      "expiry": 1641300170695
     },
     "/data/wf/anaconda3/envs/full_conv/bin/python.interpreter.displayName.v7": {
       "data": {
@@ -2358,7 +2357,9 @@
     "INTERPRETERS_CACHE_v3_PipEnvService": [],
     "INTERPRETERS_CACHE_v3_WorkspaceVirtualEnvService": [],
     "INTERPRETERS_CACHE_v3_PipEnvService:c5432c78ac01d26efdb30170038ef3e2": [],
-    "INTERPRETERS_CACHE_v3_WorkspaceVirtualEnvService:c5432c78ac01d26efdb30170038ef3e2": []
+    "INTERPRETERS_CACHE_v3_WorkspaceVirtualEnvService:c5432c78ac01d26efdb30170038ef3e2": [],
+    "INTERPRETERS_CACHE_v3_PipEnvService:2e9e8b973688186b4e13029a3d2e793e": [],
+    "INTERPRETERS_CACHE_v3_WorkspaceVirtualEnvService:2e9e8b973688186b4e13029a3d2e793e": []
   },
   "coc-python|/root/dot_file": {
     "INTERPRETERS_CACHE_v3_PipEnvService": [],

@@ -11,7 +11,7 @@ typeset -g -A key
 bindkey -s '\eh' '~ \n'
 # t太难按了
 # bindkey -s '\et' '~/.l \n'
-# w: waste: 垃圾是浪费了的宝藏?
+# w: wait: 要删除文件？wait， mv到垃圾箱吧
 bindkey -s '\ew' '~/.t \n'
 
 bindkey -s '\e3' '~/3 \n'
@@ -167,7 +167,6 @@ bindkey '^ ' delete-word
 # b: backward-word
 # f: forward-word
 
-bindkey -s '\ew' 'echo "待用" \n'
 bindkey -s '\eo' 'echo "待用" \n'
 bindkey -s '\ei' 'echo "待用" \n'
 bindkey -s '\ep' 'echo "待用" \n'

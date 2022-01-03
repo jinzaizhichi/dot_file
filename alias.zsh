@@ -95,6 +95,16 @@ q(){
     tree -L 2 --filelimit=50 $1 | peco
 }
 
+git_rm_sub(){
+    sub_name=$1
+    git submodule deinit -f $sub_name
+    rm -rf .git/modules/$sub_name
+    git config -f .gitmodules --remove-section submodule.$sub_name
+    git config -f .git/config --remove-section submodule.$sub_name
+    git rm --cached $sub_name
+    git commit -m "彻底清理submodule: $sub_name"
+}
+
 # alias git='LANG=en_GB git' # 不行
 
 zi(){
@@ -1094,9 +1104,6 @@ alias top=htop
 alias toc='htop -s %cpu'
 alias tom='htop -s %mem'
 
-alias wg='axel'
-alias wget='echo "using axel" ; axel'
-alias wgname='wget -c -O "wf_need_to_change_name"'
 alias z='_z 2>&1'
 
 
@@ -1181,3 +1188,19 @@ alias apt-get='apt'
 # $PWD:t
 # 或者
 # basename $PWD  # 更通用
+
+# sh -c "$(curl -fsLS git.io/chezmoi)" 意思：
+# -f :Fail silently (no output at all) on HTTP error
+# -s :Silent mode
+# -S : Show error even when -s is used
+# -L : follow redirects
+
+alias wg='axel'
+alias wget='echo "using axel. 要是遇到别人写wget -O-，知道它是重定向到stdout就好。 axel的参数和wget不同" ; axel'
+alias wgname='wget -c -O "wf_need_to_change_name"'
+
+ # sh -c "$(wget -q -O- git.io/chezmoi)"
+ # -O: 指定输出文件名
+ # -O-：  输出到stdout
+
+

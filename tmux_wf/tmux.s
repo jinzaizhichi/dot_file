@@ -26,28 +26,34 @@ set -g @yank_selection_mouse 'clipboard' # or 'primary' or 'secondary'
 
 # bind -T copy-mode-vi 'yy' send -X copy-end-of-line
 # bind -T copy-mode-vi 'M-j' send j5  todo 不行
+
+bind  -T copy-mode-vi  'Y' send -X copy-end-of-line
+
 bind -T copy-mode-vi 'H' send '^'
 bind -T copy-mode-vi 'L' send '$'
 
 bind 'a' run-shell "tmux copy-mode; tmux send k; tmux send H"
 
-# toggle number
-# bind 'v' run-shell "F2 ; tmux copy-mode; tmux send v"  # 不行
-bind 'v' run-shell "tmux copy-mode; tmux send v ; tmux send c"
-bind 'V' run-shell 'tmux copy-mode; tmux send 'v''  # 大V
+# toggle number # 不行
+# bind 'v' run-shell "F2 ; tmux copy-mode; tmux send v" 
+bind 'v' run-shell "tmux copy-mode; tmux send 'v' ; tmux send 'c'"
 
-
-bind  -T copy-mode-vi  'Y' send -X copy-end-of-line
 
 bind -T copy-mode-vi 'v' send -X begin-selection
-bind -T copy-mode-vi 'c' send -X rectangle-toggle
-# 不行
-# bind -T copy-mode-vi 'C-c' run-shell 'tmux rectangle-toggle && tmux send "v" ; tmux echo "block-mode" ; '
+# bind -T copy-mode-vi 'c' send -X rectangle-toggle
+
+# 进了copy-mode后 没选中内容时, rectangle-toggl看不到生效
+# bind -T copy-mode-vi 'C-v' run-shell "tmux rectangle-toggle"  # copy mode的命令不能这样, 要send -X
+# todo: 现在并没有toggle
+bind -T copy-mode-vi 'C-v' send -X rectangle-toggl
+
+试过变成下面这行的t的 效果,后来又不会了 （正常了)
+
+# tmux-how-to-display-line-numbers-in-copy-mode
+bind -T copy-mode-vi t  split-window -h -l 3 -b "printf '\e[38;5;0m\e[48;5;226m' && seq 500 -1 1 && echo -n 0 && read" \; selectp -l
 
 
 # ==========================打通tmux和系统、nvim的粘贴板。反应有点慢================]]
-
-
 
 # unbind 't'  待用 to use
 # unbind u

@@ -88,14 +88,14 @@ nnoremap g/ msgg/
 if !exists('g:vscode')
     " cnoremap s/ s/\v
     " vscode里，用了camp时，必须在光标后有字符才能正常map
-    
+
     " <expr> 指明了right hand side是表达式
     " cnoremap    <expr> bd    getcmdtype() == ":" && getcmdline() == 'bd'   ? 'tabedit ~/.zshrc' : 'tabedit'
     " bd 本来是buffer delete的意思。现在用bde代替吧
     cnoreabbrev <expr> bd    getcmdtype() == ":" && getcmdline() == 'bd'   ? 'tabedit ~/.zshrc' : 'bd'
     cnoreabbrev <expr> e     getcmdtype() == ":" && getcmdline() == 'e'   ? 'tabedit' : 'e'
     cnoreabbrev <expr> et    getcmdtype() == ":" && getcmdline() == 'et'   ? 'tabedit ~/d/tmp.py' : 'et'
-    cnoreabbrev <expr> tc    getcmdtype() == ":" && getcmdline() == 'tc'   ? 'tabedit ~/dotF/tmux_tools_wf/tmux.conf' : 'tc'
+    cnoreabbrev <expr> tc    getcmdtype() == ":" && getcmdline() == 'tc'   ? 'tabedit ~/dotF/tmux_wf/tmux.s' : 'tc'
     cnoreabbrev <expr> h     getcmdtype() == ":" && getcmdline() == 'h'   ? 'tab help' : 'h'
     cnoreabbrev <expr> in    getcmdtype() == ":" && getcmdline() == 'in'  ? 'tabedit ~/dotF/cfg/nvim/init.vim' : 'in'
     cnoreabbrev <expr> s     getcmdtype() == ":" && getcmdline() == 's'   ? 'tabedit ~/dotF/rc.zsh' : 's'
@@ -108,7 +108,7 @@ if !exists('g:vscode')
     " abbrev 和map的区别，就像ahk里 hotkey和hotstring
 
     " cnoremap ,az tabedit ~/dotF/auto_install.sh
-    
+
     " cnoremap ,in tabedit ~/dotF/cfg/nvim/init.vim
     " cnoremap ,al tabedit ~/dotF/alias.zsh
     " cnoremap ,et tabedit ~/d/tmp.py<CR>
@@ -245,18 +245,10 @@ noremap <Up> <C-O>
 
 
 
-" block模式
-" <C-q>用不了，可能是kite占用了  [好像又能用了]
-" 记忆：c for block c发音:ke
-nnoremap <C-c> <C-v>
-
-" 变成^  作用是 显示ASCII码?:
-" vscod里不生效：
-inoremap <C-C> <C-V>
 
 
 " vscode里是切到terminal
-" nnoremap <C-J>  
+" nnoremap <C-J>
 
 noremap <BS> <left>
 " normal模式：<C-X>  数字减1
@@ -320,7 +312,7 @@ endif
 
 if exists('g:vscode')
     "set wrap 后，同物理行上线直接跳。
-    "  they are not recursively mapped themselves (I don't know why this matters) but 
+    "  they are not recursively mapped themselves (I don't know why this matters) but
     "  you can still recursively map to them.
     map j gj
     map k gk
@@ -397,7 +389,7 @@ autocmd BufNewFile,BufRead *.py  exec ":call T2S()"
 
 func T2F()
     echom "  2个空格 变成tab"
-    set noexpandtab tabstop=2  
+    set noexpandtab tabstop=2
     " [range]retab 百分号% 表示全文
     %retab!
     call T2S()
@@ -468,7 +460,7 @@ else
         "       the indent of a line.  When non-empty this method overrides
         "       the other ones.  See |indent-expression|.
     set cindent
-    " 考虑用谷歌的规范？ 
+    " 考虑用谷歌的规范？
     " https://github.com/google/styleguide/blob/gh-pages/google_python_style.vim
     " set indentexpr=GetGooglePythonIndent(v:lnum)
     "
@@ -559,6 +551,7 @@ if !exists('g:vscode')
 endif
 
 
+Plug 'sheerun/vim-polyglot'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'andymass/vim-matchup'
 Plug 'junegunn/vim-easy-align'
@@ -951,16 +944,16 @@ set completeopt=noinsert,menuone
 
 func Wfprint_n()
     if &filetype == 'python'
-        exec "normal yiwoprint(f'{= }')" 
-        exec "normal hhhhhp" 
+        exec "normal yiwoprint(f'{= }')"
+        exec "normal hhhhhp"
     elseif &filetype == 'cpp'
         exec 'normal yiwocout<<""<<'| exec 'normal hhhpf<lpa<<endl;'
     elseif &filetype == 'zsh'
         exec 'normal yiwoecho ${}'
-        exec "normal hp" 
+        exec "normal hp"
     elseif &filetype == 'vim'
         exec 'normal yiwoecho &'
-        exec "normal p" 
+        exec "normal p"
     endif
 endfunc
 
@@ -970,7 +963,7 @@ func Wfprint_v()
         exec "visual y"
         exec "normal oprint(f'{= }')"
         exec "normal k$hp"
-    endif 
+    endif
 endfunc
 
 nnoremap _p :call Wfprint_n()<CR>
@@ -1036,7 +1029,7 @@ func AutoHead()
     elseif &filetype == 'python'
         " google Python风格规范: 不要在行尾加分号, 也不要用分号将两条命令放在同一行。
         " 但不会报错
-        
+
         " call append(2, 'from dotF.wf_snippet import *')
         " call append(2, 'sys.path.append(wf_home)')
         " call append(2, 'wf_home = os.path.expanduser("~/")')
@@ -1137,9 +1130,13 @@ set history=2000
 set autoread
 
 " shortmess: short messages, 简略提示
-" I:启动的时候不显示多余提示
-" t: trunc
-set shortmess=tI
+set shortmess=I  " I:启动的时候不显示多余提示
+set shortmess+=t  " t: trunc if too long
+set shortmess+=F  " F don't give the file info when editing a file, like :silent
+
+" To reduce the number of hit-enter prompts:
+" - Set 'cmdheight' to 2 or higher.
+set cmdheight=2
 
 let s:noSwapSuck_file = fnamemodify($MYVIMRC, ":p:h")  . "/noswapsuck.vim"    " 字符串concat，用点号
             " fnamemodify比expand的功能更强
@@ -1183,9 +1180,6 @@ set nowrapscan  " serch时，到了顶部/底部，别再跑
 set ignorecase smartcase
 
 
-" 设了屏幕会很乱
-" set isprint=1-255
-" set isprint+=9
 
 " set cmdheight=2
 
@@ -1436,9 +1430,35 @@ endfunc
 nnoremap <C-d> 8<C-e>
 nnoremap <C-u> 8<C-y>
 
-autocmd BufRead *  exec ":call Conceal_strang_chr()"
+" autocmd BufRead *  exec ":call Conceal_strang_chr()"
+" 需要时手动执行吧
 func Conceal_strang_chr()
-    syn match name_you_like  /[^[:print:]]/ conceal cchar= 
+    " syn match name_you_like  /[^[:print:]]/ conceal cchar=  " 空格会被自动删掉
+    syn match name_you_like  /[^[:print:]]/ conceal cchar=%
     set conceallevel=2
     set concealcursor=vc
 endfunc
+
+
+" set isprint+=9  " 9代表tab，设了回导致排版错乱
+set isprint=@,161-255  " 默认值
+" set isprint=1-255  " 设了屏幕会很乱  " Stack Overflow有个傻逼回答，别信
+
+" autocmd BufRead *.txt  exec ":call Conceal_strang_chr_3()"
+func Conceal_strang_chr_3()
+    " set isprint=1-255  " 设了屏幕会很乱
+    set isprint+=9  " 设了屏幕会很乱
+    " syn match name_you_like  /[^[:print:]]/ conceal cchar=%
+    " set conceallevel=3
+    " set concealcursor=vcni
+endfunc
+
+" block模式
+" <C-q>用不了，可能是kite占用了  [好像又能用了]
+" 记忆：c for block c发音:ke
+nnoremap <C-C> <C-v>
+nnoremap <C-V> <C-V>
+
+" 变成^  作用是 显示ASCII码?:
+" vscod里不生效：
+inoremap <C-C> <C-V>
