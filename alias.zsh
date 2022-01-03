@@ -269,7 +269,8 @@ alias ca='cat'
 alias ba='bat'
 alias w=bat
 
-_git(){git $* | bat}
+# bat read git output
+bgit(){git $* | bat}
 
 # /home/wf/dotF/color_less_wf.zsh 里，export LESS='--quit-if-one-screen 一大串.....'
 alias le="less  --quit-if-one-screen"
