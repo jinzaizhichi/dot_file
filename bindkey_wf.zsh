@@ -8,11 +8,12 @@ typeset -g -A key
 # -A specify that arguments refer to associative arrays
 
 # alt 负责路径跳转
-bindkey -s '\eh' 'cd ~ \n'
+bindkey -s '\eh' '~ \n'
 # t太难按了
 # bindkey -s '\et' '~/.l \n'
-# l for laji 垃圾
-bindkey -s '\el' '~/.t \n'
+# w: waste: 垃圾是浪费了的宝藏?
+bindkey -s '\ew' '~/.t \n'
+
 bindkey -s '\e3' '~/3 \n'
 bindkey -s '\ed' '~/d \n'
 # m for modify，修改配置
@@ -162,6 +163,11 @@ bindkey '^ ' delete-word
 
 
 # \e表示Esc键，但敲alt也行. 先按Ecs键，再按字母，等价于：按下alt，再按字母
+# 默认就是吧:
+# b: backward-word
+# f: forward-word
+
+bindkey -s '\ew' 'echo "待用" \n'
 bindkey -s '\eo' 'echo "待用" \n'
 bindkey -s '\ei' 'echo "待用" \n'
 bindkey -s '\ep' 'echo "待用" \n'
