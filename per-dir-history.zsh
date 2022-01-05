@@ -1,13 +1,11 @@
 #!/usr/bin/env zsh
 
+# lwf改过变量名，todo：检查一遍
 # dir: directory
-# hst: history
+# hst: histor
 
-# This is a implementation of per dir history for zsh, some
-# implementations of which exist in bash[1,2].
-#
-# In both cases the history is  always saved to both the global history
-# and the dir history, so the  toggle state will not effect the saved histories.
+# In both cases the history is  always saved to both
+# the global history  and the dir history, so the toggle state will not effect the saved histories.
 #
 #-------------------------------------------------------------------------------
 # Configuration

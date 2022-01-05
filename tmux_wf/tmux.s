@@ -35,11 +35,12 @@ bind -T copy-mode-vi 'L' send '$'
 bind 'a' run-shell "tmux copy-mode; tmux send k; tmux send H"
 
 # toggle number # 不行
-# bind 'v' run-shell "F2 ; tmux copy-mode; tmux send v" 
+# bind 'v' run-shell "F2 ; tmux copy-mode; tmux send v"
 bind 'v' run-shell "tmux copy-mode; tmux send 'v' ; tmux send 'c'"
 
 
-bind -T copy-mode-vi 'v' send -X begin-selection
+bind -T copy-mode-vi 'space' send -X begin-selection
+bind -T copy-mode-vi 'v'   send -X rectangle-toggle
 # bind -T copy-mode-vi 'c' send -X rectangle-toggle
 
 # 进了copy-mode后 没选中内容时, rectangle-toggl看不到生效
@@ -47,10 +48,10 @@ bind -T copy-mode-vi 'v' send -X begin-selection
 # todo: 现在并没有toggle
 bind -T copy-mode-vi 'C-v' send -X rectangle-toggl
 
-试过变成下面这行的t的 效果,后来又不会了 （正常了)
+# 试过变成下面这行的t的 效果,后来又不会了 （正常了) 神奇
 
 # tmux-how-to-display-line-numbers-in-copy-mode
-bind -T copy-mode-vi t  split-window -h -l 3 -b "printf '\e[38;5;0m\e[48;5;226m' && seq 500 -1 1 && echo -n 0 && read" \; selectp -l
+# bind -T copy-mode-vi t  split-window -h -l 3 -b "printf '\e[38;5;0m\e[48;5;226m' && seq 500 -1 1 && echo -n 0 && read" \; selectp -l
 
 
 # ==========================打通tmux和系统、nvim的粘贴板。反应有点慢================]]
@@ -129,6 +130,7 @@ bind 'e' break-pane
 
 
 bind 'c' new-window -c "#{pane_current_path}"
+# bind 'Meta' new-window -c "#{pane_current_path}"  # 不行
 # splitting panes
 bind '\' split-window -h -c "#{pane_current_path}"
 bind 'space'  split-window -c '#{pane_current_path}'
@@ -237,7 +239,8 @@ bind -T copy-mode-vi 9                 command-prompt -N -I 9  "send -N \"%%%\""
 
 set -g pane-border-status top
 # set -g pane-border-format "#{pane_index} #{pane_current_command} #P #T"
-set -g pane-border-format "#T"
+# set -g pane-border-format "#T"
+set -g pane-border-format ""  # 在vim里显示文件名，别再显示这个了
 set -g pane-active-border-style fg=black,bg=colour7
 set -g pane-border-style fg=colour108
 # set -g pane-border-style 'fg=#123456,bg=default'

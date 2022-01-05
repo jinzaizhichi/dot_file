@@ -22,10 +22,11 @@ logger.add(log_file)
 logger.info(str(vars(args)))
 
 
+import os
 def find_gpus(num_of_cards_needed=6):
     os.system('nvidia-smi -q -d Memory |grep -A4 GPU|grep Free >~/.tmp_free_gpus')
-    _p = os.path.expanduser ('~/.tmp_free_gpus')# If there is no ~ in the path, return the path unchanged
-    with open(_p , 'r') as lines_txt:
+    # If there is no ~ in the path, return the path unchanged
+    with open(os.path.expanduser ('~/.tmp_free_gpus'), 'r') as lines_txt:
         frees = lines_txt.readlines()
         idx_freeMemory_pair = [ (idx, int(x.split()[2]))
                                 for idx, x in enumerate(frees) ]
@@ -34,16 +35,12 @@ def find_gpus(num_of_cards_needed=6):
     usingGPUs = [str(idx_memory_pair[0]) for idx_memory_pair in
                     idx_freeMemory_pair[:num_of_cards_needed] ]
     usingGPUs = ','.join(usingGPUs)
-    # todo try用对了？debug来这里
-    try:
-        logger.info('using GPUs:')
-        for pair in idx_freeMemory_pair[:num_of_cards_needed]:
-            logger.info('{}号: {} MB free'.format(*pair) )
-    except:
-        pass
+    for pair in idx_freeMemory_pair[:num_of_cards_needed]:
+        print('{}号: {} MB free'.format(*pair) )
     return usingGPUs
 
 
-os.environ['CUDA_VISIBLE_DEVICES'] = find_gpus(num_of_cards_needed=1)  # 必须在import torch前面
+os.environ['CUDA_VISIBLE_DEVICES'] = find_gpus(1)  # 必须在import torch前面
+import torch
 # XPU: CPU or GPU
 myXPU = torch.device('cuda')   # ('cuda:号数')   号数:从0到N, N是VISIBLE显卡的数量。号数默认是0 [不是显卡的真实编号]

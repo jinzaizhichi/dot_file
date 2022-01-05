@@ -24,7 +24,7 @@ let mapleader =" "
 
 set hlsearch " 高亮search
 " nnoremap <silent><leader>/ :nohls<CR> " 搜索时 不高亮
-nnoremap <Leader>h :set hlsearch!<CR>
+nnoremap <Leader>set hlsearch!<CR>
 
 
 " >_>_>1.1 =====================================================begin
@@ -146,32 +146,49 @@ set list
 
 set listchars=
 
+" `:autocmd` adds to the list of autocommands regardless of whether they are
+        " already present.  When your .vimrc file is sourced twice, the autocommands
+        " will appear twice.  To avoid this, define your autocommands in a group, so
+        " that you can easily clear them: >
 
 " 让配置变更立即生效
-if has('autocmd') " ignore this section if your vim does not support autocommands
-    " 1. Select the group with ":augroup {name}".
-    augroup wf_reload_init.vim
-        " 2. Delete any old autocommands with
-        autocmd!
-        " 3. Define the autocommands.   %（百分号）表示当前文件
-        " autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source % | echo '改了init.vim'
-                " Using :echom will save the output and let you run :messages to view it later.
+    " 1. Select the group with `:augroup {name}`
+    " :aug[roup] {name}		Define the autocmd group name for the
+    "                 following ":autocmd" commands. 
+    augroup wf_reload
+        " 2. Delete any old autocommands  `:help autocmd-remove`
+        autocmd!  
+        " 3. Define the autocommands.   %（百分号）表示当前文件  " 下面这个的！不表示remove
         autocmd! BufWritePost $MYVIMRC,$MYGVIMRC nested source % | echom '改了init.vim'
-
         " 4. Go back to the default group：  END
-    augroup END
-endif
+    augroup end
+    " The name "end" selects the default group.
+    "
+
+" When a function by this name already exists and [!] is
+" not used an error message is given.  There is one
+" exception: When sourcing a script again, a function
+" that was previously defined in that script will be
+" silently replaced.
+" When [!] is used, an existing function is silently
+" replaced.  Unless it is currently being executed, that
+" is an error.
+" NOTE: Use ! wisely.  If used without care it can cause
+" an existing function to be replaced unexpectedly,
+" which is hard to debug.
+
+" 改了 beautify_wf并保存后， 保存init.vim会说function already exist
+" 些别想着避免这个问题，毕竟很少改init.vim以外的文件. 
+" https://github.com/xolox/vim-reload
 
 
-" 新tab打开help
-
-" 竖着分屏打开help
+" " 竖着分屏打开help
 " augroup my_filetype_settings
-" autocmd!
-" winnr: 当前window的编号，top winodw是1
-" $  表示 last window
-" autocmd FileType help if winnr('$') > 2 | wincmd K | else | wincmd L | endif
-" augroup END
+"     autocmd!
+"     " winnr: 当前window的编号，top winodw是1
+"     " $  表示 last window
+"     autocmd FileType help if winnr('$') > 2 | wincmd K | else | wincmd L | endif
+"     augroup end
 
 " 1.4 LISTING MAPPINGS                  *map-listing*
 " When listing mappings the characters in the first two columns are:
@@ -258,7 +275,6 @@ nnoremap X <C-A>
 " 被coc占用了？
 " <C-X> 调自带的omnicomplete
 inoremap <C-F> <C-X><C-F>
-nnoremap <C-F> i<C-X><C-F>
 
 " 对于vscode-nvim：insert mode is being handled by vscode 所以<C-X>没反应
 
@@ -297,7 +313,7 @@ nnoremap <C-F> i<C-X><C-F>
 " 或者:
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"zv" |
+     \   execute "normal! g`\"zv" |
      \ endif
 " end-------------------------------------------------------------】】
 
@@ -385,7 +401,10 @@ endfunc
 " 没有混淆时，任意缩写都可以？endfunc
 
 " autocmd对neovim-vscode无效？
-autocmd BufNewFile,BufRead *.py  exec ":call T2S()"
+autocmd BufNewFile,BufRead *.py  execute ":call T2S()"
+
+" https://github.com/neoclide/coc.nvim/wiki/Using-the-configuration-file
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
 func T2F()
     echom "  2个空格 变成tab"
@@ -532,7 +551,9 @@ Plug 'junegunn/vim-plug' " 为了能用:help plug-options
 
 
 if !exists('g:vscode')
+    " Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
     Plug 'preservim/nerdtree'
+
     autocmd StdinReadPre * let s:std_in=1
     autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
@@ -542,20 +563,19 @@ if !exists('g:vscode')
     " <Leader>t 翻译光标下的文本，在命令行回显
     nnoremap <silent> <Leader>a <Plug>Translate
     vnoremap <silent> <Leader>a <Plug>TranslateV
-
-    " <Leader>h 翻译光标下的文本，在窗口中显示   h：here
+    " h被占了
+    " <Leader>h 翻译光标下的文本，在窗口中显示   h：here 
     nnoremap <silent> <Leader>a <Plug>TranslateW
     vnoremap <silent> <Leader>a <Plug>TranslateWV
     " Leader h被 set hlsearch！占用了
 
 endif
 
-
 Plug 'sheerun/vim-polyglot'
-Plug 'jonathanfilip/vim-lucius'
+Plug 'jonathanfilip/vim-lucius'   " colorscheme lucius
+
 Plug 'andymass/vim-matchup'
 Plug 'junegunn/vim-easy-align'
-
 
 
 Plug 'neoclide/coc.nvim', VimPlugConds(!exists('g:vscode'), {'branch': 'release'})
@@ -672,8 +692,10 @@ endif
 " Plug 'honza/vim-snippets'
 
 " On-demand loading
-" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" todo
+" https://github.com/pechorin/any-jump.vim
 
 call plug#end()
 " =============================================vim-plug===============================end
@@ -686,15 +708,6 @@ if has('win32')
     " let g:loaded_python_provider = 0
 endif
 
-if !has('win32')
-    " 从这里学来的：
-    " https://github.com/SpaceVim/SpaceVim/blob/b2d1d7460690648951d6685a3a947e9b4248e38c/autoload/SpaceVim/layers/leaderf.vim#L489
-    source ~/dotF/cfg/nvim/beautify_wf.vim
-
-    " 这么写比较啰嗦：
-    " let s:beauty_path = fnamemodify($MYVIMRC, ":p:h") . "/beautify_wf.vim"    " 字符串concat，用点号
-    " exe 'source ' . s:beauty_path      " 这样不行： source  . s:beauty_path
-endif
 
 
 
@@ -722,10 +735,10 @@ vnoremap <C-_> :call nerdcommenter#Comment('n', 'toggle')<CR>
 
 " 不行
 " func! InlineCommentWf()
-"     exec "normal A"
-"     exec "normal o/"
+"     execute "normal A"
+"     execute "normal o/"
 "     call nerdcommenter#Comment("n", "Comment")
-"     exec "normal kJA"
+"     execute "normal kJA"
 " endfunc
 
 
@@ -944,25 +957,32 @@ set completeopt=noinsert,menuone
 
 func Wfprint_n()
     if &filetype == 'python'
-        exec "normal yiwoprint(f'{= }')"
-        exec "normal hhhhhp"
+        " todo 加叹号
+        " normal! 表示不允许mapping
+        " execute "normal yiwoprint(f'{= }')"
+        execute "normal yiwoprint(f'{= }')"
+        execute "normal hhhhhp"
     elseif &filetype == 'cpp'
-        exec 'normal yiwocout<<""<<'| exec 'normal hhhpf<lpa<<endl;'
+        " execute 'normal yiwocout<<""<<' | execute 'normal hhhpf<lpa<<endl;'
+        execute 'normal yiwocout<<""<<' 
+        execute 'normal hhhpf<lpa<<endl;'
     elseif &filetype == 'zsh'
-        exec 'normal yiwoecho ${}'
-        exec "normal hp"
+        execute 'normal yiwoecho ${}'
+        execute "normal hp"
     elseif &filetype == 'vim'
-        exec 'normal yiwoecho &'
-        exec "normal p"
+        execute 'normal yiwoecho &'
+        execute "normal p"
     endif
 endfunc
 
 func Wfprint_v()
     if &filetype == 'python'
         " todo
-        exec "visual y"
-        exec "normal oprint(f'{= }')"
-        exec "normal k$hp"
+        " visual 是退出ex mode，进入normal mode, 不是在visual mode 执行
+        " execute "visual y"
+        " y
+        execute "normal oprint(f'{= }')"
+        execute "normal 4h"
     endif
 endfunc
 
@@ -1051,7 +1071,7 @@ func AutoHead()
     normal o
 endfunc
 
-autocmd BufNewFile *.sh,*.py exec ":call AutoHead()"
+autocmd BufNewFile *.sh,*.py execute ":call AutoHead()"
 
 
 
@@ -1079,16 +1099,16 @@ nnoremap - :call nerdcommenter#Comment('n', 'toggle')<CR>k
 nnoremap <Leader>r :call WfRun()<CR>
 
 func! WfRun()
-    exec "w"
+    execute "w"
     echo "wf_已保存"
     if &filetype == 'python'
         "跑votenet的某个文件时,若这样执行,pc_util.write_ply没被调用; 若正常敲python执行,则正常
         "% 代表当前文件
-        exec "! python %"
+        execute "! python %"
     elseif &filetype == 'sh'
-        exec "! zsh %"
+        execute "! zsh %"
     elseif &filetype == 'cpp'
-        exec " ! rm -f /d/script.wf_cpp; g++ -std=c++11 % -Wall -g -o /d/script.wf_cpp `pkg-config --cflags --libs opencv` ; /d/script.wf_cpp "
+        execute " ! rm -f /d/script.wf_cpp; g++ -std=c++11 % -Wall -g -o /d/script.wf_cpp `pkg-config --cflags --libs opencv` ; /d/script.wf_cpp "
     endif
 endfunc
 
@@ -1208,8 +1228,9 @@ endif
 
 " http://stackoverflow.com/questions/2005214/switching-to-a-particular-tab-in-vim
 
-map <leader>th :tabprev<cr>
-map <leader>tl :tabnext<cr>
+map <leader>h :tabprev<cr>
+map <leader>l :tabnext<cr>
+set guitablabel=\[%N\]\ %t\ %M
 
 " normal模式下切换到确切的tab
 noremap <leader>1 1gt
@@ -1277,15 +1298,16 @@ let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 
-let g:Lf_ShortcutF = "<leader>o"
-let g:Lf_ShortcutF = "<leader>f"
-noremap <leader>ob :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
-noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-noremap <leader>ot :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
-noremap <leader>ol :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
-
-" noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
-" noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+" let g:Lf_ShortcutF = "<leader>o"
+let g:Lf_ShortcutF = "<leader>f"  " 要想快点弹出窗口，按下f后，马上输出字符
+" mru: most recently used file
+    nnoremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+" Launch LeaderF to search a line in current buffer.  " 有点vscode下的感觉
+    nnoremap <leader>/ :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+" <cword> is replaced with the word under the cursor (like |star|)
+    nnoremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR><CR>
+    " nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR><CR>
+    nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR><CR>
 
 " search visually selected text literally
 " xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
@@ -1335,6 +1357,9 @@ nnoremap sc <Plug>(operator-sandwich-add)
 " longer updatetime (default is 4000 ms = ) leads to  delays and poor user experience.
 set updatetime=300
 
+
+
+
 if !exists('g:vscode') " or hostname() == 'redmi14-leo'  不要这样，起码保证ubuntu下的workflow一致
     " >_>_>coc补全==================================================================begin
 
@@ -1379,11 +1404,12 @@ if !exists('g:vscode') " or hostname() == 'redmi14-leo'  不要这样，起码�
     " coc补全=====================================================================<_<_<
 endif
 
-" https://unix.stackexchange.com/a/8296/457327
+" 用法:  put =Vim_out('你的命令') 
 funct Vim_out(my_cmd)
+" https://unix.stackexchange.com/a/8296/457327
     redir =>my_output
     " a 表示argument
-    silent exec a:my_cmd
+    silent execute a:my_cmd
     redir END
     return my_output
 endfunc
@@ -1430,7 +1456,7 @@ endfunc
 nnoremap <C-d> 8<C-e>
 nnoremap <C-u> 8<C-y>
 
-" autocmd BufRead *  exec ":call Conceal_strang_chr()"
+" autocmd BufRead *  execute ":call Conceal_strang_chr()"
 " 需要时手动执行吧
 func Conceal_strang_chr()
     " syn match name_you_like  /[^[:print:]]/ conceal cchar=  " 空格会被自动删掉
@@ -1444,7 +1470,7 @@ endfunc
 set isprint=@,161-255  " 默认值
 " set isprint=1-255  " 设了屏幕会很乱  " Stack Overflow有个傻逼回答，别信
 
-" autocmd BufRead *.txt  exec ":call Conceal_strang_chr_3()"
+" autocmd BufRead *.txt  execute ":call Conceal_strang_chr_3()"
 func Conceal_strang_chr_3()
     " set isprint=1-255  " 设了屏幕会很乱
     set isprint+=9  " 设了屏幕会很乱
@@ -1459,6 +1485,67 @@ endfunc
 nnoremap <C-C> <C-v>
 nnoremap <C-V> <C-V>
 
-" 变成^  作用是 显示ASCII码?:
+" 变成^  作用是 显示ASCII码 （以^H等方式显示一些控制字符）
 " vscod里不生效：
 inoremap <C-C> <C-V>
+
+if !has('win32')
+    source ~/dotF/cfg/nvim/beautify_wf.vim
+    " 这么写比较啰嗦：
+    " let s:beauty_path = fnamemodify($MYVIMRC, ":p:h") . "/beautify_wf.vim"    " 字符串concat，用点号
+    " exe 'source ' . s:beauty_path      " 这样不行： source  . s:beauty_path
+endif
+
+
+
+" todo
+" Each status line item is of the form: ( All fields except the {item} are optional.)
+"       %-0{minwid}.{maxwid}{item}
+" 在上面的基础上：  (几表示某个highlight设置)
+" %Highlight配色号码
+
+"    %=   右对齐
+"    %r  readonly, 显示 [RO]
+set statusline=
+set statusline=%7*=%r
+set statusline=%=%t                            " tittle  
+set statusline+=%=\ buffer号:%n\            "buffer number
+set statusline+=%=%m                         "modified flag
+" set statusline+=%=文件格式:%{&ff}            "是否unix
+" flag[Preview] ??
+set statusline+=%=\ %h
+set statusline+=%=\ %w
+set statusline+=%=\ %k
+set statusline+=%=\ %q
+set statusline+=%999X
+" set statusline+=
+set statusline+=%=第%l行/
+set statusline+=%L行               "total lines
+set statusline+=(%p%%)
+set statusline+=%=第%v列         "virtual column number (screen column)
+" set statusline+=\ %c           " Column number (byte index).
+
+
+
+set statusline=
+set statusline+=%0*\ %<%F\                                "File+path
+set statusline+=%0*\ \ %m%r%w\                       "Modified? Readonly? Top/bot.
+" buffer号码
+set statusline+=%2*\[buffer:%n]                                  "buffernr
+" set statusline+=%2*\ %y\                                  "FileType
+" set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}      "Encoding
+" set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\            "Encoding2
+" set statusline+=%4*\ %{&ff}\                              "FileFormat (dos/unix..)
+" set statusline+=%5*\ %{&spelllang}\                         "Spellanguage
+set statusline+=%8*\ %=\ 行:%l/%L\ (%3p%%)\             "Rownumber/total (%)
+set statusline+=%9*\ 列:%3c\                            "Colnr
+" set statusline+=%0*\ \ %m%r%w\ %P\ \                      "Modified? Readonly? Top/bot.
+
+" set laststatus=1  " only if there are at least two windows
+" 没有statusline时，命令那行和代码容易混在一起
+set laststatus=2  "  always show statusline
+
+" put the  block above in your vimrc file and
+" the following lines in your current colorscheme file.
+" hi User1 guifg=#ffdad8  guibg=#880c0e
+

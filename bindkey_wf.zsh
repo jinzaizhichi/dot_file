@@ -8,6 +8,10 @@ typeset -g -A key
 # -A specify that arguments refer to associative arrays
 
 # alt 负责路径跳转
+
+
+# bindkey -s in-string out-string
+
 bindkey -s '\eh' '~ \n'
 # t太难按了
 # bindkey -s '\et' '~/.l \n'
@@ -20,6 +24,17 @@ bindkey -s '\ed' '~/d \n'
 bindkey -s '\em' '~/dotF \n'
 bindkey -s '\et' '~/.t \n'
 bindkey -s '\ec' 'cfg \n'
+
+# bindkey -s "\C-o" "cle \C-j"  # 很少用
+bindkey -s "\C-o" "echo '待用' \n"
+bindkey -s "\C-t" "tt \C-j"  # python ~/d/tmp.py  # t for try
+
+
+# bindkey -s "\C-q" "echo '待用' \n"  # 无法修改。作用一直是删除
+# (暂停输出)
+# bindkey -s "^s" 'echo "bindkey succeed?" \n'
+# bindkey -s "\C-s" "echo '待用' \n"  # 改了但还是 锁屏
+bindkey -s '\c-s' 'echo "bindkey succeed?" \n'
 
 # todo
 # ^D在当前行 有字符时, 相当于Del
@@ -87,8 +102,6 @@ key[Menu]=''''
 # bindkey -m
 # -m  | add builtin meta-key (win键) bindings to selected keymap
 
-# bindkey [ options ] -s in-string out-string
-bindkey -s "\C-o" "cle \C-j"
 
 
 
@@ -139,8 +152,6 @@ bindkey "$key[Delete]" delete-char
 bindkey '^ ' delete-word
 
 
-# t for try
-# bindkey -s "\C-t" "run_l \C-j" 不知道是啥
 
 # vi mode 出问题来这里
 
@@ -171,14 +182,6 @@ bindkey -s '\eo' 'echo "待用" \n'
 bindkey -s '\ei' 'echo "待用" \n'
 bindkey -s '\ep' 'echo "待用" \n'
 
-bindkey -s '\c-s' 'echo "待用" \n'
-bindkey -s "\C-q" 'echo "待用" \n'
-
-
-# 改了 不生效：
-bindkey -s "\C-q" 'echo "待用" \n'
-# (暂停输出)
-bindkey -s '\c-s' 'echo "bindkey succeed?" \n'
 
 # todo
 # DIRSTACKSIZE=15 # Setup dir stack

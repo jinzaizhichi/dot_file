@@ -1,7 +1,6 @@
 # The shell evaluation order (per POSIX) for the entities in your question is:
 # aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
 
-alias bat=less
 
 # 在~/dotF/bin_wf 下
 alias names='massren'
@@ -873,7 +872,7 @@ alias gb='echo -e "\033[?25h"'
 alias c=cp
 alias cp='cp -ivr'
 alias c.='cp -ivr -t `pwd`'
-alias df='df -h'
+alias df='df -h | bat'
 # bie dai li，别代理
 alias bdl='unset ALL_PROXY; pqi use tuna; conda conf'
 
@@ -1117,6 +1116,9 @@ alias imcat="~/dotF/imcat/imcat"
 alias -s png=imcat
 alias -s jpg=imcat
 alias -s jpeg=imcat
+alias -s svg=imcat
+alias -s bmp=imcat
+alias -s gif=imcat
 
 # -x 等同 --extrac
 alias -s tar='tar -xf'

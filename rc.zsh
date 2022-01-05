@@ -252,6 +252,8 @@ source $HOME/dotF/color_ls_wf.zsh
 
 source $HOME/dotF/bindkey_wf.zsh
 source $HOME/dotF/history_config_wf.zsh
+# todo: 检查一遍再source
+# source /home/wf/dotF/per-dir-history.zsh
 
 source $HOME/dotF/alias.zsh   # 里面有：chpwd_functions=(${chpwd_functions[@]} "list_all_after_cd")
 autoload -Uz chpwd_recent_dirs  cdr add-zsh-hook  # -U: suppress alias expansion for functions
@@ -341,6 +343,7 @@ compctl -K _pip_completion pip3
 # pip zsh completion end
 
 
+export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:$HOME/dotF/bin_wf"
 
 # 别多手把前面的export PATH中的export扔了。万一脚本中途 子shell依赖的变量没export呢？
@@ -366,3 +369,6 @@ export PATH="$PATH:$HOME/dotF/bin_wf"
 source ~/dotF/zsh-git-prompt/zshrc.sh
 # an example prompt
 PROMPT='%B%m%~%b$(git_super_status) %# '
+
+# bindkey -s "\C-s" "echo '待用' \n"  # 改了但还是 锁屏
+# bindkey -s "\C-q" "echo '待用' \n"  # 无法修改。作用一直是删除
