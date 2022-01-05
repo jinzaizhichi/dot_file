@@ -346,6 +346,9 @@ compctl -K _pip_completion pip3
 export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:$HOME/dotF/bin_wf"
 
+# export XDG_CONFIG_HOME=$HOME/dotF/cfg
+export XDG_CONFIG_HOME="$HOME/.config"  # 感觉这个稳妥点
+
 # 别多手把前面的export PATH中的export扔了。万一脚本中途 子shell依赖的变量没export呢？
 # time测时间，export耗时太短忽略不计？
 

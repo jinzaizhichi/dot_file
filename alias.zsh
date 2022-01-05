@@ -1,6 +1,8 @@
 # The shell evaluation order (per POSIX) for the entities in your question is:
 # aliases 优先于  variables --> command substitutions --> special built-ins --> functions --> regular built-ins
 
+# oh my git    oh my god
+alias omg='chezmoi'
 
 # 在~/dotF/bin_wf 下
 alias names='massren'
