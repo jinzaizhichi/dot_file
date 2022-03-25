@@ -1,3 +1,8 @@
+Has been moved to https://gitee.com/llwwff/dotF
+
+---
+
+
 # Oh-My-Terminal
 
 **zsh+tmux+vim**
